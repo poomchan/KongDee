@@ -1,0 +1,7 @@
+fGit Commands
+- git init (already did to create a local repository)
+- git add . (To add all files in the directory to the staging phase)
+- git commit -m "initial commit" (to commit the changes)
+- git log (to check the commits)
+- git remote add origin https://github.com/poomchan/taladsod.git
+- git push -u origin master
