@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>9073822051-v19fp4d557eq9ha3br7l40ri6pjupddp.apps.googleusercontent.com</string>
+	<string>334976200629-k52fmd6l4llsgo1amr5q3gm9ruoga285.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.9073822051-v19fp4d557eq9ha3br7l40ri6pjupddp</string>
+	<string>com.googleusercontent.apps.334976200629-k52fmd6l4llsgo1amr5q3gm9ruoga285</string>
 	<key>API_KEY</key>
-	<string>AIzaSyAM_QdImh05_uyRs40DnPZRd46yGv9z_jI</string>
+	<string>AIzaSyD2Enl1yOwmuPgViA_ATpmZKt0PHXU13kI</string>
 	<key>GCM_SENDER_ID</key>
-	<string>9073822051</string>
+	<string>334976200629</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.ampm.goodstuff</string>
+	<string>com.ampm.kongdee</string>
 	<key>PROJECT_ID</key>
-	<string>good-stuff-6b5e8</string>
+	<string>kong-dee</string>
 	<key>STORAGE_BUCKET</key>
-	<string>good-stuff-6b5e8.appspot.com</string>
+	<string>kong-dee.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,8 +29,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:9073822051:ios:853d77e500f1b309126b56</string>
+	<string>1:334976200629:ios:5085cfdfc4557b858473fc</string>
 	<key>DATABASE_URL</key>
-	<string>https://good-stuff-6b5e8.firebaseio.com</string>
+	<string>https://kong-dee.firebaseio.com</string>
 </dict>
 </plist>
