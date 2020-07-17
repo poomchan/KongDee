@@ -25,15 +25,22 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.googleusercontent.apps.730808190219-io8sfir4tr836okku8erb93lgcdd1680</string>
+				<string>com.googleusercontent.apps.334976200629-k52fmd6l4llsgo1amr5q3gm9ruoga285</string>
 			</array>
 		</dict>
 		<dict>
 			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
+			<string>None</string>
+			<key>CFBundleURLSchemes</key>
+			<array/>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>None</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.googleusercontent.apps.9073822051-v19fp4d557eq9ha3br7l40ri6pjupddp</string>
+				<string>
+</string>
 			</array>
 		</dict>
 	</array>

@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:fluttertaladsod/storage/local_state_storage.dart';
 import 'package:fluttertaladsod/storage/network_state_storage.dart';
-import 'package:fluttertaladsod/model/user.dart';
 import 'package:fluttertaladsod/services/db_service.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -16,7 +15,7 @@ class AuthService {
   loginSilently(BuildContext context) async {
     // Re-authenticate user silently when app is opened
     GoogleSignInAccount account = await _googleSignIn
-        .signInSilently(suppressErrors: false)
+        .signInSilently(suppressErrors: true)
         .catchError((err) {
       print('Error signing in silently: $err');
     });

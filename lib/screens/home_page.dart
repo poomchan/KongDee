@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertaladsod/model/user.dart';
 import 'package:fluttertaladsod/services/db_service.dart';
@@ -44,14 +43,6 @@ class _MyHomePageState extends State<HomePage> {
   void dispose() {
     super.dispose();
     _pageController.dispose();
-  }
-
-  void changePage(int index) {
-    setState(() {
-      _pageIndex = index;
-    });
-    _pageController.animateToPage(_pageIndex,
-        duration: Duration(milliseconds: 400), curve: Curves.linearToEaseOut);
   }
 
   handleNavBarSelection(selectedIndex) async {
@@ -185,6 +176,30 @@ class _MyHomePageState extends State<HomePage> {
         ],
       ),
     );
+  }
+
+//  Future<Widget> checkLocationPermission() async {
+//    if (await Permission.location.serviceStatus.isDisabled) {
+//      print('location is not enable');
+//      return IntroductionPages();
+//    }
+////    if (await Permission.location.isDenied) {
+////      print('location is denied');
+////      var status = await Permission.location.request();
+////      print(status);
+////      openAppSettings();
+////    }
+//    if (await Permission.location.request().isDenied) {
+//      print('location permission is not granted');
+//    }
+//  }
+
+  void changePage(int index) {
+    setState(() {
+      _pageIndex = index;
+    });
+    _pageController.animateToPage(_pageIndex,
+        duration: Duration(milliseconds: 400), curve: Curves.linearToEaseOut);
   }
 
   @override
