@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:fluttertaladsod/domain/core/value_failures.dart';
 import 'package:fluttertaladsod/domain/core/value_objects.dart';
@@ -19,6 +20,7 @@ abstract class Store implements _$Store {
     @required int distanceAway,
     @required String formattedAddress,
     @required UniqueId ownerId,
+    GeoPoint geoPoint,
   }) = _Store;
 
   factory Store.created() => Store(

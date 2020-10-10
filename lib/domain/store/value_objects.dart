@@ -7,8 +7,6 @@ import 'package:fluttertaladsod/domain/core/value_objects.dart';
 import 'package:fluttertaladsod/domain/core/value_validators.dart';
 import 'package:geoflutterfire/geoflutterfire.dart';
 
-import 'package:kt_dart/kt.dart';
-
 class StoreName extends ValueObject<String> {
   @override
   final Either<ValueFailure<String>, String> value;

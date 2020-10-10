@@ -14,6 +14,7 @@ class NameView extends StatelessWidget {
               inital: (state) => circularProgress(context),
               loading: (state) => circularProgress(context),
               success: (state) => Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         state.store.name.getOrCrash(),
@@ -24,7 +25,12 @@ class NameView extends StatelessWidget {
                       ),
                       Text(
                         state.store.formattedAddress,
-                        style: TextStyle(fontSize: 20.0, color: Colors.black87),
+                        style: TextStyle(
+                            fontSize: 18.0,
+                            color: Colors.black87,
+                            fontWeight: FontWeight.w300,
+                            ),
+                            overflow: TextOverflow.ellipsis,
                       ),
                     ],
                   ),

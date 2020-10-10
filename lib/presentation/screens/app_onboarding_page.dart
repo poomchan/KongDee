@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertaladsod/application/location/permission/location_permission_cubit.dart';
+import 'package:websafe_svg/websafe_svg.dart';
 
 class AppOnboardingPage extends StatefulWidget {
   @override
@@ -13,34 +14,50 @@ class _AppOnboardingPageState extends State<AppOnboardingPage> {
   final int _totalPages = 3;
   int _pageIndex = 0;
 
-  Widget buildIPageContent(
-      {String body = 'body',
-      bool isAskingPermission = false,
-      Color backgroundColor = Colors.black12}) {
+  Widget buildIPageContent({
+    String body = 'body',
+    bool isAskingPermission = false,
+    Color backgroundColor = Colors.black12,
+    @required String svgName,
+  }) {
     return Container(
       decoration: BoxDecoration(color: backgroundColor),
       child: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          textBaseline: TextBaseline.ideographic,
           children: <Widget>[
-            const Text('picture goes here'),
+            Flexible(
+              child: WebsafeSvg.asset('assets/$svgName.svg'),
+            ),
             const SizedBox(
               height: 20.0,
             ),
-            Text(
-              body,
-              style: const TextStyle(color: Colors.black),
-            ),
-            if (isAskingPermission)
-              FlatButton(
+            Flexible(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 25.0),
                 child: Text(
-                  'Grant Location',
+                  body,
                   style: const TextStyle(color: Colors.white, fontSize: 20.0),
                 ),
-                onPressed: () =>
-                    BlocProvider.of<LocationPermissionCubit>(context)
-                        .requestLocationPermission(),
-              )
+              ),
+            ),
+            Flexible(
+              child: isAskingPermission
+                  ? RaisedButton(
+                    color: Colors.amber,
+                      child: Text(
+                        'Grant Location',
+                        style: const TextStyle(
+                            color: Colors.black, fontSize: 20.0),
+                      ),
+                      onPressed: () =>
+                          BlocProvider.of<LocationPermissionCubit>(context)
+                              .requestLocationPermission(),
+                    )
+                  : SizedBox(height: 1.0),
+            ),
           ],
         ),
       ),
@@ -94,15 +111,21 @@ class _AppOnboardingPageState extends State<AppOnboardingPage> {
             },
             children: <Widget>[
               buildIPageContent(
-                  body: 'This app is the best',
-                  backgroundColor: const Color(0xFFFF7252)),
+                body: 'Easy to buy and sell anything nearby\nNo commision.',
+                backgroundColor: const Color(0x9F3C60FF),
+                svgName: 'food',
+              ),
               buildIPageContent(
-                  body: 'Really the best',
-                  backgroundColor: const Color(0xFFFFA131)),
+                body: 'Realtime chat with your own deal',
+                backgroundColor: const Color(0xFFFFA131),
+                svgName: 'men',
+              ),
               buildIPageContent(
-                  body: 'please grant the permission',
-                  backgroundColor: const Color(0xFF3C60FF),
-                  isAskingPermission: true),
+                body: 'Turn on location to find nearby people',
+                backgroundColor: const Color(0xFFFF7252),
+                svgName: 'location',
+                isAskingPermission: true,
+              ),
             ],
           ),
           Positioned(
@@ -128,16 +151,16 @@ class _AppOnboardingPageState extends State<AppOnboardingPage> {
                       if (_pageIndex != 2)
                         GestureDetector(
                           onTap: () {
-                            _pageViewController.animateToPage(2,
-                                duration: const Duration(milliseconds: 400),
-                                curve: Curves.linear);
+                            _pageViewController.nextPage(
+                                duration: const Duration(milliseconds: 250),
+                                curve: Curves.fastOutSlowIn);
                             setState(() {});
                           },
                           child: Container(
                             height: Platform.isIOS ? 70 : 60,
                             alignment: Alignment.center,
                             child: const Text(
-                              'Skip',
+                              'Next',
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w600,

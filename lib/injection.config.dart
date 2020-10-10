@@ -34,6 +34,7 @@ import 'application/store/store_own_watcher/cubit/owned_store_watcher_cubit.dart
 import 'application/store/chat/watcher/store_chat_watcher_cubit.dart';
 import 'application/store/store_form/store_form_cubit.dart';
 import 'application/store/store_form/store_form_location/store_form_location_cubit.dart';
+import 'application/home/store_feed/store_near/store_near_cubit.dart';
 import 'infrastucture/store/store_repository.dart';
 import 'application/store/store_view/store_view_cubit.dart';
 
@@ -92,6 +93,7 @@ GetIt $initGetIt(
   gh.factory<StoreFormCubit>(
       () => StoreFormCubit(get<IImageRepository>(), get<IStoreRepository>()),
       registerFor: {_prod});
+  gh.factory<StoreNearCubit>(() => StoreNearCubit(get<IStoreRepository>()));
   gh.factory<StoreViewCubit>(() => StoreViewCubit(get<IStoreRepository>()));
   return get;
 }

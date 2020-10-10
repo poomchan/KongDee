@@ -1,9 +1,14 @@
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluttertaladsod/domain/core/value_objects.dart';
+import 'package:fluttertaladsod/domain/location/i_location_repository.dart';
 import 'package:fluttertaladsod/domain/store/store.dart';
 import 'package:fluttertaladsod/domain/store/value_objects.dart';
 import 'package:fluttertaladsod/infrastucture/core/json_converters.dart';
+import 'package:fluttertaladsod/injection.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geoflutterfire/geoflutterfire.dart';
 
 part 'store_dto.freezed.dart';
 part 'store_dto.g.dart';
@@ -22,6 +27,7 @@ abstract class StoreDto implements _$StoreDto {
     @required int distanceAway,
     @required String formattedAddress,
     @required @ServerTimestampConverter() FieldValue serverTimeStamp,
+    @JsonKey(ignore: true) GeoPoint geoPoint,
   }) = _StoreDto;
 
   factory StoreDto.fromDomain(Store store) {
@@ -50,7 +56,10 @@ abstract class StoreDto implements _$StoreDto {
       _$StoreDtoFromJson(json);
 
   factory StoreDto.fromFirestore(DocumentSnapshot doc) {
-    return StoreDto.fromJson(doc.data()).copyWith(id: doc.id);
+    return StoreDto.fromJson(doc.data()).copyWith(
+      id: doc.id,
+      geoPoint: doc.data()['location']['geopoint'] as GeoPoint,
+    );
   }
 
   Store toDomain() {
@@ -71,7 +80,7 @@ abstract class StoreDto implements _$StoreDto {
       ownerId: UniqueId.fromUniqueString(ownerId),
       distanceAway: distanceAway,
       formattedAddress: formattedAddress,
+      geoPoint: geoPoint,
     );
   }
 }
-

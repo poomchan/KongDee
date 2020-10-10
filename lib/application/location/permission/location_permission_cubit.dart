@@ -15,15 +15,16 @@ class LocationPermissionCubit extends Cubit<LocationPermissionState> {
   LocationPermissionCubit(this._locationRepository) : super(const _Initial());
 
   Future<void> checkPermissionStatus() async {
-    print('checking location permission');
-    emit(const LocationPermissionState.loading());
-    final bool isLocationGranted =
-        await _locationRepository.checkPermissionStatus();
-    if (isLocationGranted) {
-      emit(const LocationPermissionState.granted());
-    } else {
-      emit(const LocationPermissionState.denied());
-    }
+    emit(const LocationPermissionState.denied());
+    // print('checking location permission');
+    // emit(const LocationPermissionState.loading());
+    // final bool isLocationGranted =
+    //     await _locationRepository.checkPermissionStatus();
+    // if (isLocationGranted) {
+    //   emit(const LocationPermissionState.granted());
+    // } else {
+    //   emit(const LocationPermissionState.denied());
+    // }
   }
 
   Future<void> requestLocationPermission() async {

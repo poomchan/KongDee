@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertaladsod/application/location/location_cubit.dart';
 import 'package:fluttertaladsod/domain/core/value_objects.dart';
 import 'package:fluttertaladsod/domain/location/location.dart';
@@ -16,41 +18,45 @@ import 'package:rxdart/rxdart.dart';
 import 'package:uuid/uuid.dart';
 import 'package:fluttertaladsod/infrastucture/core/firestore_helper.dart';
 
-import '../../injection.dart';
-
 @prod
 @LazySingleton(as: IStoreRepository)
 class StoreRepository implements IStoreRepository {
   final FirebaseFirestore _firestore;
   final StorageReference _storage;
   final Geoflutterfire _geo;
+  final radius = BehaviorSubject<double>.seeded(0.0);
 
   StoreRepository(this._firestore, this._storage, this._geo);
 
+  
+
   @override
-  Stream<Either<StoreFailure, List<Store>>> watchNearbyStore(double rad) {
-    final LocationDomain location = getIt<LocationState>().maybeMap(
+  Stream<Either<StoreFailure, List<Store>>> watchNearbyStore(
+      BuildContext context,
+      {@required double rad}) async* {
+    final LocationCubit locationBloc = BlocProvider.of<LocationCubit>(context);
+    final LocationDomain location = locationBloc.state.maybeMap(
       success: (state) => state.location,
       orElse: () => throw 'location not granted',
     );
 
-    final radius = BehaviorSubject<double>.seeded(10);
     radius.add(rad);
 
-    return radius.switchMap((rad) {
-      return _geo
-          .collection(collectionRef: _firestore.storeCollectionRef)
-          .within(
-            center: location.geoFirePoint,
-            radius: rad,
-            field: 'position',
-          );
-    }).map(
+    yield* radius
+        .switchMap((rad) => _geo
+            .collection(collectionRef: _firestore.storeCollectionRef)
+            .within(
+              center: location.geoFirePoint,
+              radius: rad,
+              field: 'location',
+              strictMode: true,
+            ))
+        .map(
       (snapshots) {
         if (snapshots.isEmpty) {
           return left<StoreFailure, List<Store>>(StoreFailure.noStore());
         }
-        right<StoreFailure, List<Store>>(
+        return right<StoreFailure, List<Store>>(
           snapshots
               .map(
                 (snapshot) => StoreDto.fromFirestore(snapshot).toDomain(),
@@ -101,7 +107,7 @@ class StoreRepository implements IStoreRepository {
         ],
       );
     try {
-      _firestore.storeCollectionRef.doc(store.id.getOrCrash()).set(jsonData);
+      _firestore.storeCollectionRef.doc(UniqueId().getOrCrash()).set(jsonData);
     } catch (err) {
       return left(StoreFailure.unexpected());
     }
@@ -115,7 +121,7 @@ class StoreRepository implements IStoreRepository {
       ..addEntries([MapEntry('location', location.geoFirePoint.data)]);
 
     try {
-      _firestore.storeCollectionRef.doc(store.id.getOrCrash()).update(jsonData);
+      _firestore.storeCollectionRef.doc(UniqueId().getOrCrash()).set(jsonData);
     } catch (err) {
       return left(StoreFailure.unexpected());
     }
@@ -163,5 +169,10 @@ class StoreRepository implements IStoreRepository {
       // print error onto the console here
       return left<StoreFailure, Store>(StoreFailure.unexpected());
     });
+  }
+
+  @override
+  void addMoreRadius(double rad) {
+    radius.add(rad);
   }
 }

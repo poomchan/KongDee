@@ -155,13 +155,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.2.0-nullsafety.1"
-  chat_bubbles:
-    dependency: "direct main"
-    description:
-      name: chat_bubbles
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.7.8+1"
   checked_yaml:
     dependency: transitive
     description:
@@ -288,6 +281,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "6.0.0-nullsafety.2"
+  file_picker:
+    dependency: "direct main"
+    description:
+      name: file_picker
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.7"
   firebase:
     dependency: transitive
     description:
@@ -391,6 +391,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_awesome_alert_box:
+    dependency: "direct main"
+    description:
+      name: flutter_awesome_alert_box
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.1"
   flutter_bloc:
     dependency: "direct main"
     description:
@@ -412,11 +419,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.4.2"
-  flutter_driver:
-    dependency: transitive
-    description: flutter
-    source: sdk
-    version: "0.0.0"
   flutter_hooks:
     dependency: "direct main"
     description:
@@ -432,7 +434,7 @@ packages:
     source: hosted
     version: "1.0.11"
   flutter_svg:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: flutter_svg
       url: "https://pub.dartlang.org"
@@ -469,11 +471,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.12.0"
-  fuchsia_remote_debug_protocol:
-    dependency: transitive
-    description: flutter
-    source: sdk
-    version: "0.0.0"
   geocoding:
     dependency: "direct main"
     description:
@@ -614,13 +611,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.4"
-  integration_test:
-    dependency: "direct main"
-    description:
-      name: integration_test
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.9.1"
   intl:
     dependency: transitive
     description:
@@ -649,13 +639,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.1.0"
-  json_rpc_2:
-    dependency: transitive
-    description:
-      name: json_rpc_2
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.2.2"
   json_serializable:
     dependency: "direct dev"
     description:
@@ -663,13 +646,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.5.0"
-  kt_dart:
-    dependency: "direct main"
-    description:
-      name: kt_dart
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.7.0+1"
   lint:
     dependency: "direct dev"
     description:
@@ -705,13 +681,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.9.7"
-  multi_image_picker:
+  modal_bottom_sheet:
     dependency: "direct main"
     description:
-      name: multi_image_picker
+      name: modal_bottom_sheet
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.7.14"
+    version: "0.2.2"
   nested:
     dependency: transitive
     description:
@@ -831,6 +807,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.1.0"
+  photo_view:
+    dependency: "direct main"
+    description:
+      name: photo_view
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.10.2"
   platform:
     dependency: transitive
     description:
@@ -989,7 +972,7 @@ packages:
       name: stack_trace
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.10.0-nullsafety.2"
+    version: "1.10.0-nullsafety.1"
   states_rebuilder:
     dependency: transitive
     description:
@@ -1032,13 +1015,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.2.0"
-  sync_http:
-    dependency: transitive
-    description:
-      name: sync_http
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.2.0"
   synchronized:
     dependency: transitive
     description:
@@ -1137,20 +1113,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0-nullsafety.3"
-  vm_service:
-    dependency: transitive
-    description:
-      name: vm_service
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "4.2.0"
-  vm_service_client:
-    dependency: transitive
-    description:
-      name: vm_service_client
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.2.6+2"
   watcher:
     dependency: transitive
     description:
@@ -1165,13 +1127,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.0"
-  webdriver:
-    dependency: transitive
+  websafe_svg:
+    dependency: "direct main"
     description:
-      name: webdriver
+      name: websafe_svg
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.2"
+    version: "1.1.4"
   win32:
     dependency: transitive
     description:
@@ -1201,5 +1163,5 @@ packages:
     source: hosted
     version: "2.2.1"
 sdks:
-  dart: ">=2.10.0-110 <=2.11.0-185.0.dev"
+  dart: ">=2.10.0-110 <2.11.0"
   flutter: ">=1.20.0 <2.0.0"

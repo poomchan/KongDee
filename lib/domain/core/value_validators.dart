@@ -1,6 +1,5 @@
 import 'package:dartz/dartz.dart';
 import 'package:fluttertaladsod/domain/core/value_failures.dart';
-import 'package:kt_dart/kt.dart';
 
 Either<ValueFailure<String>, String> validateMaxStringLength(
   String input,

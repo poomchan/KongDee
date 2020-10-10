@@ -109,13 +109,14 @@ class StoreCard extends StatelessWidget {
                         Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Flexible(
+                            Container(
+                              width: 150.0,
                               child: Text(
                                 store.formattedAddress,
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ),
-                            SizedBox(width: 20.0,),
+                            Spacer(),
                             RichText(
                               overflow: TextOverflow.ellipsis,
                               text: TextSpan(

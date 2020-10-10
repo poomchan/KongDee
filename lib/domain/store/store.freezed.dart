@@ -21,7 +21,8 @@ class _$StoreTearOff {
       @required StorePic16 pics,
       @required int distanceAway,
       @required String formattedAddress,
-      @required UniqueId ownerId}) {
+      @required UniqueId ownerId,
+      GeoPoint geoPoint}) {
     return _Store(
       id: id,
       name: name,
@@ -31,6 +32,7 @@ class _$StoreTearOff {
       distanceAway: distanceAway,
       formattedAddress: formattedAddress,
       ownerId: ownerId,
+      geoPoint: geoPoint,
     );
   }
 }
@@ -47,6 +49,7 @@ mixin _$Store {
   int get distanceAway;
   String get formattedAddress;
   UniqueId get ownerId;
+  GeoPoint get geoPoint;
 
   $StoreCopyWith<Store> get copyWith;
 }
@@ -62,7 +65,8 @@ abstract class $StoreCopyWith<$Res> {
       StorePic16 pics,
       int distanceAway,
       String formattedAddress,
-      UniqueId ownerId});
+      UniqueId ownerId,
+      GeoPoint geoPoint});
 }
 
 class _$StoreCopyWithImpl<$Res> implements $StoreCopyWith<$Res> {
@@ -82,6 +86,7 @@ class _$StoreCopyWithImpl<$Res> implements $StoreCopyWith<$Res> {
     Object distanceAway = freezed,
     Object formattedAddress = freezed,
     Object ownerId = freezed,
+    Object geoPoint = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed ? _value.id : id as UniqueId,
@@ -95,6 +100,7 @@ class _$StoreCopyWithImpl<$Res> implements $StoreCopyWith<$Res> {
           ? _value.formattedAddress
           : formattedAddress as String,
       ownerId: ownerId == freezed ? _value.ownerId : ownerId as UniqueId,
+      geoPoint: geoPoint == freezed ? _value.geoPoint : geoPoint as GeoPoint,
     ));
   }
 }
@@ -111,7 +117,8 @@ abstract class _$StoreCopyWith<$Res> implements $StoreCopyWith<$Res> {
       StorePic16 pics,
       int distanceAway,
       String formattedAddress,
-      UniqueId ownerId});
+      UniqueId ownerId,
+      GeoPoint geoPoint});
 }
 
 class __$StoreCopyWithImpl<$Res> extends _$StoreCopyWithImpl<$Res>
@@ -132,6 +139,7 @@ class __$StoreCopyWithImpl<$Res> extends _$StoreCopyWithImpl<$Res>
     Object distanceAway = freezed,
     Object formattedAddress = freezed,
     Object ownerId = freezed,
+    Object geoPoint = freezed,
   }) {
     return _then(_Store(
       id: id == freezed ? _value.id : id as UniqueId,
@@ -145,6 +153,7 @@ class __$StoreCopyWithImpl<$Res> extends _$StoreCopyWithImpl<$Res>
           ? _value.formattedAddress
           : formattedAddress as String,
       ownerId: ownerId == freezed ? _value.ownerId : ownerId as UniqueId,
+      geoPoint: geoPoint == freezed ? _value.geoPoint : geoPoint as GeoPoint,
     ));
   }
 }
@@ -158,7 +167,8 @@ class _$_Store extends _Store {
       @required this.pics,
       @required this.distanceAway,
       @required this.formattedAddress,
-      @required this.ownerId})
+      @required this.ownerId,
+      this.geoPoint})
       : assert(id != null),
         assert(name != null),
         assert(banner != null),
@@ -185,10 +195,12 @@ class _$_Store extends _Store {
   final String formattedAddress;
   @override
   final UniqueId ownerId;
+  @override
+  final GeoPoint geoPoint;
 
   @override
   String toString() {
-    return 'Store(id: $id, name: $name, banner: $banner, menu: $menu, pics: $pics, distanceAway: $distanceAway, formattedAddress: $formattedAddress, ownerId: $ownerId)';
+    return 'Store(id: $id, name: $name, banner: $banner, menu: $menu, pics: $pics, distanceAway: $distanceAway, formattedAddress: $formattedAddress, ownerId: $ownerId, geoPoint: $geoPoint)';
   }
 
   @override
@@ -212,7 +224,11 @@ class _$_Store extends _Store {
                 const DeepCollectionEquality()
                     .equals(other.formattedAddress, formattedAddress)) &&
             (identical(other.ownerId, ownerId) ||
-                const DeepCollectionEquality().equals(other.ownerId, ownerId)));
+                const DeepCollectionEquality()
+                    .equals(other.ownerId, ownerId)) &&
+            (identical(other.geoPoint, geoPoint) ||
+                const DeepCollectionEquality()
+                    .equals(other.geoPoint, geoPoint)));
   }
 
   @override
@@ -225,7 +241,8 @@ class _$_Store extends _Store {
       const DeepCollectionEquality().hash(pics) ^
       const DeepCollectionEquality().hash(distanceAway) ^
       const DeepCollectionEquality().hash(formattedAddress) ^
-      const DeepCollectionEquality().hash(ownerId);
+      const DeepCollectionEquality().hash(ownerId) ^
+      const DeepCollectionEquality().hash(geoPoint);
 
   @override
   _$StoreCopyWith<_Store> get copyWith =>
@@ -242,7 +259,8 @@ abstract class _Store extends Store {
       @required StorePic16 pics,
       @required int distanceAway,
       @required String formattedAddress,
-      @required UniqueId ownerId}) = _$_Store;
+      @required UniqueId ownerId,
+      GeoPoint geoPoint}) = _$_Store;
 
   @override
   UniqueId get id;
@@ -260,6 +278,8 @@ abstract class _Store extends Store {
   String get formattedAddress;
   @override
   UniqueId get ownerId;
+  @override
+  GeoPoint get geoPoint;
   @override
   _$StoreCopyWith<_Store> get copyWith;
 }
