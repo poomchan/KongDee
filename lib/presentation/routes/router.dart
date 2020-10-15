@@ -1,5 +1,4 @@
 import 'package:auto_route/auto_route_annotations.dart';
-import 'package:fluttertaladsod/presentation/screens/app_landing_page.dart';
 import 'package:fluttertaladsod/presentation/screens/home_page/home_page.dart';
 import 'package:fluttertaladsod/presentation/screens/profile/profile_page.dart';
 import 'package:fluttertaladsod/presentation/screens/splash/sign_in_splash.dart';
@@ -13,9 +12,8 @@ import '../screens/app_onboarding_page.dart';
   generateNavigationHelperExtension: true,
   routes: <AutoRoute>[
     // initial route is named "/"
-    MaterialRoute(page: AppLandingPage),
     MaterialRoute(page: HomePage),
-    MaterialRoute(page: AppOnboardingPage),
+    MaterialRoute(page: AppOnboardingPage, initial: true),
     MaterialRoute(page: SignInSplash, fullscreenDialog: true),
     MaterialRoute(page: ProfilePage),
     MaterialRoute(page: StoreForm),

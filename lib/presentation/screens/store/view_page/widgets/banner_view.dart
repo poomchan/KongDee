@@ -35,11 +35,11 @@ class BannerView extends StatelessWidget {
                   inital: (state) => circularProgress(context),
                   loading: (state) => circularProgress(context),
                   success: (state) => CachedNetworkImage(
-                        imageUrl: state.store.banner.url,
-                        fit: BoxFit.cover,
-                        placeholder: (context, str) =>
-                            circularProgress(context),
-                      ),
+                    imageUrl: state.store.banner.url,
+                    fit: BoxFit.cover,
+                    placeholder: (context, str) =>
+                        circularProgress(context),
+                  ),
                   failure: (state) => Icon(Icons.error)),
             ),
           ),

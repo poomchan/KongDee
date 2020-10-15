@@ -2,21 +2,23 @@ import 'package:dartz/dartz.dart';
 import 'package:fluttertaladsod/domain/location/i_location_repository.dart';
 import 'package:fluttertaladsod/domain/location/location.dart';
 import 'package:fluttertaladsod/domain/location/location_failures.dart';
-import 'package:geocoding/geocoding.dart';
+import 'package:geocoding/geocoding.dart' as _code;
 import 'package:geoflutterfire/geoflutterfire.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:injectable/injectable.dart';
-import 'package:permission_handler/permission_handler.dart';
+import 'package:location/location.dart';
 
 @prod
 @LazySingleton(as: ILocationRepository)
 class LocationRepository implements ILocationRepository {
+  final Location _location;
+  final Geoflutterfire _geo;
+  LocationRepository(this._location, this._geo);
+  
   @override
   Future<Either<LocationFailures, Unit>> requestLocationPermission() async {
-    // do the request
-    final PermissionStatus status = await Permission.location.request();
-    print(status);
-    if (status.isGranted) {
+    final PermissionStatus status = await _location.requestPermission();
+    if (status == PermissionStatus.granted) {
       return right(unit);
     } else {
       return left(const LocationFailures.cancleByUser());
@@ -25,8 +27,8 @@ class LocationRepository implements ILocationRepository {
 
   @override
   Future<bool> checkPermissionStatus() async {
-    final bool isLocationGranted = await Permission.location.isGranted;
-    if (isLocationGranted) {
+    final bool isServiceEnabled = await _location.serviceEnabled();
+    if (isServiceEnabled) {
       return true;
     } else {
       return false;
@@ -40,30 +42,29 @@ class LocationRepository implements ILocationRepository {
 
   @override
   Future<Option<LocationDomain>> getLocation() async {
-    var error;
+    dynamic error;
     // get coordinates
-    final Position position =
-        await getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
-            .catchError((err) => error = err);
+    final LocationData position =
+        await _location.getLocation();
 
     // get full address
-    final List<Placemark> placemarks =
-        await placemarkFromCoordinates(position.latitude, position.longitude);
-    final Placemark placemark = placemarks[0];
+    final List<_code.Placemark> placemarks =
+        await _code.placemarkFromCoordinates(position.latitude, position.longitude);
+    final _code.Placemark placemark = placemarks[0];
     final completeAddress =
         '${placemark.subThoroughfare}/ ${placemark.thoroughfare}/ '
         '${placemark.subLocality}/ ${placemark.locality}/ '
         '${placemark.subAdministrativeArea}/ '
         '${placemark.administrativeArea}/ ${placemark.postalCode}/ '
         '${placemark.country} ';
+
     final formattedAddress =
-        '${placemark.subLocality}, ${placemark.locality}, ${placemark.country}';
+        '${placemark.subLocality}, ${placemark.locality}';
 
     // get geohash
     // Init firestore and geoFlutterFire
-    final Geoflutterfire geo = Geoflutterfire();
     final GeoFirePoint myGeoPoint =
-        geo.point(latitude: position.latitude, longitude: position.longitude);
+        _geo.point(latitude: position.latitude, longitude: position.longitude);
     if (error != null) {
       return none();
     } else {

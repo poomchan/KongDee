@@ -17,7 +17,7 @@ class _$LocationDomainTearOff {
       {@required String fullAddress,
       @required String formattedAddress,
       @required GeoFirePoint geoFirePoint,
-      @required Position position}) {
+      @required LocationData position}) {
     return _LocationDomain(
       fullAddress: fullAddress,
       formattedAddress: formattedAddress,
@@ -34,7 +34,7 @@ mixin _$LocationDomain {
   String get fullAddress;
   String get formattedAddress;
   GeoFirePoint get geoFirePoint;
-  Position get position;
+  LocationData get position;
 
   $LocationDomainCopyWith<LocationDomain> get copyWith;
 }
@@ -47,7 +47,7 @@ abstract class $LocationDomainCopyWith<$Res> {
       {String fullAddress,
       String formattedAddress,
       GeoFirePoint geoFirePoint,
-      Position position});
+      LocationData position});
 }
 
 class _$LocationDomainCopyWithImpl<$Res>
@@ -74,7 +74,8 @@ class _$LocationDomainCopyWithImpl<$Res>
       geoFirePoint: geoFirePoint == freezed
           ? _value.geoFirePoint
           : geoFirePoint as GeoFirePoint,
-      position: position == freezed ? _value.position : position as Position,
+      position:
+          position == freezed ? _value.position : position as LocationData,
     ));
   }
 }
@@ -89,7 +90,7 @@ abstract class _$LocationDomainCopyWith<$Res>
       {String fullAddress,
       String formattedAddress,
       GeoFirePoint geoFirePoint,
-      Position position});
+      LocationData position});
 }
 
 class __$LocationDomainCopyWithImpl<$Res>
@@ -118,7 +119,8 @@ class __$LocationDomainCopyWithImpl<$Res>
       geoFirePoint: geoFirePoint == freezed
           ? _value.geoFirePoint
           : geoFirePoint as GeoFirePoint,
-      position: position == freezed ? _value.position : position as Position,
+      position:
+          position == freezed ? _value.position : position as LocationData,
     ));
   }
 }
@@ -141,7 +143,7 @@ class _$_LocationDomain implements _LocationDomain {
   @override
   final GeoFirePoint geoFirePoint;
   @override
-  final Position position;
+  final LocationData position;
 
   @override
   String toString() {
@@ -184,7 +186,7 @@ abstract class _LocationDomain implements LocationDomain {
       {@required String fullAddress,
       @required String formattedAddress,
       @required GeoFirePoint geoFirePoint,
-      @required Position position}) = _$_LocationDomain;
+      @required LocationData position}) = _$_LocationDomain;
 
   @override
   String get fullAddress;
@@ -193,7 +195,7 @@ abstract class _LocationDomain implements LocationDomain {
   @override
   GeoFirePoint get geoFirePoint;
   @override
-  Position get position;
+  LocationData get position;
   @override
   _$LocationDomainCopyWith<_LocationDomain> get copyWith;
 }

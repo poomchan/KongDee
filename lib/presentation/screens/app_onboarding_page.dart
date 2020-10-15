@@ -1,7 +1,9 @@
 import 'dart:io';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertaladsod/application/location/permission/location_permission_cubit.dart';
+import 'package:fluttertaladsod/presentation/routes/router.gr.dart';
 import 'package:websafe_svg/websafe_svg.dart';
 
 class AppOnboardingPage extends StatefulWidget {
@@ -13,6 +15,119 @@ class _AppOnboardingPageState extends State<AppOnboardingPage> {
   final _pageViewController = PageController(initialPage: 0);
   final int _totalPages = 3;
   int _pageIndex = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocListener<LocationPermissionCubit, LocationPermissionState>(
+      listener: (context, state) {
+        // if permission granted => navigate to the home page
+        // otherwise, stay on the onboarding page
+        state.map(
+          inital: (_) => null,
+          loading: (_) => null,
+          granted: (_) => context.navigator.pushHomePage(),
+          denied: (_) => null,
+        );
+      },
+      child: Scaffold(
+        body: Stack(
+          children: <Widget>[
+            PageView(
+              physics: const ClampingScrollPhysics(),
+              controller: _pageViewController,
+              onPageChanged: (int page) {
+                setState(() {
+                  _pageIndex = page;
+                });
+              },
+              children: <Widget>[
+                buildIPageContent(
+                  body: 'Easy to buy and sell anything nearby\nNo commision.',
+                  backgroundColor: const Color(0x9F3C60FF),
+                  svgName: 'food',
+                ),
+                buildIPageContent(
+                  body: 'Realtime chat with your own deal',
+                  backgroundColor: const Color(0xFFFFA131),
+                  svgName: 'men',
+                ),
+                buildIPageContent(
+                  body: 'Turn on location to find nearby people',
+                  backgroundColor: const Color(0xFFFF7252),
+                  svgName: 'location2',
+                  isAskingPermission: true,
+                ),
+              ],
+            ),
+            Positioned(
+              bottom: 40,
+              left: MediaQuery.of(context).size.width * .05,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    alignment: Alignment.center,
+                    width: MediaQuery.of(context).size.width * .9,
+                    child: Row(
+                      children: [
+                        Container(
+                          child: Row(children: [
+                            for (int i = 0; i < _totalPages; i++)
+                              i == _pageIndex
+                                  ? _buildPageIndicator(true)
+                                  : _buildPageIndicator(false)
+                          ]),
+                        ),
+                        const Spacer(),
+                        if (_pageIndex != 2)
+                          GestureDetector(
+                            onTap: () {
+                              _pageViewController.nextPage(
+                                  duration: const Duration(milliseconds: 250),
+                                  curve: Curves.fastOutSlowIn);
+                              setState(() {});
+                            },
+                            child: Container(
+                              height: Platform.isIOS ? 70 : 60,
+                              alignment: Alignment.center,
+                              child: const Text(
+                                'Next',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 20),
+                              ),
+                            ),
+                          ),
+                        if (_pageIndex == 2)
+                          GestureDetector(
+                            onTap: () =>
+                                BlocProvider.of<LocationPermissionCubit>(
+                                        context)
+                                    .requestLocationPermission(),
+                            child: Container(
+                              height: Platform.isIOS ? 70 : 60,
+                              alignment: Alignment.center,
+                              child: const Text(
+                                'Start Now!',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 20),
+                              ),
+                            ),
+                          ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 
   Widget buildIPageContent({
     String body = 'body',
@@ -46,7 +161,7 @@ class _AppOnboardingPageState extends State<AppOnboardingPage> {
             Flexible(
               child: isAskingPermission
                   ? RaisedButton(
-                    color: Colors.amber,
+                      color: Colors.amber,
                       child: Text(
                         'Grant Location',
                         style: const TextStyle(
@@ -92,106 +207,6 @@ class _AppOnboardingPageState extends State<AppOnboardingPage> {
           style: TextStyle(
               color: Colors.white, fontWeight: FontWeight.w600, fontSize: 20),
         ),
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: <Widget>[
-          PageView(
-            physics: const ClampingScrollPhysics(),
-            controller: _pageViewController,
-            onPageChanged: (int page) {
-              setState(() {
-                _pageIndex = page;
-              });
-            },
-            children: <Widget>[
-              buildIPageContent(
-                body: 'Easy to buy and sell anything nearby\nNo commision.',
-                backgroundColor: const Color(0x9F3C60FF),
-                svgName: 'food',
-              ),
-              buildIPageContent(
-                body: 'Realtime chat with your own deal',
-                backgroundColor: const Color(0xFFFFA131),
-                svgName: 'men',
-              ),
-              buildIPageContent(
-                body: 'Turn on location to find nearby people',
-                backgroundColor: const Color(0xFFFF7252),
-                svgName: 'location',
-                isAskingPermission: true,
-              ),
-            ],
-          ),
-          Positioned(
-            bottom: 40,
-            left: MediaQuery.of(context).size.width * .05,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  alignment: Alignment.center,
-                  width: MediaQuery.of(context).size.width * .9,
-                  child: Row(
-                    children: [
-                      Container(
-                        child: Row(children: [
-                          for (int i = 0; i < _totalPages; i++)
-                            i == _pageIndex
-                                ? _buildPageIndicator(true)
-                                : _buildPageIndicator(false)
-                        ]),
-                      ),
-                      const Spacer(),
-                      if (_pageIndex != 2)
-                        GestureDetector(
-                          onTap: () {
-                            _pageViewController.nextPage(
-                                duration: const Duration(milliseconds: 250),
-                                curve: Curves.fastOutSlowIn);
-                            setState(() {});
-                          },
-                          child: Container(
-                            height: Platform.isIOS ? 70 : 60,
-                            alignment: Alignment.center,
-                            child: const Text(
-                              'Next',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 20),
-                            ),
-                          ),
-                        ),
-                      if (_pageIndex == 2)
-                        GestureDetector(
-                          onTap: () =>
-                              BlocProvider.of<LocationPermissionCubit>(context)
-                                  .requestLocationPermission(),
-                          child: Container(
-                            height: Platform.isIOS ? 70 : 60,
-                            alignment: Alignment.center,
-                            child: const Text(
-                              'Start Now!',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 20),
-                            ),
-                          ),
-                        ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
       ),
     );
   }

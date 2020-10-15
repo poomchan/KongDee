@@ -13,7 +13,6 @@ import 'package:flutter/material.dart';
 import '../../domain/auth/user.dart';
 import '../../domain/core/value_objects.dart';
 import '../../domain/store/store.dart';
-import '../screens/app_landing_page.dart';
 import '../screens/app_onboarding_page.dart';
 import '../screens/home_page/home_page.dart';
 import '../screens/profile/profile_page.dart';
@@ -23,16 +22,14 @@ import '../screens/store/form/store_form.dart';
 import '../screens/store/view_page/store_view_page.dart';
 
 class Routes {
-  static const String appLandingPage = '/app-landing-page';
   static const String homePage = '/home-page';
-  static const String appOnboardingPage = '/app-onboarding-page';
+  static const String appOnboardingPage = '/';
   static const String signInSplash = '/sign-in-splash';
   static const String profilePage = '/profile-page';
   static const String storeForm = '/store-form';
   static const String storeViewPage = '/store-view-page';
   static const String chatPage = '/chat-page';
   static const all = <String>{
-    appLandingPage,
     homePage,
     appOnboardingPage,
     signInSplash,
@@ -47,7 +44,6 @@ class Router extends RouterBase {
   @override
   List<RouteDef> get routes => _routes;
   final _routes = <RouteDef>[
-    RouteDef(Routes.appLandingPage, page: AppLandingPage),
     RouteDef(Routes.homePage, page: HomePage),
     RouteDef(Routes.appOnboardingPage, page: AppOnboardingPage),
     RouteDef(Routes.signInSplash, page: SignInSplash),
@@ -59,12 +55,6 @@ class Router extends RouterBase {
   @override
   Map<Type, AutoRouteFactory> get pagesMap => _pagesMap;
   final _pagesMap = <Type, AutoRouteFactory>{
-    AppLandingPage: (data) {
-      return MaterialPageRoute<dynamic>(
-        builder: (context) => AppLandingPage(),
-        settings: data,
-      );
-    },
     HomePage: (data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => HomePage(),
@@ -138,8 +128,6 @@ class Router extends RouterBase {
 /// *************************************************************************
 
 extension RouterExtendedNavigatorStateX on ExtendedNavigatorState {
-  Future<dynamic> pushAppLandingPage() => push<dynamic>(Routes.appLandingPage);
-
   Future<dynamic> pushHomePage() => push<dynamic>(Routes.homePage);
 
   Future<dynamic> pushAppOnboardingPage() =>

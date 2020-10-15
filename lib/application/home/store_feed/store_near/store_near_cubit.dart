@@ -31,7 +31,7 @@ class StoreNearCubit extends Cubit<StoreNearState> {
       failureOrStoreList.fold(
         (f) => emit(StoreNearState.failure(f)),
         (storeList) {
-          print('emitting storeList');
+          // print('emitting storeList');
           this.storeList = _calculateDistanceAway(context, storeList);
           emit(StoreNearState.loaded(this.storeList));
         },

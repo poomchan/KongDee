@@ -41,4 +41,6 @@ abstract class Store implements _$Store {
         .andThen(pics.failureOrUnit)
         .fold((f) => some(f), (r) => none());
   }
+
+  
 }

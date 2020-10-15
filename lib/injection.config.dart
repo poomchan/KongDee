@@ -11,6 +11,7 @@ import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:location/location.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 import 'application/auth/actor/auth_actor_cubit.dart';
@@ -62,24 +63,21 @@ GetIt $initGetIt(
   gh.lazySingleton<IAuthFacade>(
       () => FirebaseAuthFacade(get<GoogleSignIn>(), get<FirebaseAuth>()),
       registerFor: {_prod});
-  gh.lazySingleton<ILocationRepository>(() => LocationRepository(),
-      registerFor: {_prod});
   gh.lazySingleton<IMessageRepository>(
       () => MessageRepository(get<FirebaseFirestore>()));
   gh.lazySingleton<ImagePicker>(() => imageInjectableModule.imagePicker);
-  gh.factory<LocationCubit>(() => LocationCubit(get<ILocationRepository>()));
-  gh.factory<LocationPermissionCubit>(
-      () => LocationPermissionCubit(get<ILocationRepository>()));
+  gh.lazySingleton<Location>(() => locationInjectableModule.location);
   gh.lazySingleton<StorageReference>(
       () => firebaseInjectableModule.firebaseStorage);
   gh.factory<StoreChatWatcherCubit>(
       () => StoreChatWatcherCubit(get<IMessageRepository>()));
-  gh.factory<StoreFormLocationCubit>(
-      () => StoreFormLocationCubit(get<ILocationRepository>()));
   gh.factory<AuthActorCubit>(() => AuthActorCubit(get<IAuthFacade>()));
   gh.factory<AuthWatcherCubit>(() => AuthWatcherCubit(get<IAuthFacade>()));
   gh.factory<ChatFormCubit>(() => ChatFormCubit(get<IMessageRepository>()));
   gh.lazySingleton<IImageRepository>(() => ImageRepository(get<ImagePicker>()),
+      registerFor: {_prod});
+  gh.lazySingleton<ILocationRepository>(
+      () => LocationRepository(get<Location>(), get<Geoflutterfire>()),
       registerFor: {_prod});
   gh.lazySingleton<IStoreRepository>(
       () => StoreRepository(
@@ -88,11 +86,16 @@ GetIt $initGetIt(
             get<Geoflutterfire>(),
           ),
       registerFor: {_prod});
+  gh.factory<LocationCubit>(() => LocationCubit(get<ILocationRepository>()));
+  gh.factory<LocationPermissionCubit>(
+      () => LocationPermissionCubit(get<ILocationRepository>()));
   gh.factory<OwnedStoreWatcherCubit>(
       () => OwnedStoreWatcherCubit(get<IStoreRepository>()));
   gh.factory<StoreFormCubit>(
       () => StoreFormCubit(get<IImageRepository>(), get<IStoreRepository>()),
       registerFor: {_prod});
+  gh.factory<StoreFormLocationCubit>(
+      () => StoreFormLocationCubit(get<ILocationRepository>()));
   gh.factory<StoreNearCubit>(() => StoreNearCubit(get<IStoreRepository>()));
   gh.factory<StoreViewCubit>(() => StoreViewCubit(get<IStoreRepository>()));
   return get;

@@ -6,7 +6,7 @@ import 'package:fluttertaladsod/presentation/core/components/progress_indicator.
 import 'package:fluttertaladsod/presentation/core/theme.dart';
 import 'package:fluttertaladsod/presentation/routes/router.gr.dart';
 
-import 'layout_helpers.dart';
+import '../profile/widgets/layout_helpers.dart';
 
 class StoreCard extends StatelessWidget {
   final Store store;
@@ -38,36 +38,34 @@ class StoreCard extends StatelessWidget {
             ),
             Row(
               children: [
-                Container(
-                  // color: Colors.red,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Flexible(
-                        flex: 20,
-                        child: AspectRatio(
-                          aspectRatio: 130 / 100,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(15.0),
-                            child: CachedNetworkImage(
-                              imageUrl: store.banner.url,
-                              fit: BoxFit.cover,
-                              placeholder: (context, str) =>
-                                  circularProgress(context),
-                            ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Flexible(
+                      flex: 20,
+                      child: AspectRatio(
+                        aspectRatio: 130 / 100,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(15.0),
+                          child: CachedNetworkImage(
+                            imageUrl: store.banner.url,
+                            fit: BoxFit.cover,
+                            placeholder: (context, str) =>
+                                circularProgress(context),
                           ),
                         ),
                       ),
-                      Flexible(
-                        child: Container(),
-                      ),
-                    ],
-                  ),
+                    ),
+                    Flexible(
+                      child: Container(),
+                    ),
+                  ],
                 ),
                 Expanded(
                   child: Container(
                     // color: Colors.blue,
-                    padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
+                    padding:
+                        EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
                     child: Column(
                       children: [
                         Row(
