@@ -3,10 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertaladsod/application/auth/actor/auth_actor_cubit.dart';
 import 'package:fluttertaladsod/application/auth/watcher/auth_watcher_cubit.dart';
-import 'package:fluttertaladsod/application/location/location_cubit.dart';
 import 'package:fluttertaladsod/application/location/permission/location_permission_cubit.dart';
-import 'package:fluttertaladsod/application/store/store_own_watcher/cubit/owned_store_watcher_cubit.dart';
 import 'package:fluttertaladsod/injection.dart';
+import 'package:fluttertaladsod/presentation/core/unknown_page.dart';
 import 'package:fluttertaladsod/presentation/routes/router.gr.dart' as _router;
 import 'package:fluttertaladsod/presentation/screens/app_onboarding_page.dart';
 
@@ -32,6 +31,7 @@ class AppWidget extends StatelessWidget {
           initialRoute: _router.Routes.appOnboardingPage,
         ),
         onGenerateRoute: _router.Router(),
+        // initialRoute: _router.Routes.appOnboardingPage,
         debugShowMaterialGrid: false,
         debugShowCheckedModeBanner: false,
         title: 'Kong Dee',
@@ -43,7 +43,9 @@ class AppWidget extends StatelessWidget {
           fontFamily: 'Roboto',
           textTheme: Typography.blackCupertino,
         ),
-        home: AppOnboardingPage(),
+        // routes: {
+        //   "/" : (context) => AppOnboardingPage(),
+        // },
       ),
     );
   }

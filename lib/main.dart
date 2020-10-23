@@ -9,9 +9,12 @@ import 'injection.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  print('initializing firebase...');
   await Firebase.initializeApp();
+  print('DONE!');
   configureInjection(Environment.prod);
   Bloc.observer = MyBlocObserver();
+  print('Building the app...');
   runApp(
     AppWidget(),
   );

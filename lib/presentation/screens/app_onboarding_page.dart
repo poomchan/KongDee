@@ -1,9 +1,9 @@
-import 'dart:io';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertaladsod/application/location/permission/location_permission_cubit.dart';
 import 'package:fluttertaladsod/presentation/routes/router.gr.dart';
+import 'package:universal_platform/universal_platform.dart';
 import 'package:websafe_svg/websafe_svg.dart';
 
 class AppOnboardingPage extends StatefulWidget {
@@ -22,11 +22,10 @@ class _AppOnboardingPageState extends State<AppOnboardingPage> {
       listener: (context, state) {
         // if permission granted => navigate to the home page
         // otherwise, stay on the onboarding page
-        state.map(
-          inital: (_) => null,
-          loading: (_) => null,
-          granted: (_) => context.navigator.pushHomePage(),
-          denied: (_) => null,
+        state.maybeMap(
+          granted: (_) => context.navigator
+              .pushAndRemoveUntil(Routes.homePage, (route) => false),
+          orElse: () => null,
         );
       },
       child: Scaffold(
@@ -88,7 +87,7 @@ class _AppOnboardingPageState extends State<AppOnboardingPage> {
                               setState(() {});
                             },
                             child: Container(
-                              height: Platform.isIOS ? 70 : 60,
+                              height: UniversalPlatform.isIOS ? 70 : 60,
                               alignment: Alignment.center,
                               child: const Text(
                                 'Next',
@@ -106,7 +105,7 @@ class _AppOnboardingPageState extends State<AppOnboardingPage> {
                                         context)
                                     .requestLocationPermission(),
                             child: Container(
-                              height: Platform.isIOS ? 70 : 60,
+                              height: UniversalPlatform.isIOS ? 70 : 60,
                               alignment: Alignment.center,
                               child: const Text(
                                 'Start Now!',
@@ -200,7 +199,7 @@ class _AppOnboardingPageState extends State<AppOnboardingPage> {
         setState(() {});
       },
       child: Container(
-        height: Platform.isIOS ? 70 : 60,
+        height: UniversalPlatform.isIOS ? 70 : 60,
         alignment: Alignment.center,
         child: const Text(
           'Skip',

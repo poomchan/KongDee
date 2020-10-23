@@ -23,7 +23,8 @@ class StoreNearCubit extends Cubit<StoreNearState> {
 
   StoreNearCubit(this._iStoreRepository) : super(_Initial());
 
-  Future<void> watchNearbyStore(BuildContext context) async {
+  Future<void> watchNearbyStore(BuildContext context,
+      {bool isFirstBatch = true}) async {
     emit(StoreNearState.loading(storeList));
     _iStoreRepository
         .watchNearbyStore(context, rad: rad)
@@ -31,17 +32,23 @@ class StoreNearCubit extends Cubit<StoreNearState> {
       failureOrStoreList.fold(
         (f) => emit(StoreNearState.failure(f)),
         (storeList) {
-          // print('emitting storeList');
-          this.storeList = _calculateDistanceAway(context, storeList);
-          emit(StoreNearState.loaded(this.storeList));
+          if (storeList.length > this.storeList.length) {
+            print('emitting storeList');
+            print(storeList.length);
+            this.storeList = _calculateDistanceAway(context, storeList);
+            if (isFirstBatch) emit(StoreNearState.loaded(this.storeList));
+          } else {
+            requestMoreRadius(isLoading: false);
+          }
         },
       );
     });
   }
 
-   Future<void> requestMoreRadius() async {
-     emit(StoreNearState.loading(storeList));
-     rad += 1;
+  Future<void> requestMoreRadius({bool isLoading = true}) async {
+    if (isLoading) emit(StoreNearState.loading(this.storeList));
+    rad += 1;
+    print('repo: adding radius');
     _iStoreRepository.addMoreRadius(rad);
   }
 

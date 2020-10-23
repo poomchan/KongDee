@@ -56,6 +56,7 @@ class StoreRepository implements IStoreRepository {
         if (snapshots.isEmpty) {
           return left<StoreFailure, List<Store>>(StoreFailure.noStore());
         }
+        // print('store repo: snap len is : ${snapshots.length}');
         return right<StoreFailure, List<Store>>(
           snapshots
               .map(

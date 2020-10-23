@@ -2,7 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:fluttertaladsod/domain/location/i_location_repository.dart';
 import 'package:fluttertaladsod/domain/location/location.dart';
 import 'package:fluttertaladsod/domain/location/location_failures.dart';
-import 'package:geocoding/geocoding.dart' as _code;
+import 'package:geocoding_platform_interface/geocoding_platform_interface.dart' as _code;
 import 'package:geoflutterfire/geoflutterfire.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:injectable/injectable.dart';
@@ -49,7 +49,7 @@ class LocationRepository implements ILocationRepository {
 
     // get full address
     final List<_code.Placemark> placemarks =
-        await _code.placemarkFromCoordinates(position.latitude, position.longitude);
+        await _code.GeocodingPlatform.instance.placemarkFromCoordinates(position.latitude, position.longitude);
     final _code.Placemark placemark = placemarks[0];
     final completeAddress =
         '${placemark.subThoroughfare}/ ${placemark.thoroughfare}/ '

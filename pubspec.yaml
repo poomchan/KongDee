@@ -42,11 +42,13 @@ dependencies:
   uuid: ^2.2.2
   equatable: ^1.2.5
   path_provider: ^1.6.11
+  universal_platform: ^0.1.3
 
   # location
   location: ^3.0.2
   geolocator: ^6.0.0+4
   geocoding: ^1.0.3
+  # geocoding_platform_interface: ^1.0.1+1
   geoflutterfire: ^2.2.1
 
   # local services

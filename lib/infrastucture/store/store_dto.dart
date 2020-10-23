@@ -7,7 +7,6 @@ import 'package:fluttertaladsod/domain/store/value_objects.dart';
 import 'package:fluttertaladsod/infrastucture/core/json_converters.dart';
 import 'package:fluttertaladsod/injection.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:geocoding/geocoding.dart';
 import 'package:geoflutterfire/geoflutterfire.dart';
 
 part 'store_dto.freezed.dart';

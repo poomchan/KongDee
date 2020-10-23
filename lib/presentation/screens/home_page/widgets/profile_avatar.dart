@@ -19,14 +19,10 @@ class ProfileAvatar extends StatelessWidget {
         onTap: () => state.maybeMap(
             unAuthenticated: (_) =>
                 ExtendedNavigator.of(context).pushSignInSplash(),
-            authenticated: (state) {
-              BlocProvider.of<OwnedStoreWatcherCubit>(context)
-                  .watchOwnedStoreStarted(state.user.id.getOrCrash());
-              return ExtendedNavigator.of(context).push(
-                Routes.profilePage,
-                arguments: ProfilePageArguments(user: state.user),
-              );
-            },
+            authenticated: (state) => ExtendedNavigator.of(context).push(
+                  Routes.profilePage,
+                  arguments: ProfilePageArguments(user: state.user),
+                ),
             orElse: () => null),
         child: Hero(
           tag: state.maybeMap(

@@ -3,6 +3,7 @@
   // Hover to view descriptions of existing attributes.
   // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
   "version": "0.2.0",
+  // for mobile
   "configurations": [
     {
       "name": "Flutter",
@@ -10,4 +11,17 @@
       "type": "dart"
     }
   ]
+  //for web
+//   "configurations": [
+//     {
+//         "name": "web",
+//         "program": "lib/main.dart",
+//         "request": "launch",
+//         "type": "dart",
+//         "args": [
+//             "--web-port=5000",
+//             "--web-enable-expression-evaluation"
+//         ],
+//     },
+// ]
 }

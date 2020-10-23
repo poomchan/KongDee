@@ -21,23 +21,25 @@ class NearStoreFeed extends StatelessWidget {
                     loaded: (state) => true,
                     orElse: () => false,
                   ) &&
-                  scrollInfo.metrics.pixels ==
-                      scrollInfo.metrics.maxScrollExtent) {
+                  scrollInfo.metrics.atEdge) {
                 print('adding radius');
                 context.bloc<StoreNearCubit>().requestMoreRadius();
               }
               return null;
             },
-            child: ListView(
-              clipBehavior: Clip.antiAlias,
-              shrinkWrap: true,
-              children: state.maybeMap(
-                  loading: (state) => [
-                        circularProgress(context),
-                        ..._buildStoreCard(state.previousStoreList),
-                      ],
-                  loaded: (state) => _buildStoreCard(state.storeList),
-                  orElse: () => [Container()]),
+            child: Container(
+              // color: Colors.blue,
+              child: ListView(
+                clipBehavior: Clip.antiAlias,
+                shrinkWrap: true,
+                children: state.maybeMap(
+                    loading: (state) => [
+                          ..._buildStoreCard(state.previousStoreList),
+                          circularProgress(context),
+                        ],
+                    loaded: (state) => _buildStoreCard(state.storeList),
+                    orElse: () => [Container()]),
+              ),
             ),
           ),
         ),

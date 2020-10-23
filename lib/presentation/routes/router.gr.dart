@@ -22,13 +22,13 @@ import '../screens/store/form/store_form.dart';
 import '../screens/store/view_page/store_view_page.dart';
 
 class Routes {
-  static const String homePage = '/home-page';
+  static const String homePage = '/home';
   static const String appOnboardingPage = '/';
-  static const String signInSplash = '/sign-in-splash';
-  static const String profilePage = '/profile-page';
+  static const String signInSplash = '/sign-in';
+  static const String profilePage = '/profile';
   static const String storeForm = '/store-form';
-  static const String storeViewPage = '/store-view-page';
-  static const String chatPage = '/chat-page';
+  static const String storeViewPage = '/store-view';
+  static const String chatPage = '/chat';
   static const all = <String>{
     homePage,
     appOnboardingPage,
@@ -56,19 +56,19 @@ class Router extends RouterBase {
   Map<Type, AutoRouteFactory> get pagesMap => _pagesMap;
   final _pagesMap = <Type, AutoRouteFactory>{
     HomePage: (data) {
-      return MaterialPageRoute<dynamic>(
+      return buildAdaptivePageRoute<dynamic>(
         builder: (context) => HomePage(),
         settings: data,
       );
     },
     AppOnboardingPage: (data) {
-      return MaterialPageRoute<dynamic>(
+      return buildAdaptivePageRoute<dynamic>(
         builder: (context) => AppOnboardingPage(),
         settings: data,
       );
     },
     SignInSplash: (data) {
-      return MaterialPageRoute<dynamic>(
+      return buildAdaptivePageRoute<dynamic>(
         builder: (context) => SignInSplash(),
         settings: data,
         fullscreenDialog: true,
@@ -76,7 +76,7 @@ class Router extends RouterBase {
     },
     ProfilePage: (data) {
       final args = data.getArgs<ProfilePageArguments>(nullOk: false);
-      return MaterialPageRoute<dynamic>(
+      return buildAdaptivePageRoute<dynamic>(
         builder: (context) => ProfilePage(
           key: args.key,
           user: args.user,
@@ -88,7 +88,7 @@ class Router extends RouterBase {
       final args = data.getArgs<StoreFormArguments>(
         orElse: () => StoreFormArguments(),
       );
-      return MaterialPageRoute<dynamic>(
+      return buildAdaptivePageRoute<dynamic>(
         builder: (context) => StoreForm(
           key: args.key,
           initialStore: args.initialStore,
@@ -100,7 +100,7 @@ class Router extends RouterBase {
       final args = data.getArgs<StoreViewPageArguments>(
         orElse: () => StoreViewPageArguments(),
       );
-      return MaterialPageRoute<dynamic>(
+      return buildAdaptivePageRoute<dynamic>(
         builder: (context) => StoreViewPage(
           key: args.key,
           storeId: args.storeId,
@@ -112,7 +112,7 @@ class Router extends RouterBase {
       final args = data.getArgs<ChatPageArguments>(
         orElse: () => ChatPageArguments(),
       );
-      return MaterialPageRoute<dynamic>(
+      return buildAdaptivePageRoute<dynamic>(
         builder: (context) => ChatPage(
           key: args.key,
           storeId: args.storeId,

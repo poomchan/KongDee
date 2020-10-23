@@ -51,3 +51,6 @@ May 28
 
 May 29
 - can save post but still need to be optimized and display on the saving screen
+
+Octobrer 15
+- most important parts of the app are done =D

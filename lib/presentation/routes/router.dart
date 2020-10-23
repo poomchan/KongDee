@@ -12,13 +12,21 @@ import '../screens/app_onboarding_page.dart';
   generateNavigationHelperExtension: true,
   routes: <AutoRoute>[
     // initial route is named "/"
-    MaterialRoute(page: HomePage),
-    MaterialRoute(page: AppOnboardingPage, initial: true),
-    MaterialRoute(page: SignInSplash, fullscreenDialog: true),
-    MaterialRoute(page: ProfilePage),
-    MaterialRoute(page: StoreForm),
-    MaterialRoute(page: StoreViewPage),
-    MaterialRoute(page: ChatPage),
+    AdaptiveRoute(page: HomePage, path: '/home'),
+    AdaptiveRoute(
+      page: AppOnboardingPage,
+      path: '/',
+      initial: true,
+    ),
+    AdaptiveRoute(
+      page: SignInSplash,
+      path: '/sign-in',
+      fullscreenDialog: true,
+    ),
+    AdaptiveRoute(page: ProfilePage, path: '/profile'),
+    AdaptiveRoute(page: StoreForm, path: '/store-form'),
+    AdaptiveRoute(page: StoreViewPage, path: '/store-view'),
+    AdaptiveRoute(page: ChatPage, path: '/chat'),
   ],
 )
 class $Router {}
