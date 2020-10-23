@@ -33,8 +33,8 @@ class StoreNearCubit extends Cubit<StoreNearState> {
         (f) => emit(StoreNearState.failure(f)),
         (storeList) {
           if (storeList.length > this.storeList.length) {
-            print('emitting storeList');
-            print(storeList.length);
+            // print('emitting storeList');
+            // print(storeList.length);
             this.storeList = _calculateDistanceAway(context, storeList);
             if (isFirstBatch) emit(StoreNearState.loaded(this.storeList));
           } else {
@@ -48,7 +48,7 @@ class StoreNearCubit extends Cubit<StoreNearState> {
   Future<void> requestMoreRadius({bool isLoading = true}) async {
     if (isLoading) emit(StoreNearState.loading(this.storeList));
     rad += 1;
-    print('repo: adding radius');
+    // print('repo: adding radius');
     _iStoreRepository.addMoreRadius(rad);
   }
 
