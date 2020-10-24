@@ -28,14 +28,16 @@ class HomePageScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
+        // toolbarHeight: 100.0,
         automaticallyImplyLeading: false,
         actions: const [
           ProfileAvatar(),
           SizedBox(width: 30),
         ],
-        backgroundColor: Colors.transparent,
         elevation: 0.0,
+        backgroundColor: Colors.transparent,
       ),
       body: SafeArea(
         child: Padding(

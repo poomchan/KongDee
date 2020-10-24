@@ -22,7 +22,7 @@ class NearStoreFeed extends StatelessWidget {
                     orElse: () => false,
                   ) &&
                   scrollInfo.metrics.atEdge) {
-                print('adding radius');
+                // print('adding radius');
                 context.bloc<StoreNearCubit>().requestMoreRadius();
               }
               return null;

@@ -16,6 +16,8 @@ import '../../domain/store/store.dart';
 import '../screens/app_onboarding_page.dart';
 import '../screens/home_page/home_page.dart';
 import '../screens/profile/profile_page.dart';
+import '../screens/setting_page/language.dart';
+import '../screens/setting_page/profile_setting.dart';
 import '../screens/splash/sign_in_splash.dart';
 import '../screens/store/chat/chat_page.dart';
 import '../screens/store/form/store_form.dart';
@@ -29,6 +31,8 @@ class Routes {
   static const String storeForm = '/store-form';
   static const String storeViewPage = '/store-view';
   static const String chatPage = '/chat';
+  static const String profileSettingPage = '/profile-setting-page';
+  static const String languageSetting = '/language-setting';
   static const all = <String>{
     homePage,
     appOnboardingPage,
@@ -37,6 +41,8 @@ class Routes {
     storeForm,
     storeViewPage,
     chatPage,
+    profileSettingPage,
+    languageSetting,
   };
 }
 
@@ -51,6 +57,8 @@ class Router extends RouterBase {
     RouteDef(Routes.storeForm, page: StoreForm),
     RouteDef(Routes.storeViewPage, page: StoreViewPage),
     RouteDef(Routes.chatPage, page: ChatPage),
+    RouteDef(Routes.profileSettingPage, page: ProfileSettingPage),
+    RouteDef(Routes.languageSetting, page: LanguageSetting),
   ];
   @override
   Map<Type, AutoRouteFactory> get pagesMap => _pagesMap;
@@ -120,6 +128,18 @@ class Router extends RouterBase {
         settings: data,
       );
     },
+    ProfileSettingPage: (data) {
+      return buildAdaptivePageRoute<dynamic>(
+        builder: (context) => ProfileSettingPage(),
+        settings: data,
+      );
+    },
+    LanguageSetting: (data) {
+      return buildAdaptivePageRoute<dynamic>(
+        builder: (context) => LanguageSetting(),
+        settings: data,
+      );
+    },
   };
 }
 
@@ -170,6 +190,12 @@ extension RouterExtendedNavigatorStateX on ExtendedNavigatorState {
         Routes.chatPage,
         arguments: ChatPageArguments(key: key, storeId: storeId),
       );
+
+  Future<dynamic> pushProfileSettingPage() =>
+      push<dynamic>(Routes.profileSettingPage);
+
+  Future<dynamic> pushLanguageSetting() =>
+      push<dynamic>(Routes.languageSetting);
 }
 
 /// ************************************************************************

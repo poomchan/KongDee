@@ -6,7 +6,7 @@ import 'package:fluttertaladsod/application/location/location_cubit.dart';
 import 'package:fluttertaladsod/application/store/store_form/store_form_cubit.dart';
 import 'package:fluttertaladsod/application/store/store_form/store_form_location/store_form_location_cubit.dart';
 import 'package:fluttertaladsod/domain/store/store.dart';
-import 'package:fluttertaladsod/presentation/core/dialogs.dart';
+import 'package:fluttertaladsod/presentation/core/components/dialogs.dart';
 import 'package:fluttertaladsod/presentation/screens/store/form/widgets/banner_field.dart';
 import 'package:fluttertaladsod/presentation/screens/store/form/widgets/image_field.dart';
 import 'package:fluttertaladsod/presentation/screens/store/form/widgets/menu_field.dart';

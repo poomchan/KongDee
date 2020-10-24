@@ -31,7 +31,6 @@ class ProfilePage extends StatelessWidget {
 }
 
 class ProfileScaffold extends StatelessWidget {
-
   const ProfileScaffold({
     Key key,
     @required this.user,
@@ -44,10 +43,13 @@ class ProfileScaffold extends StatelessWidget {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
+      backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
         title: Text('Profile'),
         backgroundColor: Colors.transparent,
         elevation: 0.0,
+        iconTheme: IconThemeData(color: Colors.black),
+        textTheme: Theme.of(context).textTheme,
         actions: [
           IconButton(
             padding: const EdgeInsets.only(right: 10.0),
@@ -59,29 +61,25 @@ class ProfileScaffold extends StatelessWidget {
                   ButtomSheetItem(
                     title: 'Report user',
                     icon: FontAwesomeIcons.flag,
-                    color: Colors.red,
+                    textColor: Colors.redAccent,
                     onTap: () => print('report user'),
                   ),
-                  Divider(height: 0.0, color: Colors.black54),
+                  Divider(height: 0.0, color: Colors.white24),
                   ButtomSheetItem(
                     title: 'Block user',
                     icon: FontAwesomeIcons.ban,
-                    color: Colors.red,
+                    textColor: Colors.redAccent,
                     onTap: () => print('blocking user'),
                   ),
-                  Divider(height: 0.0, color: Colors.black54),
-                  ButtomSheetItem(
-                    title: 'Log out',
-                    icon: FontAwesomeIcons.signOutAlt,
-                    onTap: () =>
-                        context.bloc<AuthActorCubit>().signOut().then(
-                              (_) => context.navigator.popUntil((route) =>
-                                  route.settings.name == Routes.homePage),
-                            ),
-                  ),
+                  Divider(height: 0.0, color: Colors.white24),
                 ],
               );
             },
+          ),
+          IconButton(
+            padding: const EdgeInsets.only(right: 10.0),
+            icon: Icon(Icons.settings),
+            onPressed: () => context.navigator.pushProfileSettingPage(),
           )
         ],
       ),
@@ -126,8 +124,7 @@ class ProfileScaffold extends StatelessWidget {
                 decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10.0)),
-                padding:
-                    EdgeInsets.symmetric(vertical: 3.0, horizontal: 10.0),
+                padding: EdgeInsets.symmetric(vertical: 3.0, horizontal: 10.0),
                 child: Text('Basic'),
               ),
               SizedBox(

@@ -10,6 +10,23 @@ import 'package:fluttertaladsod/presentation/routes/router.gr.dart' as _router;
 import 'package:fluttertaladsod/presentation/screens/app_onboarding_page.dart';
 
 class AppWidget extends StatelessWidget {
+
+  final ColorScheme colorScheme = ColorScheme.light(
+            brightness: Brightness.light,
+            primary: Color(0xFF3949AB),
+            secondary: Color(0xFFFFCA28),
+            primaryVariant: Color(0xFF002884),
+            secondaryVariant: Color(0xFFC8A415),
+            surface: Color(0xFFFFFFFF),
+            background: Color(0xFFe8eaf6),
+            error: Colors.red,
+            onPrimary: Color(0xFFFFFFFF),
+            onSecondary: Colors.black,
+            onSurface: Colors.black,
+            onBackground: Colors.black,
+            onError: Colors.white,
+          );
+
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -36,17 +53,25 @@ class AppWidget extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Kong Dee',
         theme: ThemeData(
-          brightness: Brightness.light,
-          primaryColor: Colors.green[400],
-          accentColor: Colors.redAccent,
+          colorScheme: colorScheme,
+          brightness: colorScheme.brightness,
+          primaryColor: colorScheme.primary,
+          accentColor: colorScheme.secondary,
+          backgroundColor: colorScheme.background,
+          errorColor: colorScheme.error,
+          primaryTextTheme: TextTheme(),
+          accentTextTheme: TextTheme(),
           visualDensity: VisualDensity.adaptivePlatformDensity,
           fontFamily: 'Roboto',
-          textTheme: Typography.blackCupertino,
+          buttonTheme: null,
+
+
         ),
         // routes: {
         //   "/" : (context) => AppOnboardingPage(),
         // },
       ),
     );
+
   }
 }

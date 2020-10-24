@@ -9,6 +9,7 @@ import 'package:fluttertaladsod/presentation/screens/store/view_page/widgets/ban
 import 'package:fluttertaladsod/presentation/screens/store/view_page/widgets/image_view.dart';
 import 'package:fluttertaladsod/presentation/screens/store/view_page/widgets/menu_view.dart';
 import 'package:fluttertaladsod/presentation/screens/store/view_page/widgets/name_view.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../../injection.dart';
 
@@ -41,6 +42,7 @@ class StoreFormScaffold extends StatelessWidget {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
+      backgroundColor: Theme.of(context).backgroundColor,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -51,10 +53,9 @@ class StoreFormScaffold extends StatelessWidget {
           Routes.chatPage,
           arguments: ChatPageArguments(storeId: storeId),
         ),
-        backgroundColor: Colors.green,
-        child: Icon(Icons.chat_bubble),
+        child: Icon(Icons.chat),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       body: SingleChildScrollView(
         clipBehavior: Clip.none,
         child: Column(

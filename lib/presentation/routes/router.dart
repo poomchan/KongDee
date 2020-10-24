@@ -1,6 +1,8 @@
 import 'package:auto_route/auto_route_annotations.dart';
 import 'package:fluttertaladsod/presentation/screens/home_page/home_page.dart';
 import 'package:fluttertaladsod/presentation/screens/profile/profile_page.dart';
+import 'package:fluttertaladsod/presentation/screens/setting_page/language.dart';
+import 'package:fluttertaladsod/presentation/screens/setting_page/profile_setting.dart';
 import 'package:fluttertaladsod/presentation/screens/splash/sign_in_splash.dart';
 import 'package:fluttertaladsod/presentation/screens/store/chat/chat_page.dart';
 import 'package:fluttertaladsod/presentation/screens/store/form/store_form.dart';
@@ -27,6 +29,8 @@ import '../screens/app_onboarding_page.dart';
     AdaptiveRoute(page: StoreForm, path: '/store-form'),
     AdaptiveRoute(page: StoreViewPage, path: '/store-view'),
     AdaptiveRoute(page: ChatPage, path: '/chat'),
+    AdaptiveRoute(page: ProfileSettingPage),
+    AdaptiveRoute(page: LanguageSetting),
   ],
 )
 class $Router {}

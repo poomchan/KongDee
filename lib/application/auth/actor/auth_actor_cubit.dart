@@ -1,5 +1,8 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:bloc/bloc.dart';
+import 'package:flutter/widgets.dart';
 import 'package:fluttertaladsod/domain/auth/i_auth_facade.dart';
+import 'package:fluttertaladsod/presentation/routes/router.gr.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 
@@ -18,9 +21,14 @@ class AuthActorCubit extends Cubit<AuthActorState> {
     emit(AuthActorState.success());
   }
 
-  Future<void> signOut() async {
+  Future<void> signOut(BuildContext context) async {
     emit(AuthActorState.loading());
-    await _iAuthFacade.signOut();
-    emit(AuthActorState.success());
+    try {
+      await _iAuthFacade.signOut();
+      ExtendedNavigator.of(context).popUntilPath(Routes.homePage);
+      emit(AuthActorState.success());
+    } catch (e) {
+      emit(AuthActorState.failue());
+    }
   }
 }

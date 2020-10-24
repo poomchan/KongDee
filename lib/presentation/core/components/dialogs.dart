@@ -1,7 +1,7 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/widgets.dart';
 
-import 'components/progress_indicator.dart';
+import 'progress_indicator.dart';
 
 AwesomeDialog savingDialog(BuildContext context) {
   return AwesomeDialog(
