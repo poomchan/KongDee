@@ -118,20 +118,30 @@ class StoreFormCubit extends Cubit<StoreFormState> {
     // send the latest store to firestore (either update or create is checked by [isEditting])
     if (state.store.failureOption.isNone()) {
       emit(
-      state.copyWith(
-        isSaving: true,
-        saveFailureOrSuccessOption: none(),
-        store: state.store.copyWith(
-          formattedAddress: location.formattedAddress,
-        )
-      ),
-    );
-      await _uploadBannerPic();
-      await _uploadStorePics();
-      print('saving to database');
-      failureOrSuccess = state.isEditting
-          ? await _iStoreRepository.update(state.store, location)
-          : await _iStoreRepository.create(state.store, location);
+        state.copyWith(
+            isSaving: true,
+            saveFailureOrSuccessOption: none(),
+            store: state.store.copyWith(
+              formattedAddress: location.formattedAddress,
+            )),
+      );
+      await Future.wait([
+        _uploadBannerPic(),
+        _uploadStorePics(),
+      ]).then((fOrSuccessList) {
+        print(fOrSuccessList);
+        failureOrSuccess = fOrSuccessList[0].flatMap((_) => fOrSuccessList[1]);
+      });
+
+      await failureOrSuccess.fold(
+        (f) => null, // db storage error, log here
+        (ok) async {
+          print('saving to database');
+          failureOrSuccess = state.isEditting
+              ? await _iStoreRepository.update(state.store, location)
+              : await _iStoreRepository.create(state.store, location);
+        },
+      );
     }
 
     emit(state.copyWith(
@@ -141,17 +151,17 @@ class StoreFormCubit extends Cubit<StoreFormState> {
     ));
   }
 
-  Future<void> _uploadStorePics() async {
+  Future<Either<StoreFailure, Unit>> _uploadStorePics() async {
     print('uploading store pics');
     // 1. check and upload the new pics
     // 2. get the download url, append it to a new list
     // 3. set a new list as the latest pics state of the store
 
-    final List<StorePic> urlOnlyList = [];
     final String path = "stores/store_${state.store.id.getOrCrash()}/pics";
 
     final List<StorePic> storePics = List.from(state.store.pics.getOrCrash());
 
+    final List<Either<StoreFailure, String>> fOrUrlList = [];
     await Future.forEach(
       storePics,
       (StorePic pic) => pic.fileOrUrl.fold(
@@ -159,44 +169,61 @@ class StoreFormCubit extends Cubit<StoreFormState> {
           final cmpFile = await _iImageRepository.compressImage(file);
           final failureOrUrl =
               await _iStoreRepository.uploadFileImage(cmpFile, path);
-          failureOrUrl.fold(
-            (f) => print('Error uploading the pic'),
-            (url) {
-              urlOnlyList.add(StorePic.url(url));
-            },
-          );
+
+          fOrUrlList.add(failureOrUrl);
         },
-        (url) => urlOnlyList.add(StorePic.url(url)),
+        (url) => fOrUrlList.add(right(url)),
       ),
     );
 
-    emit(state.copyWith(
-      store: state.store.copyWith(
-        pics: StorePic16(urlOnlyList),
-      ),
-    ));
+    Option<StoreFailure> failureOption = none();
+
+    for (final fOrUrl in fOrUrlList) {
+      fOrUrl.fold(
+        (f) {
+          failureOption = some(f);
+        },
+        (ok) => null,
+      );
+    }
+
+    final List<StorePic> urlOnlyList = [];
+
+    return failureOption.fold(() {
+      urlOnlyList.addAll(
+        fOrUrlList.map(
+          (fOrUrl) => StorePic.url(fOrUrl.getOrElse(() => null)),
+        ),
+      );
+
+      emit(state.copyWith(
+        store: state.store.copyWith(
+          pics: StorePic16(urlOnlyList),
+        ),
+      ));
+
+      return right<StoreFailure, Unit>(unit);
+
+    }, (f) => left<StoreFailure, Unit>(f));
   }
 
-  Future<void> _uploadBannerPic() async {
+  Future<Either<StoreFailure, Unit>> _uploadBannerPic() async {
     print('uploading banner');
     // 1. check and upload the new pic
     // 2. get the download url
     // 3. set a url as the latest banner state of the store
     final path = "stores/store_${state.store.id.getOrCrash()}/banner";
-    await state.store.banner
-        .getOrCrash()
-        .fold((file) => _iStoreRepository.uploadFileImage(file, path),
-            (url) => Future(() => right<File, String>(url)))
-        .then(
-          (failureOrUrl) => failureOrUrl.fold(
-              (f) => null,
-              (url) => emit(
-                    state.copyWith(
-                      store: state.store.copyWith(
-                        banner: StoreBanner.url(url),
-                      ),
-                    ),
-                  )),
-        );
+    final failureOrUrl = await state.store.banner.getOrCrash().fold(
+        (file) => _iStoreRepository.uploadFileImage(file, path),
+        (url) => Future(() => right<StoreFailure, String>(url)));
+
+    return failureOrUrl.fold((f) => left(f), (url) {
+      emit(state.copyWith(
+        store: state.store.copyWith(
+          banner: StoreBanner.url(url),
+        ),
+      ));
+      return right(unit);
+    });
   }
 }

@@ -72,7 +72,6 @@ class StoreFormScaffold extends StatelessWidget {
   Widget build(BuildContext context) {
     final locationBloc = BlocProvider.of<StoreFormLocationCubit>(context);
     final formBloc = BlocProvider.of<StoreFormCubit>(context);
-    // formBloc.initializeForm(initialStore: initialStore);
     final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       extendBodyBehindAppBar: true,
