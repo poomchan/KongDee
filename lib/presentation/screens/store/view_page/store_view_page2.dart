@@ -50,7 +50,7 @@ class StoreFormScaffold extends StatelessWidget {
       body: NestedScrollView(
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
-            BannerAppbar(),
+            // BannerAppbar(),
           ];
         },
         body: SingleChildScrollView(
