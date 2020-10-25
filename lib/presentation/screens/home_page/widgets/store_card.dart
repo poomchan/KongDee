@@ -21,8 +21,8 @@ class StoreCard extends StatelessWidget {
       aspectRatio: 100 / 30,
       child: GestureDetector(
         onTap: () {
-          ExtendedNavigator.of(context).push(Routes.storeViewPage,
-              arguments: StoreViewPageArguments(storeId: store.id));
+          ExtendedNavigator.of(context).push(Routes.storeViewPage2,
+              arguments: StoreViewPage2Arguments(storeId: store.id));
         },
         child: Stack(
           children: [

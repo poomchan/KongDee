@@ -349,7 +349,7 @@ PODS:
   - FMDB (2.7.5):
     - FMDB/standard (= 2.7.5)
   - FMDB/standard (2.7.5)
-  - "geocoding (1.0.3+1)":
+  - geocoding (1.0.5):
     - Flutter
   - geoflutterfire (0.0.1):
     - Flutter
@@ -557,7 +557,7 @@ SPEC CHECKSUMS:
   FirebaseStorage: f4f39ae834a7145963b913f54e2f24a9db1d8fac
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
-  geocoding: e1f71509cefcf3ac61ef6b92efc50024da0be32d
+  geocoding: 32cfcdb16d38d907caaba65e2e42ad10d38bee58
   geoflutterfire: 2a6493e01fb6eef1a6c9046b1baf9a943d0c5ffe
   geolocator: 1ae40084cc6c1586ce5ad12cfc3fd38c64d05f2f
   google_sign_in: 6bd214b9c154f881422f5fe27b66aaa7bbd580cc
