@@ -2,7 +2,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
-void showAppButtomSheet(BuildContext context, {List<Widget> children}) {
+void showAppButtomSheet(BuildContext context, {List<Widget> children = const []}) {
+
   showMaterialModalBottomSheet(
     context: context,
     backgroundColor: Theme.of(context).primaryColor.withOpacity(0.9),

@@ -122,7 +122,7 @@ class StoreRepository implements IStoreRepository {
       ..addEntries([MapEntry('location', location.geoFirePoint.data)]);
 
     try {
-      _firestore.storeCollectionRef.doc(UniqueId().getOrCrash()).set(jsonData);
+      _firestore.storeCollectionRef.doc(UniqueId().getOrCrash()).update(jsonData);
     } catch (err) {
       return left(StoreFailure.unexpected());
     }

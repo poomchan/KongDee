@@ -4,7 +4,7 @@ import 'package:fluttertaladsod/application/home/store_feed/store_near/store_nea
 import 'package:fluttertaladsod/domain/store/store.dart';
 import 'package:fluttertaladsod/injection.dart';
 import 'package:fluttertaladsod/presentation/core/components/progress_indicator.dart';
-import 'package:fluttertaladsod/presentation/screens/store/store_card.dart';
+import 'package:fluttertaladsod/presentation/screens/home_page/widgets/store_card.dart';
 
 class NearStoreFeed extends StatelessWidget {
   @override
