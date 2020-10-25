@@ -45,13 +45,16 @@ class StoreCard extends StatelessWidget {
                       flex: 20,
                       child: AspectRatio(
                         aspectRatio: 130 / 100,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(15.0),
-                          child: CachedNetworkImage(
-                            imageUrl: store.banner.url,
-                            fit: BoxFit.cover,
-                            placeholder: (context, str) =>
-                                circularProgress(context),
+                        child: Hero(
+                          tag: store.banner,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(15.0),
+                            child: CachedNetworkImage(
+                              imageUrl: store.banner.url,
+                              fit: BoxFit.cover,
+                              placeholder: (context, str) =>
+                                  circularProgress(context),
+                            ),
                           ),
                         ),
                       ),

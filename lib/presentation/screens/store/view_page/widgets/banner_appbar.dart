@@ -47,10 +47,13 @@ class _BannerAppBarDelegate extends SliverPersistentHeaderDelegate {
             state.map(
               inital: (state) => circularProgress(context),
               loading: (state) => circularProgress(context),
-              success: (state) => CachedNetworkImage(
-                imageUrl: state.store.banner.url,
-                fit: BoxFit.cover,
-                placeholder: (context, str) => circularProgress(context),
+              success: (state) => Hero(
+                tag: state.store.banner,
+                child: CachedNetworkImage(
+                  imageUrl: state.store.banner.url,
+                  fit: BoxFit.cover,
+                  placeholder: (context, str) => circularProgress(context),
+                ),
               ),
               failure: (state) => Icon(Icons.error),
             ),
