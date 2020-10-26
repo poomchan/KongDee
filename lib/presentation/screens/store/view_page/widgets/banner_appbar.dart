@@ -15,6 +15,7 @@ class BannerAppbar extends StatelessWidget {
     return SliverPersistentHeader(
       pinned: true,
       delegate: _BannerAppBarDelegate(
+        context,
         extent: 350,
       ),
     );
@@ -23,8 +24,9 @@ class BannerAppbar extends StatelessWidget {
 
 class _BannerAppBarDelegate extends SliverPersistentHeaderDelegate {
   final double extent;
+  final BuildContext context;
 
-  _BannerAppBarDelegate({this.extent});
+  _BannerAppBarDelegate(this.context, {this.extent});
 
   @override
   Widget build(
@@ -129,7 +131,7 @@ class _BannerAppBarDelegate extends SliverPersistentHeaderDelegate {
   double get maxExtent => extent;
 
   @override
-  double get minExtent => 106;
+  double get minExtent => MediaQuery.of(context).padding.top + kToolbarHeight;
 
   @override
   bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
