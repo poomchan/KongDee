@@ -59,6 +59,9 @@ dependencies:
   # for web
   file_picker: ^2.0.7
 
+  # remote service
+  url_launcher: ^5.7.8
+
   # state management
   bloc: ^6.0.3
   flutter_bloc: ^6.0.5
