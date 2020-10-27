@@ -9,7 +9,6 @@ import 'package:fluttertaladsod/presentation/screens/store/view_page/widgets/ban
 import 'package:fluttertaladsod/presentation/screens/store/view_page/widgets/image_view.dart';
 import 'package:fluttertaladsod/presentation/screens/store/view_page/widgets/menu_view.dart';
 import 'package:fluttertaladsod/presentation/screens/store/view_page/widgets/name_view.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../../injection.dart';
 

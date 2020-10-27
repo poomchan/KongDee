@@ -1,11 +1,8 @@
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertaladsod/application/location/location_cubit.dart';
 import 'package:fluttertaladsod/domain/core/value_objects.dart';
 import 'package:fluttertaladsod/domain/location/location.dart';
 import 'package:fluttertaladsod/domain/store/i_store_repository.dart';
@@ -28,17 +25,13 @@ class StoreRepository implements IStoreRepository {
 
   StoreRepository(this._firestore, this._storage, this._geo);
 
-  
-
   @override
-  Stream<Either<StoreFailure, List<Store>>> watchNearbyStore(
-      BuildContext context,
-      {@required double rad}) async* {
-    final LocationCubit locationBloc = BlocProvider.of<LocationCubit>(context);
-    final LocationDomain location = locationBloc.state.maybeMap(
-      success: (state) => state.location,
-      orElse: () => throw 'location not granted',
-    );
+  Stream<Either<StoreFailure, List<Store>>> watchNearbyStore({
+    @required double rad,
+    @required LocationDomain location,
+  }) async* {
+    assert(rad != null);
+    assert(location != null);
 
     radius.add(rad);
 
@@ -56,17 +49,27 @@ class StoreRepository implements IStoreRepository {
         if (snapshots.isEmpty) {
           return left<StoreFailure, List<Store>>(StoreFailure.noStore());
         }
-        // print('store repo: snap len is : ${snapshots.length}');
         return right<StoreFailure, List<Store>>(
-          snapshots
-              .map(
-                (snapshot) => StoreDto.fromFirestore(snapshot).toDomain(),
-              )
-              .toList(),
+          snapshots.map(
+            (snapshot) {
+              final geoPoint =
+                  snapshot.data()['location']['geopoint'] as GeoPoint;
+              final distanceAway = location.geoFirePoint.distance(
+                lat: geoPoint.latitude,
+                lng: geoPoint.longitude,
+              );
+              return StoreDto.fromFirestore(snapshot)
+                  .toDomain()
+                  .copyWith(distanceAway: distanceAway.toInt());
+            },
+          ).toList(),
         );
       },
     ).handleError(
-      (err) => left<StoreFailure, List<Store>>(StoreFailure.unexpected()),
+      (err) {
+        // log error onto the console here
+        return left<StoreFailure, List<Store>>(StoreFailure.unexpected());
+      },
     );
   }
 
@@ -76,22 +79,17 @@ class StoreRepository implements IStoreRepository {
         .where('ownerId', isEqualTo: ownerId)
         .snapshots()
         .map((snapshot) {
-      final hasEmtyStore = snapshot.docs.isEmpty;
-      if (hasEmtyStore) {
-        // print('no store');
+      if (snapshot.docs.isEmpty) {
         return left<StoreFailure, Store>(StoreFailure.noStore());
       }
-      // print('has store');
       return right<StoreFailure, Store>(snapshot.docs
           .map(
-            (document) {
-              return StoreDto.fromFirestore(document).toDomain();
-            },
+            (document) => StoreDto.fromFirestore(document).toDomain(),
           )
           .toList()
           .first);
     }).handleError((err) {
-      // print error onto the console here
+      // log error onto the console here
       return left<StoreFailure, Store>(StoreFailure.unexpected());
     });
   }
@@ -122,7 +120,9 @@ class StoreRepository implements IStoreRepository {
       ..addEntries([MapEntry('location', location.geoFirePoint.data)]);
 
     try {
-      _firestore.storeCollectionRef.doc(UniqueId().getOrCrash()).update(jsonData);
+      _firestore.storeCollectionRef
+          .doc(UniqueId().getOrCrash())
+          .update(jsonData);
     } catch (err) {
       return left(StoreFailure.unexpected());
     }
@@ -131,8 +131,12 @@ class StoreRepository implements IStoreRepository {
 
   @override
   Future<Either<StoreFailure, Unit>> delete(UniqueId storeId) async {
-    // TODO: implement delete
-    throw UnimplementedError();
+    try {
+      await _firestore.storeCollectionRef.doc(storeId.getOrCrash()).delete();
+      return right(unit);
+    } catch (err) {
+      return left(StoreFailure.unexpected());
+    }
   }
 
   @override

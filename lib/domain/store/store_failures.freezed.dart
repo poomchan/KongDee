@@ -21,6 +21,11 @@ class _$StoreFailureTearOff {
   _Unexpected unexpected() {
     return const _Unexpected();
   }
+
+// ignore: unused_element
+  _LocationNotGranted locationNotGranted() {
+    return const _LocationNotGranted();
+  }
 }
 
 // ignore: unused_element
@@ -31,22 +36,26 @@ mixin _$StoreFailure {
   Result when<Result extends Object>({
     @required Result noStore(),
     @required Result unexpected(),
+    @required Result locationNotGranted(),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result noStore(),
     Result unexpected(),
+    Result locationNotGranted(),
     @required Result orElse(),
   });
   @optionalTypeArgs
   Result map<Result extends Object>({
     @required Result noStore(_NoStoreOwned value),
     @required Result unexpected(_Unexpected value),
+    @required Result locationNotGranted(_LocationNotGranted value),
   });
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
     Result noStore(_NoStoreOwned value),
     Result unexpected(_Unexpected value),
+    Result locationNotGranted(_LocationNotGranted value),
     @required Result orElse(),
   });
 }
@@ -102,9 +111,11 @@ class _$_NoStoreOwned implements _NoStoreOwned {
   Result when<Result extends Object>({
     @required Result noStore(),
     @required Result unexpected(),
+    @required Result locationNotGranted(),
   }) {
     assert(noStore != null);
     assert(unexpected != null);
+    assert(locationNotGranted != null);
     return noStore();
   }
 
@@ -113,6 +124,7 @@ class _$_NoStoreOwned implements _NoStoreOwned {
   Result maybeWhen<Result extends Object>({
     Result noStore(),
     Result unexpected(),
+    Result locationNotGranted(),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -127,9 +139,11 @@ class _$_NoStoreOwned implements _NoStoreOwned {
   Result map<Result extends Object>({
     @required Result noStore(_NoStoreOwned value),
     @required Result unexpected(_Unexpected value),
+    @required Result locationNotGranted(_LocationNotGranted value),
   }) {
     assert(noStore != null);
     assert(unexpected != null);
+    assert(locationNotGranted != null);
     return noStore(this);
   }
 
@@ -138,6 +152,7 @@ class _$_NoStoreOwned implements _NoStoreOwned {
   Result maybeMap<Result extends Object>({
     Result noStore(_NoStoreOwned value),
     Result unexpected(_Unexpected value),
+    Result locationNotGranted(_LocationNotGranted value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -189,9 +204,11 @@ class _$_Unexpected implements _Unexpected {
   Result when<Result extends Object>({
     @required Result noStore(),
     @required Result unexpected(),
+    @required Result locationNotGranted(),
   }) {
     assert(noStore != null);
     assert(unexpected != null);
+    assert(locationNotGranted != null);
     return unexpected();
   }
 
@@ -200,6 +217,7 @@ class _$_Unexpected implements _Unexpected {
   Result maybeWhen<Result extends Object>({
     Result noStore(),
     Result unexpected(),
+    Result locationNotGranted(),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -214,9 +232,11 @@ class _$_Unexpected implements _Unexpected {
   Result map<Result extends Object>({
     @required Result noStore(_NoStoreOwned value),
     @required Result unexpected(_Unexpected value),
+    @required Result locationNotGranted(_LocationNotGranted value),
   }) {
     assert(noStore != null);
     assert(unexpected != null);
+    assert(locationNotGranted != null);
     return unexpected(this);
   }
 
@@ -225,6 +245,7 @@ class _$_Unexpected implements _Unexpected {
   Result maybeMap<Result extends Object>({
     Result noStore(_NoStoreOwned value),
     Result unexpected(_Unexpected value),
+    Result locationNotGranted(_LocationNotGranted value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -237,4 +258,98 @@ class _$_Unexpected implements _Unexpected {
 
 abstract class _Unexpected implements StoreFailure {
   const factory _Unexpected() = _$_Unexpected;
+}
+
+abstract class _$LocationNotGrantedCopyWith<$Res> {
+  factory _$LocationNotGrantedCopyWith(
+          _LocationNotGranted value, $Res Function(_LocationNotGranted) then) =
+      __$LocationNotGrantedCopyWithImpl<$Res>;
+}
+
+class __$LocationNotGrantedCopyWithImpl<$Res>
+    extends _$StoreFailureCopyWithImpl<$Res>
+    implements _$LocationNotGrantedCopyWith<$Res> {
+  __$LocationNotGrantedCopyWithImpl(
+      _LocationNotGranted _value, $Res Function(_LocationNotGranted) _then)
+      : super(_value, (v) => _then(v as _LocationNotGranted));
+
+  @override
+  _LocationNotGranted get _value => super._value as _LocationNotGranted;
+}
+
+class _$_LocationNotGranted implements _LocationNotGranted {
+  const _$_LocationNotGranted();
+
+  @override
+  String toString() {
+    return 'StoreFailure.locationNotGranted()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is _LocationNotGranted);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result noStore(),
+    @required Result unexpected(),
+    @required Result locationNotGranted(),
+  }) {
+    assert(noStore != null);
+    assert(unexpected != null);
+    assert(locationNotGranted != null);
+    return locationNotGranted();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result noStore(),
+    Result unexpected(),
+    Result locationNotGranted(),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (locationNotGranted != null) {
+      return locationNotGranted();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result noStore(_NoStoreOwned value),
+    @required Result unexpected(_Unexpected value),
+    @required Result locationNotGranted(_LocationNotGranted value),
+  }) {
+    assert(noStore != null);
+    assert(unexpected != null);
+    assert(locationNotGranted != null);
+    return locationNotGranted(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result noStore(_NoStoreOwned value),
+    Result unexpected(_Unexpected value),
+    Result locationNotGranted(_LocationNotGranted value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (locationNotGranted != null) {
+      return locationNotGranted(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _LocationNotGranted implements StoreFailure {
+  const factory _LocationNotGranted() = _$_LocationNotGranted;
 }
