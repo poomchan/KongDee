@@ -1,11 +1,8 @@
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertaladsod/application/location/location_cubit.dart';
 import 'package:fluttertaladsod/domain/core/value_objects.dart';
 import 'package:fluttertaladsod/domain/location/location.dart';
 import 'package:fluttertaladsod/domain/store/i_store_repository.dart';
@@ -29,14 +26,12 @@ class StoreRepository implements IStoreRepository {
   StoreRepository(this._firestore, this._storage, this._geo);
 
   @override
-  Stream<Either<StoreFailure, List<Store>>> watchNearbyStore(
-      BuildContext context,
-      {@required double rad}) async* {
-    final locationBloc = BlocProvider.of<LocationCubit>(context);
-    final LocationDomain location = locationBloc.state.maybeMap(
-      success: (state) => state.location,
-      orElse: () => throw 'location not granted',
-    );
+  Stream<Either<StoreFailure, List<Store>>> watchNearbyStore({
+    @required double rad,
+    @required LocationDomain location,
+  }) async* {
+    assert(rad != null);
+    assert(location != null);
 
     radius.add(rad);
 
@@ -57,7 +52,8 @@ class StoreRepository implements IStoreRepository {
         return right<StoreFailure, List<Store>>(
           snapshots.map(
             (snapshot) {
-              final geoPoint = snapshot.data()['location']['geopoint'] as GeoPoint;
+              final geoPoint =
+                  snapshot.data()['location']['geopoint'] as GeoPoint;
               final distanceAway = location.geoFirePoint.distance(
                 lat: geoPoint.latitude,
                 lng: geoPoint.longitude,

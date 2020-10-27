@@ -9,6 +9,8 @@ import 'package:fluttertaladsod/presentation/screens/home_page/widgets/store_car
 class NearStoreFeed extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final storeNearCubit = context.bloc<StoreNearCubit>();
+
     return BlocBuilder<StoreNearCubit, StoreNearState>(
       cubit: getIt<StoreNearCubit>()..watchNearbyStore(context),
       builder: (context, state) => state.maybeMap(
@@ -23,22 +25,31 @@ class NearStoreFeed extends StatelessWidget {
                   ) &&
                   scrollInfo.metrics.atEdge) {
                 // print('adding radius');
-                context.bloc<StoreNearCubit>().requestMoreRadius();
+                storeNearCubit.requestMoreRadius();
               }
-              return null;
+              return true;
             },
-            child: Container(
-              // color: Colors.blue,
-              child: ListView(
-                clipBehavior: Clip.antiAlias,
-                shrinkWrap: true,
-                children: state.maybeMap(
-                    loading: (state) => [
-                          ..._buildStoreCard(state.previousStoreList),
-                          circularProgress(context),
-                        ],
-                    loaded: (state) => _buildStoreCard(state.storeList),
-                    orElse: () => [Container()]),
+            child: ListView(
+              clipBehavior: Clip.antiAlias,
+              shrinkWrap: true,
+              children: state.map(
+                inital: (state) => [Container()],
+                loading: (state) => [
+                  ..._buildStoreCard(state.previousStoreList),
+                  circularProgress(context),
+                ],
+                loaded: (state) => _buildStoreCard(state.storeList),
+                failure: (state) => state.f.map(
+                  noStore: (_) => [Text('No Store Nearby')],
+                  unexpected: (_) => [Text('Unexpected Error')],
+                  locationNotGranted: (_) => [
+                    Text('Location is not granted'),
+                    RaisedButton(
+                      onPressed: () => storeNearCubit.watchNearbyStore(context),
+                      child: Text('Try Again'),
+                    )
+                  ],
+                ),
               ),
             ),
           ),

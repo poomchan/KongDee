@@ -1,13 +1,11 @@
-import 'dart:math' show cos, sqrt, asin;
-
 import 'package:bloc/bloc.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertaladsod/application/location/location_cubit.dart';
-import 'package:fluttertaladsod/domain/location/location.dart';
+import 'package:fluttertaladsod/domain/location/i_location_repository.dart';
 import 'package:fluttertaladsod/domain/store/i_store_repository.dart';
 import 'package:fluttertaladsod/domain/store/store.dart';
 import 'package:fluttertaladsod/domain/store/store_failures.dart';
+import 'package:fluttertaladsod/injection.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 
@@ -24,9 +22,18 @@ class StoreNearCubit extends Cubit<StoreNearState> {
 
   Future<void> watchNearbyStore(BuildContext context,
       {bool isFirstBatch = true}) async {
+
     emit(StoreNearState.loading(storeList));
+    final locationOption = await getIt<ILocationRepository>().getLocation();
+    final locationDomain = locationOption.getOrElse(() => null);
+
+    if (locationDomain == null) {
+      emit(StoreNearState.failure(StoreFailure.locationNotGranted()));
+      return;
+    }
+
     _iStoreRepository
-        .watchNearbyStore(context, rad: rad)
+        .watchNearbyStore(rad: rad, location: locationDomain)
         .listen((failureOrStoreList) {
       failureOrStoreList.fold(
         (f) => emit(StoreNearState.failure(f)),

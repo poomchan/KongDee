@@ -9,15 +9,18 @@ class OwnedStoreView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<OwnedStoreWatcherCubit, OwnedStoreWatcherState>(
-        builder: (context, state) => state.map(
-              inital: (_) => null,
-              loadInProgress: (state) => circularProgress(context),
-              loadSuccess: (state) => StoreCard(
-                store: state.store,
-              ),
-              loadFailure: (state) => state.f.map(
-                  noStore: (_) => NoStoreCard(),
-                  unexpected: (_) => NoStoreCard()),
-            ));
+      builder: (context, state) => state.map(
+        inital: (_) => null,
+        loadInProgress: (state) => circularProgress(context),
+        loadSuccess: (state) => StoreCard(
+          store: state.store,
+        ),
+        loadFailure: (state) => state.f.map(
+          noStore: (_) => NoStoreCard(),
+          unexpected: (_) => Text('ERROR: unexpected failure'),
+          locationNotGranted: (_) => Text('ERROR: location not granted'),
+        ),
+      ),
+    );
   }
 }
