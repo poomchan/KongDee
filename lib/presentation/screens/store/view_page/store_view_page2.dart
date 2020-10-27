@@ -5,11 +5,12 @@ import 'package:fluttertaladsod/application/store/store_view/store_view_cubit.da
 import 'package:fluttertaladsod/domain/core/value_objects.dart';
 import 'package:fluttertaladsod/injection.dart';
 import 'package:fluttertaladsod/presentation/routes/router.gr.dart';
-import 'package:fluttertaladsod/presentation/screens/store/form/widgets/edit_store_button.dart';
+import 'package:fluttertaladsod/presentation/screens/store/view_page/widgets/edit_store_button.dart';
 import 'package:fluttertaladsod/presentation/screens/store/view_page/widgets/banner_appbar.dart';
 import 'package:fluttertaladsod/presentation/screens/store/view_page/widgets/image_view.dart';
 import 'package:fluttertaladsod/presentation/screens/store/view_page/widgets/menu_view.dart';
 import 'package:fluttertaladsod/presentation/screens/store/view_page/widgets/name_view.dart';
+import 'package:fluttertaladsod/presentation/screens/store/view_page/widgets/store_setting_button.dart';
 
 class StoreViewPage2 extends StatelessWidget {
   final UniqueId storeId;
@@ -62,7 +63,16 @@ class StoreFormScaffold extends StatelessWidget {
                 width: screenWidth,
                 child: Column(
                   children: [
-                    EditStoreButton(),
+                    ButtonBar(
+                      alignment: MainAxisAlignment.spaceEvenly,
+                      mainAxisSize: MainAxisSize.max,
+                      overflowDirection: VerticalDirection.down,
+                      overflowButtonSpacing: 10.0,
+                      children: const [
+                        EditStoreButton(),
+                        StoreSettingButton(),
+                      ],
+                    ),
                     NameView(),
                     SizedBox(height: 10.0),
                     MenuView(),

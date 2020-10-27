@@ -21,6 +21,7 @@ import '../screens/setting_page/profile_setting.dart';
 import '../screens/splash/sign_in_splash.dart';
 import '../screens/store/chat/chat_page.dart';
 import '../screens/store/form/store_form.dart';
+import '../screens/store/setting/store_setting_page.dart';
 import '../screens/store/view_page/store_view_page.dart';
 import '../screens/store/view_page/store_view_page2.dart';
 
@@ -35,6 +36,7 @@ class Routes {
   static const String profileSettingPage = '/profile-setting-page';
   static const String languageSetting = '/language-setting';
   static const String storeViewPage2 = '/store-view-page2';
+  static const String storeSettingPage = '/store-setting-page';
   static const all = <String>{
     homePage,
     appOnboardingPage,
@@ -46,6 +48,7 @@ class Routes {
     profileSettingPage,
     languageSetting,
     storeViewPage2,
+    storeSettingPage,
   };
 }
 
@@ -63,6 +66,7 @@ class Router extends RouterBase {
     RouteDef(Routes.profileSettingPage, page: ProfileSettingPage),
     RouteDef(Routes.languageSetting, page: LanguageSetting),
     RouteDef(Routes.storeViewPage2, page: StoreViewPage2),
+    RouteDef(Routes.storeSettingPage, page: StoreSettingPage),
   ];
   @override
   Map<Type, AutoRouteFactory> get pagesMap => _pagesMap;
@@ -156,6 +160,12 @@ class Router extends RouterBase {
         settings: data,
       );
     },
+    StoreSettingPage: (data) {
+      return buildAdaptivePageRoute<dynamic>(
+        builder: (context) => StoreSettingPage(),
+        settings: data,
+      );
+    },
   };
 }
 
@@ -221,6 +231,9 @@ extension RouterExtendedNavigatorStateX on ExtendedNavigatorState {
         Routes.storeViewPage2,
         arguments: StoreViewPage2Arguments(key: key, storeId: storeId),
       );
+
+  Future<dynamic> pushStoreSettingPage() =>
+      push<dynamic>(Routes.storeSettingPage);
 }
 
 /// ************************************************************************

@@ -12,61 +12,62 @@ class ProfileSettingPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
-        title: Text('Settings'),
+        title: Text('Profile Settings'),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            SettingsList(
-              backgroundColor: Theme.of(context).backgroundColor,
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              sections: [
-                SettingsSection(
-                  title: 'Section',
-                  tiles: [
-                    SettingsTile(
-                      title: 'Language',
-                      subtitle: 'English',
-                      leading: Icon(Icons.language),
-                      onTap: () => context.navigator.pushLanguageSetting(),
+      body: ListView(
+        padding: EdgeInsets.all(10.0),
+        children: [
+          SettingsList(
+            backgroundColor: Theme.of(context).backgroundColor,
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            sections: [
+              SettingsSection(
+                title: 'Section',
+                tiles: [
+                  SettingsTile(
+                    title: 'Language',
+                    subtitle: 'English',
+                    leading: Icon(Icons.language),
+                    onTap: () => context.navigator.pushLanguageSetting(),
+                  ),
+                  SettingsTile.switchTile(
+                    title: 'Use fingerprint',
+                    leading: Icon(Icons.fingerprint),
+                    switchValue: true,
+                    onToggle: (bool value) {},
+                  ),
+                ],
+              ),
+              SettingsSection(
+                title: 'Policies',
+                tiles: [
+                  SettingsTile(
+                    title: 'Privacy Policy',
+                    leading: Icon(Icons.privacy_tip),
+                    onTap: () {},
+                  ),
+                  SettingsTile(
+                    title: 'Terms of Use',
+                    leading: Icon(Icons.policy),
+                    onTap: () {},
+                  ),
+                  SettingsTile(
+                    title: 'About the Application',
+                    leading: Icon(Icons.info),
+                    onTap: () => showAboutDialog(
+                      context: context,
+                      applicationName: 'Kong Dee',
+                      applicationVersion: '0.0.1',
                     ),
-                    SettingsTile.switchTile(
-                      title: 'Use fingerprint',
-                      leading: Icon(Icons.fingerprint),
-                      switchValue: true,
-                      onToggle: (bool value) {},
-                    ),
-                  ],
-                ),
-                SettingsSection(
-                  title: 'Policies',
-                  tiles: [
-                    SettingsTile(
-                      title: 'Privacy Policy',
-                      leading: Icon(Icons.privacy_tip),
-                      onTap: () {},
-                    ),
-                    SettingsTile(
-                      title: 'Terms of Use',
-                      leading: Icon(Icons.policy),
-                      onTap: () {},
-                    ),
-                    SettingsTile(
-                      title: 'About the Application',
-                      leading: Icon(Icons.info),
-                      onTap: () => showAboutDialog(
-                        context: context,
-                        applicationName: 'Kong Dee',
-                        applicationVersion: '0.0.1',
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            RaisedButton(
+                  ),
+                ],
+              ),
+            ],
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 30.0),
+            child: RaisedButton(
               color: Theme.of(context).accentColor,
               onPressed: () => context.bloc<AuthActorCubit>().signOut(context),
               child: Row(
@@ -79,9 +80,9 @@ class ProfileSettingPage extends StatelessWidget {
                   Icon(FontAwesomeIcons.signOutAlt),
                 ],
               ),
-            )
-          ],
-        ),
+            ),
+          )
+        ],
       ),
     );
   }

@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertaladsod/application/store/store_view/store_view_cubit.dart';
 import 'package:fluttertaladsod/domain/core/value_objects.dart';
 import 'package:fluttertaladsod/presentation/routes/router.gr.dart';
-import 'package:fluttertaladsod/presentation/screens/store/form/widgets/edit_store_button.dart';
+import 'package:fluttertaladsod/presentation/screens/store/view_page/widgets/edit_store_button.dart';
 import 'package:fluttertaladsod/presentation/screens/store/view_page/widgets/banner_view.dart';
 import 'package:fluttertaladsod/presentation/screens/store/view_page/widgets/image_view.dart';
 import 'package:fluttertaladsod/presentation/screens/store/view_page/widgets/menu_view.dart';
@@ -67,7 +67,12 @@ class StoreFormScaffold extends StatelessWidget {
               width: screenWidth,
               child: Column(
                 children: [
-                  EditStoreButton(),
+                  ButtonBar(
+                    children: const [
+                      EditStoreButton(),
+                      EditStoreButton(),
+                    ],
+                  ),
                   NameView(),
                   SizedBox(height: 10.0),
                   MenuView(),
