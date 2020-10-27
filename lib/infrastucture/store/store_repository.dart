@@ -32,7 +32,7 @@ class StoreRepository implements IStoreRepository {
   Stream<Either<StoreFailure, List<Store>>> watchNearbyStore(
       BuildContext context,
       {@required double rad}) async* {
-    final LocationCubit locationBloc = BlocProvider.of<LocationCubit>(context);
+    final locationBloc = BlocProvider.of<LocationCubit>(context);
     final LocationDomain location = locationBloc.state.maybeMap(
       success: (state) => state.location,
       orElse: () => throw 'location not granted',
@@ -54,17 +54,26 @@ class StoreRepository implements IStoreRepository {
         if (snapshots.isEmpty) {
           return left<StoreFailure, List<Store>>(StoreFailure.noStore());
         }
-        // print('store repo: snap len is : ${snapshots.length}');
         return right<StoreFailure, List<Store>>(
-          snapshots
-              .map(
-                (snapshot) => StoreDto.fromFirestore(snapshot).toDomain(),
-              )
-              .toList(),
+          snapshots.map(
+            (snapshot) {
+              final geoPoint = snapshot.data()['location']['geopoint'] as GeoPoint;
+              final distanceAway = location.geoFirePoint.distance(
+                lat: geoPoint.latitude,
+                lng: geoPoint.longitude,
+              );
+              return StoreDto.fromFirestore(snapshot)
+                  .toDomain()
+                  .copyWith(distanceAway: distanceAway.toInt());
+            },
+          ).toList(),
         );
       },
     ).handleError(
-      (err) => left<StoreFailure, List<Store>>(StoreFailure.unexpected()),
+      (err) {
+        // log error onto the console here
+        return left<StoreFailure, List<Store>>(StoreFailure.unexpected());
+      },
     );
   }
 
@@ -74,22 +83,17 @@ class StoreRepository implements IStoreRepository {
         .where('ownerId', isEqualTo: ownerId)
         .snapshots()
         .map((snapshot) {
-      final hasEmtyStore = snapshot.docs.isEmpty;
-      if (hasEmtyStore) {
-        // print('no store');
+      if (snapshot.docs.isEmpty) {
         return left<StoreFailure, Store>(StoreFailure.noStore());
       }
-      // print('has store');
       return right<StoreFailure, Store>(snapshot.docs
           .map(
-            (document) {
-              return StoreDto.fromFirestore(document).toDomain();
-            },
+            (document) => StoreDto.fromFirestore(document).toDomain(),
           )
           .toList()
           .first);
     }).handleError((err) {
-      // print error onto the console here
+      // log error onto the console here
       return left<StoreFailure, Store>(StoreFailure.unexpected());
     });
   }
