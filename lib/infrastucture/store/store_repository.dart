@@ -28,8 +28,6 @@ class StoreRepository implements IStoreRepository {
 
   StoreRepository(this._firestore, this._storage, this._geo);
 
-  
-
   @override
   Stream<Either<StoreFailure, List<Store>>> watchNearbyStore(
       BuildContext context,
@@ -122,7 +120,9 @@ class StoreRepository implements IStoreRepository {
       ..addEntries([MapEntry('location', location.geoFirePoint.data)]);
 
     try {
-      _firestore.storeCollectionRef.doc(UniqueId().getOrCrash()).update(jsonData);
+      _firestore.storeCollectionRef
+          .doc(UniqueId().getOrCrash())
+          .update(jsonData);
     } catch (err) {
       return left(StoreFailure.unexpected());
     }
