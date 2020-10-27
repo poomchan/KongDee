@@ -1,13 +1,11 @@
-import 'dart:math' show cos, sqrt, asin;
-
 import 'package:bloc/bloc.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertaladsod/application/location/location_cubit.dart';
-import 'package:fluttertaladsod/domain/location/location.dart';
+import 'package:fluttertaladsod/domain/location/i_location_repository.dart';
 import 'package:fluttertaladsod/domain/store/i_store_repository.dart';
 import 'package:fluttertaladsod/domain/store/store.dart';
 import 'package:fluttertaladsod/domain/store/store_failures.dart';
+import 'package:fluttertaladsod/injection.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 
@@ -18,31 +16,37 @@ part 'store_near_state.dart';
 class StoreNearCubit extends Cubit<StoreNearState> {
   final IStoreRepository _iStoreRepository;
   double rad = 1.0;
-
   List<Store> storeList = [];
 
   StoreNearCubit(this._iStoreRepository) : super(_Initial());
 
   Future<void> watchNearbyStore(BuildContext context,
       {bool isFirstBatch = true}) async {
-    emit(StoreNearState.loaded(storeList));
-    // _iStoreRepository
-    //     .watchNearbyStore(context, rad: rad)
-    //     .listen((failureOrStoreList) {
-    //   failureOrStoreList.fold(
-    //     (f) => emit(StoreNearState.failure(f)),
-    //     (storeList) {
-    //       if (storeList.length > this.storeList.length) {
-    //         // print('emitting storeList');
-    //         // print(storeList.length);
-    //         this.storeList = _calculateDistanceAway(context, storeList);
-    //         if (isFirstBatch) emit(StoreNearState.loaded(this.storeList));
-    //       } else {
-    //         requestMoreRadius(isLoading: false);
-    //       }
-    //     },
-    //   );
-    // });
+
+    emit(StoreNearState.loading(storeList));
+    final locationOption = await getIt<ILocationRepository>().getLocation();
+    final locationDomain = locationOption.getOrElse(() => null);
+
+    if (locationDomain == null) {
+      emit(StoreNearState.failure(StoreFailure.locationNotGranted()));
+      return;
+    }
+
+    _iStoreRepository
+        .watchNearbyStore(rad: rad, location: locationDomain)
+        .listen((failureOrStoreList) {
+      failureOrStoreList.fold(
+        (f) => emit(StoreNearState.failure(f)),
+        (storeList) {
+          if (storeList.length > this.storeList.length) {
+            this.storeList = storeList;
+            if (isFirstBatch) emit(StoreNearState.loaded(this.storeList));
+          } else {
+            requestMoreRadius(isLoading: false);
+          }
+        },
+      );
+    });
   }
 
   Future<void> requestMoreRadius({bool isLoading = true}) async {
@@ -50,32 +54,5 @@ class StoreNearCubit extends Cubit<StoreNearState> {
     rad += 1;
     // print('repo: adding radius');
     _iStoreRepository.addMoreRadius(rad);
-  }
-
-  List<Store> _calculateDistanceAway(
-      BuildContext context, List<Store> storeList) {
-    final LocationCubit locationBloc = BlocProvider.of<LocationCubit>(context);
-    final LocationDomain location = locationBloc.state.maybeMap(
-      success: (state) => state.location,
-      orElse: () => throw 'location not granted',
-    );
-
-    final List<Store> formattedStoreList = [];
-
-    for (final Store store in storeList) {
-      const p = 0.017453292519943295;
-      const c = cos;
-      final lat1 = store.geoPoint.latitude;
-      final lon1 = store.geoPoint.longitude;
-      final lat2 = location.geoFirePoint.latitude;
-      final lon2 = location.geoFirePoint.longitude;
-      final a = 0.5 -
-          c((lat2 - lat1) * p) / 2 +
-          c(lat1 * p) * c(lat2 * p) * (1 - c((lon2 - lon1) * p)) / 2;
-      final double result = 12742 * asin(sqrt(a));
-      final formattedStore = store.copyWith(distanceAway: result.toInt());
-      formattedStoreList.add(formattedStore);
-    }
-    return formattedStoreList;
   }
 }

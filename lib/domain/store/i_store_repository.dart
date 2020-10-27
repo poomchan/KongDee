@@ -9,9 +9,9 @@ import 'package:fluttertaladsod/domain/store/store_failures.dart';
 
 abstract class IStoreRepository {
   Stream<Either<StoreFailure, Store>> watchOwnedStore(String ownerId);
-  Stream<Either<StoreFailure, List<Store>>> watchNearbyStore(
-    BuildContext context, {
+  Stream<Either<StoreFailure, List<Store>>> watchNearbyStore({
     @required double rad,
+    @required LocationDomain location,
   });
   void addMoreRadius(double rad);
   Stream<Either<StoreFailure, Store>> watchSingleStore(String storeId);
