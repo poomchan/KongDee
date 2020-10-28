@@ -5,8 +5,8 @@ import 'package:fluttertaladsod/application/store/store_view/store_view_cubit.da
 import 'package:fluttertaladsod/domain/core/value_objects.dart';
 import 'package:fluttertaladsod/injection.dart';
 import 'package:fluttertaladsod/presentation/routes/router.gr.dart';
+import 'package:fluttertaladsod/presentation/screens/store/view_page/widgets/banner_appbar2.dart';
 import 'package:fluttertaladsod/presentation/screens/store/view_page/widgets/edit_store_button.dart';
-import 'package:fluttertaladsod/presentation/screens/store/view_page/widgets/banner_appbar.dart';
 import 'package:fluttertaladsod/presentation/screens/store/view_page/widgets/image_view.dart';
 import 'package:fluttertaladsod/presentation/screens/store/view_page/widgets/menu_view.dart';
 import 'package:fluttertaladsod/presentation/screens/store/view_page/widgets/name_view.dart';
@@ -51,7 +51,7 @@ class StoreFormScaffold extends StatelessWidget {
       body: NestedScrollView(
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
-            BannerAppbar(),
+            BannerAppbar2(),
           ];
         },
         body: SingleChildScrollView(

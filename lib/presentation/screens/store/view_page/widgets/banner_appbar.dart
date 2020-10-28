@@ -40,6 +40,8 @@ class _BannerAppBarDelegate extends SliverPersistentHeaderDelegate {
     final opacityOffSet =
         cutButtomOffset / (maxExtent - minExtent - fullyVisibleUntil);
 
+        print('building');
+
     return BlocBuilder<StoreViewCubit, StoreViewState>(
       builder: (context, state) => ClipRRect(
         borderRadius: BorderRadius.circular(20.0),
@@ -135,6 +137,6 @@ class _BannerAppBarDelegate extends SliverPersistentHeaderDelegate {
 
   @override
   bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
-    return true;
+    return false;
   }
 }
