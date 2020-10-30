@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertaladsod/application/location/permission/location_permission_cubit.dart';
 import 'package:fluttertaladsod/presentation/routes/router.gr.dart';
 import 'package:universal_platform/universal_platform.dart';
-import 'package:websafe_svg/websafe_svg.dart';
 
 class AppOnboardingPage extends StatefulWidget {
   @override
@@ -143,7 +142,7 @@ class _AppOnboardingPageState extends State<AppOnboardingPage> {
           textBaseline: TextBaseline.ideographic,
           children: <Widget>[
             Flexible(
-              child: WebsafeSvg.asset('assets/$svgName.svg'),
+              child: Container(),
             ),
             const SizedBox(
               height: 20.0,
