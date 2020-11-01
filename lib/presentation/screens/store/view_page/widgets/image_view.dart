@@ -1,10 +1,8 @@
 import 'package:dartz/dartz.dart' as dartz;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertaladsod/application/store/store_form/store_form_cubit.dart';
 import 'package:fluttertaladsod/application/store/store_view/store_view_cubit.dart';
 import 'package:fluttertaladsod/presentation/core/components/progress_indicator.dart';
-import 'package:fluttertaladsod/presentation/screens/store/form/widgets/image_grid.dart';
 import 'package:fluttertaladsod/presentation/screens/store/form/widgets/reusable_card.dart';
 
 import 'image_grid_view.dart';

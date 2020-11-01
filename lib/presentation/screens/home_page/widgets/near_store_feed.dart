@@ -4,7 +4,8 @@ import 'package:fluttertaladsod/application/home/store_feed/store_near/store_nea
 import 'package:fluttertaladsod/domain/store/store.dart';
 import 'package:fluttertaladsod/injection.dart';
 import 'package:fluttertaladsod/presentation/core/components/progress_indicator.dart';
-import 'package:fluttertaladsod/presentation/screens/home_page/widgets/store_card.dart';
+import 'package:fluttertaladsod/presentation/screens/store/widgets/store_card.dart';
+import 'package:fluttertaladsod/presentation/screens/store/widgets/store_card2.dart';
 
 class NearStoreFeed extends StatelessWidget {
   @override
@@ -18,17 +19,18 @@ class NearStoreFeed extends StatelessWidget {
         failure: (state) => Center(child: Icon(Icons.error)),
         orElse: () => Expanded(
           child: NotificationListener<ScrollNotification>(
-            onNotification: (ScrollNotification scrollInfo) {
-              if (state.maybeMap(
-                    loaded: (state) => true,
-                    orElse: () => false,
-                  ) &&
-                  scrollInfo.metrics.atEdge) {
-                // print('adding radius');
-                storeNearCubit.requestMoreRadius();
-              }
-              return true;
-            },
+            // onNotification: (ScrollNotification scrollInfo) {
+            //   if (state.maybeMap(
+            //         loaded: (state) => true,
+            //         orElse: () => false,
+            //       ) &&
+            //       scrollInfo.metrics.atEdge) {
+            //     // print('adding radius');
+            //     // storeNearCubit.requestMoreRadius();
+            //   }
+            //   return true;
+            // },
+            onNotification: (_){return null;},
             child: ListView(
               clipBehavior: Clip.antiAlias,
               shrinkWrap: true,
@@ -62,7 +64,7 @@ class NearStoreFeed extends StatelessWidget {
     return storeList
         .map((store) => Padding(
               padding: const EdgeInsets.all(10.0),
-              child: StoreCard(store: store),
+              child: StoreCard2(store: store),
             ))
         .toList();
   }

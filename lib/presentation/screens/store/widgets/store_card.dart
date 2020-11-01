@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertaladsod/domain/store/store.dart';
+import 'package:fluttertaladsod/presentation/core/components/my_network_image.dart';
 import 'package:fluttertaladsod/presentation/core/components/progress_indicator.dart';
 import 'package:fluttertaladsod/presentation/core/theme.dart';
 import 'package:fluttertaladsod/presentation/routes/router.gr.dart';
@@ -49,12 +50,7 @@ class StoreCard extends StatelessWidget {
                           tag: store.banner,
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(15.0),
-                            child: CachedNetworkImage(
-                              imageUrl: store.banner.url,
-                              fit: BoxFit.cover,
-                              placeholder: (context, str) =>
-                                  circularProgress(context),
-                            ),
+                            child: MyNetworkImage(imageUrl: store.banner.url),
                           ),
                         ),
                       ),

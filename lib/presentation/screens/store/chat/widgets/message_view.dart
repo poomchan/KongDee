@@ -15,34 +15,36 @@ class MessageView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: BlocBuilder<StoreChatWatcherCubit, StoreChatWatcherState>(
-        builder: (context, state) => state.maybeMap(
-          inital: (state) => circularProgress(context),
-          failure: (state) => Icon(Icons.error),
-          orElse: () => NotificationListener<ScrollNotification>(
-            onNotification: (ScrollNotification scrollInfo) {
-              if (state.maybeMap(
-                    loaded: (state) => true,
-                    orElse: () => false,
-                  ) &&
-                  scrollInfo.metrics.pixels ==
-                      scrollInfo.metrics.maxScrollExtent) {
-                context.bloc<StoreChatWatcherCubit>().fetchMoreChat(storeId);
-              }
-              return null;
-            },
-            child: ListView(
-                shrinkWrap: true,
-                reverse: true,
-                children: state.maybeMap(
-                    loading: (state) => [
-                          ..._buildMessage(state.previousChatList),
-                          circularProgress(context),
-                        ],
-                    loaded: (state) => _buildMessage(state.chatList),
-                    orElse: () => [Container()])),
+    return Expanded(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: BlocBuilder<StoreChatWatcherCubit, StoreChatWatcherState>(
+          builder: (context, state) => state.maybeMap(
+            inital: (state) => circularProgress(context),
+            failure: (state) => Icon(Icons.error),
+            orElse: () => NotificationListener<ScrollNotification>(
+              // onNotification: (ScrollNotification scrollInfo) {
+              //   if (state.maybeMap(
+              //         loaded: (state) => true,
+              //         orElse: () => false,
+              //       ) &&
+              //       scrollInfo.metrics.pixels ==
+              //           scrollInfo.metrics.maxScrollExtent) {
+              //     context.bloc<StoreChatWatcherCubit>().fetchMoreChat(storeId);
+              //   }
+              //   return null;
+              // },
+              child: ListView(
+                  shrinkWrap: true,
+                  reverse: true,
+                  children: state.maybeMap(
+                      loading: (state) => [
+                            ..._buildMessage(state.previousChatList),
+                            circularProgress(context),
+                          ],
+                      loaded: (state) => _buildMessage(state.chatList),
+                      orElse: () => [Container()])),
+            ),
           ),
         ),
       ),
@@ -56,13 +58,12 @@ class MessageView extends StatelessWidget {
     for (final message in messages) {
       messageList.add(
         Message(
-          text: message.body.getOrCrash(),
-          isSender: message.isSender,
-          avatarUrl: message.senderAvatarUrl.getOrCrash(),
-          isTop: message.senderId.getOrCrash() != senderId,
-          senderName: message.senderName.getOrCrash(),
-          timestamp: message.timestamp
-        ),
+            text: message.body.getOrCrash(),
+            isSender: message.isSender,
+            avatarUrl: message.senderAvatarUrl.getOrCrash(),
+            isTop: message.senderId.getOrCrash() != senderId,
+            senderName: message.senderName.getOrCrash(),
+            timestamp: message.timestamp),
       );
       // set new sender id
       senderId = message.senderId.getOrCrash();

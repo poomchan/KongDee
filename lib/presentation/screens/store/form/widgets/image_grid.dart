@@ -1,10 +1,10 @@
-import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertaladsod/application/store/store_form/store_form_cubit.dart';
+import 'package:fluttertaladsod/presentation/core/components/my_network_image.dart';
 import 'package:fluttertaladsod/presentation/core/components/progress_indicator.dart';
 
 class ImageGrid extends StatelessWidget {
@@ -52,12 +52,7 @@ class ImageGrid extends StatelessWidget {
                                     file,
                                     fit: BoxFit.cover,
                                   ),
-                                  (url) => CachedNetworkImage(
-                                    imageUrl: url,
-                                    fit: BoxFit.cover,
-                                    placeholder: (context, _) =>
-                                        circularProgress(context),
-                                  ),
+                                  (url) => MyNetworkImage(imageUrl: url),
                                 ),
                       ),
                     ),

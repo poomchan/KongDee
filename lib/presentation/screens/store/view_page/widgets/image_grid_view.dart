@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertaladsod/application/store/store_form/store_form_cubit.dart';
 import 'package:fluttertaladsod/application/store/store_view/store_view_cubit.dart';
+import 'package:fluttertaladsod/presentation/core/components/my_network_image.dart';
 import 'package:fluttertaladsod/presentation/core/components/progress_indicator.dart';
 
 class ImageGridView extends StatelessWidget {
@@ -46,12 +47,7 @@ class ImageGridView extends StatelessWidget {
                               .fileOrUrl
                               .fold(
                                 (file) => throw 'network image cannot be File',
-                                (url) => CachedNetworkImage(
-                                  imageUrl: url,
-                                  fit: BoxFit.cover,
-                                  placeholder: (context, _) =>
-                                      circularProgress(context),
-                                ),
+                                (url) => MyNetworkImage(imageUrl: url)
                               ),
                           failure: (state) => Icon(Icons.error)),
                     ),

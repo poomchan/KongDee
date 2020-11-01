@@ -44,7 +44,7 @@ class ChatScaffold extends StatelessWidget {
           width: MediaQuery.of(context).size.width,
           child: Column(
             children: [
-              Expanded(child: MessageView(storeId: storeId)),
+              MessageView(storeId: storeId),
               Divider(height: 0,),
               InputBar(storeId: storeId),
             ],

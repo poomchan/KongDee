@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertaladsod/application/store/store_form/store_form_cubit.dart';
+import 'package:fluttertaladsod/presentation/core/components/my_network_image.dart';
 import 'package:fluttertaladsod/presentation/core/components/progress_indicator.dart';
 
 class BannerField extends StatelessWidget {
@@ -37,17 +38,15 @@ class BannerField extends StatelessWidget {
                 child: state.isSaving
                     ? Container()
                     : state.store.banner.getOrCrash().fold(
-                          (file) => Image.file(
-                            file,
-                            fit: BoxFit.cover,
-                          ),
-                          (url) => CachedNetworkImage(
-                            imageUrl: url,
-                            fit: BoxFit.cover,
-                            placeholder: (context, str) =>
-                                circularProgress(context),
-                          ),
-                        ),
+                        (file) => Image.file(
+                              file,
+                              fit: BoxFit.cover,
+                            ),
+                        (url) => MyNetworkImage(
+                              imageUrl: url,
+                              memCacheHeight: 500,
+                              memCacheWidth: 600,
+                            )),
               ),
             ),
           ),

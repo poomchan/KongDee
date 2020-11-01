@@ -37,9 +37,11 @@ Future<void> main() async {
     );
   }).sendPort);
 
+
+  // FirebaseCrashlytics.instance.crash();
+
+
   print('Building the app...');
-  runZoned<Future<void>>(() async {
-    runApp(AppWidget());
-    // FirebaseCrashlytics.instance.crash();
-  }, onError: FirebaseCrashlytics.instance.recordError);
+  runApp(AppWidget());
+  
 }

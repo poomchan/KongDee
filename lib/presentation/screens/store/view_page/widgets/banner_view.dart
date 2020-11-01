@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertaladsod/application/store/store_view/store_view_cubit.dart';
+import 'package:fluttertaladsod/presentation/core/components/my_network_image.dart';
 import 'package:fluttertaladsod/presentation/core/components/progress_indicator.dart';
 
 class BannerView extends StatelessWidget {
@@ -34,12 +35,11 @@ class BannerView extends StatelessWidget {
               child: state.map(
                   inital: (state) => circularProgress(context),
                   loading: (state) => circularProgress(context),
-                  success: (state) => CachedNetworkImage(
-                    imageUrl: state.store.banner.url,
-                    fit: BoxFit.cover,
-                    placeholder: (context, str) =>
-                        circularProgress(context),
-                  ),
+                  success: (state) => MyNetworkImage(
+                        imageUrl: state.store.banner.url,
+                        memCacheHeight: 500,
+                        memCacheWidth: 600,
+                      ),
                   failure: (state) => Icon(Icons.error)),
             ),
           ),

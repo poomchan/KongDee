@@ -55,7 +55,11 @@ class HomePageScaffold extends StatelessWidget {
                   inital: (state) => circularProgress(context),
                   getting: (state) => circularProgress(context),
                   success: (state) => NearStoreFeed(),
-                  failure: (state) => Text('Error: Location is not enable'),
+                  failure: (state) => OutlineButton(
+                    onPressed: () =>
+                        context.bloc<LocationCubit>().getUserLocation(),
+                    child: Text('Please enable location'),
+                  ),
                 ),
               ),
             ],
