@@ -1,9 +1,8 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertaladsod/application/store/store_form/store_form_cubit.dart';
 import 'package:fluttertaladsod/presentation/core/components/my_network_image.dart';
-import 'package:fluttertaladsod/presentation/core/components/progress_indicator.dart';
+import 'package:fluttertaladsod/presentation/screens/store/constant.dart';
 
 class BannerField extends StatelessWidget {
   @override
@@ -22,7 +21,7 @@ class BannerField extends StatelessWidget {
                   context.bloc<StoreFormCubit>().bannerChangeRequested(),
               child: Container(
                 width: screenWidth,
-                height: screenHeight * 0.40,
+                height: kStoreBannerHeight,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.vertical(
                     bottom: Radius.circular(20.0),
@@ -41,10 +40,10 @@ class BannerField extends StatelessWidget {
                         (file) => Image.file(
                               file,
                               fit: BoxFit.cover,
+                              cacheWidth: 600,
                             ),
                         (url) => MyNetworkImage(
                               imageUrl: url,
-                              memCacheHeight: 500,
                               memCacheWidth: 600,
                             )),
               ),

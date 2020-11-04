@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertaladsod/application/store/store_view/store_view_cubit.dart';
 import 'package:fluttertaladsod/presentation/core/components/my_network_image.dart';
 import 'package:fluttertaladsod/presentation/core/components/progress_indicator.dart';
+import 'package:fluttertaladsod/presentation/screens/store/constant.dart';
 
 class BannerAppbar2 extends StatelessWidget {
   const BannerAppbar2();
@@ -18,7 +19,7 @@ class BannerAppbar2 extends StatelessWidget {
             bottomRight: Radius.circular(20.0),
           ),
         ),
-        expandedHeight: 350.0,
+        expandedHeight: kStoreBannerHeight,
         pinned: true,
         title: Text(
           state.map(
@@ -41,7 +42,6 @@ class BannerAppbar2 extends StatelessWidget {
                 tag: state.store.banner,
                 child: MyNetworkImage(
                   imageUrl: state.store.banner.url,
-                  memCacheHeight: 500,
                   memCacheWidth: 600,
                 ),
               ),

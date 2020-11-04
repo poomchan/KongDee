@@ -131,7 +131,7 @@ class StoreFormCubit extends Cubit<StoreFormState> {
       await failureOrSuccess.fold(
         (f) => null, // db storage error, log here
         (urls) async {
-          print('saving to database');
+          print('saving to firestore..');
           failureOrSuccess = state.isEditting
               ? await _iStoreRepository.update(
                   state.store.copyWith(
@@ -139,23 +139,30 @@ class StoreFormCubit extends Cubit<StoreFormState> {
                     banner: state.storeBannerOnUpload,
                   ),
                   location: location)
-              : await _iStoreRepository.create(state.store.copyWith(
+              : await _iStoreRepository.create(
+                  state.store.copyWith(
                     pics: state.storePicsOnUpload,
                     banner: state.storeBannerOnUpload,
-                  ), location);
+                  ),
+                  location);
         },
       );
+      emit(state.copyWith(
+        isSaving: false,
+        showErrorMessage: true,
+        saveFailureOrSuccessOption: optionOf(failureOrSuccess),
+      ));
+    } else {
+      emit(state.copyWith(
+        isSaving: false,
+        showErrorMessage: true,
+        saveFailureOrSuccessOption: optionOf(failureOrSuccess),
+      ));
     }
-
-    emit(state.copyWith(
-      isSaving: false,
-      showErrorMessage: true,
-      saveFailureOrSuccessOption: optionOf(failureOrSuccess),
-    ));
   }
 
   Future<Either<StoreFailure, Unit>> _uploadStorePics() async {
-    print('uploading store pics');
+    print('uploading store pics..');
     final String path = "stores/store_${state.store.id.getOrCrash()}/pics";
 
     final List<StorePic> storePics = List.from(state.store.pics.getOrCrash());
@@ -199,7 +206,7 @@ class StoreFormCubit extends Cubit<StoreFormState> {
   }
 
   Future<Either<StoreFailure, Unit>> _uploadBannerPic() async {
-    print('uploading banner');
+    print('uploading banner..');
     final path = "stores/store_${state.store.id.getOrCrash()}/banner";
     final failureOrUrl = await state.store.banner.getOrCrash().fold(
         (file) => _iStoreRepository.uploadFileImage(file, path),

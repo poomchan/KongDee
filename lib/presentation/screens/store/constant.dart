@@ -1,0 +1,1 @@
+const kStoreBannerHeight = 350.0;

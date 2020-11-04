@@ -142,7 +142,6 @@ class StoreRepository implements IStoreRepository {
   @override
   Future<Either<StoreFailure, Unit>> update(Store store,
       {LocationDomain location}) async {
-    return left(StoreFailure.unexpected());
     final jsonData = StoreDto.fromDomain(store).toJson()
       ..addEntries([MapEntry('location', location?.geoFirePoint?.data)]);
 
