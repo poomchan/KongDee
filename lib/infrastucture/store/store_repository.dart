@@ -49,7 +49,7 @@ class StoreRepository implements IStoreRepository {
     @required LocationDomain location,
   }) async* {
     yield* _firestore.storeCollectionRef
-        .where('ownerId', isEqualTo: ownerId)
+        .where('ownerId', isEqualTo: ownerId.getOrCrash())
         .snapshots()
         .map((snapshot) {
       if (snapshot.docs.isEmpty) {

@@ -22,31 +22,32 @@ class StoreNearCubit extends Cubit<StoreNearState> {
 
   Future<void> watchNearbyStore(BuildContext context,
       {bool isFirstBatch = true}) async {
+    emit(StoreNearState.failure(StoreFailure.locationNotGranted()));
 
-    emit(StoreNearState.loading(storeList));
-    final locationOption = await getIt<ILocationRepository>().getLocation();
-    final locationDomain = locationOption.getOrElse(() => null);
+    // emit(StoreNearState.loading(storeList));
+    // final locationOption = await getIt<ILocationRepository>().getLocation();
+    // final locationDomain = locationOption.getOrElse(() => null);
 
-    if (locationDomain == null) {
-      emit(StoreNearState.failure(StoreFailure.locationNotGranted()));
-      return;
-    }
+    // if (locationDomain == null) {
+    //   emit(StoreNearState.failure(StoreFailure.locationNotGranted()));
+    //   return;
+    // }
 
-    _iStoreRepository
-        .watchNearbyStore(rad: rad, location: locationDomain)
-        .listen((failureOrStoreList) {
-      failureOrStoreList.fold(
-        (f) => emit(StoreNearState.failure(f)),
-        (storeList) {
-          if (storeList.length > this.storeList.length) {
-            this.storeList = storeList;
-            if (isFirstBatch) emit(StoreNearState.loaded(this.storeList));
-          } else {
-            requestMoreRadius(isLoading: false);
-          }
-        },
-      );
-    });
+    // _iStoreRepository
+    //     .watchNearbyStore(rad: rad, location: locationDomain)
+    //     .listen((failureOrStoreList) {
+    //   failureOrStoreList.fold(
+    //     (f) => emit(StoreNearState.failure(f)),
+    //     (storeList) {
+    //       if (storeList.length > this.storeList.length) {
+    //         this.storeList = storeList;
+    //         if (isFirstBatch) emit(StoreNearState.loaded(this.storeList));
+    //       } else {
+    //         requestMoreRadius(isLoading: false);
+    //       }
+    //     },
+    //   );
+    // });
   }
 
   Future<void> requestMoreRadius({bool isLoading = true}) async {
