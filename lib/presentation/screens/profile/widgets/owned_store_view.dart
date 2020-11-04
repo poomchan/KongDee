@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertaladsod/application/store/store_own_watcher/cubit/owned_store_watcher_cubit.dart';
+import 'package:fluttertaladsod/application/store/store_own_watcher/owned_store_watcher_cubit.dart';
 import 'package:fluttertaladsod/presentation/core/components/progress_indicator.dart';
 import 'package:fluttertaladsod/presentation/screens/profile/widgets/no_store_card.dart';
 import 'package:fluttertaladsod/presentation/screens/store/widgets/store_card.dart';

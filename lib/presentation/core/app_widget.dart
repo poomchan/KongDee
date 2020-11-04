@@ -7,7 +7,7 @@ import 'package:fluttertaladsod/application/location/permission/location_permiss
 import 'package:fluttertaladsod/injection.dart';
 import 'package:fluttertaladsod/presentation/core/unknown_page.dart';
 import 'package:fluttertaladsod/presentation/routes/router.gr.dart' as _router;
-import 'package:fluttertaladsod/presentation/screens/app_onboarding_page.dart';
+import 'package:fluttertaladsod/presentation/screens/onboarding/app_onboarding_page.dart';
 
 class AppWidget extends StatelessWidget {
 

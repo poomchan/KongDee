@@ -11,7 +11,7 @@ class MyNetworkImage extends StatelessWidget {
   const MyNetworkImage({
     Key key,
     @required this.imageUrl,
-    this.memCacheHeight = 200,
+    this.memCacheHeight,
     this.memCacheWidth = 200,
     this.fit = BoxFit.cover,
   }) : super(key: key);

@@ -18,31 +18,28 @@ class _ImageFieldState extends State<ImageField> {
 
   Widget buildListTile(BuildContext context) {
     return BlocBuilder<StoreFormCubit, StoreFormState>(
-      // buildWhen: (p, c) => p.newStorePics.length != c.newStorePics.length,
+      buildWhen: (p, c) => p.store.pics != c.store.pics,
       builder: (context, state) {
-        return Container(
-          // color: Colors.blue,
-          child: GridView.count(
-            padding: EdgeInsets.all(0.0),
-            physics: NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            crossAxisSpacing: 10.0,
-            mainAxisSpacing: 10.0,
-            crossAxisCount: 2,
-            childAspectRatio: 0.95,
-            children: [
-              ...List.generate(
-                state.store.pics.length,
-                (index) => ImageGrid(
-                  indexOption: dartz.some(
-                      index), // pass index to bloc builder and to delete function in the grid
-                ),
+        return GridView.count(
+          padding: EdgeInsets.all(0.0),
+          physics: NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          crossAxisSpacing: 10.0,
+          mainAxisSpacing: 10.0,
+          crossAxisCount: 2,
+          childAspectRatio: 0.95,
+          children: [
+            ...List.generate(
+              state.store.pics.length,
+              (index) => ImageGrid(
+                indexOption: dartz.some(
+                    index), // pass index to bloc builder and to delete function in the grid
               ),
-              ImageGrid(
-                indexOption: dartz.none(), // for an empty grid to add new pic
-              ),
-            ],
-          ),
+            ),
+            ImageGrid(
+              indexOption: dartz.none(), // for an empty grid to add new pic
+            ),
+          ],
         );
       },
     );

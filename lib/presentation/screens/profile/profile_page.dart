@@ -2,8 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertaladsod/application/auth/actor/auth_actor_cubit.dart';
-import 'package:fluttertaladsod/application/store/store_own_watcher/cubit/owned_store_watcher_cubit.dart';
+import 'package:fluttertaladsod/application/store/store_own_watcher/owned_store_watcher_cubit.dart';
 import 'package:fluttertaladsod/domain/auth/user.dart';
 import 'package:fluttertaladsod/injection.dart';
 import 'package:fluttertaladsod/presentation/core/components/buttom_sheet.dart';
@@ -21,8 +20,10 @@ class ProfilePage extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<OwnedStoreWatcherCubit>(
-          create: (context) => getIt<OwnedStoreWatcherCubit>()
-            ..watchOwnedStoreStarted(user.id.getOrCrash()),
+          create: (context) {
+            return getIt<OwnedStoreWatcherCubit>()
+              ..watchOwnedStoreStarted(ownerId: user.id);
+          },
         ),
       ],
       child: ProfileScaffold(user: user),
@@ -88,7 +89,7 @@ class ProfileScaffold extends StatelessWidget {
           Column(
             children: [
               SizedBox(
-                height: screenHeight * 0.07,
+                height: kToolbarHeight / 3,
               ),
               Center(
                 child: Hero(

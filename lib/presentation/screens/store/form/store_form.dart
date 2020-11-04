@@ -110,9 +110,9 @@ class StoreFormScaffold extends StatelessWidget {
                     child: Column(
                       children: [
                         const NameField(),
-                        SizedBox(height: 10.0),
+                        const SizedBox(height: 10.0),
                         Menufield(),
-                        SizedBox(height: 10.0),
+                        const SizedBox(height: 10.0),
                         ImageField(),
                       ],
                     ),

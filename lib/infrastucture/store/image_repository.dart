@@ -49,6 +49,7 @@ class ImageRepository implements IImageRepository {
     return none();
   }
 
+  @override
   Future<File> compressImage(File image) async {
     final String imageId = Uuid().v4();
     final tempDIr = await getTemporaryDirectory();
@@ -56,7 +57,7 @@ class ImageRepository implements IImageRepository {
 
     final im.Image imageFile = im.decodeImage(image.readAsBytesSync());
     final compressedImageFile = File('$path/img_$imageId.jpg')
-      ..writeAsBytesSync(im.encodeJpg(imageFile, quality: 35));
+      ..writeAsBytesSync(im.encodeJpg(imageFile, quality: 10));
     return compressedImageFile;
   }
 }

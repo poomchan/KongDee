@@ -8,6 +8,8 @@ abstract class StoreFormState with _$StoreFormState {
     @required bool isSaving,
     @required bool showErrorMessage,
     @required Option<Either<StoreFailure, Unit>> saveFailureOrSuccessOption,
+    @required StorePic16 storePicsOnUpload,
+    @required StoreBanner storeBannerOnUpload,
   }) = _StoreFormState;
 
   factory StoreFormState.initial() => StoreFormState(
@@ -16,5 +18,7 @@ abstract class StoreFormState with _$StoreFormState {
         isSaving: false,
         showErrorMessage: false,
         saveFailureOrSuccessOption: none(),
+        storePicsOnUpload: StorePic16(const []),
+        storeBannerOnUpload: StoreBanner.url(''),
       );
 }

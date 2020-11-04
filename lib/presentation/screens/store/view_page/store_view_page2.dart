@@ -48,42 +48,39 @@ class StoreFormScaffold extends StatelessWidget {
         ),
         child: Icon(Icons.chat),
       ),
-      body: NestedScrollView(
-        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-          return <Widget>[
-            BannerAppbar2(),
-          ];
-        },
-        body: SingleChildScrollView(
-          physics: NeverScrollableScrollPhysics(),
-          child: Column(
-            children: [
-              Container(
-                padding: EdgeInsets.all(10.0),
-                width: screenWidth,
-                child: Column(
-                  children: [
-                    ButtonBar(
-                      alignment: MainAxisAlignment.spaceEvenly,
-                      mainAxisSize: MainAxisSize.max,
-                      overflowDirection: VerticalDirection.down,
-                      overflowButtonSpacing: 10.0,
-                      children: const [
-                        EditStoreButton(),
-                        StoreSettingButton(),
-                      ],
-                    ),
-                    NameView(),
-                    SizedBox(height: 10.0),
-                    MenuView(),
-                    SizedBox(height: 10.0),
-                    ImageView(),
-                  ],
+      body: CustomScrollView(
+        slivers: <Widget>[
+          BannerAppbar2(),
+          SliverToBoxAdapter(
+            child: Column(
+              children: [
+                Container(
+                  padding: EdgeInsets.all(10.0),
+                  width: screenWidth,
+                  child: Column(
+                    children: [
+                      ButtonBar(
+                        alignment: MainAxisAlignment.spaceEvenly,
+                        mainAxisSize: MainAxisSize.max,
+                        overflowDirection: VerticalDirection.down,
+                        overflowButtonSpacing: 10.0,
+                        children: const [
+                          EditStoreButton(),
+                          StoreSettingButton(),
+                        ],
+                      ),
+                      NameView(),
+                      SizedBox(height: 10.0),
+                      MenuView(),
+                      SizedBox(height: 10.0),
+                      ImageView(),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
+        ],
       ),
     );
   }

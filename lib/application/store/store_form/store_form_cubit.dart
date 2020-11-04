@@ -43,7 +43,6 @@ class StoreFormCubit extends Cubit<StoreFormState> {
           isEditting: true,
         ),
       );
-      // print('just emitted the state');
     });
   }
 
@@ -110,9 +109,8 @@ class StoreFormCubit extends Cubit<StoreFormState> {
     );
   }
 
-  Future<void> saved({@required LocationDomain location}) async {
+  Future<void> saved({LocationDomain location}) async {
     Either<StoreFailure, Unit> failureOrSuccess;
-
     // send the latest store to firestore (either update or create is checked by [isEditting])
     if (state.store.failureOption.isNone()) {
       emit(
@@ -127,17 +125,24 @@ class StoreFormCubit extends Cubit<StoreFormState> {
         _uploadBannerPic(),
         _uploadStorePics(),
       ]).then((fOrSuccessList) {
-        print(fOrSuccessList);
         failureOrSuccess = fOrSuccessList[0].flatMap((_) => fOrSuccessList[1]);
       });
 
       await failureOrSuccess.fold(
         (f) => null, // db storage error, log here
-        (ok) async {
+        (urls) async {
           print('saving to database');
           failureOrSuccess = state.isEditting
-              ? await _iStoreRepository.update(state.store, location)
-              : await _iStoreRepository.create(state.store, location);
+              ? await _iStoreRepository.update(
+                  state.store.copyWith(
+                    pics: state.storePicsOnUpload,
+                    banner: state.storeBannerOnUpload,
+                  ),
+                  location: location)
+              : await _iStoreRepository.create(state.store.copyWith(
+                    pics: state.storePicsOnUpload,
+                    banner: state.storeBannerOnUpload,
+                  ), location);
         },
       );
     }
@@ -151,10 +156,6 @@ class StoreFormCubit extends Cubit<StoreFormState> {
 
   Future<Either<StoreFailure, Unit>> _uploadStorePics() async {
     print('uploading store pics');
-    // 1. check and upload the new pics
-    // 2. get the download url, append it to a new list
-    // 3. set a new list as the latest pics state of the store
-
     final String path = "stores/store_${state.store.id.getOrCrash()}/pics";
 
     final List<StorePic> storePics = List.from(state.store.pics.getOrCrash());
@@ -167,7 +168,6 @@ class StoreFormCubit extends Cubit<StoreFormState> {
           final cmpFile = await _iImageRepository.compressImage(file);
           final failureOrUrl =
               await _iStoreRepository.uploadFileImage(cmpFile, path);
-
           fOrUrlList.add(failureOrUrl);
         },
         (url) => fOrUrlList.add(right(url)),
@@ -175,41 +175,31 @@ class StoreFormCubit extends Cubit<StoreFormState> {
     );
 
     Option<StoreFailure> failureOption = none();
+    final List<String> urlOnlyList = [];
 
     for (final fOrUrl in fOrUrlList) {
       fOrUrl.fold(
         (f) {
           failureOption = some(f);
         },
-        (ok) => null,
+        (url) => urlOnlyList.add(url),
       );
     }
 
-    final List<StorePic> urlOnlyList = [];
-
-    return failureOption.fold(() {
-      urlOnlyList.addAll(
-        fOrUrlList.map(
-          (fOrUrl) => StorePic.url(fOrUrl.getOrElse(() => null)),
-        ),
-      );
-
+    if (failureOption.isNone()) {
       emit(state.copyWith(
-        store: state.store.copyWith(
-          pics: StorePic16(urlOnlyList),
+        storePicsOnUpload: StorePic16(
+          urlOnlyList.map((p) => StorePic.url(p)).toList(),
         ),
       ));
-
-      return right<StoreFailure, Unit>(unit);
-
-    }, (f) => left<StoreFailure, Unit>(f));
+      return right(unit);
+    } else {
+      return left(failureOption.getOrElse(() => null));
+    }
   }
 
   Future<Either<StoreFailure, Unit>> _uploadBannerPic() async {
     print('uploading banner');
-    // 1. check and upload the new pic
-    // 2. get the download url
-    // 3. set a url as the latest banner state of the store
     final path = "stores/store_${state.store.id.getOrCrash()}/banner";
     final failureOrUrl = await state.store.banner.getOrCrash().fold(
         (file) => _iStoreRepository.uploadFileImage(file, path),
@@ -217,9 +207,7 @@ class StoreFormCubit extends Cubit<StoreFormState> {
 
     return failureOrUrl.fold((f) => left(f), (url) {
       emit(state.copyWith(
-        store: state.store.copyWith(
-          banner: StoreBanner.url(url),
-        ),
+        storeBannerOnUpload: StoreBanner.url(url),
       ));
       return right(unit);
     });

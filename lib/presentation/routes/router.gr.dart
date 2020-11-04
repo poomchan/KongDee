@@ -13,7 +13,7 @@ import 'package:flutter/material.dart';
 import '../../domain/auth/user.dart';
 import '../../domain/core/value_objects.dart';
 import '../../domain/store/store.dart';
-import '../screens/app_onboarding_page.dart';
+import '../screens/onboarding/app_onboarding_page.dart';
 import '../screens/home_page/home_page.dart';
 import '../screens/profile/profile_page.dart';
 import '../screens/setting_page/language.dart';
@@ -22,7 +22,6 @@ import '../screens/splash/sign_in_splash.dart';
 import '../screens/store/chat/chat_page.dart';
 import '../screens/store/form/store_form.dart';
 import '../screens/store/setting/store_setting_page.dart';
-import '../screens/store/view_page/store_view_page.dart';
 import '../screens/store/view_page/store_view_page2.dart';
 
 class Routes {
@@ -31,7 +30,6 @@ class Routes {
   static const String signInSplash = '/sign-in';
   static const String profilePage = '/profile';
   static const String storeForm = '/store-form';
-  static const String storeViewPage = '/store-view';
   static const String chatPage = '/chat';
   static const String profileSettingPage = '/profile-setting-page';
   static const String languageSetting = '/language-setting';
@@ -43,7 +41,6 @@ class Routes {
     signInSplash,
     profilePage,
     storeForm,
-    storeViewPage,
     chatPage,
     profileSettingPage,
     languageSetting,
@@ -61,7 +58,6 @@ class Router extends RouterBase {
     RouteDef(Routes.signInSplash, page: SignInSplash),
     RouteDef(Routes.profilePage, page: ProfilePage),
     RouteDef(Routes.storeForm, page: StoreForm),
-    RouteDef(Routes.storeViewPage, page: StoreViewPage),
     RouteDef(Routes.chatPage, page: ChatPage),
     RouteDef(Routes.profileSettingPage, page: ProfileSettingPage),
     RouteDef(Routes.languageSetting, page: LanguageSetting),
@@ -108,18 +104,6 @@ class Router extends RouterBase {
         builder: (context) => StoreForm(
           key: args.key,
           initialStore: args.initialStore,
-        ),
-        settings: data,
-      );
-    },
-    StoreViewPage: (data) {
-      final args = data.getArgs<StoreViewPageArguments>(
-        orElse: () => StoreViewPageArguments(),
-      );
-      return buildAdaptivePageRoute<dynamic>(
-        builder: (context) => StoreViewPage(
-          key: args.key,
-          storeId: args.storeId,
         ),
         settings: data,
       );
@@ -199,15 +183,6 @@ extension RouterExtendedNavigatorStateX on ExtendedNavigatorState {
         arguments: StoreFormArguments(key: key, initialStore: initialStore),
       );
 
-  Future<dynamic> pushStoreViewPage({
-    Key key,
-    UniqueId storeId,
-  }) =>
-      push<dynamic>(
-        Routes.storeViewPage,
-        arguments: StoreViewPageArguments(key: key, storeId: storeId),
-      );
-
   Future<dynamic> pushChatPage({
     Key key,
     UniqueId storeId,
@@ -252,13 +227,6 @@ class StoreFormArguments {
   final Key key;
   final Option<Store> initialStore;
   StoreFormArguments({this.key, this.initialStore});
-}
-
-/// StoreViewPage arguments holder class
-class StoreViewPageArguments {
-  final Key key;
-  final UniqueId storeId;
-  StoreViewPageArguments({this.key, this.storeId});
 }
 
 /// ChatPage arguments holder class

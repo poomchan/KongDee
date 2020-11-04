@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertaladsod/application/store/store_view/store_view_cubit.dart';
 import 'package:fluttertaladsod/presentation/core/components/buttom_sheet.dart';
+import 'package:fluttertaladsod/presentation/core/components/my_network_image.dart';
 import 'package:fluttertaladsod/presentation/core/components/progress_indicator.dart';
 
 class BannerAppbar extends StatelessWidget {
@@ -31,20 +32,12 @@ class _BannerAppBarDelegate extends SliverPersistentHeaderDelegate {
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
-    final double diff = maxExtent - minExtent;
-    final double fullyVisibleUntil = diff / 1.5;
-    final cutTopOffset = shrinkOffset >= diff ? diff : shrinkOffset;
-    final cutButtomOffset = cutTopOffset - fullyVisibleUntil <= 0
-        ? 0
-        : cutTopOffset - fullyVisibleUntil;
-    final opacityOffSet =
-        cutButtomOffset / (maxExtent - minExtent - fullyVisibleUntil);
-
-        print('building');
-
     return BlocBuilder<StoreViewCubit, StoreViewState>(
       builder: (context, state) => ClipRRect(
-        borderRadius: BorderRadius.circular(20.0),
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(20.0),
+          bottomRight: Radius.circular(20.0),
+        ),
         child: Stack(
           fit: StackFit.expand,
           children: [
@@ -53,11 +46,7 @@ class _BannerAppBarDelegate extends SliverPersistentHeaderDelegate {
               loading: (state) => circularProgress(context),
               success: (state) => Hero(
                 tag: state.store.banner,
-                child: CachedNetworkImage(
-                  imageUrl: state.store.banner.url,
-                  fit: BoxFit.cover,
-                  placeholder: (context, str) => circularProgress(context),
-                ),
+                child: MyNetworkImage(imageUrl: state.store.banner.url),
               ),
               failure: (state) => Icon(Icons.error),
             ),
@@ -68,7 +57,7 @@ class _BannerAppBarDelegate extends SliverPersistentHeaderDelegate {
                     Colors.black54,
                     Colors.transparent,
                   ],
-                  stops: const [0.1, 0.5],
+                  stops: const [0.1, 0.25],
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   tileMode: TileMode.repeated,
@@ -76,7 +65,7 @@ class _BannerAppBarDelegate extends SliverPersistentHeaderDelegate {
               ),
             ),
             Opacity(
-              opacity: opacityOffSet,
+              opacity: 1,
               child: Container(
                 decoration: BoxDecoration(
                   color: Theme.of(context).primaryColor,
@@ -88,7 +77,7 @@ class _BannerAppBarDelegate extends SliverPersistentHeaderDelegate {
               child: Align(
                 alignment: Alignment.topCenter,
                 child: Opacity(
-                  opacity: opacityOffSet,
+                  opacity: 1,
                   child: Text(
                     state.map(
                       inital: (state) => '',
@@ -127,6 +116,16 @@ class _BannerAppBarDelegate extends SliverPersistentHeaderDelegate {
         ),
       ),
     );
+  }
+
+  double _computeBackgroundFadeOpacity(double shrinkOffset) {
+    final diff = maxExtent - minExtent;
+    final fullyVisibleUntil = diff / 1.5;
+    final cutTopOffset = shrinkOffset >= diff ? diff : shrinkOffset;
+    final cutButtomOffset = cutTopOffset - fullyVisibleUntil <= 0
+        ? 0
+        : cutTopOffset - fullyVisibleUntil;
+    return cutButtomOffset / (maxExtent - minExtent - fullyVisibleUntil);
   }
 
   @override

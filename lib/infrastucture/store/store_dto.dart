@@ -1,7 +1,7 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluttertaladsod/domain/core/value_objects.dart';
 import 'package:fluttertaladsod/domain/location/i_location_repository.dart';
+import 'package:fluttertaladsod/domain/location/location.dart';
 import 'package:fluttertaladsod/domain/store/store.dart';
 import 'package:fluttertaladsod/domain/store/value_objects.dart';
 import 'package:fluttertaladsod/infrastucture/core/json_converters.dart';
@@ -54,10 +54,19 @@ abstract class StoreDto implements _$StoreDto {
   factory StoreDto.fromJson(Map<String, dynamic> json) =>
       _$StoreDtoFromJson(json);
 
-  factory StoreDto.fromFirestore(DocumentSnapshot doc) {
-    return StoreDto.fromJson(doc.data()).copyWith(
-      id: doc.id,
-      geoPoint: doc.data()['location']['geopoint'] as GeoPoint,
+  factory StoreDto.fromFirestore({
+    @required DocumentSnapshot snap,
+    @required LocationDomain location,
+  }) {
+    final geoPoint = snap.data()['location']['geopoint'] as GeoPoint;
+    final distanceAway = location.geoFirePoint.distance(
+      lat: geoPoint.latitude,
+      lng: geoPoint.longitude,
+    );
+    return StoreDto.fromJson(snap.data()).copyWith(
+      id: snap.id,
+      geoPoint: geoPoint,
+      distanceAway: distanceAway.toInt(),
     );
   }
 

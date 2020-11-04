@@ -1,13 +1,11 @@
-
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertaladsod/application/store/store_form/store_form_cubit.dart';
 import 'package:fluttertaladsod/presentation/core/components/my_network_image.dart';
-import 'package:fluttertaladsod/presentation/core/components/progress_indicator.dart';
 
 class ImageGrid extends StatelessWidget {
+  // whether it is an empty grid or has an image
   final Option<int> indexOption;
 
   static const double _aspectRatio = 1;
@@ -46,11 +44,13 @@ class ImageGrid extends StatelessWidget {
                     child: indexOption.fold(
                       () => Icon(Icons.add),
                       (indx) => BlocBuilder<StoreFormCubit, StoreFormState>(
+                        buildWhen: (p, c) => p.store.pics != c.store.pics,
                         builder: (context, state) =>
                             state.store.pics.getOrCrash()[indx].fileOrUrl.fold(
                                   (file) => Image.file(
                                     file,
                                     fit: BoxFit.cover,
+                                    cacheWidth: 200,
                                   ),
                                   (url) => MyNetworkImage(imageUrl: url),
                                 ),
@@ -66,8 +66,8 @@ class ImageGrid extends StatelessWidget {
             (indx) => Align(
               alignment: Alignment.topRight,
               child: GestureDetector(
-                onTap: () => context.bloc<StoreFormCubit>().picDeleteRequested(
-                    indexOption.fold(() => null, (indx) => indx)),
+                onTap: () =>
+                    context.bloc<StoreFormCubit>().picDeleteRequested(indx),
                 child: Container(
                   decoration: BoxDecoration(
                     color: Colors.white,

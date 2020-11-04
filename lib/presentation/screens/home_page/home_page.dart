@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertaladsod/application/home/store_feed/store_near/store_near_cubit.dart';
+import 'package:fluttertaladsod/application/home/store_feed/nearby/store_near_cubit.dart';
 import 'package:fluttertaladsod/application/location/location_cubit.dart';
 import 'package:fluttertaladsod/presentation/core/components/progress_indicator.dart';
 import 'package:fluttertaladsod/presentation/screens/home_page/widgets/near_store_feed.dart';
@@ -50,6 +50,7 @@ class HomePageScaffold extends StatelessWidget {
                 style: TextStyle(fontSize: 25.0),
               ),
               SizedBox(height: 10.0),
+              Divider(height: 0.0),
               BlocBuilder<LocationCubit, LocationState>(
                 builder: (context, state) => state.map(
                   inital: (state) => circularProgress(context),

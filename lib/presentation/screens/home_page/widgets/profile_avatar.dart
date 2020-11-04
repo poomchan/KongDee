@@ -2,7 +2,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertaladsod/application/auth/watcher/auth_watcher_cubit.dart';
-import 'package:fluttertaladsod/application/store/store_own_watcher/cubit/owned_store_watcher_cubit.dart';
 import 'package:fluttertaladsod/presentation/core/components/image_network.dart';
 import 'package:fluttertaladsod/presentation/core/components/progress_indicator.dart';
 import 'package:fluttertaladsod/presentation/routes/router.gr.dart';

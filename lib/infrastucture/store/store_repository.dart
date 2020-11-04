@@ -26,6 +26,49 @@ class StoreRepository implements IStoreRepository {
   StoreRepository(this._firestore, this._storage, this._geo);
 
   @override
+  Stream<Either<StoreFailure, Store>> watchSingleStore({
+    @required UniqueId storeId,
+    @required LocationDomain location,
+  }) async* {
+    yield* _firestore.storeCollectionRef.doc(storeId.getOrCrash()).snapshots().map((snap) {
+      if (!snap.exists) {
+        return left<StoreFailure, Store>(StoreFailure.noStore());
+      } else {
+        return right<StoreFailure, Store>(
+            StoreDto.fromFirestore(snap: snap, location: location).toDomain());
+      }
+    }).handleError((err) {
+      // print error onto the console here
+      return left<StoreFailure, Store>(StoreFailure.unexpected());
+    });
+  }
+
+  @override
+  Stream<Either<StoreFailure, Store>> watchOwnedStore({
+    @required UniqueId ownerId,
+    @required LocationDomain location,
+  }) async* {
+    yield* _firestore.storeCollectionRef
+        .where('ownerId', isEqualTo: ownerId)
+        .snapshots()
+        .map((snapshot) {
+      if (snapshot.docs.isEmpty) {
+        return left<StoreFailure, Store>(StoreFailure.noStore());
+      } else {
+        return right<StoreFailure, Store>(snapshot.docs
+            .map(
+              (doc) => StoreDto.fromFirestore(snap: doc, location: location).toDomain(),
+            )
+            .toList()
+            .first);
+      }
+    }).handleError((err) {
+      // log error onto the console here
+      return left<StoreFailure, Store>(StoreFailure.unexpected());
+    });
+  }
+
+  @override
   Stream<Either<StoreFailure, List<Store>>> watchNearbyStore({
     @required double rad,
     @required LocationDomain location,
@@ -51,14 +94,13 @@ class StoreRepository implements IStoreRepository {
         }
         return right<StoreFailure, List<Store>>(
           snapshots.map(
-            (snapshot) {
-              final geoPoint =
-                  snapshot.data()['location']['geopoint'] as GeoPoint;
+            (snap) {
+              final geoPoint = snap.data()['location']['geopoint'] as GeoPoint;
               final distanceAway = location.geoFirePoint.distance(
                 lat: geoPoint.latitude,
                 lng: geoPoint.longitude,
               );
-              return StoreDto.fromFirestore(snapshot)
+              return StoreDto.fromFirestore(snap: snap, location: location)
                   .toDomain()
                   .copyWith(distanceAway: distanceAway.toInt());
             },
@@ -74,24 +116,8 @@ class StoreRepository implements IStoreRepository {
   }
 
   @override
-  Stream<Either<StoreFailure, Store>> watchOwnedStore(String ownerId) async* {
-    yield* _firestore.storeCollectionRef
-        .where('ownerId', isEqualTo: ownerId)
-        .snapshots()
-        .map((snapshot) {
-      if (snapshot.docs.isEmpty) {
-        return left<StoreFailure, Store>(StoreFailure.noStore());
-      }
-      return right<StoreFailure, Store>(snapshot.docs
-          .map(
-            (document) => StoreDto.fromFirestore(document).toDomain(),
-          )
-          .toList()
-          .first);
-    }).handleError((err) {
-      // log error onto the console here
-      return left<StoreFailure, Store>(StoreFailure.unexpected());
-    });
+  void addMoreRadius(double rad) {
+    radius.add(rad);
   }
 
   @override
@@ -114,15 +140,14 @@ class StoreRepository implements IStoreRepository {
   }
 
   @override
-  Future<Either<StoreFailure, Unit>> update(
-      Store store, LocationDomain location) async {
+  Future<Either<StoreFailure, Unit>> update(Store store,
+      {LocationDomain location}) async {
+    return left(StoreFailure.unexpected());
     final jsonData = StoreDto.fromDomain(store).toJson()
-      ..addEntries([MapEntry('location', location.geoFirePoint.data)]);
+      ..addEntries([MapEntry('location', location?.geoFirePoint?.data)]);
 
     try {
-      _firestore.storeCollectionRef
-          .doc(UniqueId().getOrCrash())
-          .update(jsonData);
+      _firestore.storeCollectionRef.doc(store.id.getOrCrash()).update(jsonData);
     } catch (err) {
       return left(StoreFailure.unexpected());
     }
@@ -158,26 +183,5 @@ class StoreRepository implements IStoreRepository {
       // log error here
       return left(StoreFailure.unexpected());
     }
-  }
-
-  @override
-  Stream<Either<StoreFailure, Store>> watchSingleStore(String storeId) async* {
-    yield* _firestore.storeCollectionRef.doc(storeId).snapshots().map((doc) {
-      final hasStore = doc.exists;
-      if (!hasStore) {
-        // print('no store');
-        return left<StoreFailure, Store>(StoreFailure.noStore());
-      }
-      // print('has store');
-      return right<StoreFailure, Store>(StoreDto.fromFirestore(doc).toDomain());
-    }).handleError((err) {
-      // print error onto the console here
-      return left<StoreFailure, Store>(StoreFailure.unexpected());
-    });
-  }
-
-  @override
-  void addMoreRadius(double rad) {
-    radius.add(rad);
   }
 }

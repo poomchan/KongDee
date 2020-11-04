@@ -14,22 +14,21 @@ class _$StoreFormStateTearOff {
 
 // ignore: unused_element
   _StoreFormState call(
-      {@required
-          Store store,
-      @required
-          bool isEditting,
-      @required
-          bool isSaving,
-      @required
-          bool showErrorMessage,
-      @required
-          Option<Either<StoreFailure, Unit>> saveFailureOrSuccessOption}) {
+      {@required Store store,
+      @required bool isEditting,
+      @required bool isSaving,
+      @required bool showErrorMessage,
+      @required Option<Either<StoreFailure, Unit>> saveFailureOrSuccessOption,
+      @required StorePic16 storePicsOnUpload,
+      @required StoreBanner storeBannerOnUpload}) {
     return _StoreFormState(
       store: store,
       isEditting: isEditting,
       isSaving: isSaving,
       showErrorMessage: showErrorMessage,
       saveFailureOrSuccessOption: saveFailureOrSuccessOption,
+      storePicsOnUpload: storePicsOnUpload,
+      storeBannerOnUpload: storeBannerOnUpload,
     );
   }
 }
@@ -43,6 +42,8 @@ mixin _$StoreFormState {
   bool get isSaving;
   bool get showErrorMessage;
   Option<Either<StoreFailure, Unit>> get saveFailureOrSuccessOption;
+  StorePic16 get storePicsOnUpload;
+  StoreBanner get storeBannerOnUpload;
 
   $StoreFormStateCopyWith<StoreFormState> get copyWith;
 }
@@ -56,7 +57,9 @@ abstract class $StoreFormStateCopyWith<$Res> {
       bool isEditting,
       bool isSaving,
       bool showErrorMessage,
-      Option<Either<StoreFailure, Unit>> saveFailureOrSuccessOption});
+      Option<Either<StoreFailure, Unit>> saveFailureOrSuccessOption,
+      StorePic16 storePicsOnUpload,
+      StoreBanner storeBannerOnUpload});
 
   $StoreCopyWith<$Res> get store;
 }
@@ -76,6 +79,8 @@ class _$StoreFormStateCopyWithImpl<$Res>
     Object isSaving = freezed,
     Object showErrorMessage = freezed,
     Object saveFailureOrSuccessOption = freezed,
+    Object storePicsOnUpload = freezed,
+    Object storeBannerOnUpload = freezed,
   }) {
     return _then(_value.copyWith(
       store: store == freezed ? _value.store : store as Store,
@@ -88,6 +93,12 @@ class _$StoreFormStateCopyWithImpl<$Res>
       saveFailureOrSuccessOption: saveFailureOrSuccessOption == freezed
           ? _value.saveFailureOrSuccessOption
           : saveFailureOrSuccessOption as Option<Either<StoreFailure, Unit>>,
+      storePicsOnUpload: storePicsOnUpload == freezed
+          ? _value.storePicsOnUpload
+          : storePicsOnUpload as StorePic16,
+      storeBannerOnUpload: storeBannerOnUpload == freezed
+          ? _value.storeBannerOnUpload
+          : storeBannerOnUpload as StoreBanner,
     ));
   }
 
@@ -113,7 +124,9 @@ abstract class _$StoreFormStateCopyWith<$Res>
       bool isEditting,
       bool isSaving,
       bool showErrorMessage,
-      Option<Either<StoreFailure, Unit>> saveFailureOrSuccessOption});
+      Option<Either<StoreFailure, Unit>> saveFailureOrSuccessOption,
+      StorePic16 storePicsOnUpload,
+      StoreBanner storeBannerOnUpload});
 
   @override
   $StoreCopyWith<$Res> get store;
@@ -136,6 +149,8 @@ class __$StoreFormStateCopyWithImpl<$Res>
     Object isSaving = freezed,
     Object showErrorMessage = freezed,
     Object saveFailureOrSuccessOption = freezed,
+    Object storePicsOnUpload = freezed,
+    Object storeBannerOnUpload = freezed,
   }) {
     return _then(_StoreFormState(
       store: store == freezed ? _value.store : store as Store,
@@ -148,6 +163,12 @@ class __$StoreFormStateCopyWithImpl<$Res>
       saveFailureOrSuccessOption: saveFailureOrSuccessOption == freezed
           ? _value.saveFailureOrSuccessOption
           : saveFailureOrSuccessOption as Option<Either<StoreFailure, Unit>>,
+      storePicsOnUpload: storePicsOnUpload == freezed
+          ? _value.storePicsOnUpload
+          : storePicsOnUpload as StorePic16,
+      storeBannerOnUpload: storeBannerOnUpload == freezed
+          ? _value.storeBannerOnUpload
+          : storeBannerOnUpload as StoreBanner,
     ));
   }
 }
@@ -160,12 +181,16 @@ class _$_StoreFormState
       @required this.isEditting,
       @required this.isSaving,
       @required this.showErrorMessage,
-      @required this.saveFailureOrSuccessOption})
+      @required this.saveFailureOrSuccessOption,
+      @required this.storePicsOnUpload,
+      @required this.storeBannerOnUpload})
       : assert(store != null),
         assert(isEditting != null),
         assert(isSaving != null),
         assert(showErrorMessage != null),
-        assert(saveFailureOrSuccessOption != null);
+        assert(saveFailureOrSuccessOption != null),
+        assert(storePicsOnUpload != null),
+        assert(storeBannerOnUpload != null);
 
   @override
   final Store store;
@@ -177,10 +202,14 @@ class _$_StoreFormState
   final bool showErrorMessage;
   @override
   final Option<Either<StoreFailure, Unit>> saveFailureOrSuccessOption;
+  @override
+  final StorePic16 storePicsOnUpload;
+  @override
+  final StoreBanner storeBannerOnUpload;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'StoreFormState(store: $store, isEditting: $isEditting, isSaving: $isSaving, showErrorMessage: $showErrorMessage, saveFailureOrSuccessOption: $saveFailureOrSuccessOption)';
+    return 'StoreFormState(store: $store, isEditting: $isEditting, isSaving: $isSaving, showErrorMessage: $showErrorMessage, saveFailureOrSuccessOption: $saveFailureOrSuccessOption, storePicsOnUpload: $storePicsOnUpload, storeBannerOnUpload: $storeBannerOnUpload)';
   }
 
   @override
@@ -193,7 +222,9 @@ class _$_StoreFormState
       ..add(DiagnosticsProperty('isSaving', isSaving))
       ..add(DiagnosticsProperty('showErrorMessage', showErrorMessage))
       ..add(DiagnosticsProperty(
-          'saveFailureOrSuccessOption', saveFailureOrSuccessOption));
+          'saveFailureOrSuccessOption', saveFailureOrSuccessOption))
+      ..add(DiagnosticsProperty('storePicsOnUpload', storePicsOnUpload))
+      ..add(DiagnosticsProperty('storeBannerOnUpload', storeBannerOnUpload));
   }
 
   @override
@@ -215,7 +246,13 @@ class _$_StoreFormState
                     saveFailureOrSuccessOption) ||
                 const DeepCollectionEquality().equals(
                     other.saveFailureOrSuccessOption,
-                    saveFailureOrSuccessOption)));
+                    saveFailureOrSuccessOption)) &&
+            (identical(other.storePicsOnUpload, storePicsOnUpload) ||
+                const DeepCollectionEquality()
+                    .equals(other.storePicsOnUpload, storePicsOnUpload)) &&
+            (identical(other.storeBannerOnUpload, storeBannerOnUpload) ||
+                const DeepCollectionEquality()
+                    .equals(other.storeBannerOnUpload, storeBannerOnUpload)));
   }
 
   @override
@@ -225,7 +262,9 @@ class _$_StoreFormState
       const DeepCollectionEquality().hash(isEditting) ^
       const DeepCollectionEquality().hash(isSaving) ^
       const DeepCollectionEquality().hash(showErrorMessage) ^
-      const DeepCollectionEquality().hash(saveFailureOrSuccessOption);
+      const DeepCollectionEquality().hash(saveFailureOrSuccessOption) ^
+      const DeepCollectionEquality().hash(storePicsOnUpload) ^
+      const DeepCollectionEquality().hash(storeBannerOnUpload);
 
   @override
   _$StoreFormStateCopyWith<_StoreFormState> get copyWith =>
@@ -234,17 +273,13 @@ class _$_StoreFormState
 
 abstract class _StoreFormState implements StoreFormState {
   const factory _StoreFormState(
-          {@required
-              Store store,
-          @required
-              bool isEditting,
-          @required
-              bool isSaving,
-          @required
-              bool showErrorMessage,
-          @required
-              Option<Either<StoreFailure, Unit>> saveFailureOrSuccessOption}) =
-      _$_StoreFormState;
+      {@required Store store,
+      @required bool isEditting,
+      @required bool isSaving,
+      @required bool showErrorMessage,
+      @required Option<Either<StoreFailure, Unit>> saveFailureOrSuccessOption,
+      @required StorePic16 storePicsOnUpload,
+      @required StoreBanner storeBannerOnUpload}) = _$_StoreFormState;
 
   @override
   Store get store;
@@ -256,6 +291,10 @@ abstract class _StoreFormState implements StoreFormState {
   bool get showErrorMessage;
   @override
   Option<Either<StoreFailure, Unit>> get saveFailureOrSuccessOption;
+  @override
+  StorePic16 get storePicsOnUpload;
+  @override
+  StoreBanner get storeBannerOnUpload;
   @override
   _$StoreFormStateCopyWith<_StoreFormState> get copyWith;
 }
