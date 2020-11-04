@@ -6,6 +6,7 @@ import 'package:fluttertaladsod/domain/core/value_objects.dart';
 import 'package:fluttertaladsod/domain/location/location.dart';
 import 'package:fluttertaladsod/domain/store/store.dart';
 import 'package:fluttertaladsod/domain/store/store_failures.dart';
+import 'package:rxdart/rxdart.dart';
 
 abstract class IStoreRepository {
   Stream<Either<StoreFailure, Store>> watchOwnedStore({
@@ -15,14 +16,13 @@ abstract class IStoreRepository {
   Stream<Either<StoreFailure, List<Store>>> watchNearbyStore({
     @required double rad,
     @required LocationDomain location,
+    @required BehaviorSubject<double> radius,
   });
 
   Stream<Either<StoreFailure, Store>> watchSingleStore({
     @required UniqueId storeId,
     @required LocationDomain location,
   });
-
-  void addMoreRadius(double rad);
 
   Future<Either<StoreFailure, String>> uploadFileImage(File img, String path);
 

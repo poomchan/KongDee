@@ -6,8 +6,6 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fluttertaladsod/application/home/store_feed/nearby/store_near_cubit.dart';
-import 'package:fluttertaladsod/application/store/store_own_watcher/owned_store_watcher_cubit.dart';
 import 'package:geoflutterfire/geoflutterfire.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
@@ -33,9 +31,11 @@ import 'infrastucture/location/location_injectable_modules.dart';
 import 'application/location/permission/location_permission_cubit.dart';
 import 'infrastucture/location/location_repository.dart';
 import 'infrastucture/chat/message_repository.dart';
+import 'application/store/store_own_watcher/owned_store_watcher_cubit.dart';
 import 'application/store/chat/watcher/store_chat_watcher_cubit.dart';
 import 'application/store/store_form/store_form_cubit.dart';
 import 'application/store/store_form/store_form_location/store_form_location_cubit.dart';
+import 'application/home/store_feed/nearby/store_near_cubit.dart';
 import 'infrastucture/store/store_repository.dart';
 import 'application/store/store_view/store_view_cubit.dart';
 
@@ -96,7 +96,8 @@ GetIt $initGetIt(
       registerFor: {_prod});
   gh.factory<StoreFormLocationCubit>(
       () => StoreFormLocationCubit(get<ILocationRepository>()));
-  gh.factory<StoreNearCubit>(() => StoreNearCubit(get<IStoreRepository>()));
+  gh.factory<StoreNearCubit>(() =>
+      StoreNearCubit(get<IStoreRepository>(), get<ILocationRepository>()));
   gh.factory<StoreViewCubit>(() =>
       StoreViewCubit(get<IStoreRepository>(), get<ILocationRepository>()));
   return get;

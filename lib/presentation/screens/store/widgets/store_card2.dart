@@ -19,23 +19,27 @@ class StoreCard2 extends StatelessWidget {
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
         clipBehavior: Clip.hardEdge,
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Stack(children: [
-              SizedBox(
-                height: 100.0,
-                child: MyNetworkImage(imageUrl: store.banner.url),
+            SizedBox(
+              height: 130.0,
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                  MyNetworkImage(imageUrl: store.banner.url),
+                  Positioned(
+                      bottom: 8.0,
+                      right: 8.0,
+                      child: Card(
+                        child: Padding(
+                          padding: const EdgeInsets.all(3.0),
+                          child: Text('${store.distanceAway.toString()} km'),
+                        ),
+                      )),
+                ],
               ),
-              Positioned(
-                  bottom: 8.0,
-                  right: 8.0,
-                  child: Card(
-                    child: Padding(
-                      padding: const EdgeInsets.all(3.0),
-                      child: Text('${store.distanceAway.toString()} km'),
-                    ),
-                  )),
-            ]),
+            ),
             Text(store.name.getOrCrash()),
             Text(store.formattedAddress),
           ],

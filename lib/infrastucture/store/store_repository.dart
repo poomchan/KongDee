@@ -21,9 +21,55 @@ class StoreRepository implements IStoreRepository {
   final FirebaseFirestore _firestore;
   final StorageReference _storage;
   final Geoflutterfire _geo;
-  final radius = BehaviorSubject<double>.seeded(0.0);
 
   StoreRepository(this._firestore, this._storage, this._geo);
+
+  @override
+  Stream<Either<StoreFailure, List<Store>>> watchNearbyStore({
+    @required double rad,
+    @required LocationDomain location,
+    @required BehaviorSubject<double> radius,
+  }) async* {
+    assert(rad != null);
+    assert(location != null);
+
+    yield* radius
+        .switchMap((rad) => _geo
+            .collection(collectionRef: _firestore.storeCollectionRef)
+            .within(
+              center: location.geoFirePoint,
+              radius: rad,
+              field: 'location',
+              strictMode: true,
+            ))
+        .map(
+      (snapshots) {
+        if (snapshots.isEmpty) {
+          return left<StoreFailure, List<Store>>(StoreFailure.noStore());
+        }
+        print('store repo: returning stores');
+        return right<StoreFailure, List<Store>>(
+          snapshots.map(
+            (snap) {
+              final geoPoint = snap.data()['location']['geopoint'] as GeoPoint;
+              final distanceAway = location.geoFirePoint.distance(
+                lat: geoPoint.latitude,
+                lng: geoPoint.longitude,
+              );
+              return StoreDto.fromFirestore(snap: snap, location: location)
+                  .toDomain()
+                  .copyWith(distanceAway: distanceAway.toInt());
+            },
+          ).toList(),
+        );
+      },
+    ).handleError(
+      (err) {
+        // log error onto the console here
+        return left<StoreFailure, List<Store>>(StoreFailure.unexpected());
+      },
+    );
+  }
 
   @override
   Stream<Either<StoreFailure, Store>> watchSingleStore({
@@ -66,58 +112,6 @@ class StoreRepository implements IStoreRepository {
       // log error onto the console here
       return left<StoreFailure, Store>(StoreFailure.unexpected());
     });
-  }
-
-  @override
-  Stream<Either<StoreFailure, List<Store>>> watchNearbyStore({
-    @required double rad,
-    @required LocationDomain location,
-  }) async* {
-    assert(rad != null);
-    assert(location != null);
-
-    radius.add(rad);
-
-    yield* radius
-        .switchMap((rad) => _geo
-            .collection(collectionRef: _firestore.storeCollectionRef)
-            .within(
-              center: location.geoFirePoint,
-              radius: rad,
-              field: 'location',
-              strictMode: true,
-            ))
-        .map(
-      (snapshots) {
-        if (snapshots.isEmpty) {
-          return left<StoreFailure, List<Store>>(StoreFailure.noStore());
-        }
-        return right<StoreFailure, List<Store>>(
-          snapshots.map(
-            (snap) {
-              final geoPoint = snap.data()['location']['geopoint'] as GeoPoint;
-              final distanceAway = location.geoFirePoint.distance(
-                lat: geoPoint.latitude,
-                lng: geoPoint.longitude,
-              );
-              return StoreDto.fromFirestore(snap: snap, location: location)
-                  .toDomain()
-                  .copyWith(distanceAway: distanceAway.toInt());
-            },
-          ).toList(),
-        );
-      },
-    ).handleError(
-      (err) {
-        // log error onto the console here
-        return left<StoreFailure, List<Store>>(StoreFailure.unexpected());
-      },
-    );
-  }
-
-  @override
-  void addMoreRadius(double rad) {
-    radius.add(rad);
   }
 
   @override
