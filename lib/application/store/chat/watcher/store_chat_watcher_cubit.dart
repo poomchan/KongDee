@@ -31,8 +31,8 @@ class StoreChatWatcherCubit extends Cubit<StoreChatWatcherState> {
           (f) => emit(
             StoreChatWatcherState.failure(f),
           ),
-          (chats) async {
-            chatList = await _filterChats(chats);
+          (chatList) async {
+            this.chatList = await _filterChats(chatList);
             // fake state (i'm lazy to extend equatable on the chatList)
             emit(StoreChatWatcherState.inital());
             emit(StoreChatWatcherState.loaded(chatList));
@@ -54,9 +54,9 @@ class StoreChatWatcherCubit extends Cubit<StoreChatWatcherState> {
         } else {
           emit(StoreChatWatcherState.failure(f));
         }
-      }, (chats) async {
-        final List<MessageDomain> newChats = await _filterChats(chats);
-        chatList.insertAll(0, newChats);
+      }, (chatList) async {
+        final List<MessageDomain> newChats = await _filterChats(chatList);
+        this.chatList.insertAll(0, newChats);
         emit(StoreChatWatcherState.loaded(chatList));
       });
     });

@@ -1,11 +1,8 @@
 import 'dart:io';
-
 import 'package:dartz/dartz.dart';
-import 'package:flutter/foundation.dart';
 import 'package:fluttertaladsod/domain/core/value_failures.dart';
 import 'package:fluttertaladsod/domain/core/value_objects.dart';
 import 'package:fluttertaladsod/domain/core/value_validators.dart';
-import 'package:geoflutterfire/geoflutterfire.dart';
 
 class StoreName extends ValueObject<String> {
   @override

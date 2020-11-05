@@ -26,49 +26,50 @@ class StoreRepository implements IStoreRepository {
 
   @override
   Stream<Either<StoreFailure, List<Store>>> watchNearbyStore({
-    @required double rad,
     @required LocationDomain location,
-    @required BehaviorSubject<double> radius,
+    @required BehaviorSubject<double> rad,
   }) async* {
-    assert(rad != null);
-    assert(location != null);
 
-    yield* radius
-        .switchMap((rad) => _geo
-            .collection(collectionRef: _firestore.storeCollectionRef)
-            .within(
-              center: location.geoFirePoint,
-              radius: rad,
-              field: 'location',
-              strictMode: true,
-            ))
-        .map(
-      (snapshots) {
-        if (snapshots.isEmpty) {
-          return left<StoreFailure, List<Store>>(StoreFailure.noStore());
-        }
-        print('store repo: returning stores');
-        return right<StoreFailure, List<Store>>(
-          snapshots.map(
-            (snap) {
-              final geoPoint = snap.data()['location']['geopoint'] as GeoPoint;
-              final distanceAway = location.geoFirePoint.distance(
-                lat: geoPoint.latitude,
-                lng: geoPoint.longitude,
+    yield* rad
+        .switchMap((rad) {
+          print('repo: radius = $rad');
+          return _geo
+              .collection(collectionRef: _firestore.storeCollectionRef)
+              .within(
+                center: location.geoFirePoint,
+                radius: rad,
+                field: 'location',
+                strictMode: true,
               );
-              return StoreDto.fromFirestore(snap: snap, location: location)
-                  .toDomain()
-                  .copyWith(distanceAway: distanceAway.toInt());
-            },
-          ).toList(),
+        })
+        .map(
+          (snapshots) {
+            if (snapshots.isEmpty) {
+              return left<StoreFailure, List<Store>>(StoreFailure.noStore());
+            }
+            return right<StoreFailure, List<Store>>(
+              snapshots.map(
+                (snap) {
+                  final geoPoint =
+                      snap.data()['location']['geopoint'] as GeoPoint;
+                  final distanceAway = location.geoFirePoint.distance(
+                    lat: geoPoint.latitude,
+                    lng: geoPoint.longitude,
+                  );
+                  return StoreDto.fromFirestore(snap: snap, location: location)
+                      .toDomain()
+                      .copyWith(distanceAway: distanceAway.toInt());
+                },
+              ).toList(),
+            );
+          },
+        )
+        .handleError(
+          (err) {
+            // log error onto the console here
+            return left<StoreFailure, List<Store>>(StoreFailure.unexpected());
+          },
         );
-      },
-    ).handleError(
-      (err) {
-        // log error onto the console here
-        return left<StoreFailure, List<Store>>(StoreFailure.unexpected());
-      },
-    );
   }
 
   @override
@@ -76,7 +77,10 @@ class StoreRepository implements IStoreRepository {
     @required UniqueId storeId,
     @required LocationDomain location,
   }) async* {
-    yield* _firestore.storeCollectionRef.doc(storeId.getOrCrash()).snapshots().map((snap) {
+    yield* _firestore.storeCollectionRef
+        .doc(storeId.getOrCrash())
+        .snapshots()
+        .map((snap) {
       if (!snap.exists) {
         return left<StoreFailure, Store>(StoreFailure.noStore());
       } else {
@@ -103,7 +107,8 @@ class StoreRepository implements IStoreRepository {
       } else {
         return right<StoreFailure, Store>(snapshot.docs
             .map(
-              (doc) => StoreDto.fromFirestore(snap: doc, location: location).toDomain(),
+              (doc) => StoreDto.fromFirestore(snap: doc, location: location)
+                  .toDomain(),
             )
             .toList()
             .first);

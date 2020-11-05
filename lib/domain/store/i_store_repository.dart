@@ -6,7 +6,7 @@ import 'package:fluttertaladsod/domain/core/value_objects.dart';
 import 'package:fluttertaladsod/domain/location/location.dart';
 import 'package:fluttertaladsod/domain/store/store.dart';
 import 'package:fluttertaladsod/domain/store/store_failures.dart';
-import 'package:rxdart/rxdart.dart';
+import 'package:rxdart/subjects.dart';
 
 abstract class IStoreRepository {
   Stream<Either<StoreFailure, Store>> watchOwnedStore({
@@ -14,9 +14,8 @@ abstract class IStoreRepository {
     @required LocationDomain location,
   });
   Stream<Either<StoreFailure, List<Store>>> watchNearbyStore({
-    @required double rad,
     @required LocationDomain location,
-    @required BehaviorSubject<double> radius,
+    @required BehaviorSubject<double> rad,
   });
 
   Stream<Either<StoreFailure, Store>> watchSingleStore({

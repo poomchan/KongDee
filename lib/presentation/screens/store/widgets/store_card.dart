@@ -1,9 +1,7 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertaladsod/domain/store/store.dart';
 import 'package:fluttertaladsod/presentation/core/components/my_network_image.dart';
-import 'package:fluttertaladsod/presentation/core/components/progress_indicator.dart';
 import 'package:fluttertaladsod/presentation/core/theme.dart';
 import 'package:fluttertaladsod/presentation/routes/router.gr.dart';
 

@@ -1,29 +1,38 @@
 import 'package:bloc/bloc.dart';
+import 'package:dartz/dartz.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertaladsod/application/home/store_feed/nearby/store_list.dart';
 import 'package:fluttertaladsod/domain/location/i_location_repository.dart';
 import 'package:fluttertaladsod/domain/store/i_store_repository.dart';
 import 'package:fluttertaladsod/domain/store/store.dart';
 import 'package:fluttertaladsod/domain/store/store_failures.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
-import 'package:rxdart/rxdart.dart';
+import 'package:rxdart/subjects.dart';
 
 part 'store_near_cubit.freezed.dart';
 part 'store_near_state.dart';
 
 @injectable
 class StoreNearCubit extends Cubit<StoreNearState> {
-  
   final IStoreRepository _iStoreRepository;
   final ILocationRepository _iLocationRepository;
-  final radius = BehaviorSubject<double>.seeded(1.0);
-  List<Store> storeList = [];
 
-  StoreNearCubit(this._iStoreRepository, this._iLocationRepository) : super(_Initial());
+  final radiusSubject = BehaviorSubject<double>.seeded(1.0);
+  final deepEq = const DeepCollectionEquality();
 
-  Future<void> watchNearbyStore(BuildContext context) async {
-    emit(StoreNearState.loading(storeList));
+  Stream<Either<StoreFailure, List<Store>>> storeStream;
+
+  static const initRad = 1.0;
+  double rad = 1;
+  StoreList storeList = StoreList.empty();
+
+  StoreNearCubit(this._iStoreRepository, this._iLocationRepository)
+      : super(_Initial());
+
+  Future<void> watchNearbyStore() async {
+    emit(StoreNearState.loading(storeList.value));
 
     final locationOption = await _iLocationRepository.getLocation();
     final location = locationOption.getOrElse(() => null);
@@ -33,30 +42,61 @@ class StoreNearCubit extends Cubit<StoreNearState> {
       return;
     }
 
-    _iStoreRepository
-        .watchNearbyStore(rad: 1.0, location: location, radius: radius)
-        .listen((failureOrStoreList) {
+    storeStream = _iStoreRepository
+        .watchNearbyStore(location: location, rad: radiusSubject)
+        .asBroadcastStream();
+
+    storeStream.listen((failureOrStoreList) {
       failureOrStoreList.fold(
         (f) => emit(StoreNearState.failure(f)),
         (storeList) {
-          if (storeList.length > this.storeList.length) {
-            this.storeList = storeList;
-            emit(StoreNearState.loaded(this.storeList));
-          }
+          // print('CUBIT: storeCount: ${storeList.length}');
+          this.storeList = StoreList.fromList(storeList);
+          emit(StoreNearState.loaded(this.storeList.value, rad));
         },
       );
     });
   }
 
-  Future<void> requestMoreRadius({bool isLoading = true}) async {
-    if (isLoading) emit(StoreNearState.loading(this.storeList));
-    radius.add(1.0);
-    print('bloc: adding radius');
+  Future<void> requestMoreRadius() async {
+    emit(StoreNearState.loading(storeList.value));
+
+    // _foundStoresStream().listen((failOrFound) {
+    //   failOrFound.fold(
+    //     (fail) => null,
+    //     (found) {
+    //       if (!found) {
+    //         rad += 0.5;
+    //         radiusSubject.add(rad);
+    //       }
+    //     },
+    //   );
+    // });
+    rad += 0.5;
+    radiusSubject.add(rad);
+  }
+
+  Stream<Either<StoreFailure, bool>> _foundStoresStream() async* {
+    yield* storeStream.map((fOrStoreList) {
+      return fOrStoreList.fold(
+        (f) => left<StoreFailure, bool>(f),
+        (storeList) {
+          final isEqual = StoreList.fromList(storeList) == this.storeList;
+          // print(isEqual);
+          return right<StoreFailure, bool>(isEqual);
+        },
+      );
+    });
+  }
+
+  Future<void> drainRadius() async {
+    rad = initRad;
+    radiusSubject.add(rad);
   }
 
   @override
   Future<void> close() {
-    radius.close();
+    radiusSubject.close();
     return super.close();
   }
 }

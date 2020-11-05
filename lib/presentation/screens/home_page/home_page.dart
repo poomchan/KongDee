@@ -16,7 +16,7 @@ class HomePage extends StatelessWidget {
           create: (context) => getIt<LocationCubit>()..getUserLocation(),
         ),
         BlocProvider<StoreNearCubit>(
-          create: (context) => getIt<StoreNearCubit>(),
+          create: (context) => getIt<StoreNearCubit>()..watchNearbyStore(),
         ),
       ],
       child: HomePageScaffold(),
@@ -42,28 +42,43 @@ class HomePageScaffold extends StatelessWidget {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(10.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Stores close to you',
-                style: TextStyle(fontSize: 25.0),
-              ),
-              SizedBox(height: 10.0),
-              Divider(height: 0.0),
-              BlocBuilder<LocationCubit, LocationState>(
-                builder: (context, state) => state.map(
-                  inital: (state) => circularProgress(context),
-                  getting: (state) => circularProgress(context),
-                  success: (state) => NearStoreFeed(),
-                  failure: (state) => OutlineButton(
-                    onPressed: () =>
-                        context.bloc<LocationCubit>().getUserLocation(),
-                    child: Text('Please enable location'),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                BlocBuilder<LocationCubit, LocationState>(
+                  builder: (context, state) => state.map(
+                    inital: (state) => circularProgress(context),
+                    getting: (state) => circularProgress(context),
+                    success: (state) => NearStoreFeed(),
+                    failure: (state) => OutlineButton(
+                      onPressed: () =>
+                          context.bloc<LocationCubit>().getUserLocation(),
+                      child: Text('Please enable location'),
+                    ),
                   ),
                 ),
-              ),
-            ],
+                ButtonBar(
+                  children: [
+                    BlocBuilder<StoreNearCubit, StoreNearState>(
+                      builder: (context, state) => state.maybeMap(
+                        loaded: (state) => Text('Searched in ${state.rad} km'),
+                        orElse: () => const SizedBox(height: 10.0 + 4.0),
+                      ),
+                    ),
+                    RaisedButton(
+                      onPressed: () =>
+                          context.bloc<StoreNearCubit>().requestMoreRadius(),
+                      child: Text('Add Radius'),
+                    ),
+                    RaisedButton(
+                      onPressed: () =>
+                          context.bloc<StoreNearCubit>().drainRadius(),
+                      child: Text('Drain Radius'),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),

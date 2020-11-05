@@ -25,9 +25,10 @@ class _$StoreNearStateTearOff {
   }
 
 // ignore: unused_element
-  _Loaded loaded(List<Store> storeList) {
+  _Loaded loaded(List<Store> storeList, double rad) {
     return _Loaded(
       storeList,
+      rad,
     );
   }
 
@@ -47,14 +48,14 @@ mixin _$StoreNearState {
   Result when<Result extends Object>({
     @required Result inital(),
     @required Result loading(List<Store> previousStoreList),
-    @required Result loaded(List<Store> storeList),
+    @required Result loaded(List<Store> storeList, double rad),
     @required Result failure(StoreFailure f),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result inital(),
     Result loading(List<Store> previousStoreList),
-    Result loaded(List<Store> storeList),
+    Result loaded(List<Store> storeList, double rad),
     Result failure(StoreFailure f),
     @required Result orElse(),
   });
@@ -125,7 +126,7 @@ class _$_Initial implements _Initial {
   Result when<Result extends Object>({
     @required Result inital(),
     @required Result loading(List<Store> previousStoreList),
-    @required Result loaded(List<Store> storeList),
+    @required Result loaded(List<Store> storeList, double rad),
     @required Result failure(StoreFailure f),
   }) {
     assert(inital != null);
@@ -140,7 +141,7 @@ class _$_Initial implements _Initial {
   Result maybeWhen<Result extends Object>({
     Result inital(),
     Result loading(List<Store> previousStoreList),
-    Result loaded(List<Store> storeList),
+    Result loaded(List<Store> storeList, double rad),
     Result failure(StoreFailure f),
     @required Result orElse(),
   }) {
@@ -247,7 +248,7 @@ class _$_Loading implements _Loading {
   Result when<Result extends Object>({
     @required Result inital(),
     @required Result loading(List<Store> previousStoreList),
-    @required Result loaded(List<Store> storeList),
+    @required Result loaded(List<Store> storeList, double rad),
     @required Result failure(StoreFailure f),
   }) {
     assert(inital != null);
@@ -262,7 +263,7 @@ class _$_Loading implements _Loading {
   Result maybeWhen<Result extends Object>({
     Result inital(),
     Result loading(List<Store> previousStoreList),
-    Result loaded(List<Store> storeList),
+    Result loaded(List<Store> storeList, double rad),
     Result failure(StoreFailure f),
     @required Result orElse(),
   }) {
@@ -315,7 +316,7 @@ abstract class _Loading implements StoreNearState {
 abstract class _$LoadedCopyWith<$Res> {
   factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) then) =
       __$LoadedCopyWithImpl<$Res>;
-  $Res call({List<Store> storeList});
+  $Res call({List<Store> storeList, double rad});
 }
 
 class __$LoadedCopyWithImpl<$Res> extends _$StoreNearStateCopyWithImpl<$Res>
@@ -329,22 +330,28 @@ class __$LoadedCopyWithImpl<$Res> extends _$StoreNearStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object storeList = freezed,
+    Object rad = freezed,
   }) {
     return _then(_Loaded(
       storeList == freezed ? _value.storeList : storeList as List<Store>,
+      rad == freezed ? _value.rad : rad as double,
     ));
   }
 }
 
 class _$_Loaded implements _Loaded {
-  const _$_Loaded(this.storeList) : assert(storeList != null);
+  const _$_Loaded(this.storeList, this.rad)
+      : assert(storeList != null),
+        assert(rad != null);
 
   @override
   final List<Store> storeList;
+  @override
+  final double rad;
 
   @override
   String toString() {
-    return 'StoreNearState.loaded(storeList: $storeList)';
+    return 'StoreNearState.loaded(storeList: $storeList, rad: $rad)';
   }
 
   @override
@@ -353,12 +360,16 @@ class _$_Loaded implements _Loaded {
         (other is _Loaded &&
             (identical(other.storeList, storeList) ||
                 const DeepCollectionEquality()
-                    .equals(other.storeList, storeList)));
+                    .equals(other.storeList, storeList)) &&
+            (identical(other.rad, rad) ||
+                const DeepCollectionEquality().equals(other.rad, rad)));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(storeList);
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(storeList) ^
+      const DeepCollectionEquality().hash(rad);
 
   @override
   _$LoadedCopyWith<_Loaded> get copyWith =>
@@ -369,14 +380,14 @@ class _$_Loaded implements _Loaded {
   Result when<Result extends Object>({
     @required Result inital(),
     @required Result loading(List<Store> previousStoreList),
-    @required Result loaded(List<Store> storeList),
+    @required Result loaded(List<Store> storeList, double rad),
     @required Result failure(StoreFailure f),
   }) {
     assert(inital != null);
     assert(loading != null);
     assert(loaded != null);
     assert(failure != null);
-    return loaded(storeList);
+    return loaded(storeList, rad);
   }
 
   @override
@@ -384,13 +395,13 @@ class _$_Loaded implements _Loaded {
   Result maybeWhen<Result extends Object>({
     Result inital(),
     Result loading(List<Store> previousStoreList),
-    Result loaded(List<Store> storeList),
+    Result loaded(List<Store> storeList, double rad),
     Result failure(StoreFailure f),
     @required Result orElse(),
   }) {
     assert(orElse != null);
     if (loaded != null) {
-      return loaded(storeList);
+      return loaded(storeList, rad);
     }
     return orElse();
   }
@@ -428,9 +439,10 @@ class _$_Loaded implements _Loaded {
 }
 
 abstract class _Loaded implements StoreNearState {
-  const factory _Loaded(List<Store> storeList) = _$_Loaded;
+  const factory _Loaded(List<Store> storeList, double rad) = _$_Loaded;
 
   List<Store> get storeList;
+  double get rad;
   _$LoadedCopyWith<_Loaded> get copyWith;
 }
 
@@ -502,7 +514,7 @@ class _$_Failure implements _Failure {
   Result when<Result extends Object>({
     @required Result inital(),
     @required Result loading(List<Store> previousStoreList),
-    @required Result loaded(List<Store> storeList),
+    @required Result loaded(List<Store> storeList, double rad),
     @required Result failure(StoreFailure f),
   }) {
     assert(inital != null);
@@ -517,7 +529,7 @@ class _$_Failure implements _Failure {
   Result maybeWhen<Result extends Object>({
     Result inital(),
     Result loading(List<Store> previousStoreList),
-    Result loaded(List<Store> storeList),
+    Result loaded(List<Store> storeList, double rad),
     Result failure(StoreFailure f),
     @required Result orElse(),
   }) {
