@@ -6,6 +6,7 @@ import 'package:fluttertaladsod/domain/core/value_objects.dart';
 import 'package:fluttertaladsod/injection.dart';
 import 'package:fluttertaladsod/presentation/routes/router.gr.dart';
 import 'package:fluttertaladsod/presentation/screens/store/view_page/widgets/banner_appbar2.dart';
+import 'package:fluttertaladsod/presentation/screens/store/view_page/widgets/console.dart';
 import 'package:fluttertaladsod/presentation/screens/store/view_page/widgets/edit_store_button.dart';
 import 'package:fluttertaladsod/presentation/screens/store/view_page/widgets/image_view.dart';
 import 'package:fluttertaladsod/presentation/screens/store/view_page/widgets/menu_view.dart';
@@ -59,16 +60,8 @@ class StoreFormScaffold extends StatelessWidget {
                   width: screenWidth,
                   child: Column(
                     children: [
-                      ButtonBar(
-                        alignment: MainAxisAlignment.spaceEvenly,
-                        mainAxisSize: MainAxisSize.max,
-                        overflowDirection: VerticalDirection.down,
-                        overflowButtonSpacing: 10.0,
-                        children: const [
-                          EditStoreButton(),
-                          StoreSettingButton(),
-                        ],
-                      ),
+                      Console(),
+                      SizedBox(height: 10.0),
                       NameView(),
                       SizedBox(height: 10.0),
                       MenuView(),

@@ -32,12 +32,30 @@ class NearStoreFeed extends StatelessWidget {
             loaded: (state) => _buildFeed(context, storeList: state.storeList),
           ),
         ),
+        ButtonBar(
+          children: [
+            BlocBuilder<StoreNearCubit, StoreNearState>(
+              builder: (context, state) => state.maybeMap(
+                loaded: (state) => Text('Searched in ${state.rad} km'),
+                orElse: () => const SizedBox(height: 10.0 + 4.0),
+              ),
+            ),
+            RaisedButton(
+              onPressed: () =>
+                  context.bloc<StoreNearCubit>().requestMoreRadius(),
+              child: Text('Add Radius'),
+            ),
+            RaisedButton(
+              onPressed: () => context.bloc<StoreNearCubit>().drainRadius(),
+              child: Text('Drain Radius'),
+            ),
+          ],
+        ),
       ],
     );
   }
 
-  Widget _buildFeed(BuildContext context,
-      {@required List<Store> storeList}) {
+  Widget _buildFeed(BuildContext context, {@required List<Store> storeList}) {
     return GridView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),

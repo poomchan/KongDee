@@ -30,7 +30,7 @@ class EditStoreButton extends StatelessWidget {
               vertical: 10.0,
               horizontal: 10.0,
             ),
-            child: Text('Edit store'),
+            child: Text('Edit Store Appearance'),
           ),
         );
       },

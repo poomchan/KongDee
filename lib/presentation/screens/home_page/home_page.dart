@@ -57,26 +57,6 @@ class HomePageScaffold extends StatelessWidget {
                     ),
                   ),
                 ),
-                ButtonBar(
-                  children: [
-                    BlocBuilder<StoreNearCubit, StoreNearState>(
-                      builder: (context, state) => state.maybeMap(
-                        loaded: (state) => Text('Searched in ${state.rad} km'),
-                        orElse: () => const SizedBox(height: 10.0 + 4.0),
-                      ),
-                    ),
-                    RaisedButton(
-                      onPressed: () =>
-                          context.bloc<StoreNearCubit>().requestMoreRadius(),
-                      child: Text('Add Radius'),
-                    ),
-                    RaisedButton(
-                      onPressed: () =>
-                          context.bloc<StoreNearCubit>().drainRadius(),
-                      child: Text('Drain Radius'),
-                    ),
-                  ],
-                ),
               ],
             ),
           ),
