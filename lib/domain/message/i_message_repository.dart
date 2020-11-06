@@ -8,9 +8,11 @@ import 'message.dart';
 abstract class IMessageRepository {
   Stream<Either<MessageFailure, List<MessageDomain>>> watchMessages({
     @required UniqueId storeId,
+    @required UniqueId viewerId, // to see that isSender or not
   });
-  Stream<Either<MessageFailure, List<MessageDomain>>> watchMoreMessages({
+  Future<Either<MessageFailure, List<MessageDomain>>> fetchMoreMessages({
     @required UniqueId storeId,
+    @required UniqueId viewerId, // to see that isSender or not
   });
   Future<Either<MessageFailure, Unit>> uploadMessage({
     @required UniqueId storeId,
@@ -20,4 +22,6 @@ abstract class IMessageRepository {
     @required UniqueId storeId,
     @required UniqueId chatId,
   });
+
+  void clearState();
 }

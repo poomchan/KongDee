@@ -23,8 +23,13 @@ class _$MessageFailureTearOff {
   }
 
 // ignore: unused_element
-  _EmptyChat emtyChat() {
-    return const _EmptyChat();
+  _NoSuchMessage noSuchMessage() {
+    return const _NoSuchMessage();
+  }
+
+// ignore: unused_element
+  _EmptyChatRoom emptyChatRoom() {
+    return const _EmptyChatRoom();
   }
 }
 
@@ -36,26 +41,30 @@ mixin _$MessageFailure {
   Result when<Result extends Object>({
     @required Result unexpected(),
     @required Result severFailure(),
-    @required Result emtyChat(),
+    @required Result noSuchMessage(),
+    @required Result emptyChatRoom(),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result unexpected(),
     Result severFailure(),
-    Result emtyChat(),
+    Result noSuchMessage(),
+    Result emptyChatRoom(),
     @required Result orElse(),
   });
   @optionalTypeArgs
   Result map<Result extends Object>({
     @required Result unexpected(_Unexpected value),
     @required Result severFailure(_SeverFailure value),
-    @required Result emtyChat(_EmptyChat value),
+    @required Result noSuchMessage(_NoSuchMessage value),
+    @required Result emptyChatRoom(_EmptyChatRoom value),
   });
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
     Result unexpected(_Unexpected value),
     Result severFailure(_SeverFailure value),
-    Result emtyChat(_EmptyChat value),
+    Result noSuchMessage(_NoSuchMessage value),
+    Result emptyChatRoom(_EmptyChatRoom value),
     @required Result orElse(),
   });
 }
@@ -112,11 +121,13 @@ class _$_Unexpected implements _Unexpected {
   Result when<Result extends Object>({
     @required Result unexpected(),
     @required Result severFailure(),
-    @required Result emtyChat(),
+    @required Result noSuchMessage(),
+    @required Result emptyChatRoom(),
   }) {
     assert(unexpected != null);
     assert(severFailure != null);
-    assert(emtyChat != null);
+    assert(noSuchMessage != null);
+    assert(emptyChatRoom != null);
     return unexpected();
   }
 
@@ -125,7 +136,8 @@ class _$_Unexpected implements _Unexpected {
   Result maybeWhen<Result extends Object>({
     Result unexpected(),
     Result severFailure(),
-    Result emtyChat(),
+    Result noSuchMessage(),
+    Result emptyChatRoom(),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -140,11 +152,13 @@ class _$_Unexpected implements _Unexpected {
   Result map<Result extends Object>({
     @required Result unexpected(_Unexpected value),
     @required Result severFailure(_SeverFailure value),
-    @required Result emtyChat(_EmptyChat value),
+    @required Result noSuchMessage(_NoSuchMessage value),
+    @required Result emptyChatRoom(_EmptyChatRoom value),
   }) {
     assert(unexpected != null);
     assert(severFailure != null);
-    assert(emtyChat != null);
+    assert(noSuchMessage != null);
+    assert(emptyChatRoom != null);
     return unexpected(this);
   }
 
@@ -153,7 +167,8 @@ class _$_Unexpected implements _Unexpected {
   Result maybeMap<Result extends Object>({
     Result unexpected(_Unexpected value),
     Result severFailure(_SeverFailure value),
-    Result emtyChat(_EmptyChat value),
+    Result noSuchMessage(_NoSuchMessage value),
+    Result emptyChatRoom(_EmptyChatRoom value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -206,11 +221,13 @@ class _$_SeverFailure implements _SeverFailure {
   Result when<Result extends Object>({
     @required Result unexpected(),
     @required Result severFailure(),
-    @required Result emtyChat(),
+    @required Result noSuchMessage(),
+    @required Result emptyChatRoom(),
   }) {
     assert(unexpected != null);
     assert(severFailure != null);
-    assert(emtyChat != null);
+    assert(noSuchMessage != null);
+    assert(emptyChatRoom != null);
     return severFailure();
   }
 
@@ -219,7 +236,8 @@ class _$_SeverFailure implements _SeverFailure {
   Result maybeWhen<Result extends Object>({
     Result unexpected(),
     Result severFailure(),
-    Result emtyChat(),
+    Result noSuchMessage(),
+    Result emptyChatRoom(),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -234,11 +252,13 @@ class _$_SeverFailure implements _SeverFailure {
   Result map<Result extends Object>({
     @required Result unexpected(_Unexpected value),
     @required Result severFailure(_SeverFailure value),
-    @required Result emtyChat(_EmptyChat value),
+    @required Result noSuchMessage(_NoSuchMessage value),
+    @required Result emptyChatRoom(_EmptyChatRoom value),
   }) {
     assert(unexpected != null);
     assert(severFailure != null);
-    assert(emtyChat != null);
+    assert(noSuchMessage != null);
+    assert(emptyChatRoom != null);
     return severFailure(this);
   }
 
@@ -247,7 +267,8 @@ class _$_SeverFailure implements _SeverFailure {
   Result maybeMap<Result extends Object>({
     Result unexpected(_Unexpected value),
     Result severFailure(_SeverFailure value),
-    Result emtyChat(_EmptyChat value),
+    Result noSuchMessage(_NoSuchMessage value),
+    Result emptyChatRoom(_EmptyChatRoom value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -262,32 +283,34 @@ abstract class _SeverFailure implements MessageFailure {
   const factory _SeverFailure() = _$_SeverFailure;
 }
 
-abstract class _$EmptyChatCopyWith<$Res> {
-  factory _$EmptyChatCopyWith(
-          _EmptyChat value, $Res Function(_EmptyChat) then) =
-      __$EmptyChatCopyWithImpl<$Res>;
+abstract class _$NoSuchMessageCopyWith<$Res> {
+  factory _$NoSuchMessageCopyWith(
+          _NoSuchMessage value, $Res Function(_NoSuchMessage) then) =
+      __$NoSuchMessageCopyWithImpl<$Res>;
 }
 
-class __$EmptyChatCopyWithImpl<$Res> extends _$MessageFailureCopyWithImpl<$Res>
-    implements _$EmptyChatCopyWith<$Res> {
-  __$EmptyChatCopyWithImpl(_EmptyChat _value, $Res Function(_EmptyChat) _then)
-      : super(_value, (v) => _then(v as _EmptyChat));
+class __$NoSuchMessageCopyWithImpl<$Res>
+    extends _$MessageFailureCopyWithImpl<$Res>
+    implements _$NoSuchMessageCopyWith<$Res> {
+  __$NoSuchMessageCopyWithImpl(
+      _NoSuchMessage _value, $Res Function(_NoSuchMessage) _then)
+      : super(_value, (v) => _then(v as _NoSuchMessage));
 
   @override
-  _EmptyChat get _value => super._value as _EmptyChat;
+  _NoSuchMessage get _value => super._value as _NoSuchMessage;
 }
 
-class _$_EmptyChat implements _EmptyChat {
-  const _$_EmptyChat();
+class _$_NoSuchMessage implements _NoSuchMessage {
+  const _$_NoSuchMessage();
 
   @override
   String toString() {
-    return 'MessageFailure.emtyChat()';
+    return 'MessageFailure.noSuchMessage()';
   }
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is _EmptyChat);
+    return identical(this, other) || (other is _NoSuchMessage);
   }
 
   @override
@@ -298,12 +321,14 @@ class _$_EmptyChat implements _EmptyChat {
   Result when<Result extends Object>({
     @required Result unexpected(),
     @required Result severFailure(),
-    @required Result emtyChat(),
+    @required Result noSuchMessage(),
+    @required Result emptyChatRoom(),
   }) {
     assert(unexpected != null);
     assert(severFailure != null);
-    assert(emtyChat != null);
-    return emtyChat();
+    assert(noSuchMessage != null);
+    assert(emptyChatRoom != null);
+    return noSuchMessage();
   }
 
   @override
@@ -311,12 +336,13 @@ class _$_EmptyChat implements _EmptyChat {
   Result maybeWhen<Result extends Object>({
     Result unexpected(),
     Result severFailure(),
-    Result emtyChat(),
+    Result noSuchMessage(),
+    Result emptyChatRoom(),
     @required Result orElse(),
   }) {
     assert(orElse != null);
-    if (emtyChat != null) {
-      return emtyChat();
+    if (noSuchMessage != null) {
+      return noSuchMessage();
     }
     return orElse();
   }
@@ -326,12 +352,14 @@ class _$_EmptyChat implements _EmptyChat {
   Result map<Result extends Object>({
     @required Result unexpected(_Unexpected value),
     @required Result severFailure(_SeverFailure value),
-    @required Result emtyChat(_EmptyChat value),
+    @required Result noSuchMessage(_NoSuchMessage value),
+    @required Result emptyChatRoom(_EmptyChatRoom value),
   }) {
     assert(unexpected != null);
     assert(severFailure != null);
-    assert(emtyChat != null);
-    return emtyChat(this);
+    assert(noSuchMessage != null);
+    assert(emptyChatRoom != null);
+    return noSuchMessage(this);
   }
 
   @override
@@ -339,17 +367,118 @@ class _$_EmptyChat implements _EmptyChat {
   Result maybeMap<Result extends Object>({
     Result unexpected(_Unexpected value),
     Result severFailure(_SeverFailure value),
-    Result emtyChat(_EmptyChat value),
+    Result noSuchMessage(_NoSuchMessage value),
+    Result emptyChatRoom(_EmptyChatRoom value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
-    if (emtyChat != null) {
-      return emtyChat(this);
+    if (noSuchMessage != null) {
+      return noSuchMessage(this);
     }
     return orElse();
   }
 }
 
-abstract class _EmptyChat implements MessageFailure {
-  const factory _EmptyChat() = _$_EmptyChat;
+abstract class _NoSuchMessage implements MessageFailure {
+  const factory _NoSuchMessage() = _$_NoSuchMessage;
+}
+
+abstract class _$EmptyChatRoomCopyWith<$Res> {
+  factory _$EmptyChatRoomCopyWith(
+          _EmptyChatRoom value, $Res Function(_EmptyChatRoom) then) =
+      __$EmptyChatRoomCopyWithImpl<$Res>;
+}
+
+class __$EmptyChatRoomCopyWithImpl<$Res>
+    extends _$MessageFailureCopyWithImpl<$Res>
+    implements _$EmptyChatRoomCopyWith<$Res> {
+  __$EmptyChatRoomCopyWithImpl(
+      _EmptyChatRoom _value, $Res Function(_EmptyChatRoom) _then)
+      : super(_value, (v) => _then(v as _EmptyChatRoom));
+
+  @override
+  _EmptyChatRoom get _value => super._value as _EmptyChatRoom;
+}
+
+class _$_EmptyChatRoom implements _EmptyChatRoom {
+  const _$_EmptyChatRoom();
+
+  @override
+  String toString() {
+    return 'MessageFailure.emptyChatRoom()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is _EmptyChatRoom);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result unexpected(),
+    @required Result severFailure(),
+    @required Result noSuchMessage(),
+    @required Result emptyChatRoom(),
+  }) {
+    assert(unexpected != null);
+    assert(severFailure != null);
+    assert(noSuchMessage != null);
+    assert(emptyChatRoom != null);
+    return emptyChatRoom();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result unexpected(),
+    Result severFailure(),
+    Result noSuchMessage(),
+    Result emptyChatRoom(),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (emptyChatRoom != null) {
+      return emptyChatRoom();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result unexpected(_Unexpected value),
+    @required Result severFailure(_SeverFailure value),
+    @required Result noSuchMessage(_NoSuchMessage value),
+    @required Result emptyChatRoom(_EmptyChatRoom value),
+  }) {
+    assert(unexpected != null);
+    assert(severFailure != null);
+    assert(noSuchMessage != null);
+    assert(emptyChatRoom != null);
+    return emptyChatRoom(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result unexpected(_Unexpected value),
+    Result severFailure(_SeverFailure value),
+    Result noSuchMessage(_NoSuchMessage value),
+    Result emptyChatRoom(_EmptyChatRoom value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (emptyChatRoom != null) {
+      return emptyChatRoom(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _EmptyChatRoom implements MessageFailure {
+  const factory _EmptyChatRoom() = _$_EmptyChatRoom;
 }

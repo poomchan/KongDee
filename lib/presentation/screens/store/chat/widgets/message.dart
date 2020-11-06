@@ -11,6 +11,7 @@ class Message extends StatelessWidget {
   final String senderName;
   final Timestamp timestamp;
   static const double sidePaddding = 20.0;
+  static const double verticalPadding = 1.1;
 
   const Message({
     Key key,
@@ -24,51 +25,45 @@ class Message extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 1.5),
+      padding: const EdgeInsets.symmetric(vertical: verticalPadding),
       child: isSender
           ? Row(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Expanded(
-                  child: Container(
-                    // color: Colors.blue,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Container(
-                          // color: Colors.red,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            // mainAxisSize: MainAxisSize.min,
-                            children: [
-                              SizedBox(width: sidePaddding),
-                              Container(
-                                child: Text(
-                                  TimeOfDay.fromDateTime(timestamp.toDate())
-                                      .format(context),
-                                  style: TextStyle(fontSize: 10.0),
-                                ),
-                              ),
-                              Flexible(
-                                child: MessageBubble(
-                                  text: text,
-                                  isSender: isSender,
-                                  color: Colors.amber[500],
-                                  tail: isTop,
-                                ),
-                              ),
-                            ],
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        // mainAxisSize: MainAxisSize.min,
+                        children: [
+                          SizedBox(width: sidePaddding),
+                          Container(
+                            child: Text(
+                              TimeOfDay.fromDateTime(timestamp.toDate())
+                                  .format(context),
+                              style: TextStyle(fontSize: 10.0),
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
+                          Flexible(
+                            child: MessageBubble(
+                              text: text,
+                              isSender: isSender,
+                              color: Colors.amber[500],
+                              tail: isTop,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
               ],
             )
           : Row(
-            mainAxisSize: MainAxisSize.min,
+              mainAxisSize: MainAxisSize.min,
               children: [
                 MessageAvatar(
                   avatarUrl: avatarUrl,
@@ -86,29 +81,24 @@ class Message extends StatelessWidget {
                               style: TextStyle(fontWeight: FontWeight.bold),
                             )
                           : Container(),
-                      Container(
-                          // color: Colors.red,
-                          child: Row(
-                            children: [
-                              Flexible(
-                                child: MessageBubble(
-                                  text: text,
-                                  isSender: isSender,
-                                  color: Colors.lightGreen[300],
-                                  tail: isTop,
-                                ),
-                              ),
-                              Container(
-                                child: Text(
-                                  TimeOfDay.fromDateTime(timestamp.toDate())
-                                      .format(context),
-                                  style: TextStyle(fontSize: 10.0),
-                                ),
-                              ),
-                              SizedBox(width: sidePaddding),
-                            ],
+                      Row(
+                        children: [
+                          Flexible(
+                            child: MessageBubble(
+                              text: text,
+                              isSender: isSender,
+                              color: Colors.lightGreen[300],
+                              tail: isTop,
+                            ),
                           ),
-                        ),
+                          Text(
+                            TimeOfDay.fromDateTime(timestamp.toDate())
+                                .format(context),
+                            style: TextStyle(fontSize: 10.0),
+                          ),
+                          SizedBox(width: sidePaddding),
+                        ],
+                      ),
                     ],
                   ),
                 ),

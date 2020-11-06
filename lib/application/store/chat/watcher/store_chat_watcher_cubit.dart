@@ -3,11 +3,11 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertaladsod/domain/auth/i_auth_facade.dart';
+import 'package:fluttertaladsod/domain/auth/user.dart';
 import 'package:fluttertaladsod/domain/core/value_objects.dart';
 import 'package:fluttertaladsod/domain/message/i_message_repository.dart';
 import 'package:fluttertaladsod/domain/message/message.dart';
 import 'package:fluttertaladsod/domain/message/message_failure.dart';
-import 'package:fluttertaladsod/injection.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 
@@ -17,25 +17,27 @@ part 'store_chat_watcher_cubit.freezed.dart';
 @injectable
 class StoreChatWatcherCubit extends Cubit<StoreChatWatcherState> {
   final IMessageRepository _iChatRepository;
+  final IAuthFacade _iAuthFacade;
 
-  List<MessageDomain> chatList = [];
+  UserDomain user;
+  List<MessageDomain> messageList = [];
 
-  StoreChatWatcherCubit(this._iChatRepository) : super(_Initial());
+  StoreChatWatcherCubit(this._iChatRepository, this._iAuthFacade)
+      : super(_Initial());
 
   Future<void> watchStarted(UniqueId storeId) async {
-    emit(StoreChatWatcherState.loading(chatList));
+    emit(StoreChatWatcherState.loading(messageList));
 
-    _iChatRepository.watchMessages(storeId: storeId).listen(
+    final userOption = await _iAuthFacade.getSignedInUser();
+    user = userOption.getOrElse(() => throw 'User unauthenticated');
+
+    _iChatRepository.watchMessages(storeId: storeId, viewerId: user.id).listen(
       (failreOrChats) {
         failreOrChats.fold(
-          (f) => emit(
-            StoreChatWatcherState.failure(f),
-          ),
+          (f) => emit(StoreChatWatcherState.failure(f)),
           (chatList) async {
-            this.chatList = await _filterChats(chatList);
-            // fake state (i'm lazy to extend equatable on the chatList)
-            emit(StoreChatWatcherState.inital());
-            emit(StoreChatWatcherState.loaded(chatList));
+            messageList = chatList;
+            emit(StoreChatWatcherState.loaded(messageList));
           },
         );
       },
@@ -43,36 +45,32 @@ class StoreChatWatcherCubit extends Cubit<StoreChatWatcherState> {
   }
 
   Future<void> fetchMoreChat(UniqueId storeId) async {
-    emit(StoreChatWatcherState.loading(chatList));
+    assert(user != null);
 
-    final stream = _iChatRepository.watchMoreMessages(storeId: storeId);
+    // no need to paginate if the total messages in the room is below 20
+    // (just a single page)
+    if (messageList.length < 20) return;
 
-    stream.listen((failureOrChats) {
-      failureOrChats.fold((f) {
-        if (f == MessageFailure.emtyChat()) {
-          emit(StoreChatWatcherState.loaded(chatList));
-        } else {
-          emit(StoreChatWatcherState.failure(f));
-        }
-      }, (chatList) async {
-        final List<MessageDomain> newChats = await _filterChats(chatList);
-        this.chatList.insertAll(0, newChats);
-        emit(StoreChatWatcherState.loaded(chatList));
-      });
+    emit(StoreChatWatcherState.loading(messageList));
+
+    final fOrMessageList = await _iChatRepository.fetchMoreMessages(
+        storeId: storeId, viewerId: user.id);
+
+    fOrMessageList.fold((f) {
+      if (f == MessageFailure.emptyChatRoom()) {
+        emit(StoreChatWatcherState.loaded(messageList));
+      } else {
+        emit(StoreChatWatcherState.failure(f));
+      }
+    }, (mList) {
+      messageList.insertAll(0, mList);
+      emit(StoreChatWatcherState.loaded(messageList));
     });
   }
 
-  Future<List<MessageDomain>> _filterChats(List<MessageDomain> chats) async {
-    final userOption = await getIt<IAuthFacade>().getSignedInUser();
-    final user = userOption.fold(
-      () => throw 'User unauthenticated',
-      (user) => user,
-    );
-    return chats.map(
-      (chat) {
-        final bool isSender = user.id == chat.senderId;
-        return chat.copyWith(isSender: isSender);
-      },
-    ).toList();
+  @override
+  Future<void> close() {
+    _iChatRepository.clearState();
+    return super.close();
   }
 }

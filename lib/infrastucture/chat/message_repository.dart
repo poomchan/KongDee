@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter/foundation.dart';
 import 'package:fluttertaladsod/domain/core/value_objects.dart';
 import 'package:fluttertaladsod/domain/message/i_message_repository.dart';
 import 'package:fluttertaladsod/domain/message/message.dart';
@@ -11,96 +11,75 @@ import 'package:fluttertaladsod/infrastucture/core/firestore_helper.dart';
 
 @LazySingleton(as: IMessageRepository)
 class MessageRepository implements IMessageRepository {
-  final FirebaseFirestore _firestore;
-  DocumentSnapshot start;
-  DocumentSnapshot end;
   static const String collection = 'chats';
   static const String timestamp = 'timestamp';
+  static const int firstPageDocs = 20;
+  static const int fetchMoreCount = 20;
+  final FirebaseFirestore _firestore;
+  DocumentSnapshot start;
 
   MessageRepository(this._firestore);
 
-  List<MessageDomain> _transformToDomain(List<DocumentSnapshot> docList) {
-    final List<MessageDomain> chatList = [];
-    for (final doc in docList) {
-      final chat = MessageDto.fromFirestore(doc).toDomain();
-      chatList.add(chat);
-    }
-    return chatList;
-  }
-
   @override
-  Stream<Either<MessageFailure, List<MessageDomain>>> watchMessages(
-      {UniqueId storeId}) async* {
-    const int firstDocs = 20;
+  Stream<Either<MessageFailure, List<MessageDomain>>> watchMessages({
+    @required UniqueId storeId,
+    @required UniqueId viewerId,
+  }) async* {
     final _ref = _firestore.storeCollectionRef
         .doc(storeId.getOrCrash())
         .collection(collection);
 
     final snap = await _ref
         .orderBy(timestamp, descending: true)
-        .limit(firstDocs)
+        .limit(firstPageDocs)
         .get();
 
     if (snap.docs.isEmpty) {
-      // watch the first message
-      yield* _ref
-          .orderBy(timestamp)
-          .snapshots(includeMetadataChanges: true)
-          .map((snap) {
-        if (snap.docs.isEmpty) {
-          return left(MessageFailure.emtyChat());
-        }
-        final chatList = _transformToDomain(snap.docs);
-        return right(chatList);
-      });
+      // no prevoius messages, wait and watch for the first message
+      yield* _ref.orderBy(timestamp).snapshots().map(
+        (snap) {
+          if (snap.docs.isEmpty) {
+            return left(MessageFailure.emptyChatRoom());
+          }
+          final chatList = _mapToDomain(snap.docs, viewerId);
+          return right(chatList);
+        },
+      );
     } else {
-      // watch messages by having a starting doc
+      // watch messages by having a starting doc, no way it is empty
       start = snap.docs.last;
-      yield* _ref
-          .orderBy(timestamp)
-          .startAtDocument(start)
-          .snapshots()
-          .map((snap) {
-        if (snap.docs.isEmpty) {
-          return left(MessageFailure.emtyChat());
-        }
-        final chatList = _transformToDomain(snap.docs);
-        return right(chatList);
-      });
+      yield* _ref.orderBy(timestamp).startAtDocument(start).snapshots().map(
+        (snap) {
+          final chatList = _mapToDomain(snap.docs, viewerId);
+          return right(chatList);
+        },
+      );
     }
   }
 
   @override
-  Stream<Either<MessageFailure, List<MessageDomain>>> watchMoreMessages(
-      {UniqueId storeId}) async* {
-    const int moreDocs = 20;
-    final _ref = _firestore.storeCollectionRef
-        .doc(storeId.getOrCrash())
-        .collection(collection);
-
-    final snap = await _ref
-        .orderBy(timestamp, descending: true)
-        .startAtDocument(start)
-        .limit(moreDocs)
-        .get();
-
-    if (snap.docs.isEmpty) {
-      yield left(MessageFailure.emtyChat());
-    } else {
-      end = start;
-      start = snap.docs.last;
-      yield* _ref
-          .orderBy(timestamp)
+  Future<Either<MessageFailure, List<MessageDomain>>> fetchMoreMessages({
+    @required UniqueId storeId,
+    @required UniqueId viewerId,
+  }) async {
+    try {
+      final _ref = _firestore.storeCollectionRef
+          .doc(storeId.getOrCrash())
+          .collection(collection);
+      final snap = await _ref
+          .orderBy(timestamp, descending: true)
           .startAtDocument(start)
-          .endBeforeDocument(end)
-          .snapshots()
-          .map((snap) {
-        if (snap.docs.isEmpty) {
-          return left(MessageFailure.emtyChat());
-        }
-        final chatList = _transformToDomain(snap.docs);
+          .limit(fetchMoreCount)
+          .get();
+      start = snap.docs.last;
+      if (snap.docs.isEmpty) {
+        return left(MessageFailure.emptyChatRoom());
+      } else {
+        final chatList = _mapToDomain(snap.docs, viewerId);
         return right(chatList);
-      });
+      }
+    } catch (e) {
+      return left(MessageFailure.severFailure());
     }
   }
 
@@ -109,23 +88,15 @@ class MessageRepository implements IMessageRepository {
     UniqueId storeId,
     MessageDomain chat,
   }) async {
-    final user = await _firestore.userDomain();
-
-    final jsonData = MessageDto.fromDomain(chat).toJson()
-      ..addEntries([
-        MapEntry('senderId', user.id.getOrCrash()),
-        MapEntry('senderName', user.displayName),
-        MapEntry('senderAvatarUrl', user.photoURL),
-      ]);
-
     try {
+      final jsonData = MessageDto.fromDomain(chat).toJson();
       await _firestore.storeCollectionRef
           .doc(storeId.getOrCrash())
           .collection(collection)
           .doc(chat.id.getOrCrash())
           .set(jsonData);
       return right(unit);
-    } on PlatformException {
+    } catch (e) {
       return left(MessageFailure.severFailure());
     }
   }
@@ -133,19 +104,40 @@ class MessageRepository implements IMessageRepository {
   @override
   Future<Either<MessageFailure, Unit>> deleteMessage(
       {UniqueId storeId, UniqueId chatId}) async {
-    final chatDoc = await _firestore.storeCollectionRef
-        .doc(storeId.getOrCrash())
-        .collection(collection)
-        .doc(chatId.getOrCrash())
-        .get();
-    if (!chatDoc.exists) {
-      return left(MessageFailure.emtyChat());
+    try {
+      final chatDoc = await _firestore.storeCollectionRef
+          .doc(storeId.getOrCrash())
+          .collection(collection)
+          .doc(chatId.getOrCrash())
+          .get();
+      if (!chatDoc.exists) {
+        return left(MessageFailure.noSuchMessage());
+      }
+      await _firestore.storeCollectionRef
+          .doc(storeId.getOrCrash())
+          .collection(collection)
+          .doc(chatId.getOrCrash())
+          .delete();
+      return right(unit);
+    } catch (e) {
+      return left(MessageFailure.severFailure());
     }
-    await _firestore.storeCollectionRef
-        .doc(storeId.getOrCrash())
-        .collection(collection)
-        .doc(chatId.getOrCrash())
-        .delete();
-    return right(unit);
+  }
+
+  List<MessageDomain> _mapToDomain(
+    List<DocumentSnapshot> docList,
+    UniqueId viewerId,
+  ) {
+    final List<MessageDomain> chatList = [];
+    for (final doc in docList) {
+      final chat = MessageDto.fromFirestore(doc).toDomain(viewerId: viewerId);
+      chatList.add(chat);
+    }
+    return chatList;
+  }
+
+  @override
+  void clearState() {
+    start = null;
   }
 }

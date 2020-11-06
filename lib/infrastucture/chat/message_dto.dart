@@ -26,7 +26,7 @@ abstract class MessageDto implements _$MessageDto {
       _$MessageDtoFromJson(json);
 
   factory MessageDto.fromFirestore(DocumentSnapshot doc) {
-    return MessageDto.fromJson(doc.data()).copyWith(id: doc.id);
+    return MessageDto.fromJson(doc.data());
   }
 
   factory MessageDto.fromDomain(MessageDomain m) {
@@ -40,43 +40,19 @@ abstract class MessageDto implements _$MessageDto {
     );
   }
 
-  MessageDomain toDomain() => MessageDomain(
+  // add aditional message properties besides json here
+  MessageDomain toDomain({
+    @required UniqueId viewerId,
+  }) =>
+      MessageDomain(
         id: UniqueId.fromUniqueString(id),
         senderId: UniqueId.fromUniqueString(senderId),
         senderName: SenderName(senderName),
         senderAvatarUrl: SenderAvatarUrl(senderAvatarUrl),
         body: MessageBody(body),
-        isSender: false,
+        isSender: senderId == viewerId.getOrCrash(),
         timestamp: timestamp,
       );
 
   const MessageDto._();
-}
-
-class MyTimestamp {
-  FieldValue serverTimestamp;
-  Timestamp timestamp;
-
-  MyTimestamp._({this.serverTimestamp, this.timestamp});
-
-  factory MyTimestamp.serverTimestamp() {
-    return MyTimestamp._(serverTimestamp: FieldValue.serverTimestamp());
-  }
-
-  factory MyTimestamp.timestamp(Timestamp timestamp) {
-    assert(timestamp != null);
-    return MyTimestamp._(timestamp: timestamp);
-  }
-}
-
-class MyTimestampConverter implements JsonConverter<MyTimestamp, Object> {
-  const MyTimestampConverter();
-
-  @override
-  MyTimestamp fromJson(Object json) {
-    return MyTimestamp.timestamp(json as Timestamp);
-  }
-
-  @override
-  Object toJson(MyTimestamp myTimestamp) => myTimestamp.serverTimestamp;
 }

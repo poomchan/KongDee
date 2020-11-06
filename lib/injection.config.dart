@@ -69,11 +69,12 @@ GetIt $initGetIt(
   gh.lazySingleton<Location>(() => locationInjectableModule.location);
   gh.lazySingleton<StorageReference>(
       () => firebaseInjectableModule.firebaseStorage);
-  gh.factory<StoreChatWatcherCubit>(
-      () => StoreChatWatcherCubit(get<IMessageRepository>()));
+  gh.factory<StoreChatWatcherCubit>(() =>
+      StoreChatWatcherCubit(get<IMessageRepository>(), get<IAuthFacade>()));
   gh.factory<AuthActorCubit>(() => AuthActorCubit(get<IAuthFacade>()));
   gh.factory<AuthWatcherCubit>(() => AuthWatcherCubit(get<IAuthFacade>()));
-  gh.factory<ChatFormCubit>(() => ChatFormCubit(get<IMessageRepository>()));
+  gh.factory<ChatFormCubit>(
+      () => ChatFormCubit(get<IMessageRepository>(), get<IAuthFacade>()));
   gh.lazySingleton<IImageRepository>(() => ImageRepository(get<ImagePicker>()),
       registerFor: {_prod});
   gh.lazySingleton<ILocationRepository>(

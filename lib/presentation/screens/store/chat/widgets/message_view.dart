@@ -35,15 +35,17 @@ class MessageView extends StatelessWidget {
               //   return null;
               // },
               child: ListView(
-                  shrinkWrap: true,
-                  reverse: true,
-                  children: state.maybeMap(
-                      loading: (state) => [
-                            ..._buildMessage(state.previousChatList),
-                            circularProgress(context),
-                          ],
-                      loaded: (state) => _buildMessage(state.chatList),
-                      orElse: () => [Container()])),
+                shrinkWrap: true,
+                reverse: true,
+                children: state.maybeMap(
+                  loading: (state) => [
+                    ..._buildMessage(state.previousChatList),
+                    circularProgress(context),
+                  ],
+                  loaded: (state) => _buildMessage(state.chatList),
+                  orElse: () => [Container()],
+                ),
+              ),
             ),
           ),
         ),
