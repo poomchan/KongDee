@@ -13,10 +13,8 @@ import 'package:fluttertaladsod/infrastucture/core/firestore_helper.dart';
 class MessageRepository implements IMessageRepository {
   static const String collection = 'chats';
   static const String timestamp = 'timestamp';
-  static const int firstPageDocs = 20;
-  static const int fetchMoreCount = 20;
   final FirebaseFirestore _firestore;
-  DocumentSnapshot start;
+  DocumentSnapshot lastDoc;
 
   MessageRepository(this._firestore);
 
@@ -31,7 +29,7 @@ class MessageRepository implements IMessageRepository {
 
     final snap = await _ref
         .orderBy(timestamp, descending: true)
-        .limit(firstPageDocs)
+        .limit(IMessageRepository.itemPerPage)
         .get();
 
     if (snap.docs.isEmpty) {
@@ -47,8 +45,8 @@ class MessageRepository implements IMessageRepository {
       );
     } else {
       // watch messages by having a starting doc, no way it is empty
-      start = snap.docs.last;
-      yield* _ref.orderBy(timestamp).startAtDocument(start).snapshots().map(
+      lastDoc = snap.docs.last;
+      yield* _ref.orderBy(timestamp).startAtDocument(lastDoc).snapshots().map(
         (snap) {
           final chatList = _mapToDomain(snap.docs, viewerId);
           return right(chatList);
@@ -62,16 +60,17 @@ class MessageRepository implements IMessageRepository {
     @required UniqueId storeId,
     @required UniqueId viewerId,
   }) async {
+    if (lastDoc == null) return left(MessageFailure.emptyChatRoom());
     try {
       final _ref = _firestore.storeCollectionRef
           .doc(storeId.getOrCrash())
           .collection(collection);
       final snap = await _ref
           .orderBy(timestamp, descending: true)
-          .startAtDocument(start)
-          .limit(fetchMoreCount)
+          .startAfterDocument(lastDoc)
+          .limit(IMessageRepository.itemPerPage)
           .get();
-      start = snap.docs.last;
+      lastDoc = snap.docs.last;
       if (snap.docs.isEmpty) {
         return left(MessageFailure.emptyChatRoom());
       } else {
@@ -138,6 +137,6 @@ class MessageRepository implements IMessageRepository {
 
   @override
   void clearState() {
-    start = null;
+    lastDoc = null;
   }
 }

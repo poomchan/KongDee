@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:fluttertaladsod/application/store/chat/watcher/store_chat_watcher_cubit.dart';
 import 'package:fluttertaladsod/domain/core/value_objects.dart';
 import 'package:fluttertaladsod/domain/message/message.dart';
 import 'package:fluttertaladsod/presentation/core/components/progress_indicator.dart';
 import 'package:fluttertaladsod/presentation/screens/store/chat/widgets/message.dart';
 
-class MessageView extends StatelessWidget {
+class MessageView extends HookWidget {
   final UniqueId storeId;
   const MessageView({
     Key key,
@@ -15,35 +16,34 @@ class MessageView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _scrollController = useScrollController();
     return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: BlocBuilder<StoreChatWatcherCubit, StoreChatWatcherState>(
-          builder: (context, state) => state.maybeMap(
-            inital: (state) => circularProgress(context),
-            failure: (state) => Icon(Icons.error),
-            orElse: () => NotificationListener<ScrollNotification>(
-              // onNotification: (ScrollNotification scrollInfo) {
-              //   if (state.maybeMap(
-              //         loaded: (state) => true,
-              //         orElse: () => false,
-              //       ) &&
-              //       scrollInfo.metrics.pixels ==
-              //           scrollInfo.metrics.maxScrollExtent) {
-              //     context.bloc<StoreChatWatcherCubit>().fetchMoreChat(storeId);
-              //   }
-              //   return null;
-              // },
-              child: ListView(
-                shrinkWrap: true,
-                reverse: true,
-                children: state.maybeMap(
-                  loading: (state) => [
-                    ..._buildMessage(state.previousChatList),
-                    circularProgress(context),
-                  ],
-                  loaded: (state) => _buildMessage(state.chatList),
-                  orElse: () => [Container()],
+      child: GestureDetector(
+        onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: BlocBuilder<StoreChatWatcherCubit, StoreChatWatcherState>(
+            builder: (context, state) => state.map(
+              inital: (state) => circularProgress(context),
+              failure: (state) => Icon(Icons.error),
+              loading: (state) => circularProgress(context),
+              loaded: (state) => NotificationListener<ScrollNotification>(
+                onNotification: (ScrollNotification notification) {
+                  if (notification is ScrollEndNotification &&
+                      _scrollController.position.extentAfter == 0) {
+                    context
+                        .bloc<StoreChatWatcherCubit>()
+                        .fetchMoreChat(storeId);
+                  }
+                  return null;
+                },
+                child: ListView.builder(
+                  controller: _scrollController,
+                  shrinkWrap: true,
+                  reverse: true,
+                  itemCount: state.chatList.length,
+                  itemBuilder: (context, index) =>
+                      _buildMessage(state.chatList, index),
                 ),
               ),
             ),
@@ -53,24 +53,15 @@ class MessageView extends StatelessWidget {
     );
   }
 
-  List<Message> _buildMessage(List<MessageDomain> messages) {
-    final List<Message> messageList = [];
-    String senderId = 'fake first id';
-
-    for (final message in messages) {
-      messageList.add(
-        Message(
-            text: message.body.getOrCrash(),
-            isSender: message.isSender,
-            avatarUrl: message.senderAvatarUrl.getOrCrash(),
-            isTop: message.senderId.getOrCrash() != senderId,
-            senderName: message.senderName.getOrCrash(),
-            timestamp: message.timestamp),
-      );
-      // set new sender id
-      senderId = message.senderId.getOrCrash();
-    }
-
-    return messageList.reversed.toList();
+  Message _buildMessage(List<MessageDomain> messages, int index) {
+    final m = messages[index];
+    return Message(
+      text: m.body.getOrCrash(),
+      isSender: m.isSender,
+      avatarUrl: m.senderAvatarUrl.getOrCrash(),
+      isTop: index == messages.length - 1 ? true : m.senderId != messages[index + 1].senderId,
+      senderName: m.senderName.getOrCrash(),
+      timestamp: m.timestamp,
+    );
   }
 }

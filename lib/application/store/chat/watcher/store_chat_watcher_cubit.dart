@@ -16,28 +16,37 @@ part 'store_chat_watcher_cubit.freezed.dart';
 
 @injectable
 class StoreChatWatcherCubit extends Cubit<StoreChatWatcherState> {
-  final IMessageRepository _iChatRepository;
+  final IMessageRepository _iMessageRepository;
   final IAuthFacade _iAuthFacade;
 
   UserDomain user;
-  List<MessageDomain> messageList = [];
+  List<MessageDomain> finalMessageList = [];
+  List<MessageDomain> recentMessageList = [];
+  List<MessageDomain> moreMessageList = [];
 
-  StoreChatWatcherCubit(this._iChatRepository, this._iAuthFacade)
+  StoreChatWatcherCubit(this._iMessageRepository, this._iAuthFacade)
       : super(_Initial());
 
   Future<void> watchStarted(UniqueId storeId) async {
-    emit(StoreChatWatcherState.loading(messageList));
+    emit(StoreChatWatcherState.loading(finalMessageList));
 
     final userOption = await _iAuthFacade.getSignedInUser();
-    user = userOption.getOrElse(() => throw 'User unauthenticated');
+    user = userOption.getOrElse(
+      () => throw 'User unauthenticated',
+      // emit a failure to navigate to sign-in screen, then return
+    );
 
-    _iChatRepository.watchMessages(storeId: storeId, viewerId: user.id).listen(
+    _iMessageRepository
+        .watchMessages(storeId: storeId, viewerId: user.id)
+        .listen(
       (failreOrChats) {
         failreOrChats.fold(
           (f) => emit(StoreChatWatcherState.failure(f)),
           (chatList) async {
-            messageList = chatList;
-            emit(StoreChatWatcherState.loaded(messageList));
+            recentMessageList = List.from(chatList.reversed);
+            finalMessageList = List.from(recentMessageList);
+            finalMessageList.addAll(moreMessageList);
+            emit(StoreChatWatcherState.loaded(finalMessageList));
           },
         );
       },
@@ -48,29 +57,30 @@ class StoreChatWatcherCubit extends Cubit<StoreChatWatcherState> {
     assert(user != null);
 
     // no need to paginate if the total messages in the room is below 20
-    // (just a single page)
-    if (messageList.length < 20) return;
+    if (moreMessageList.length % IMessageRepository.itemPerPage != 0) return;
+    print('fetching');
 
-    emit(StoreChatWatcherState.loading(messageList));
-
-    final fOrMessageList = await _iChatRepository.fetchMoreMessages(
+    final fOrMessageList = await _iMessageRepository.fetchMoreMessages(
         storeId: storeId, viewerId: user.id);
 
     fOrMessageList.fold((f) {
       if (f == MessageFailure.emptyChatRoom()) {
-        emit(StoreChatWatcherState.loaded(messageList));
+        return;
       } else {
         emit(StoreChatWatcherState.failure(f));
       }
     }, (mList) {
-      messageList.insertAll(0, mList);
-      emit(StoreChatWatcherState.loaded(messageList));
+      moreMessageList.addAll(mList);
+      finalMessageList = List.from(recentMessageList);
+      finalMessageList.addAll(moreMessageList);
+      emit(StoreChatWatcherState.inital());
+      emit(StoreChatWatcherState.loaded(finalMessageList));
     });
   }
 
   @override
   Future<void> close() {
-    _iChatRepository.clearState();
+    _iMessageRepository.clearState();
     return super.close();
   }
 }

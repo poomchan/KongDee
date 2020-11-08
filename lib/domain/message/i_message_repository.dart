@@ -6,6 +6,9 @@ import 'package:fluttertaladsod/domain/message/message_failure.dart';
 import 'message.dart';
 
 abstract class IMessageRepository {
+  IMessageRepository();
+  static const int itemPerPage = 20;
+
   Stream<Either<MessageFailure, List<MessageDomain>>> watchMessages({
     @required UniqueId storeId,
     @required UniqueId viewerId, // to see that isSender or not

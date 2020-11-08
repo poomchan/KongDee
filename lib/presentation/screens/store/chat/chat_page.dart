@@ -45,7 +45,9 @@ class ChatScaffold extends StatelessWidget {
           child: Column(
             children: [
               MessageView(storeId: storeId),
-              Divider(height: 0,),
+              Divider(
+                height: 0,
+              ),
               InputBar(storeId: storeId),
             ],
           ),
