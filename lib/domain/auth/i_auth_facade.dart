@@ -5,5 +5,6 @@ abstract class IAuthFacade {
   Future<void> signInWithGoogle();
   Stream<Option<UserDomain>> watchSignedInUser();
   Future<Option<UserDomain>> getSignedInUser();
+  bool isAuthenticated();
   Future<void> signOut();
 }

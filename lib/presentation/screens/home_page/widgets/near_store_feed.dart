@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertaladsod/application/home/store_feed/nearby/store_near_cubit.dart';
+import 'package:fluttertaladsod/application/location/location_cubit.dart';
 import 'package:fluttertaladsod/domain/store/store.dart';
 import 'package:fluttertaladsod/presentation/core/components/progress_indicator.dart';
 import 'package:fluttertaladsod/presentation/screens/store/widgets/store_card2.dart';
@@ -28,7 +29,27 @@ class NearStoreFeed extends StatelessWidget {
             inital: (state) => circularProgress(context),
             loading: (state) =>
                 _buildFeed(context, storeList: state.previousStoreList),
-            failure: (state) => Center(child: Icon(Icons.error)),
+            failure: (state) => Center(
+              child: state.f.map(
+                noStore: (_) => Text('No store nearby, try adding radius'),
+                unexpected: (state) => Text('Unexpected Error \n For nerds: ${state.e}'),
+                locationNotGranted: (_) => TextButton(
+                  onPressed: () =>
+                      context.bloc<LocationCubit>().getUserLocation(),
+                  child: Text('Enable Location'),
+                ),
+                timeout: (_) => Column(
+                  children: [
+                    Text('Timeout'),
+                    TextButton(
+                      onPressed: () =>
+                          context.bloc<StoreNearCubit>().watchNearbyStore(),
+                      child: Text('Try again'),
+                    ),
+                  ],
+                ),
+              ),
+            ),
             loaded: (state) => _buildFeed(context, storeList: state.storeList),
           ),
         ),

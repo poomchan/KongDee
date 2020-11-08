@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertaladsod/application/store/chat/form/chat_form_cubit.dart';
@@ -7,13 +8,13 @@ import 'package:fluttertaladsod/injection.dart';
 import 'package:fluttertaladsod/presentation/screens/store/chat/widgets/input_bar.dart';
 import 'package:fluttertaladsod/presentation/screens/store/chat/widgets/message_view.dart';
 
-class ChatPage extends StatelessWidget {
+class ChatPage extends StatelessWidget implements AutoRouteWrapper {
   final UniqueId storeId;
 
   const ChatPage({Key key, this.storeId}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget wrappedRoute(BuildContext context) {
     return MultiBlocProvider(
       providers: [
         BlocProvider<StoreChatWatcherCubit>(
@@ -24,17 +25,10 @@ class ChatPage extends StatelessWidget {
           create: (context) => getIt<ChatFormCubit>(),
         ),
       ],
-      child: ChatScaffold(
-        storeId: storeId,
-      ),
+      child: this,
     );
   }
-}
 
-class ChatScaffold extends StatelessWidget {
-  final UniqueId storeId;
-
-  const ChatScaffold({Key key, this.storeId}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,9 +39,7 @@ class ChatScaffold extends StatelessWidget {
           child: Column(
             children: [
               MessageView(storeId: storeId),
-              Divider(
-                height: 0,
-              ),
+              Divider(height: 0),
               InputBar(storeId: storeId),
             ],
           ),

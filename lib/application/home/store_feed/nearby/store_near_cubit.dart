@@ -1,5 +1,5 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:bloc/bloc.dart';
-import 'package:dartz/dartz.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertaladsod/application/home/store_feed/nearby/store_list.dart';
@@ -15,14 +15,11 @@ part 'store_near_cubit.freezed.dart';
 part 'store_near_state.dart';
 
 @injectable
-class StoreNearCubit extends Cubit<StoreNearState> {
+class StoreNearCubit extends Cubit<StoreNearState>{
   final IStoreRepository _iStoreRepository;
   final ILocationRepository _iLocationRepository;
 
   final radiusSubject = BehaviorSubject<double>.seeded(1.0);
-  final deepEq = const DeepCollectionEquality();
-
-  Stream<Either<StoreFailure, List<Store>>> storeStream;
 
   static const initRad = 1.0;
   double rad = 1;
@@ -42,15 +39,13 @@ class StoreNearCubit extends Cubit<StoreNearState> {
       return;
     }
 
-    storeStream = _iStoreRepository
-        .watchNearbyStore(location: location, rad: radiusSubject)
-        .asBroadcastStream();
+    final storeStream = _iStoreRepository
+        .watchNearbyStore(location: location, rad: radiusSubject);
 
     storeStream.listen((failureOrStoreList) {
       failureOrStoreList.fold(
         (f) => emit(StoreNearState.failure(f)),
         (storeList) {
-          // print('CUBIT: storeCount: ${storeList.length}');
           this.storeList = StoreList.fromList(storeList);
           emit(StoreNearState.loaded(this.storeList.value, rad));
         },
@@ -60,33 +55,8 @@ class StoreNearCubit extends Cubit<StoreNearState> {
 
   Future<void> requestMoreRadius() async {
     emit(StoreNearState.loading(storeList.value));
-
-    // _foundStoresStream().listen((failOrFound) {
-    //   failOrFound.fold(
-    //     (fail) => null,
-    //     (found) {
-    //       if (!found) {
-    //         rad += 0.5;
-    //         radiusSubject.add(rad);
-    //       }
-    //     },
-    //   );
-    // });
     rad += 0.5;
     radiusSubject.add(rad);
-  }
-
-  Stream<Either<StoreFailure, bool>> _foundStoresStream() async* {
-    yield* storeStream.map((fOrStoreList) {
-      return fOrStoreList.fold(
-        (f) => left<StoreFailure, bool>(f),
-        (storeList) {
-          final isEqual = StoreList.fromList(storeList) == this.storeList;
-          // print(isEqual);
-          return right<StoreFailure, bool>(isEqual);
-        },
-      );
-    });
   }
 
   Future<void> drainRadius() async {

@@ -2,7 +2,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertaladsod/application/location/location_cubit.dart';
 import 'package:fluttertaladsod/application/store/store_form/store_form_cubit.dart';
 import 'package:fluttertaladsod/application/store/store_form/store_form_location/store_form_location_cubit.dart';
 import 'package:fluttertaladsod/domain/store/store.dart';
@@ -14,12 +13,13 @@ import 'package:fluttertaladsod/presentation/screens/store/form/widgets/name_fie
 
 import '../../../../injection.dart';
 
-class StoreForm extends StatelessWidget {
+class StoreForm extends StatelessWidget implements AutoRouteWrapper {
   final Option<Store> initialStore;
 
   const StoreForm({Key key, this.initialStore}) : super(key: key);
+
   @override
-  Widget build(BuildContext context) {
+  Widget wrappedRoute(BuildContext context) {
     return MultiBlocProvider(
       providers: [
         BlocProvider<StoreFormCubit>(
@@ -56,22 +56,14 @@ class StoreForm extends StatelessWidget {
                 }
               }),
         ],
-        child: StoreFormScaffold(
-          initialStore: initialStore,
-        ),
+        child: this,
       ),
     );
   }
-}
-
-class StoreFormScaffold extends StatelessWidget {
-  final Option<Store> initialStore;
-  const StoreFormScaffold({Key key, this.initialStore}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final locationBloc = BlocProvider.of<StoreFormLocationCubit>(context);
-    final formBloc = BlocProvider.of<StoreFormCubit>(context);
     final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       extendBodyBehindAppBar: true,

@@ -11,12 +11,12 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'widgets/owned_store_view.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatelessWidget implements AutoRouteWrapper {
   final UserDomain user;
 
   const ProfilePage({Key key, @required this.user}) : super(key: key);
   @override
-  Widget build(BuildContext context) {
+  Widget wrappedRoute(BuildContext context) {
     return MultiBlocProvider(
       providers: [
         BlocProvider<OwnedStoreWatcherCubit>(
@@ -26,18 +26,9 @@ class ProfilePage extends StatelessWidget {
           },
         ),
       ],
-      child: ProfileScaffold(user: user),
+      child: this,
     );
   }
-}
-
-class ProfileScaffold extends StatelessWidget {
-  const ProfileScaffold({
-    Key key,
-    @required this.user,
-  }) : super(key: key);
-
-  final UserDomain user;
 
   @override
   Widget build(BuildContext context) {

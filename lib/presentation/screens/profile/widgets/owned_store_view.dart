@@ -19,6 +19,7 @@ class OwnedStoreView extends StatelessWidget {
           noStore: (_) => NoStoreCard(),
           unexpected: (_) => Text('ERROR: unexpected failure'),
           locationNotGranted: (_) => Text('ERROR: location not granted'),
+          timeout: (_) => Text('Timeout'),
         ),
       ),
     );

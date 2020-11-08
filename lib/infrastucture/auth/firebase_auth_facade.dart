@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertaladsod/application/auth/watcher/auth_watcher_cubit.dart';
@@ -64,4 +63,9 @@ class FirebaseAuthFacade implements IAuthFacade {
   UserDomain get user => getIt<AuthWatcherState>().maybeMap(
       authenticated: (state) => state.user,
       orElse: throw 'unauthenticated user');
+
+  @override
+  bool isAuthenticated() {
+    return _firebaseAuth.currentUser != null;
+  }
 }

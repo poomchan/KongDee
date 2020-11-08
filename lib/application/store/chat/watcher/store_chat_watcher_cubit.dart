@@ -58,7 +58,6 @@ class StoreChatWatcherCubit extends Cubit<StoreChatWatcherState> {
 
     // no need to paginate if the total messages in the room is below 20
     if (moreMessageList.length % IMessageRepository.itemPerPage != 0) return;
-    print('fetching');
 
     final fOrMessageList = await _iMessageRepository.fetchMoreMessages(
         storeId: storeId, viewerId: user.id);

@@ -7,18 +7,17 @@ import 'package:fluttertaladsod/injection.dart';
 import 'package:fluttertaladsod/presentation/routes/router.gr.dart';
 import 'package:fluttertaladsod/presentation/screens/store/view_page/widgets/banner_appbar2.dart';
 import 'package:fluttertaladsod/presentation/screens/store/view_page/widgets/console.dart';
-import 'package:fluttertaladsod/presentation/screens/store/view_page/widgets/edit_store_button.dart';
 import 'package:fluttertaladsod/presentation/screens/store/view_page/widgets/image_view.dart';
 import 'package:fluttertaladsod/presentation/screens/store/view_page/widgets/menu_view.dart';
 import 'package:fluttertaladsod/presentation/screens/store/view_page/widgets/name_view.dart';
-import 'package:fluttertaladsod/presentation/screens/store/view_page/widgets/store_setting_button.dart';
 
-class StoreViewPage2 extends StatelessWidget {
+class StoreViewPage2 extends StatelessWidget implements AutoRouteWrapper {
   final UniqueId storeId;
 
   const StoreViewPage2({Key key, this.storeId}) : super(key: key);
+
   @override
-  Widget build(BuildContext context) {
+  Widget wrappedRoute(BuildContext context) {
     return MultiBlocProvider(
       providers: [
         BlocProvider<StoreViewCubit>(
@@ -26,28 +25,39 @@ class StoreViewPage2 extends StatelessWidget {
               getIt<StoreViewCubit>()..watchStoreStarted(storeId: storeId),
         ),
       ],
-      child: StoreFormScaffold(
-        storeId: storeId,
-      ),
+      child: this,
     );
   }
-}
-
-class StoreFormScaffold extends StatelessWidget {
-  const StoreFormScaffold({Key key, this.storeId}) : super(key: key);
-
-  final UniqueId storeId;
 
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => ExtendedNavigator.of(context).push(
-          Routes.chatPage,
-          arguments: ChatPageArguments(storeId: storeId),
-        ),
-        child: Icon(Icons.chat),
+      floatingActionButton: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          FloatingActionButton(
+            heroTag: null,
+            backgroundColor: Colors.blueAccent,
+            shape: StadiumBorder(),
+            onPressed: () => print('linking'),
+            child: Icon(Icons.thumb_up),
+          ),
+          SizedBox(width: 10.0),
+          FloatingActionButton.extended(
+            shape: StadiumBorder(),
+            onPressed: () => ExtendedNavigator.of(context).push(
+              Routes.chatPage,
+              arguments: ChatPageArguments(storeId: storeId),
+            ),
+            label: Row(
+              children: const [
+                Text('chat'),
+                Icon(Icons.chat),
+              ],
+            ),
+          ),
+        ],
       ),
       body: CustomScrollView(
         slivers: <Widget>[
@@ -61,11 +71,11 @@ class StoreFormScaffold extends StatelessWidget {
                   child: Column(
                     children: [
                       Console(),
-                      SizedBox(height: 10.0),
+                      const SizedBox(height: 10.0),
                       NameView(),
-                      SizedBox(height: 10.0),
+                      const SizedBox(height: 10.0),
                       MenuView(),
-                      SizedBox(height: 10.0),
+                      const SizedBox(height: 10.0),
                       ImageView(),
                     ],
                   ),

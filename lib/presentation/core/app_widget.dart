@@ -5,9 +5,8 @@ import 'package:fluttertaladsod/application/auth/actor/auth_actor_cubit.dart';
 import 'package:fluttertaladsod/application/auth/watcher/auth_watcher_cubit.dart';
 import 'package:fluttertaladsod/application/location/permission/location_permission_cubit.dart';
 import 'package:fluttertaladsod/injection.dart';
-import 'package:fluttertaladsod/presentation/core/unknown_page.dart';
+import 'package:fluttertaladsod/presentation/routes/route_guards.dart';
 import 'package:fluttertaladsod/presentation/routes/router.gr.dart' as _router;
-import 'package:fluttertaladsod/presentation/screens/onboarding/app_onboarding_page.dart';
 
 class AppWidget extends StatelessWidget {
 
@@ -46,6 +45,7 @@ class AppWidget extends StatelessWidget {
         builder: ExtendedNavigator.builder<_router.Router>(
           router: _router.Router(),
           initialRoute: _router.Routes.appOnboardingPage,
+          guards: [AuthGuard()]
         ),
         onGenerateRoute: _router.Router(),
         // initialRoute: _router.Routes.appOnboardingPage,

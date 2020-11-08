@@ -5,6 +5,7 @@ import 'package:fluttertaladsod/application/store/chat/watcher/store_chat_watche
 import 'package:fluttertaladsod/domain/core/value_objects.dart';
 import 'package:fluttertaladsod/domain/message/message.dart';
 import 'package:fluttertaladsod/presentation/core/components/progress_indicator.dart';
+import 'package:fluttertaladsod/presentation/screens/store/chat/widgets/day_card.dart';
 import 'package:fluttertaladsod/presentation/screens/store/chat/widgets/message.dart';
 
 class MessageView extends HookWidget {
@@ -53,15 +54,27 @@ class MessageView extends HookWidget {
     );
   }
 
-  Message _buildMessage(List<MessageDomain> messages, int index) {
+  Widget _buildMessage(List<MessageDomain> messages, int index) {
     final m = messages[index];
-    return Message(
-      text: m.body.getOrCrash(),
-      isSender: m.isSender,
-      avatarUrl: m.senderAvatarUrl.getOrCrash(),
-      isTop: index == messages.length - 1 ? true : m.senderId != messages[index + 1].senderId,
-      senderName: m.senderName.getOrCrash(),
-      timestamp: m.timestamp,
+    return Column(
+      children: [
+        index == messages.length - 1
+            ? const SizedBox(height: 0)
+            : m.timestamp.toDate().weekday !=
+                    messages[index + 1].timestamp.toDate().weekday
+                ? DayCard(dateTime: m.timestamp.toDate())
+                : const SizedBox(height: 0),
+        Message(
+          text: m.body.getOrCrash(),
+          isSender: m.isSender,
+          avatarUrl: m.senderAvatarUrl.getOrCrash(),
+          isTop: index == messages.length - 1
+              ? true
+              : m.senderId != messages[index + 1].senderId,
+          senderName: m.senderName.getOrCrash(),
+          timestamp: m.timestamp,
+        ),
+      ],
     );
   }
 }

@@ -29,47 +29,40 @@ class StoreRepository implements IStoreRepository {
     @required LocationDomain location,
     @required BehaviorSubject<double> rad,
   }) async* {
-
-    yield* rad
-        .switchMap((rad) {
-          print('repo: radius = $rad');
-          return _geo
-              .collection(collectionRef: _firestore.storeCollectionRef)
-              .within(
-                center: location.geoFirePoint,
-                radius: rad,
-                field: 'location',
-                strictMode: true,
-              );
-        })
-        .map(
-          (snapshots) {
-            if (snapshots.isEmpty) {
-              return left<StoreFailure, List<Store>>(StoreFailure.noStore());
-            }
-            return right<StoreFailure, List<Store>>(
-              snapshots.map(
-                (snap) {
-                  final geoPoint =
-                      snap.data()['location']['geopoint'] as GeoPoint;
-                  final distanceAway = location.geoFirePoint.distance(
-                    lat: geoPoint.latitude,
-                    lng: geoPoint.longitude,
-                  );
-                  return StoreDto.fromFirestore(snap: snap, location: location)
-                      .toDomain()
-                      .copyWith(distanceAway: distanceAway.toInt());
-                },
-              ).toList(),
-            );
-          },
-        )
-        .handleError(
-          (err) {
-            // log error onto the console here
-            return left<StoreFailure, List<Store>>(StoreFailure.unexpected());
-          },
+    yield* rad.switchMap((rad) {
+      print('repo: radius = $rad');
+      return _geo
+          .collection(collectionRef: _firestore.storeCollectionRef)
+          .within(
+            center: location.geoFirePoint,
+            radius: rad,
+            field: 'location',
+            strictMode: true,
+          );
+    }).map(
+      (snapshots) {
+        if (snapshots.isEmpty) {
+          return left<StoreFailure, List<Store>>(StoreFailure.noStore());
+        }
+        return right<StoreFailure, List<Store>>(
+          snapshots
+              .map(
+                (snap) => StoreDto.fromFirestore(snap: snap, location: location)
+                    .toDomain(),
+              )
+              .toList(),
         );
+      },
+    ).onErrorReturnWith(
+      (err) {
+        // log error onto the console here
+        return left<StoreFailure, List<Store>>(StoreFailure.unexpected(err));
+      },
+    ).timeout(Duration(seconds: 5), onTimeout: _onTimeout);
+  }
+
+  void _onTimeout(event) {
+    event.add(left(StoreFailure.timeout()));
   }
 
   @override
@@ -87,9 +80,9 @@ class StoreRepository implements IStoreRepository {
         return right<StoreFailure, Store>(
             StoreDto.fromFirestore(snap: snap, location: location).toDomain());
       }
-    }).handleError((err) {
+    }).onErrorReturnWith((err) {
       // print error onto the console here
-      return left<StoreFailure, Store>(StoreFailure.unexpected());
+      return left<StoreFailure, Store>(StoreFailure.unexpected(err));
     });
   }
 
@@ -113,9 +106,9 @@ class StoreRepository implements IStoreRepository {
             .toList()
             .first);
       }
-    }).handleError((err) {
+    }).onErrorReturnWith((err) {
       // log error onto the console here
-      return left<StoreFailure, Store>(StoreFailure.unexpected());
+      return left<StoreFailure, Store>(StoreFailure.unexpected(err));
     });
   }
 
@@ -133,7 +126,7 @@ class StoreRepository implements IStoreRepository {
     try {
       _firestore.storeCollectionRef.doc(UniqueId().getOrCrash()).set(jsonData);
     } catch (err) {
-      return left(StoreFailure.unexpected());
+      return left(StoreFailure.unexpected(err));
     }
     return right(unit);
   }
@@ -147,7 +140,7 @@ class StoreRepository implements IStoreRepository {
     try {
       _firestore.storeCollectionRef.doc(store.id.getOrCrash()).update(jsonData);
     } catch (err) {
-      return left(StoreFailure.unexpected());
+      return left(StoreFailure.unexpected(err));
     }
     return right(unit);
   }
@@ -158,7 +151,7 @@ class StoreRepository implements IStoreRepository {
       await _firestore.storeCollectionRef.doc(storeId.getOrCrash()).delete();
       return right(unit);
     } catch (err) {
-      return left(StoreFailure.unexpected());
+      return left(StoreFailure.unexpected(err));
     }
   }
 
@@ -179,7 +172,7 @@ class StoreRepository implements IStoreRepository {
       return right(mediaUrl);
     } catch (err) {
       // log error here
-      return left(StoreFailure.unexpected());
+      return left(StoreFailure.unexpected(err));
     }
   }
 }
