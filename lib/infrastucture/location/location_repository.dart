@@ -12,8 +12,8 @@ import 'package:location/location.dart';
 @LazySingleton(as: ILocationRepository)
 class LocationRepository implements ILocationRepository {
   final Location _location;
-  final Geoflutterfire _geo;
-  LocationRepository(this._location, this._geo);
+  final Geoflutterfire _geofire;
+  LocationRepository(this._location, this._geofire);
   
   @override
   Future<Either<LocationFailures, Unit>> requestLocationPermission() async {
@@ -26,9 +26,9 @@ class LocationRepository implements ILocationRepository {
   }
 
   @override
-  Future<bool> checkPermissionStatus() async {
-    final bool isServiceEnabled = await _location.serviceEnabled();
-    if (isServiceEnabled) {
+  Future<bool> isPermissionGranted() async {
+    final permission = await _location.hasPermission();
+    if (permission == PermissionStatus.granted) {
       return true;
     } else {
       return false;
@@ -37,7 +37,7 @@ class LocationRepository implements ILocationRepository {
 
   @override
   Future<void> openAppSetting() async {
-    await openLocationSettings();
+    await Geolocator.openLocationSettings();
   }
 
   @override
@@ -64,7 +64,7 @@ class LocationRepository implements ILocationRepository {
     // get geohash
     // Init firestore and geoFlutterFire
     final GeoFirePoint myGeoPoint =
-        _geo.point(latitude: position.latitude, longitude: position.longitude);
+        _geofire.point(latitude: position.latitude, longitude: position.longitude);
     if (error != null) {
       return none();
     } else {

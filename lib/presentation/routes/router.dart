@@ -15,11 +15,11 @@ import '../screens/onboarding/app_onboarding_page.dart';
   generateNavigationHelperExtension: true,
   routes: <AutoRoute>[
     // initial route is named "/"
-    AdaptiveRoute(page: HomePage),
+    AdaptiveRoute(page: HomePage, guards: [LocationPermGuard]),
     AdaptiveRoute(page: AppOnboardingPage, initial: true),
     AdaptiveRoute(page: SignInSplash, fullscreenDialog: true),
-    AdaptiveRoute(page: ProfilePage),
-    AdaptiveRoute(page: StoreForm),
+    AdaptiveRoute(page: ProfilePage, guards: [LocationPermGuard]),
+    AdaptiveRoute(page: StoreForm, guards: [LocationPermGuard]),
     AdaptiveRoute(page: ChatPage, guards: [AuthGuard]),
     AdaptiveRoute(page: ProfileSettingPage),
     AdaptiveRoute(page: LanguageSetting),

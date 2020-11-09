@@ -6,14 +6,29 @@ import 'package:fluttertaladsod/presentation/routes/router.gr.dart';
 import 'package:universal_platform/universal_platform.dart';
 
 class AppOnboardingPage extends StatefulWidget {
+  final int initPage;
+
+  const AppOnboardingPage({Key key, this.initPage = 0}) : super(key: key);
   @override
   _AppOnboardingPageState createState() => _AppOnboardingPageState();
 }
 
 class _AppOnboardingPageState extends State<AppOnboardingPage> {
-  final _pageViewController = PageController(initialPage: 0);
+  PageController _pageViewController;
   final int _totalPages = 3;
   int _pageIndex = 0;
+
+  @override
+  void initState() { 
+    super.initState();
+    _pageViewController = PageController(initialPage: widget.initPage);
+  }
+
+  @override
+  void dispose() {
+    _pageViewController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -9,22 +9,21 @@ import 'package:fluttertaladsod/presentation/routes/route_guards.dart';
 import 'package:fluttertaladsod/presentation/routes/router.gr.dart' as _router;
 
 class AppWidget extends StatelessWidget {
-
   final ColorScheme colorScheme = ColorScheme.light(
-            brightness: Brightness.light,
-            primary: Color(0xFF3949AB),
-            secondary: Color(0xFFFFCA28),
-            primaryVariant: Color(0xFF002884),
-            secondaryVariant: Color(0xFFC8A415),
-            surface: Color(0xFFFFFFFF),
-            background: Color(0xFFe8eaf6),
-            error: Colors.red,
-            onPrimary: Color(0xFFFFFFFF),
-            onSecondary: Colors.black,
-            onSurface: Colors.black,
-            onBackground: Colors.black,
-            onError: Colors.white,
-          );
+    brightness: Brightness.light,
+    primary: Color(0xFF3949AB),
+    secondary: Color(0xFFFFCA28),
+    primaryVariant: Color(0xFF002884),
+    secondaryVariant: Color(0xFFC8A415),
+    surface: Color(0xFFFFFFFF),
+    background: Color(0xFFe8eaf6),
+    error: Colors.red,
+    onPrimary: Color(0xFFFFFFFF),
+    onSecondary: Colors.black,
+    onSurface: Colors.black,
+    onBackground: Colors.black,
+    onError: Colors.white,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -43,12 +42,13 @@ class AppWidget extends StatelessWidget {
       ],
       child: MaterialApp(
         builder: ExtendedNavigator.builder<_router.Router>(
-          router: _router.Router(),
-          initialRoute: _router.Routes.appOnboardingPage,
-          guards: [AuthGuard()]
-        ),
+            router: _router.Router(),
+            initialRoute: _router.Routes.appOnboardingPage,
+            guards: [
+              AuthGuard(),
+              LocationPermGuard(),
+            ]),
         onGenerateRoute: _router.Router(),
-        // initialRoute: _router.Routes.appOnboardingPage,
         debugShowMaterialGrid: false,
         debugShowCheckedModeBanner: false,
         title: 'Kong Dee',
@@ -64,14 +64,8 @@ class AppWidget extends StatelessWidget {
           visualDensity: VisualDensity.adaptivePlatformDensity,
           fontFamily: 'Roboto',
           buttonTheme: null,
-
-
         ),
-        // routes: {
-        //   "/" : (context) => AppOnboardingPage(),
-        // },
       ),
     );
-
   }
 }

@@ -93,7 +93,6 @@ class StoreForm extends StatelessWidget implements AutoRouteWrapper {
               BannerField(),
               Container(
                 padding: EdgeInsets.all(10.0),
-                // color: Colors.blue,
                 width: screenWidth,
                 child: BlocBuilder<StoreFormCubit, StoreFormState>(
                   buildWhen: (p, c) => p.showErrorMessage != c.showErrorMessage,

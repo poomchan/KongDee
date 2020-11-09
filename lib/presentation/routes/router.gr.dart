@@ -54,11 +54,12 @@ class Router extends RouterBase {
   @override
   List<RouteDef> get routes => _routes;
   final _routes = <RouteDef>[
-    RouteDef(Routes.homePage, page: HomePage),
+    RouteDef(Routes.homePage, page: HomePage, guards: [LocationPermGuard]),
     RouteDef(Routes.appOnboardingPage, page: AppOnboardingPage),
     RouteDef(Routes.signInSplash, page: SignInSplash),
-    RouteDef(Routes.profilePage, page: ProfilePage),
-    RouteDef(Routes.storeForm, page: StoreForm),
+    RouteDef(Routes.profilePage,
+        page: ProfilePage, guards: [LocationPermGuard]),
+    RouteDef(Routes.storeForm, page: StoreForm, guards: [LocationPermGuard]),
     RouteDef(Routes.chatPage, page: ChatPage, guards: [AuthGuard]),
     RouteDef(Routes.profileSettingPage, page: ProfileSettingPage),
     RouteDef(Routes.languageSetting, page: LanguageSetting),
@@ -70,13 +71,19 @@ class Router extends RouterBase {
   final _pagesMap = <Type, AutoRouteFactory>{
     HomePage: (data) {
       return buildAdaptivePageRoute<dynamic>(
-        builder: (context) => HomePage(),
+        builder: (context) => HomePage().wrappedRoute(context),
         settings: data,
       );
     },
     AppOnboardingPage: (data) {
+      final args = data.getArgs<AppOnboardingPageArguments>(
+        orElse: () => AppOnboardingPageArguments(),
+      );
       return buildAdaptivePageRoute<dynamic>(
-        builder: (context) => AppOnboardingPage(),
+        builder: (context) => AppOnboardingPage(
+          key: args.key,
+          initPage: args.initPage,
+        ),
         settings: data,
       );
     },
@@ -93,7 +100,7 @@ class Router extends RouterBase {
         builder: (context) => ProfilePage(
           key: args.key,
           user: args.user,
-        ),
+        ).wrappedRoute(context),
         settings: data,
       );
     },
@@ -105,7 +112,7 @@ class Router extends RouterBase {
         builder: (context) => StoreForm(
           key: args.key,
           initialStore: args.initialStore,
-        ),
+        ).wrappedRoute(context),
         settings: data,
       );
     },
@@ -117,7 +124,7 @@ class Router extends RouterBase {
         builder: (context) => ChatPage(
           key: args.key,
           storeId: args.storeId,
-        ),
+        ).wrappedRoute(context),
         settings: data,
       );
     },
@@ -161,27 +168,35 @@ class Router extends RouterBase {
 extension RouterExtendedNavigatorStateX on ExtendedNavigatorState {
   Future<dynamic> pushHomePage() => push<dynamic>(Routes.homePage);
 
-  Future<dynamic> pushAppOnboardingPage() =>
-      push<dynamic>(Routes.appOnboardingPage);
+  Future<dynamic> pushAppOnboardingPage({
+    Key key,
+    int initPage = 0,
+  }) =>
+      push<dynamic>(
+        Routes.appOnboardingPage,
+        arguments: AppOnboardingPageArguments(key: key, initPage: initPage),
+      );
 
   Future<dynamic> pushSignInSplash() => push<dynamic>(Routes.signInSplash);
 
-  Future<dynamic> pushProfilePage({
-    Key key,
-    @required UserDomain user,
-  }) =>
+  Future<dynamic> pushProfilePage(
+          {Key key,
+          @required UserDomain user,
+          OnNavigationRejected onReject}) =>
       push<dynamic>(
         Routes.profilePage,
         arguments: ProfilePageArguments(key: key, user: user),
+        onReject: onReject,
       );
 
-  Future<dynamic> pushStoreForm({
-    Key key,
-    Option<Store> initialStore,
-  }) =>
+  Future<dynamic> pushStoreForm(
+          {Key key,
+          Option<Store> initialStore,
+          OnNavigationRejected onReject}) =>
       push<dynamic>(
         Routes.storeForm,
         arguments: StoreFormArguments(key: key, initialStore: initialStore),
+        onReject: onReject,
       );
 
   Future<dynamic> pushChatPage(
@@ -214,6 +229,13 @@ extension RouterExtendedNavigatorStateX on ExtendedNavigatorState {
 /// ************************************************************************
 /// Arguments holder classes
 /// *************************************************************************
+
+/// AppOnboardingPage arguments holder class
+class AppOnboardingPageArguments {
+  final Key key;
+  final int initPage;
+  AppOnboardingPageArguments({this.key, this.initPage = 0});
+}
 
 /// ProfilePage arguments holder class
 class ProfilePageArguments {
