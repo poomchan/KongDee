@@ -70,3 +70,11 @@ Either<ValueFailure<String>, String> validatePassword(String input) {
     return left(ValueFailure.shortPassword(failedValue: input));
   }
 }
+
+Either<ValueFailure<double>, double> validateIntegerIsPositive(double input) {
+  if (input > 0) {
+    return right(input);
+  } else {
+    return left(ValueFailure.numberNotPositive(failedValue: input));
+  }
+}

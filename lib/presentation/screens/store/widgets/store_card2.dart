@@ -27,21 +27,25 @@ class StoreCard2 extends StatelessWidget {
               child: Stack(
                 fit: StackFit.expand,
                 children: [
-                  MyNetworkImage(imageUrl: store.banner.url),
+                  Hero(
+                    tag: store.banner.url,
+                    child: MyNetworkImage(imageUrl: store.banner.url),
+                  ),
                   Positioned(
                       bottom: 8.0,
                       right: 8.0,
                       child: Card(
                         child: Padding(
                           padding: const EdgeInsets.all(3.0),
-                          child: Text('${store.distanceAway.toString()} km'),
+                          child: Text(
+                              '${store.location.distanceAway.toStringAsFixed(1)} km'),
                         ),
                       )),
                 ],
               ),
             ),
             Text(store.name.getOrCrash()),
-            Text(store.formattedAddress),
+            Text(store.location.address.getOrCrash()),
           ],
         ),
       ),

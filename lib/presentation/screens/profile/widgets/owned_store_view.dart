@@ -17,7 +17,7 @@ class OwnedStoreView extends StatelessWidget {
         ),
         loadFailure: (state) => state.f.map(
           noStore: (_) => NoStoreCard(),
-          unexpected: (_) => Text('ERROR: unexpected failure'),
+          unexpected: (state) => Text('ERROR: unexpected failure : ${state.e}'),
           locationNotGranted: (_) => Text('ERROR: location not granted'),
           timeout: (_) => Text('Timeout'),
         ),

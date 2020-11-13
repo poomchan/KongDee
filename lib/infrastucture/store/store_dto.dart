@@ -1,21 +1,20 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dartz/dartz.dart' as _dz;
+import 'package:fluttertaladsod/domain/auth/user.dart';
 import 'package:fluttertaladsod/domain/core/value_objects.dart';
-import 'package:fluttertaladsod/domain/location/i_location_repository.dart';
 import 'package:fluttertaladsod/domain/location/location.dart';
 import 'package:fluttertaladsod/domain/store/store.dart';
 import 'package:fluttertaladsod/domain/store/value_objects.dart';
 import 'package:fluttertaladsod/infrastucture/core/json_converters.dart';
-import 'package:fluttertaladsod/injection.dart';
+import 'package:fluttertaladsod/infrastucture/store/location/store_location_dto.dart';
+import 'package:fluttertaladsod/infrastucture/store/preferences/store_prefs_dto.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:geoflutterfire/geoflutterfire.dart';
 
 part 'store_dto.freezed.dart';
 part 'store_dto.g.dart';
 
 @freezed
 abstract class StoreDto implements _$StoreDto {
-  const StoreDto._();
-
   const factory StoreDto({
     @JsonKey(ignore: true) String id,
     @required String name,
@@ -23,21 +22,20 @@ abstract class StoreDto implements _$StoreDto {
     @required String bannerUrl,
     @required List<String> picUrls,
     @required String ownerId,
-    @required int distanceAway,
-    @required String formattedAddress,
+    @required StoreLocationDto location,
+    @required StorePrefsDto prefs,
     @required @ServerTimestampConverter() FieldValue serverTimeStamp,
-    @JsonKey(ignore: true) GeoPoint geoPoint,
   }) = _StoreDto;
 
-  factory StoreDto.fromDomain(Store store) {
+  factory StoreDto.fromDomain(Store s) {
     return StoreDto(
-      id: store.id.getOrCrash(),
-      ownerId: store.ownerId.getOrCrash(),
-      name: store.name.getOrCrash(),
-      menu: store.menu.getOrCrash(),
-      bannerUrl: store.banner.getOrCrash().fold(
+      id: s.id.getOrCrash(),
+      ownerId: s.ownerId.getOrCrash(),
+      name: s.name.getOrCrash(),
+      menu: s.menu.getOrCrash(),
+      bannerUrl: s.banner.getOrCrash().fold(
           (file) => throw 'banner us not uploaded to the cloud', (url) => url),
-      picUrls: store.pics
+      picUrls: s.pics
           .getOrCrash()
           .map(
             (storePic) => storePic.fileOrUrl.fold(
@@ -46,8 +44,8 @@ abstract class StoreDto implements _$StoreDto {
           )
           .toList(),
       serverTimeStamp: FieldValue.serverTimestamp(),
-      distanceAway: store.distanceAway,
-      formattedAddress: store.formattedAddress,
+      location: StoreLocationDto.fromDomain(s.location),
+      prefs: StorePrefsDto.fromDomain(s.prefs),
     );
   }
 
@@ -56,21 +54,11 @@ abstract class StoreDto implements _$StoreDto {
 
   factory StoreDto.fromFirestore({
     @required DocumentSnapshot snap,
-    @required LocationDomain location,
   }) {
-    final geoPoint = snap.data()['location']['geopoint'] as GeoPoint;
-    final distanceAway = location.geoFirePoint.distance(
-      lat: geoPoint.latitude,
-      lng: geoPoint.longitude,
-    );
-    return StoreDto.fromJson(snap.data()).copyWith(
-      id: snap.id,
-      geoPoint: geoPoint,
-      distanceAway: distanceAway.toInt(),
-    );
+    return StoreDto.fromJson(snap.data()).copyWith(id: snap.id);
   }
 
-  Store toDomain() {
+  Store toDomain(LocationDomain l, _dz.Option<UserDomain> u) {
     return Store(
       id: UniqueId.fromUniqueString(id),
       name: StoreName(name),
@@ -86,9 +74,11 @@ abstract class StoreDto implements _$StoreDto {
         ),
       ),
       ownerId: UniqueId.fromUniqueString(ownerId),
-      distanceAway: distanceAway,
-      formattedAddress: formattedAddress,
-      geoPoint: geoPoint,
+      location: location.toDomain(l),
+      prefs: prefs.toDomain(),
+      isOwner: u.fold(() => false, (u) => u.id.getOrCrash() == ownerId),
     );
   }
+
+  const StoreDto._();
 }

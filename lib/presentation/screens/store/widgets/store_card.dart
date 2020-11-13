@@ -84,18 +84,15 @@ class StoreCard extends StatelessWidget {
                             Container(
                               width: 45,
                               height: 20,
+                              alignment: Alignment.center,
                               decoration: BoxDecoration(
                                   color: Colors.lightGreenAccent[100],
                                   borderRadius: BorderRadius.circular(10.0)),
-                              child: Column(
-                                children: const [
-                                  Text(
-                                    'on',
-                                    style: TextStyle(
-                                      fontSize: 15.0,
-                                    ),
-                                  ),
-                                ],
+                              child: Text(
+                                'on',
+                                style: TextStyle(
+                                  fontSize: 15.0,
+                                ),
                               ),
                             ),
                           ],
@@ -104,25 +101,30 @@ class StoreCard extends StatelessWidget {
                         Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Container(
-                              width: 150.0,
+                            SizedBox(
+                              width: 100.0,
                               child: Text(
-                                store.formattedAddress,
+                                store.location.address.getOrCrash(),
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ),
                             Spacer(),
-                            RichText(
-                              overflow: TextOverflow.ellipsis,
-                              text: TextSpan(
-                                style: TextStyle(
-                                    fontSize: 20.0, color: Colors.black87),
-                                children: [
-                                  TextSpan(text: store.distanceAway.toString()),
-                                  TextSpan(
-                                      text: ' km',
-                                      style: TextStyle(fontSize: 12.0)),
-                                ],
+                            SizedBox(
+                              width: 60.0,
+                              child: RichText(
+                                overflow: TextOverflow.ellipsis,
+                                text: TextSpan(
+                                  style: TextStyle(
+                                      fontSize: 20.0, color: Colors.black87),
+                                  children: [
+                                    TextSpan(
+                                        text: store.location.distanceAway
+                                            .toStringAsFixed(1)),
+                                    TextSpan(
+                                        text: ' km',
+                                        style: TextStyle(fontSize: 12.0)),
+                                  ],
+                                ),
                               ),
                             ),
                           ],

@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:fluttertaladsod/domain/core/value_objects.dart';
+import 'package:fluttertaladsod/domain/auth/user.dart';
 import 'package:fluttertaladsod/domain/location/i_location_repository.dart';
 import 'package:fluttertaladsod/domain/store/i_store_repository.dart';
 import 'package:fluttertaladsod/domain/store/store.dart';
@@ -18,8 +18,7 @@ class OwnedStoreWatcherCubit extends Cubit<OwnedStoreWatcherState> {
   OwnedStoreWatcherCubit(this._iStoreRepository, this._iLocationRepository)
       : super(_Initial());
 
-  Future<void> watchOwnedStoreStarted({@required UniqueId ownerId}) async {
-    assert(ownerId != null);
+  Future<void> watchOwnedStoreStarted({@required UserDomain user}) async {
     emit(OwnedStoreWatcherState.loadInProgress());
 
     final locationOption = await _iLocationRepository.getLocation();
@@ -29,7 +28,10 @@ class OwnedStoreWatcherCubit extends Cubit<OwnedStoreWatcherState> {
           StoreFailure.locationNotGranted())),
       (location) {
         final stream = _iStoreRepository.watchOwnedStore(
-            ownerId: ownerId, location: location);
+          ownerId: user.id,
+          location: location,
+          user: user,
+        );
         stream.listen(
           (storeOrF) {
             return storeOrF.fold(

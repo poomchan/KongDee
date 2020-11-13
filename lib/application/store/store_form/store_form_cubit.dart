@@ -2,9 +2,11 @@ import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertaladsod/domain/location/location.dart';
+import 'package:fluttertaladsod/domain/auth/i_auth_facade.dart';
+import 'package:fluttertaladsod/domain/location/i_location_repository.dart';
 import 'package:fluttertaladsod/domain/store/i_image_repository.dart';
 import 'package:fluttertaladsod/domain/store/i_store_repository.dart';
+import 'package:fluttertaladsod/domain/store/location/store_location.dart';
 import 'package:fluttertaladsod/domain/store/store.dart';
 import 'package:fluttertaladsod/domain/store/store_failures.dart';
 import 'package:fluttertaladsod/domain/store/value_objects.dart';
@@ -19,18 +21,26 @@ part 'store_form_cubit.freezed.dart';
 class StoreFormCubit extends Cubit<StoreFormState> {
   final IImageRepository _iImageRepository;
   final IStoreRepository _iStoreRepository;
+  final IAuthFacade _iAuthFacade;
+  final ILocationRepository _iLocationRepository;
 
-  StoreFormCubit(this._iImageRepository, this._iStoreRepository)
+  StoreFormCubit(this._iImageRepository, this._iStoreRepository,
+      this._iAuthFacade, this._iLocationRepository)
       : super(StoreFormState.initial());
 
   Future<void> initializeForm({
     @required Option<Store> initialStore,
   }) async {
+    final locationOption = await _iLocationRepository.getLocation();
+    final location = locationOption
+        .getOrElse(() => throw 'StoreFormCubit: location not granted');
     initialStore.fold(
         // if no initial store (create)
         () => emit(
               state.copyWith(
-                store: Store.created(),
+                store: Store.created().copyWith(
+                  location: StoreLocation.fromLocationDomain(location),
+                ),
               ),
             ),
         // have initial store
@@ -109,17 +119,20 @@ class StoreFormCubit extends Cubit<StoreFormState> {
     );
   }
 
-  Future<void> saved({LocationDomain location}) async {
+  Future<void> saved() async {
     Either<StoreFailure, Unit> failureOrSuccess;
     // send the latest store to firestore (either update or create is checked by [isEditting])
     if (state.store.failureOption.isNone()) {
+      final userOption = await _iAuthFacade.getSignedInUser();
+      final user = userOption.getOrElse(() => throw 'user not authenticated');
       emit(
         state.copyWith(
-            isSaving: true,
-            saveFailureOrSuccessOption: none(),
-            store: state.store.copyWith(
-              formattedAddress: location.formattedAddress,
-            )),
+          isSaving: true,
+          saveFailureOrSuccessOption: none(),
+          store: state.store.copyWith(
+            ownerId: user.id,
+          ),
+        ),
       );
       await Future.wait([
         _uploadBannerPic(),
@@ -138,13 +151,13 @@ class StoreFormCubit extends Cubit<StoreFormState> {
                     pics: state.storePicsOnUpload,
                     banner: state.storeBannerOnUpload,
                   ),
-                  location: location)
+                )
               : await _iStoreRepository.create(
                   state.store.copyWith(
                     pics: state.storePicsOnUpload,
                     banner: state.storeBannerOnUpload,
                   ),
-                  location);
+                );
         },
       );
       emit(state.copyWith(

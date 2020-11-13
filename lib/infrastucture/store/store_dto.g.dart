@@ -13,8 +13,12 @@ _$_StoreDto _$_$_StoreDtoFromJson(Map<String, dynamic> json) {
     bannerUrl: json['bannerUrl'] as String,
     picUrls: (json['picUrls'] as List)?.map((e) => e as String)?.toList(),
     ownerId: json['ownerId'] as String,
-    distanceAway: json['distanceAway'] as int,
-    formattedAddress: json['formattedAddress'] as String,
+    location: json['location'] == null
+        ? null
+        : StoreLocationDto.fromJson(json['location'] as Map<String, dynamic>),
+    prefs: json['prefs'] == null
+        ? null
+        : StorePrefsDto.fromJson(json['prefs'] as Map<String, dynamic>),
     serverTimeStamp:
         const ServerTimestampConverter().fromJson(json['serverTimeStamp']),
   );
@@ -27,8 +31,8 @@ Map<String, dynamic> _$_$_StoreDtoToJson(_$_StoreDto instance) =>
       'bannerUrl': instance.bannerUrl,
       'picUrls': instance.picUrls,
       'ownerId': instance.ownerId,
-      'distanceAway': instance.distanceAway,
-      'formattedAddress': instance.formattedAddress,
+      'location': instance.location?.toJson(),
+      'prefs': instance.prefs?.toJson(),
       'serverTimeStamp':
           const ServerTimestampConverter().toJson(instance.serverTimeStamp),
     };

@@ -24,7 +24,7 @@ class NameView extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                       ),
                       Text(
-                        state.store.formattedAddress,
+                        state.store.location.address.getOrCrash(),
                         style: TextStyle(
                             fontSize: 18.0,
                             color: Colors.black87,

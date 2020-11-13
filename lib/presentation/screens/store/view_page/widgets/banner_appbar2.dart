@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertaladsod/application/store/store_view/store_view_cubit.dart';
@@ -39,7 +38,7 @@ class BannerAppbar2 extends StatelessWidget {
               inital: (state) => circularProgress(context),
               loading: (state) => circularProgress(context),
               success: (state) => Hero(
-                tag: state.store.banner,
+                tag: state.store.banner.url,
                 child: MyNetworkImage(
                   imageUrl: state.store.banner.url,
                   memCacheWidth: 600,

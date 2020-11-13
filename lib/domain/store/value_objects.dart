@@ -86,3 +86,43 @@ class StorePic16 extends ValueObject<List<StorePic>> {
 
   bool get isFull => length == maxLength;
 }
+
+// range in meter
+class SellingRange extends ValueObject<double> {
+  @override
+  final Either<ValueFailure<double>, double> value;
+  static const maxRange = 16;
+
+  factory SellingRange(double input) {
+    return SellingRange._(validateIntegerIsPositive(input));
+  }
+
+  factory SellingRange.infinite(){
+    return SellingRange._(right(double.infinity));
+  }
+
+  factory SellingRange.created(){
+    return SellingRange._(right(1));
+  }
+
+  const SellingRange._(this.value);
+
+  bool isInCoverage(double distance) {
+    if (distance > value.getOrElse(() => throw 'null range or failure')) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+}
+
+class StoreAddress extends ValueObject<String> {
+  @override
+  final Either<ValueFailure<String>, String> value;
+
+  factory StoreAddress(String input) {
+    return StoreAddress._(right(input));
+  }
+
+  const StoreAddress._(this.value);
+}

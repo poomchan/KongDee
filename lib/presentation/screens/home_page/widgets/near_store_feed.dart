@@ -3,12 +3,27 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertaladsod/application/home/store_feed/nearby/store_near_cubit.dart';
 import 'package:fluttertaladsod/application/location/location_cubit.dart';
 import 'package:fluttertaladsod/domain/store/store.dart';
+import 'package:fluttertaladsod/injection.dart';
 import 'package:fluttertaladsod/presentation/core/components/progress_indicator.dart';
 import 'package:fluttertaladsod/presentation/screens/store/widgets/store_card2.dart';
 
 class NearStoreFeed extends StatelessWidget {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext contxt) {
+    return BlocBuilder<LocationCubit, LocationState>(
+      builder: (context, state) => state.map(
+        inital: (state) => circularProgress(context),
+        getting: (state) => circularProgress(context),
+        success: (state) => _buildViewFeed(contxt),
+        failure: (state) => OutlineButton(
+          onPressed: () => context.read<LocationCubit>().getUserLocation(),
+          child: Text('Please enable location'),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildViewFeed(BuildContext contxt) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -28,14 +43,15 @@ class NearStoreFeed extends StatelessWidget {
           builder: (context, state) => state.map(
             inital: (state) => circularProgress(context),
             loading: (state) =>
-                _buildFeed(context, storeList: state.previousStoreList),
+                _buildFeed(contxt, storeList: state.previousStoreList),
             failure: (state) => Center(
               child: state.f.map(
                 noStore: (_) => Text('No store nearby, try adding radius'),
-                unexpected: (state) => Text('Unexpected Error \n For nerds: ${state.e}'),
+                unexpected: (state) =>
+                    Text('Unexpected Error \n For nerds: ${state.e}'),
                 locationNotGranted: (_) => TextButton(
                   onPressed: () =>
-                      context.bloc<LocationCubit>().getUserLocation(),
+                      context.read<LocationCubit>().getUserLocation(),
                   child: Text('Enable Location'),
                 ),
                 timeout: (_) => Column(
@@ -43,14 +59,14 @@ class NearStoreFeed extends StatelessWidget {
                     Text('Timeout'),
                     TextButton(
                       onPressed: () =>
-                          context.bloc<StoreNearCubit>().watchNearbyStore(),
+                          context.read<StoreNearCubit>().watchNearbyStore(),
                       child: Text('Try again'),
                     ),
                   ],
                 ),
               ),
             ),
-            loaded: (state) => _buildFeed(context, storeList: state.storeList),
+            loaded: (state) => _buildFeed(contxt, storeList: state.storeList),
           ),
         ),
         ButtonBar(
@@ -63,11 +79,11 @@ class NearStoreFeed extends StatelessWidget {
             ),
             RaisedButton(
               onPressed: () =>
-                  context.bloc<StoreNearCubit>().requestMoreRadius(),
+                  contxt.read<StoreNearCubit>().requestMoreRadius(),
               child: Text('Add Radius'),
             ),
             RaisedButton(
-              onPressed: () => context.bloc<StoreNearCubit>().drainRadius(),
+              onPressed: () => contxt.read<StoreNearCubit>().drainRadius(),
               child: Text('Drain Radius'),
             ),
           ],
@@ -87,11 +103,11 @@ class NearStoreFeed extends StatelessWidget {
         childAspectRatio: 0.7,
       ),
       itemCount: storeList.length,
-      itemBuilder: (context, index) => _buildStoreCard(storeList[index]),
+      itemBuilder: (context, index) => _buildStoreCard(storeList[index], context),
     );
   }
 
-  Widget _buildStoreCard(Store store) {
+  Widget _buildStoreCard(Store store, BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: StoreCard2(store: store),

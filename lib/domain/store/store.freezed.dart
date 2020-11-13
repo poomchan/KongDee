@@ -19,20 +19,20 @@ class _$StoreTearOff {
       @required StoreBanner banner,
       @required StoreMenu menu,
       @required StorePic16 pics,
-      @required int distanceAway,
-      @required String formattedAddress,
       @required UniqueId ownerId,
-      GeoPoint geoPoint}) {
+      @required StoreLocation location,
+      @required StorePrefs prefs,
+      @required bool isOwner}) {
     return _Store(
       id: id,
       name: name,
       banner: banner,
       menu: menu,
       pics: pics,
-      distanceAway: distanceAway,
-      formattedAddress: formattedAddress,
       ownerId: ownerId,
-      geoPoint: geoPoint,
+      location: location,
+      prefs: prefs,
+      isOwner: isOwner,
     );
   }
 }
@@ -46,10 +46,10 @@ mixin _$Store {
   StoreBanner get banner;
   StoreMenu get menu;
   StorePic16 get pics;
-  int get distanceAway;
-  String get formattedAddress;
   UniqueId get ownerId;
-  GeoPoint get geoPoint;
+  StoreLocation get location;
+  StorePrefs get prefs;
+  bool get isOwner;
 
   $StoreCopyWith<Store> get copyWith;
 }
@@ -63,10 +63,13 @@ abstract class $StoreCopyWith<$Res> {
       StoreBanner banner,
       StoreMenu menu,
       StorePic16 pics,
-      int distanceAway,
-      String formattedAddress,
       UniqueId ownerId,
-      GeoPoint geoPoint});
+      StoreLocation location,
+      StorePrefs prefs,
+      bool isOwner});
+
+  $StoreLocationCopyWith<$Res> get location;
+  $StorePrefsCopyWith<$Res> get prefs;
 }
 
 class _$StoreCopyWithImpl<$Res> implements $StoreCopyWith<$Res> {
@@ -83,10 +86,10 @@ class _$StoreCopyWithImpl<$Res> implements $StoreCopyWith<$Res> {
     Object banner = freezed,
     Object menu = freezed,
     Object pics = freezed,
-    Object distanceAway = freezed,
-    Object formattedAddress = freezed,
     Object ownerId = freezed,
-    Object geoPoint = freezed,
+    Object location = freezed,
+    Object prefs = freezed,
+    Object isOwner = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed ? _value.id : id as UniqueId,
@@ -94,14 +97,32 @@ class _$StoreCopyWithImpl<$Res> implements $StoreCopyWith<$Res> {
       banner: banner == freezed ? _value.banner : banner as StoreBanner,
       menu: menu == freezed ? _value.menu : menu as StoreMenu,
       pics: pics == freezed ? _value.pics : pics as StorePic16,
-      distanceAway:
-          distanceAway == freezed ? _value.distanceAway : distanceAway as int,
-      formattedAddress: formattedAddress == freezed
-          ? _value.formattedAddress
-          : formattedAddress as String,
       ownerId: ownerId == freezed ? _value.ownerId : ownerId as UniqueId,
-      geoPoint: geoPoint == freezed ? _value.geoPoint : geoPoint as GeoPoint,
+      location:
+          location == freezed ? _value.location : location as StoreLocation,
+      prefs: prefs == freezed ? _value.prefs : prefs as StorePrefs,
+      isOwner: isOwner == freezed ? _value.isOwner : isOwner as bool,
     ));
+  }
+
+  @override
+  $StoreLocationCopyWith<$Res> get location {
+    if (_value.location == null) {
+      return null;
+    }
+    return $StoreLocationCopyWith<$Res>(_value.location, (value) {
+      return _then(_value.copyWith(location: value));
+    });
+  }
+
+  @override
+  $StorePrefsCopyWith<$Res> get prefs {
+    if (_value.prefs == null) {
+      return null;
+    }
+    return $StorePrefsCopyWith<$Res>(_value.prefs, (value) {
+      return _then(_value.copyWith(prefs: value));
+    });
   }
 }
 
@@ -115,10 +136,15 @@ abstract class _$StoreCopyWith<$Res> implements $StoreCopyWith<$Res> {
       StoreBanner banner,
       StoreMenu menu,
       StorePic16 pics,
-      int distanceAway,
-      String formattedAddress,
       UniqueId ownerId,
-      GeoPoint geoPoint});
+      StoreLocation location,
+      StorePrefs prefs,
+      bool isOwner});
+
+  @override
+  $StoreLocationCopyWith<$Res> get location;
+  @override
+  $StorePrefsCopyWith<$Res> get prefs;
 }
 
 class __$StoreCopyWithImpl<$Res> extends _$StoreCopyWithImpl<$Res>
@@ -136,10 +162,10 @@ class __$StoreCopyWithImpl<$Res> extends _$StoreCopyWithImpl<$Res>
     Object banner = freezed,
     Object menu = freezed,
     Object pics = freezed,
-    Object distanceAway = freezed,
-    Object formattedAddress = freezed,
     Object ownerId = freezed,
-    Object geoPoint = freezed,
+    Object location = freezed,
+    Object prefs = freezed,
+    Object isOwner = freezed,
   }) {
     return _then(_Store(
       id: id == freezed ? _value.id : id as UniqueId,
@@ -147,13 +173,11 @@ class __$StoreCopyWithImpl<$Res> extends _$StoreCopyWithImpl<$Res>
       banner: banner == freezed ? _value.banner : banner as StoreBanner,
       menu: menu == freezed ? _value.menu : menu as StoreMenu,
       pics: pics == freezed ? _value.pics : pics as StorePic16,
-      distanceAway:
-          distanceAway == freezed ? _value.distanceAway : distanceAway as int,
-      formattedAddress: formattedAddress == freezed
-          ? _value.formattedAddress
-          : formattedAddress as String,
       ownerId: ownerId == freezed ? _value.ownerId : ownerId as UniqueId,
-      geoPoint: geoPoint == freezed ? _value.geoPoint : geoPoint as GeoPoint,
+      location:
+          location == freezed ? _value.location : location as StoreLocation,
+      prefs: prefs == freezed ? _value.prefs : prefs as StorePrefs,
+      isOwner: isOwner == freezed ? _value.isOwner : isOwner as bool,
     ));
   }
 }
@@ -165,18 +189,19 @@ class _$_Store extends _Store {
       @required this.banner,
       @required this.menu,
       @required this.pics,
-      @required this.distanceAway,
-      @required this.formattedAddress,
       @required this.ownerId,
-      this.geoPoint})
+      @required this.location,
+      @required this.prefs,
+      @required this.isOwner})
       : assert(id != null),
         assert(name != null),
         assert(banner != null),
         assert(menu != null),
         assert(pics != null),
-        assert(distanceAway != null),
-        assert(formattedAddress != null),
         assert(ownerId != null),
+        assert(location != null),
+        assert(prefs != null),
+        assert(isOwner != null),
         super._();
 
   @override
@@ -190,17 +215,17 @@ class _$_Store extends _Store {
   @override
   final StorePic16 pics;
   @override
-  final int distanceAway;
-  @override
-  final String formattedAddress;
-  @override
   final UniqueId ownerId;
   @override
-  final GeoPoint geoPoint;
+  final StoreLocation location;
+  @override
+  final StorePrefs prefs;
+  @override
+  final bool isOwner;
 
   @override
   String toString() {
-    return 'Store(id: $id, name: $name, banner: $banner, menu: $menu, pics: $pics, distanceAway: $distanceAway, formattedAddress: $formattedAddress, ownerId: $ownerId, geoPoint: $geoPoint)';
+    return 'Store(id: $id, name: $name, banner: $banner, menu: $menu, pics: $pics, ownerId: $ownerId, location: $location, prefs: $prefs, isOwner: $isOwner)';
   }
 
   @override
@@ -217,18 +242,16 @@ class _$_Store extends _Store {
                 const DeepCollectionEquality().equals(other.menu, menu)) &&
             (identical(other.pics, pics) ||
                 const DeepCollectionEquality().equals(other.pics, pics)) &&
-            (identical(other.distanceAway, distanceAway) ||
-                const DeepCollectionEquality()
-                    .equals(other.distanceAway, distanceAway)) &&
-            (identical(other.formattedAddress, formattedAddress) ||
-                const DeepCollectionEquality()
-                    .equals(other.formattedAddress, formattedAddress)) &&
             (identical(other.ownerId, ownerId) ||
                 const DeepCollectionEquality()
                     .equals(other.ownerId, ownerId)) &&
-            (identical(other.geoPoint, geoPoint) ||
+            (identical(other.location, location) ||
                 const DeepCollectionEquality()
-                    .equals(other.geoPoint, geoPoint)));
+                    .equals(other.location, location)) &&
+            (identical(other.prefs, prefs) ||
+                const DeepCollectionEquality().equals(other.prefs, prefs)) &&
+            (identical(other.isOwner, isOwner) ||
+                const DeepCollectionEquality().equals(other.isOwner, isOwner)));
   }
 
   @override
@@ -239,10 +262,10 @@ class _$_Store extends _Store {
       const DeepCollectionEquality().hash(banner) ^
       const DeepCollectionEquality().hash(menu) ^
       const DeepCollectionEquality().hash(pics) ^
-      const DeepCollectionEquality().hash(distanceAway) ^
-      const DeepCollectionEquality().hash(formattedAddress) ^
       const DeepCollectionEquality().hash(ownerId) ^
-      const DeepCollectionEquality().hash(geoPoint);
+      const DeepCollectionEquality().hash(location) ^
+      const DeepCollectionEquality().hash(prefs) ^
+      const DeepCollectionEquality().hash(isOwner);
 
   @override
   _$StoreCopyWith<_Store> get copyWith =>
@@ -257,10 +280,10 @@ abstract class _Store extends Store {
       @required StoreBanner banner,
       @required StoreMenu menu,
       @required StorePic16 pics,
-      @required int distanceAway,
-      @required String formattedAddress,
       @required UniqueId ownerId,
-      GeoPoint geoPoint}) = _$_Store;
+      @required StoreLocation location,
+      @required StorePrefs prefs,
+      @required bool isOwner}) = _$_Store;
 
   @override
   UniqueId get id;
@@ -273,13 +296,13 @@ abstract class _Store extends Store {
   @override
   StorePic16 get pics;
   @override
-  int get distanceAway;
-  @override
-  String get formattedAddress;
-  @override
   UniqueId get ownerId;
   @override
-  GeoPoint get geoPoint;
+  StoreLocation get location;
+  @override
+  StorePrefs get prefs;
+  @override
+  bool get isOwner;
   @override
   _$StoreCopyWith<_Store> get copyWith;
 }

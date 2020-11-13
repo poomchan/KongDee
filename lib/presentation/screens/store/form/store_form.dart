@@ -25,10 +25,10 @@ class StoreForm extends StatelessWidget implements AutoRouteWrapper {
         BlocProvider<StoreFormCubit>(
             create: (context) => getIt<StoreFormCubit>()
               ..initializeForm(initialStore: initialStore)),
-        BlocProvider<StoreFormLocationCubit>(
-          create: (context) =>
-              getIt<StoreFormLocationCubit>()..getUserLocation(),
-        ),
+        // BlocProvider<StoreFormLocationCubit>(
+        //   create: (context) =>
+        //       getIt<StoreFormLocationCubit>()..getUserLocation(),
+        // ),
       ],
       child: MultiBlocListener(
         listeners: [
@@ -63,7 +63,6 @@ class StoreForm extends StatelessWidget implements AutoRouteWrapper {
 
   @override
   Widget build(BuildContext context) {
-    final locationBloc = BlocProvider.of<StoreFormLocationCubit>(context);
     final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -72,14 +71,7 @@ class StoreForm extends StatelessWidget implements AutoRouteWrapper {
         elevation: 0.0,
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => context.bloc<StoreFormCubit>().saved(
-              location: locationBloc.state.map(
-                success: (state) => state.location,
-                inital: (state) => throw 'init',
-                loading: (state) => throw 'getting',
-                failure: (state) => throw 'fail',
-              ),
-            ),
+        onPressed: () => BlocProvider.of<StoreFormCubit>(context).saved(),
         backgroundColor: Colors.green,
         child: Icon(Icons.done),
       ),

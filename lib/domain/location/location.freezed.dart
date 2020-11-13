@@ -14,15 +14,10 @@ class _$LocationDomainTearOff {
 
 // ignore: unused_element
   _LocationDomain call(
-      {@required String fullAddress,
-      @required String formattedAddress,
-      @required GeoFirePoint geoFirePoint,
-      @required LocationData position}) {
+      {@required GeoFirePoint geoFirePoint, @required Placemark placemark}) {
     return _LocationDomain(
-      fullAddress: fullAddress,
-      formattedAddress: formattedAddress,
       geoFirePoint: geoFirePoint,
-      position: position,
+      placemark: placemark,
     );
   }
 }
@@ -31,10 +26,8 @@ class _$LocationDomainTearOff {
 const $LocationDomain = _$LocationDomainTearOff();
 
 mixin _$LocationDomain {
-  String get fullAddress;
-  String get formattedAddress;
   GeoFirePoint get geoFirePoint;
-  LocationData get position;
+  Placemark get placemark;
 
   $LocationDomainCopyWith<LocationDomain> get copyWith;
 }
@@ -43,11 +36,7 @@ abstract class $LocationDomainCopyWith<$Res> {
   factory $LocationDomainCopyWith(
           LocationDomain value, $Res Function(LocationDomain) then) =
       _$LocationDomainCopyWithImpl<$Res>;
-  $Res call(
-      {String fullAddress,
-      String formattedAddress,
-      GeoFirePoint geoFirePoint,
-      LocationData position});
+  $Res call({GeoFirePoint geoFirePoint, Placemark placemark});
 }
 
 class _$LocationDomainCopyWithImpl<$Res>
@@ -60,22 +49,15 @@ class _$LocationDomainCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object fullAddress = freezed,
-    Object formattedAddress = freezed,
     Object geoFirePoint = freezed,
-    Object position = freezed,
+    Object placemark = freezed,
   }) {
     return _then(_value.copyWith(
-      fullAddress:
-          fullAddress == freezed ? _value.fullAddress : fullAddress as String,
-      formattedAddress: formattedAddress == freezed
-          ? _value.formattedAddress
-          : formattedAddress as String,
       geoFirePoint: geoFirePoint == freezed
           ? _value.geoFirePoint
           : geoFirePoint as GeoFirePoint,
-      position:
-          position == freezed ? _value.position : position as LocationData,
+      placemark:
+          placemark == freezed ? _value.placemark : placemark as Placemark,
     ));
   }
 }
@@ -86,11 +68,7 @@ abstract class _$LocationDomainCopyWith<$Res>
           _LocationDomain value, $Res Function(_LocationDomain) then) =
       __$LocationDomainCopyWithImpl<$Res>;
   @override
-  $Res call(
-      {String fullAddress,
-      String formattedAddress,
-      GeoFirePoint geoFirePoint,
-      LocationData position});
+  $Res call({GeoFirePoint geoFirePoint, Placemark placemark});
 }
 
 class __$LocationDomainCopyWithImpl<$Res>
@@ -105,76 +83,52 @@ class __$LocationDomainCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object fullAddress = freezed,
-    Object formattedAddress = freezed,
     Object geoFirePoint = freezed,
-    Object position = freezed,
+    Object placemark = freezed,
   }) {
     return _then(_LocationDomain(
-      fullAddress:
-          fullAddress == freezed ? _value.fullAddress : fullAddress as String,
-      formattedAddress: formattedAddress == freezed
-          ? _value.formattedAddress
-          : formattedAddress as String,
       geoFirePoint: geoFirePoint == freezed
           ? _value.geoFirePoint
           : geoFirePoint as GeoFirePoint,
-      position:
-          position == freezed ? _value.position : position as LocationData,
+      placemark:
+          placemark == freezed ? _value.placemark : placemark as Placemark,
     ));
   }
 }
 
 class _$_LocationDomain implements _LocationDomain {
   const _$_LocationDomain(
-      {@required this.fullAddress,
-      @required this.formattedAddress,
-      @required this.geoFirePoint,
-      @required this.position})
-      : assert(fullAddress != null),
-        assert(formattedAddress != null),
-        assert(geoFirePoint != null),
-        assert(position != null);
+      {@required this.geoFirePoint, @required this.placemark})
+      : assert(geoFirePoint != null),
+        assert(placemark != null);
 
-  @override
-  final String fullAddress;
-  @override
-  final String formattedAddress;
   @override
   final GeoFirePoint geoFirePoint;
   @override
-  final LocationData position;
+  final Placemark placemark;
 
   @override
   String toString() {
-    return 'LocationDomain(fullAddress: $fullAddress, formattedAddress: $formattedAddress, geoFirePoint: $geoFirePoint, position: $position)';
+    return 'LocationDomain(geoFirePoint: $geoFirePoint, placemark: $placemark)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _LocationDomain &&
-            (identical(other.fullAddress, fullAddress) ||
-                const DeepCollectionEquality()
-                    .equals(other.fullAddress, fullAddress)) &&
-            (identical(other.formattedAddress, formattedAddress) ||
-                const DeepCollectionEquality()
-                    .equals(other.formattedAddress, formattedAddress)) &&
             (identical(other.geoFirePoint, geoFirePoint) ||
                 const DeepCollectionEquality()
                     .equals(other.geoFirePoint, geoFirePoint)) &&
-            (identical(other.position, position) ||
+            (identical(other.placemark, placemark) ||
                 const DeepCollectionEquality()
-                    .equals(other.position, position)));
+                    .equals(other.placemark, placemark)));
   }
 
   @override
   int get hashCode =>
       runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(fullAddress) ^
-      const DeepCollectionEquality().hash(formattedAddress) ^
       const DeepCollectionEquality().hash(geoFirePoint) ^
-      const DeepCollectionEquality().hash(position);
+      const DeepCollectionEquality().hash(placemark);
 
   @override
   _$LocationDomainCopyWith<_LocationDomain> get copyWith =>
@@ -183,19 +137,13 @@ class _$_LocationDomain implements _LocationDomain {
 
 abstract class _LocationDomain implements LocationDomain {
   const factory _LocationDomain(
-      {@required String fullAddress,
-      @required String formattedAddress,
-      @required GeoFirePoint geoFirePoint,
-      @required LocationData position}) = _$_LocationDomain;
+      {@required GeoFirePoint geoFirePoint,
+      @required Placemark placemark}) = _$_LocationDomain;
 
-  @override
-  String get fullAddress;
-  @override
-  String get formattedAddress;
   @override
   GeoFirePoint get geoFirePoint;
   @override
-  LocationData get position;
+  Placemark get placemark;
   @override
   _$LocationDomainCopyWith<_LocationDomain> get copyWith;
 }

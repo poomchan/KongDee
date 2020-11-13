@@ -23,10 +23,9 @@ class _$StoreDtoTearOff {
       @required String bannerUrl,
       @required List<String> picUrls,
       @required String ownerId,
-      @required int distanceAway,
-      @required String formattedAddress,
-      @required @ServerTimestampConverter() FieldValue serverTimeStamp,
-      @JsonKey(ignore: true) GeoPoint geoPoint}) {
+      @required StoreLocationDto location,
+      @required StorePrefsDto prefs,
+      @required @ServerTimestampConverter() FieldValue serverTimeStamp}) {
     return _StoreDto(
       id: id,
       name: name,
@@ -34,10 +33,9 @@ class _$StoreDtoTearOff {
       bannerUrl: bannerUrl,
       picUrls: picUrls,
       ownerId: ownerId,
-      distanceAway: distanceAway,
-      formattedAddress: formattedAddress,
+      location: location,
+      prefs: prefs,
       serverTimeStamp: serverTimeStamp,
-      geoPoint: geoPoint,
     );
   }
 }
@@ -53,12 +51,10 @@ mixin _$StoreDto {
   String get bannerUrl;
   List<String> get picUrls;
   String get ownerId;
-  int get distanceAway;
-  String get formattedAddress;
+  StoreLocationDto get location;
+  StorePrefsDto get prefs;
   @ServerTimestampConverter()
   FieldValue get serverTimeStamp;
-  @JsonKey(ignore: true)
-  GeoPoint get geoPoint;
 
   Map<String, dynamic> toJson();
   $StoreDtoCopyWith<StoreDto> get copyWith;
@@ -74,10 +70,12 @@ abstract class $StoreDtoCopyWith<$Res> {
       String bannerUrl,
       List<String> picUrls,
       String ownerId,
-      int distanceAway,
-      String formattedAddress,
-      @ServerTimestampConverter() FieldValue serverTimeStamp,
-      @JsonKey(ignore: true) GeoPoint geoPoint});
+      StoreLocationDto location,
+      StorePrefsDto prefs,
+      @ServerTimestampConverter() FieldValue serverTimeStamp});
+
+  $StoreLocationDtoCopyWith<$Res> get location;
+  $StorePrefsDtoCopyWith<$Res> get prefs;
 }
 
 class _$StoreDtoCopyWithImpl<$Res> implements $StoreDtoCopyWith<$Res> {
@@ -95,10 +93,9 @@ class _$StoreDtoCopyWithImpl<$Res> implements $StoreDtoCopyWith<$Res> {
     Object bannerUrl = freezed,
     Object picUrls = freezed,
     Object ownerId = freezed,
-    Object distanceAway = freezed,
-    Object formattedAddress = freezed,
+    Object location = freezed,
+    Object prefs = freezed,
     Object serverTimeStamp = freezed,
-    Object geoPoint = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed ? _value.id : id as String,
@@ -107,16 +104,33 @@ class _$StoreDtoCopyWithImpl<$Res> implements $StoreDtoCopyWith<$Res> {
       bannerUrl: bannerUrl == freezed ? _value.bannerUrl : bannerUrl as String,
       picUrls: picUrls == freezed ? _value.picUrls : picUrls as List<String>,
       ownerId: ownerId == freezed ? _value.ownerId : ownerId as String,
-      distanceAway:
-          distanceAway == freezed ? _value.distanceAway : distanceAway as int,
-      formattedAddress: formattedAddress == freezed
-          ? _value.formattedAddress
-          : formattedAddress as String,
+      location:
+          location == freezed ? _value.location : location as StoreLocationDto,
+      prefs: prefs == freezed ? _value.prefs : prefs as StorePrefsDto,
       serverTimeStamp: serverTimeStamp == freezed
           ? _value.serverTimeStamp
           : serverTimeStamp as FieldValue,
-      geoPoint: geoPoint == freezed ? _value.geoPoint : geoPoint as GeoPoint,
     ));
+  }
+
+  @override
+  $StoreLocationDtoCopyWith<$Res> get location {
+    if (_value.location == null) {
+      return null;
+    }
+    return $StoreLocationDtoCopyWith<$Res>(_value.location, (value) {
+      return _then(_value.copyWith(location: value));
+    });
+  }
+
+  @override
+  $StorePrefsDtoCopyWith<$Res> get prefs {
+    if (_value.prefs == null) {
+      return null;
+    }
+    return $StorePrefsDtoCopyWith<$Res>(_value.prefs, (value) {
+      return _then(_value.copyWith(prefs: value));
+    });
   }
 }
 
@@ -131,10 +145,14 @@ abstract class _$StoreDtoCopyWith<$Res> implements $StoreDtoCopyWith<$Res> {
       String bannerUrl,
       List<String> picUrls,
       String ownerId,
-      int distanceAway,
-      String formattedAddress,
-      @ServerTimestampConverter() FieldValue serverTimeStamp,
-      @JsonKey(ignore: true) GeoPoint geoPoint});
+      StoreLocationDto location,
+      StorePrefsDto prefs,
+      @ServerTimestampConverter() FieldValue serverTimeStamp});
+
+  @override
+  $StoreLocationDtoCopyWith<$Res> get location;
+  @override
+  $StorePrefsDtoCopyWith<$Res> get prefs;
 }
 
 class __$StoreDtoCopyWithImpl<$Res> extends _$StoreDtoCopyWithImpl<$Res>
@@ -153,10 +171,9 @@ class __$StoreDtoCopyWithImpl<$Res> extends _$StoreDtoCopyWithImpl<$Res>
     Object bannerUrl = freezed,
     Object picUrls = freezed,
     Object ownerId = freezed,
-    Object distanceAway = freezed,
-    Object formattedAddress = freezed,
+    Object location = freezed,
+    Object prefs = freezed,
     Object serverTimeStamp = freezed,
-    Object geoPoint = freezed,
   }) {
     return _then(_StoreDto(
       id: id == freezed ? _value.id : id as String,
@@ -165,15 +182,12 @@ class __$StoreDtoCopyWithImpl<$Res> extends _$StoreDtoCopyWithImpl<$Res>
       bannerUrl: bannerUrl == freezed ? _value.bannerUrl : bannerUrl as String,
       picUrls: picUrls == freezed ? _value.picUrls : picUrls as List<String>,
       ownerId: ownerId == freezed ? _value.ownerId : ownerId as String,
-      distanceAway:
-          distanceAway == freezed ? _value.distanceAway : distanceAway as int,
-      formattedAddress: formattedAddress == freezed
-          ? _value.formattedAddress
-          : formattedAddress as String,
+      location:
+          location == freezed ? _value.location : location as StoreLocationDto,
+      prefs: prefs == freezed ? _value.prefs : prefs as StorePrefsDto,
       serverTimeStamp: serverTimeStamp == freezed
           ? _value.serverTimeStamp
           : serverTimeStamp as FieldValue,
-      geoPoint: geoPoint == freezed ? _value.geoPoint : geoPoint as GeoPoint,
     ));
   }
 }
@@ -187,17 +201,16 @@ class _$_StoreDto extends _StoreDto {
       @required this.bannerUrl,
       @required this.picUrls,
       @required this.ownerId,
-      @required this.distanceAway,
-      @required this.formattedAddress,
-      @required @ServerTimestampConverter() this.serverTimeStamp,
-      @JsonKey(ignore: true) this.geoPoint})
+      @required this.location,
+      @required this.prefs,
+      @required @ServerTimestampConverter() this.serverTimeStamp})
       : assert(name != null),
         assert(menu != null),
         assert(bannerUrl != null),
         assert(picUrls != null),
         assert(ownerId != null),
-        assert(distanceAway != null),
-        assert(formattedAddress != null),
+        assert(location != null),
+        assert(prefs != null),
         assert(serverTimeStamp != null),
         super._();
 
@@ -218,19 +231,16 @@ class _$_StoreDto extends _StoreDto {
   @override
   final String ownerId;
   @override
-  final int distanceAway;
+  final StoreLocationDto location;
   @override
-  final String formattedAddress;
+  final StorePrefsDto prefs;
   @override
   @ServerTimestampConverter()
   final FieldValue serverTimeStamp;
-  @override
-  @JsonKey(ignore: true)
-  final GeoPoint geoPoint;
 
   @override
   String toString() {
-    return 'StoreDto(id: $id, name: $name, menu: $menu, bannerUrl: $bannerUrl, picUrls: $picUrls, ownerId: $ownerId, distanceAway: $distanceAway, formattedAddress: $formattedAddress, serverTimeStamp: $serverTimeStamp, geoPoint: $geoPoint)';
+    return 'StoreDto(id: $id, name: $name, menu: $menu, bannerUrl: $bannerUrl, picUrls: $picUrls, ownerId: $ownerId, location: $location, prefs: $prefs, serverTimeStamp: $serverTimeStamp)';
   }
 
   @override
@@ -252,18 +262,14 @@ class _$_StoreDto extends _StoreDto {
             (identical(other.ownerId, ownerId) ||
                 const DeepCollectionEquality()
                     .equals(other.ownerId, ownerId)) &&
-            (identical(other.distanceAway, distanceAway) ||
+            (identical(other.location, location) ||
                 const DeepCollectionEquality()
-                    .equals(other.distanceAway, distanceAway)) &&
-            (identical(other.formattedAddress, formattedAddress) ||
-                const DeepCollectionEquality()
-                    .equals(other.formattedAddress, formattedAddress)) &&
+                    .equals(other.location, location)) &&
+            (identical(other.prefs, prefs) ||
+                const DeepCollectionEquality().equals(other.prefs, prefs)) &&
             (identical(other.serverTimeStamp, serverTimeStamp) ||
                 const DeepCollectionEquality()
-                    .equals(other.serverTimeStamp, serverTimeStamp)) &&
-            (identical(other.geoPoint, geoPoint) ||
-                const DeepCollectionEquality()
-                    .equals(other.geoPoint, geoPoint)));
+                    .equals(other.serverTimeStamp, serverTimeStamp)));
   }
 
   @override
@@ -275,10 +281,9 @@ class _$_StoreDto extends _StoreDto {
       const DeepCollectionEquality().hash(bannerUrl) ^
       const DeepCollectionEquality().hash(picUrls) ^
       const DeepCollectionEquality().hash(ownerId) ^
-      const DeepCollectionEquality().hash(distanceAway) ^
-      const DeepCollectionEquality().hash(formattedAddress) ^
-      const DeepCollectionEquality().hash(serverTimeStamp) ^
-      const DeepCollectionEquality().hash(geoPoint);
+      const DeepCollectionEquality().hash(location) ^
+      const DeepCollectionEquality().hash(prefs) ^
+      const DeepCollectionEquality().hash(serverTimeStamp);
 
   @override
   _$StoreDtoCopyWith<_StoreDto> get copyWith =>
@@ -293,16 +298,16 @@ class _$_StoreDto extends _StoreDto {
 abstract class _StoreDto extends StoreDto {
   const _StoreDto._() : super._();
   const factory _StoreDto(
-      {@JsonKey(ignore: true) String id,
-      @required String name,
-      @required String menu,
-      @required String bannerUrl,
-      @required List<String> picUrls,
-      @required String ownerId,
-      @required int distanceAway,
-      @required String formattedAddress,
-      @required @ServerTimestampConverter() FieldValue serverTimeStamp,
-      @JsonKey(ignore: true) GeoPoint geoPoint}) = _$_StoreDto;
+          {@JsonKey(ignore: true) String id,
+          @required String name,
+          @required String menu,
+          @required String bannerUrl,
+          @required List<String> picUrls,
+          @required String ownerId,
+          @required StoreLocationDto location,
+          @required StorePrefsDto prefs,
+          @required @ServerTimestampConverter() FieldValue serverTimeStamp}) =
+      _$_StoreDto;
 
   factory _StoreDto.fromJson(Map<String, dynamic> json) = _$_StoreDto.fromJson;
 
@@ -320,15 +325,12 @@ abstract class _StoreDto extends StoreDto {
   @override
   String get ownerId;
   @override
-  int get distanceAway;
+  StoreLocationDto get location;
   @override
-  String get formattedAddress;
+  StorePrefsDto get prefs;
   @override
   @ServerTimestampConverter()
   FieldValue get serverTimeStamp;
-  @override
-  @JsonKey(ignore: true)
-  GeoPoint get geoPoint;
   @override
   _$StoreDtoCopyWith<_StoreDto> get copyWith;
 }

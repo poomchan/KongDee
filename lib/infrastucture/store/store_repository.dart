@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/widgets.dart';
+import 'package:fluttertaladsod/domain/auth/user.dart';
 import 'package:fluttertaladsod/domain/core/value_objects.dart';
 import 'package:fluttertaladsod/domain/location/location.dart';
 import 'package:fluttertaladsod/domain/store/i_store_repository.dart';
@@ -28,6 +29,7 @@ class StoreRepository implements IStoreRepository {
   Stream<Either<StoreFailure, List<Store>>> watchNearbyStore({
     @required LocationDomain location,
     @required BehaviorSubject<double> rad,
+    @required Option<UserDomain> userOption,
   }) async* {
     yield* rad.switchMap((rad) {
       print('repo: radius = $rad');
@@ -36,7 +38,7 @@ class StoreRepository implements IStoreRepository {
           .within(
             center: location.geoFirePoint,
             radius: rad,
-            field: 'location',
+            field: 'location.geoFirePoint',
             strictMode: true,
           );
     }).map(
@@ -47,8 +49,7 @@ class StoreRepository implements IStoreRepository {
         return right<StoreFailure, List<Store>>(
           snapshots
               .map(
-                (snap) => StoreDto.fromFirestore(snap: snap, location: location)
-                    .toDomain(),
+                (snap) => StoreDto.fromFirestore(snap: snap).toDomain(location, userOption),
               )
               .toList(),
         );
@@ -69,6 +70,7 @@ class StoreRepository implements IStoreRepository {
   Stream<Either<StoreFailure, Store>> watchSingleStore({
     @required UniqueId storeId,
     @required LocationDomain location,
+    @required Option<UserDomain> userOption,
   }) async* {
     yield* _firestore.storeCollectionRef
         .doc(storeId.getOrCrash())
@@ -78,7 +80,7 @@ class StoreRepository implements IStoreRepository {
         return left<StoreFailure, Store>(StoreFailure.noStore());
       } else {
         return right<StoreFailure, Store>(
-            StoreDto.fromFirestore(snap: snap, location: location).toDomain());
+            StoreDto.fromFirestore(snap: snap).toDomain(location, userOption));
       }
     }).onErrorReturnWith((err) {
       // print error onto the console here
@@ -90,6 +92,7 @@ class StoreRepository implements IStoreRepository {
   Stream<Either<StoreFailure, Store>> watchOwnedStore({
     @required UniqueId ownerId,
     @required LocationDomain location,
+    @required UserDomain user,
   }) async* {
     yield* _firestore.storeCollectionRef
         .where('ownerId', isEqualTo: ownerId.getOrCrash())
@@ -100,8 +103,7 @@ class StoreRepository implements IStoreRepository {
       } else {
         return right<StoreFailure, Store>(snapshot.docs
             .map(
-              (doc) => StoreDto.fromFirestore(snap: doc, location: location)
-                  .toDomain(),
+              (doc) => StoreDto.fromFirestore(snap: doc).toDomain(location, some(user)),
             )
             .toList()
             .first);
@@ -113,16 +115,8 @@ class StoreRepository implements IStoreRepository {
   }
 
   @override
-  Future<Either<StoreFailure, Unit>> create(
-      Store store, LocationDomain location) async {
-    final userDoc = await _firestore.userDocument();
-    final jsonData = StoreDto.fromDomain(store).toJson()
-      ..addEntries(
-        [
-          MapEntry('location', location.geoFirePoint.data),
-          MapEntry('ownerId', userDoc.id),
-        ],
-      );
+  Future<Either<StoreFailure, Unit>> create(Store store) async {
+    final jsonData = StoreDto.fromDomain(store).toJson();
     try {
       _firestore.storeCollectionRef.doc(UniqueId().getOrCrash()).set(jsonData);
     } catch (err) {
@@ -132,10 +126,8 @@ class StoreRepository implements IStoreRepository {
   }
 
   @override
-  Future<Either<StoreFailure, Unit>> update(Store store,
-      {LocationDomain location}) async {
-    final jsonData = StoreDto.fromDomain(store).toJson()
-      ..addEntries([MapEntry('location', location?.geoFirePoint?.data)]);
+  Future<Either<StoreFailure, Unit>> update(Store store) async {
+    final jsonData = StoreDto.fromDomain(store).toJson();
 
     try {
       _firestore.storeCollectionRef.doc(store.id.getOrCrash()).update(jsonData);

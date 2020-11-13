@@ -3,6 +3,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertaladsod/application/home/store_feed/nearby/store_list.dart';
+import 'package:fluttertaladsod/domain/auth/i_auth_facade.dart';
 import 'package:fluttertaladsod/domain/location/i_location_repository.dart';
 import 'package:fluttertaladsod/domain/store/i_store_repository.dart';
 import 'package:fluttertaladsod/domain/store/store.dart';
@@ -18,6 +19,7 @@ part 'store_near_state.dart';
 class StoreNearCubit extends Cubit<StoreNearState>{
   final IStoreRepository _iStoreRepository;
   final ILocationRepository _iLocationRepository;
+  final IAuthFacade _iAuthFacade;
 
   final radiusSubject = BehaviorSubject<double>.seeded(1.0);
 
@@ -25,7 +27,7 @@ class StoreNearCubit extends Cubit<StoreNearState>{
   double rad = 1;
   StoreList storeList = StoreList.empty();
 
-  StoreNearCubit(this._iStoreRepository, this._iLocationRepository)
+  StoreNearCubit(this._iStoreRepository, this._iLocationRepository, this._iAuthFacade)
       : super(_Initial());
 
   Future<void> watchNearbyStore() async {
@@ -34,13 +36,15 @@ class StoreNearCubit extends Cubit<StoreNearState>{
     final locationOption = await _iLocationRepository.getLocation();
     final location = locationOption.getOrElse(() => null);
 
+    final userOption = await _iAuthFacade.getSignedInUser();
+
     if (location == null) {
       emit(StoreNearState.failure(StoreFailure.locationNotGranted()));
       return;
     }
 
     final storeStream = _iStoreRepository
-        .watchNearbyStore(location: location, rad: radiusSubject);
+        .watchNearbyStore(location: location, rad: radiusSubject, userOption: userOption);
 
     storeStream.listen((failureOrStoreList) {
       failureOrStoreList.fold(

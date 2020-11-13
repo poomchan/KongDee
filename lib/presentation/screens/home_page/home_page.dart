@@ -3,10 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertaladsod/application/home/store_feed/nearby/store_near_cubit.dart';
 import 'package:fluttertaladsod/application/location/location_cubit.dart';
-import 'package:fluttertaladsod/presentation/core/components/progress_indicator.dart';
+import 'package:fluttertaladsod/injection.dart';
 import 'package:fluttertaladsod/presentation/screens/home_page/widgets/near_store_feed.dart';
 import 'package:fluttertaladsod/presentation/screens/home_page/widgets/profile_avatar.dart';
-import '../../../injection.dart';
 
 class HomePage extends StatelessWidget implements AutoRouteWrapper {
   @override
@@ -14,10 +13,10 @@ class HomePage extends StatelessWidget implements AutoRouteWrapper {
     return MultiBlocProvider(
       providers: [
         BlocProvider<LocationCubit>(
-          create: (context) => getIt<LocationCubit>()..getUserLocation(),
+          create: (ctx) => getIt<LocationCubit>()..getUserLocation(),
         ),
         BlocProvider<StoreNearCubit>(
-          create: (context) => getIt<StoreNearCubit>()..watchNearbyStore(),
+          create: (ctx) => getIt<StoreNearCubit>()..watchNearbyStore(),
         ),
       ],
       child: this,
@@ -29,7 +28,6 @@ class HomePage extends StatelessWidget implements AutoRouteWrapper {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
-        // toolbarHeight: 100.0,
         automaticallyImplyLeading: false,
         actions: const [
           ProfileAvatar(),
@@ -44,18 +42,7 @@ class HomePage extends StatelessWidget implements AutoRouteWrapper {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                BlocBuilder<LocationCubit, LocationState>(
-                  builder: (context, state) => state.map(
-                    inital: (state) => circularProgress(context),
-                    getting: (state) => circularProgress(context),
-                    success: (state) => NearStoreFeed(),
-                    failure: (state) => OutlineButton(
-                      onPressed: () =>
-                          context.bloc<LocationCubit>().getUserLocation(),
-                      child: Text('Please enable location'),
-                    ),
-                  ),
-                ),
+                NearStoreFeed(),
               ],
             ),
           ),

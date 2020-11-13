@@ -22,7 +22,7 @@ class ProfilePage extends StatelessWidget implements AutoRouteWrapper {
         BlocProvider<OwnedStoreWatcherCubit>(
           create: (context) {
             return getIt<OwnedStoreWatcherCubit>()
-              ..watchOwnedStoreStarted(ownerId: user.id);
+              ..watchOwnedStoreStarted(user: user);
           },
         ),
       ],
