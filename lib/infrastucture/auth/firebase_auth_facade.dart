@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:fluttertaladsod/application/auth/watcher/auth_watcher_cubit.dart';
+import 'package:fluttertaladsod/application/global_bloc/auth/watcher/auth_watcher_cubit.dart';
 import 'package:fluttertaladsod/domain/auth/i_auth_facade.dart';
 import 'package:fluttertaladsod/domain/auth/user.dart';
 import 'package:fluttertaladsod/domain/core/value_objects.dart';
@@ -28,7 +28,7 @@ class FirebaseAuthFacade implements IAuthFacade {
     // cancle by user
     if (googleUser == null) return;
     final authentication = await googleUser.authentication;
-    final authCredential = GoogleAuthProvider.getCredential(
+    final authCredential = GoogleAuthProvider.credential(
         idToken: authentication.idToken,
         accessToken: authentication.accessToken);
 

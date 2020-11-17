@@ -1,9 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dartz/dartz.dart';
-import 'package:fluttertaladsod/application/auth/watcher/auth_watcher_cubit.dart';
 import 'package:fluttertaladsod/domain/auth/i_auth_facade.dart';
 import 'package:fluttertaladsod/domain/auth/user.dart';
-import 'package:fluttertaladsod/domain/core/error.dart';
 import 'package:fluttertaladsod/injection.dart';
 
 extension FirestoreX on FirebaseFirestore {

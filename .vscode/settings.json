@@ -3,7 +3,7 @@
     "**/.git": true,
     "**/.svn": true,
     "**/.hg": true,
-    "**/CVS": false,
+    "**/CVS": true,
     "**/.DS_Store": true,
     "/.git": true,
     "/.svn": true,
@@ -15,7 +15,7 @@
     "**/.freezed.dart": true,
     "**/.g.dart": true,
     ".freezed.dart": true,
-    ".g.dart": true
+    ".g.dart": true,
   },
   "explorerExclude.backup": null
 }

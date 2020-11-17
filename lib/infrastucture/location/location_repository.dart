@@ -22,7 +22,7 @@ class LocationRepository implements ILocationRepository {
     if (status == PermissionStatus.granted) {
       return right(unit);
     } else {
-      return left(const LocationFailures.cancleByUser());
+      return left(const LocationFailures.insufficientPermission());
     }
   }
 
