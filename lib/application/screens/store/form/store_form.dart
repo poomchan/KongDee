@@ -24,10 +24,6 @@ class StoreForm extends StatelessWidget implements AutoRouteWrapper {
         BlocProvider<StoreFormCubit>(
             create: (context) => getIt<StoreFormCubit>()
               ..initializeForm(initialStore: initialStore)),
-        // BlocProvider<StoreFormLocationCubit>(
-        //   create: (context) =>
-        //       getIt<StoreFormLocationCubit>()..getUserLocation(),
-        // ),
       ],
       child: MultiBlocListener(
         listeners: [

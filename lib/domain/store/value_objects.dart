@@ -94,7 +94,7 @@ class SellingRange extends ValueObject<double> {
   static const maxRange = 16;
 
   factory SellingRange(double input) {
-    return SellingRange._(validateIntegerIsPositive(input));
+    return SellingRange._(right(input));
   }
 
   factory SellingRange.infinite(){

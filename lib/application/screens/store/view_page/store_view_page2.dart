@@ -1,8 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertaladsod/application/core/components/progress_indicator.dart';
-import 'package:fluttertaladsod/application/global_bloc/location/location_cubit.dart';
 import 'package:fluttertaladsod/application/routes/router.gr.dart';
 import 'package:fluttertaladsod/application/screens/store/view_page/widgets/banner_appbar2.dart';
 import 'package:fluttertaladsod/application/screens/store/view_page/widgets/console.dart';
@@ -13,29 +11,21 @@ import 'package:fluttertaladsod/domain/core/value_objects.dart';
 import 'package:fluttertaladsod/injection.dart';
 import 'bloc/store_view_cubit.dart';
 
-class StoreViewPage2 extends StatelessWidget implements AutoRouteWrapper{
+class StoreViewPage2 extends StatelessWidget implements AutoRouteWrapper {
   final UniqueId storeId;
 
   const StoreViewPage2({Key key, this.storeId}) : super(key: key);
 
   @override
   Widget wrappedRoute(BuildContext context) {
-    return BlocProvider.value(
-      value: getIt<LocationCubit>()..getUserLocation(),
-      child: BlocBuilder<LocationCubit, LocationState>(
-        builder: (context, state) => state.maybeMap(
-          orElse: () => Scaffold(body: circularProgress(context)),
-          success: (state) => MultiBlocProvider(
-            providers: [
-              BlocProvider<StoreViewCubit>(
-                create: (contxt) => getIt<StoreViewCubit>()
-                  ..watchStoreStarted(storeId: storeId, context: contxt),
-              ),
-            ],
-            child: this,
-          ),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<StoreViewCubit>(
+          create: (context) => getIt<StoreViewCubit>()
+            ..watchStoreStarted(context, storeId: storeId),
         ),
-      ),
+      ],
+      child: this,
     );
   }
 
@@ -45,7 +35,8 @@ class StoreViewPage2 extends StatelessWidget implements AutoRouteWrapper{
     final storeViewBloc = context.watch<StoreViewCubit>();
     return ColorFiltered(
       colorFilter: storeViewBloc.state.maybeMap(
-        orElse: () => ColorFilter.mode(Colors.transparent, BlendMode.saturation),
+        orElse: () =>
+            ColorFilter.mode(Colors.transparent, BlendMode.saturation),
         success: (s) => s.store.prefs.isOpen
             ? ColorFilter.mode(Colors.transparent, BlendMode.saturation)
             : ColorFilter.mode(Colors.grey, BlendMode.saturation),

@@ -49,7 +49,8 @@ class StoreRepository implements IStoreRepository {
         return right<StoreFailure, List<Store>>(
           snapshots
               .map(
-                (snap) => StoreDto.fromFirestore(snap: snap).toDomain(location, userOption),
+                (snap) => StoreDto.fromFirestore(snap: snap)
+                    .toDomain(location, userOption),
               )
               .toList(),
         );
@@ -103,7 +104,8 @@ class StoreRepository implements IStoreRepository {
       } else {
         return right<StoreFailure, Store>(snapshot.docs
             .map(
-              (doc) => StoreDto.fromFirestore(snap: doc).toDomain(location, some(user)),
+              (doc) => StoreDto.fromFirestore(snap: doc)
+                  .toDomain(location, some(user)),
             )
             .toList()
             .first);

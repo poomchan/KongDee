@@ -27,7 +27,7 @@ import '../screens/onboarding/onboarding_page.dart';
     AdaptiveRoute(page: LanguageSetting),
     AdaptiveRoute(page: StoreViewPage2),
     AdaptiveRoute(page: StoreSettingPage),
-    AdaptiveRoute(page: SellingRange),
+    AdaptiveRoute(page: SellingRangePage),
     AdaptiveRoute(page: LocationSetting),
   ],
 )

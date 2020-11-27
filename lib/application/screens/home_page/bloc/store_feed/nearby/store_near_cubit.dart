@@ -16,7 +16,7 @@ part 'store_near_cubit.freezed.dart';
 part 'store_near_state.dart';
 
 @injectable
-class StoreNearCubit extends Cubit<StoreNearState>{
+class StoreNearCubit extends Cubit<StoreNearState> {
   final IStoreRepository _iStoreRepository;
   final ILocationRepository _iLocationRepository;
   final IAuthFacade _iAuthFacade;
@@ -27,34 +27,34 @@ class StoreNearCubit extends Cubit<StoreNearState>{
   double rad = 1;
   StoreList storeList = StoreList.empty();
 
-  StoreNearCubit(this._iStoreRepository, this._iLocationRepository, this._iAuthFacade)
+  StoreNearCubit(
+      this._iStoreRepository, this._iLocationRepository, this._iAuthFacade)
       : super(_Initial());
 
   Future<void> watchNearbyStore() async {
     emit(StoreNearState.loading(storeList.value));
 
     final locationOption = await _iLocationRepository.getLocation();
-    final location = locationOption.getOrElse(() => null);
 
-    final userOption = await _iAuthFacade.getSignedInUser();
+    locationOption.fold(
+      () => emit(StoreNearState.failure(StoreFailure.locationNotGranted())),
+      (location) async {
+        final userOption = await _iAuthFacade.getSignedInUser();
 
-    if (location == null) {
-      emit(StoreNearState.failure(StoreFailure.locationNotGranted()));
-      return;
-    }
+        final storeStream = _iStoreRepository.watchNearbyStore(
+            location: location, rad: radiusSubject, userOption: userOption);
 
-    final storeStream = _iStoreRepository
-        .watchNearbyStore(location: location, rad: radiusSubject, userOption: userOption);
-
-    storeStream.listen((failureOrStoreList) {
-      failureOrStoreList.fold(
-        (f) => emit(StoreNearState.failure(f)),
-        (storeList) {
-          this.storeList = StoreList.fromList(storeList);
-          emit(StoreNearState.loaded(this.storeList.value, rad));
-        },
-      );
-    });
+        storeStream.listen((failureOrStoreList) {
+          failureOrStoreList.fold(
+            (f) => emit(StoreNearState.failure(f)),
+            (storeList) {
+              this.storeList = StoreList.fromList(storeList);
+              emit(StoreNearState.loaded(this.storeList.value, rad));
+            },
+          );
+        });
+      },
+    );
   }
 
   Future<void> requestMoreRadius() async {

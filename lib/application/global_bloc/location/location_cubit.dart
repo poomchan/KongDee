@@ -22,5 +22,15 @@ class LocationCubit extends Cubit<LocationState> {
         (location) => emit(LocationState.success(location)));
   }
 
+  Future<void> updateUserLocation() async {
+    final locationOption = await _iLocationRepository.getLocation();
+    locationOption.fold(
+        () => emit(
+            LocationState.failure(LocationFailures.insufficientPermission())),
+        (location) => emit(LocationState.success(location)));
+  }
+
+
+
 
 }

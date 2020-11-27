@@ -11,18 +11,27 @@ import 'package:fluttertaladsod/injection.dart';
 
 class AppWidget extends StatelessWidget {
   final bool isLocationGranted;
-  
+
   static const ColorScheme colorScheme = tLightThemeColorScheme;
 
-  const AppWidget({Key key, @required this.isLocationGranted}) : super(key: key);
+  const AppWidget({Key key, @required this.isLocationGranted})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<LocationCubit>(
-          create: (ctx) => getIt<LocationCubit>()..getUserLocation(),
-        ),
+        // BlocProvider<LocationCubit>(
+        //   create: (context) {
+        //     if (isLocationGranted) {
+        //       // old user, get the location
+        //       return getIt<LocationCubit>()..getUserLocation();
+        //     } else {
+        //       // new user
+        //       return getIt<LocationCubit>();
+        //     }
+        //   },
+        // ),
         BlocProvider<AuthWatcherCubit>(
           create: (context) => getIt<AuthWatcherCubit>()..watchUser(),
         ),

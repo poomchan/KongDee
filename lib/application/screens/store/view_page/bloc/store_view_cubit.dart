@@ -3,10 +3,9 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertaladsod/application/global_bloc/auth/watcher/auth_watcher_cubit.dart';
-import 'package:fluttertaladsod/application/global_bloc/location/location_cubit.dart';
 import 'package:fluttertaladsod/domain/auth/user.dart';
 import 'package:fluttertaladsod/domain/core/value_objects.dart';
-import 'package:fluttertaladsod/domain/location/location.dart';
+import 'package:fluttertaladsod/domain/location/i_location_repository.dart';
 import 'package:fluttertaladsod/domain/store/i_store_repository.dart';
 import 'package:fluttertaladsod/domain/store/store.dart';
 import 'package:fluttertaladsod/domain/store/store_failures.dart';
@@ -19,48 +18,44 @@ part 'store_view_cubit.freezed.dart';
 @injectable
 class StoreViewCubit extends Cubit<StoreViewState> {
   final IStoreRepository _iStoreRepository;
+  final ILocationRepository _iLocationRepository;
 
-  StoreViewCubit(this._iStoreRepository) : super(_Initial());
+  StoreViewCubit(this._iStoreRepository, this._iLocationRepository)
+      : super(_Initial());
 
-  Future<void> watchStoreStarted(
-      {@required UniqueId storeId, @required BuildContext context}) async {
+  Future<void> watchStoreStarted(BuildContext context,
+      {@required UniqueId storeId}) async {
     assert(storeId != null);
     emit(StoreViewState.loading());
 
-    try {
-      final locationBloc = context.read<LocationCubit>();
-      final userBloc = context.read<AuthWatcherCubit>();
-
-      final Option<UserDomain> userOption = userBloc.state.maybeMap(
-      authenticated: (state) => some(state.user),
-      orElse: () => none(),
-    );
-
-    final Option<LocationDomain> locationOption = locationBloc.state.maybeMap(
-      success: (s) => some(s.location),
-      orElse: () => none(),
-    );
-
+    final locationOption = await _iLocationRepository.getLocation();
     locationOption.fold(
       () => emit(StoreViewState.failure(StoreFailure.locationNotGranted())),
-      (location) {
-        final storeOrFailureStream = _iStoreRepository.watchSingleStore(
-          storeId: storeId,
-          location: location,
-          userOption: userOption,
-        );
-        storeOrFailureStream.listen(
-          (storeOrF) {
-            return storeOrF.fold(
-              (f) => emit(StoreViewState.failure(f)),
-              (store) => emit(StoreViewState.success(store)),
-            );
-          },
-        );
+      (location) async {
+        try {
+          final userBloc = BlocProvider.of<AuthWatcherCubit>(context);
+          final Option<UserDomain> userOption = userBloc.state.maybeMap(
+            authenticated: (state) => some(state.user),
+            orElse: () => none(),
+          );
+
+          final storeOrFailureStream = _iStoreRepository.watchSingleStore(
+            storeId: storeId,
+            location: location,
+            userOption: userOption,
+          );
+          storeOrFailureStream.listen(
+            (storeOrF) {
+              return storeOrF.fold(
+                (f) => emit(StoreViewState.failure(f)),
+                (store) => emit(StoreViewState.success(store)),
+              );
+            },
+          );
+        } catch (e) {
+          print(e);
+        }
       },
     );
-    } catch (e) {
-      print(e);
-    }
   }
 }

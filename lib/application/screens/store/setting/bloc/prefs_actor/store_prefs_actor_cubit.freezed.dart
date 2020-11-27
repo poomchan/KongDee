@@ -23,15 +23,13 @@ class _$StorePrefsActorStateTearOff {
   }
 
 // ignore: unused_element
-  _Success success() {
-    return const _Success();
+  _Loaded loaded() {
+    return const _Loaded();
   }
 
 // ignore: unused_element
-  _Failure failure(StoreFailure f) {
-    return _Failure(
-      f,
-    );
+  _Failure failure() {
+    return const _Failure();
   }
 }
 
@@ -43,29 +41,29 @@ mixin _$StorePrefsActorState {
   Result when<Result extends Object>({
     @required Result initial(),
     @required Result loading(),
-    @required Result success(),
-    @required Result failure(StoreFailure f),
+    @required Result loaded(),
+    @required Result failure(),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result initial(),
     Result loading(),
-    Result success(),
-    Result failure(StoreFailure f),
+    Result loaded(),
+    Result failure(),
     @required Result orElse(),
   });
   @optionalTypeArgs
   Result map<Result extends Object>({
     @required Result initial(_Initial value),
     @required Result loading(_Loading value),
-    @required Result success(_Success value),
+    @required Result loaded(_Loaded value),
     @required Result failure(_Failure value),
   });
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
     Result initial(_Initial value),
     Result loading(_Loading value),
-    Result success(_Success value),
+    Result loaded(_Loaded value),
     Result failure(_Failure value),
     @required Result orElse(),
   });
@@ -122,12 +120,12 @@ class _$_Initial implements _Initial {
   Result when<Result extends Object>({
     @required Result initial(),
     @required Result loading(),
-    @required Result success(),
-    @required Result failure(StoreFailure f),
+    @required Result loaded(),
+    @required Result failure(),
   }) {
     assert(initial != null);
     assert(loading != null);
-    assert(success != null);
+    assert(loaded != null);
     assert(failure != null);
     return initial();
   }
@@ -137,8 +135,8 @@ class _$_Initial implements _Initial {
   Result maybeWhen<Result extends Object>({
     Result initial(),
     Result loading(),
-    Result success(),
-    Result failure(StoreFailure f),
+    Result loaded(),
+    Result failure(),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -153,12 +151,12 @@ class _$_Initial implements _Initial {
   Result map<Result extends Object>({
     @required Result initial(_Initial value),
     @required Result loading(_Loading value),
-    @required Result success(_Success value),
+    @required Result loaded(_Loaded value),
     @required Result failure(_Failure value),
   }) {
     assert(initial != null);
     assert(loading != null);
-    assert(success != null);
+    assert(loaded != null);
     assert(failure != null);
     return initial(this);
   }
@@ -168,7 +166,7 @@ class _$_Initial implements _Initial {
   Result maybeMap<Result extends Object>({
     Result initial(_Initial value),
     Result loading(_Loading value),
-    Result success(_Success value),
+    Result loaded(_Loaded value),
     Result failure(_Failure value),
     @required Result orElse(),
   }) {
@@ -220,12 +218,12 @@ class _$_Loading implements _Loading {
   Result when<Result extends Object>({
     @required Result initial(),
     @required Result loading(),
-    @required Result success(),
-    @required Result failure(StoreFailure f),
+    @required Result loaded(),
+    @required Result failure(),
   }) {
     assert(initial != null);
     assert(loading != null);
-    assert(success != null);
+    assert(loaded != null);
     assert(failure != null);
     return loading();
   }
@@ -235,8 +233,8 @@ class _$_Loading implements _Loading {
   Result maybeWhen<Result extends Object>({
     Result initial(),
     Result loading(),
-    Result success(),
-    Result failure(StoreFailure f),
+    Result loaded(),
+    Result failure(),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -251,12 +249,12 @@ class _$_Loading implements _Loading {
   Result map<Result extends Object>({
     @required Result initial(_Initial value),
     @required Result loading(_Loading value),
-    @required Result success(_Success value),
+    @required Result loaded(_Loaded value),
     @required Result failure(_Failure value),
   }) {
     assert(initial != null);
     assert(loading != null);
-    assert(success != null);
+    assert(loaded != null);
     assert(failure != null);
     return loading(this);
   }
@@ -266,7 +264,7 @@ class _$_Loading implements _Loading {
   Result maybeMap<Result extends Object>({
     Result initial(_Initial value),
     Result loading(_Loading value),
-    Result success(_Success value),
+    Result loaded(_Loaded value),
     Result failure(_Failure value),
     @required Result orElse(),
   }) {
@@ -282,32 +280,32 @@ abstract class _Loading implements StorePrefsActorState {
   const factory _Loading() = _$_Loading;
 }
 
-abstract class _$SuccessCopyWith<$Res> {
-  factory _$SuccessCopyWith(_Success value, $Res Function(_Success) then) =
-      __$SuccessCopyWithImpl<$Res>;
+abstract class _$LoadedCopyWith<$Res> {
+  factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) then) =
+      __$LoadedCopyWithImpl<$Res>;
 }
 
-class __$SuccessCopyWithImpl<$Res>
+class __$LoadedCopyWithImpl<$Res>
     extends _$StorePrefsActorStateCopyWithImpl<$Res>
-    implements _$SuccessCopyWith<$Res> {
-  __$SuccessCopyWithImpl(_Success _value, $Res Function(_Success) _then)
-      : super(_value, (v) => _then(v as _Success));
+    implements _$LoadedCopyWith<$Res> {
+  __$LoadedCopyWithImpl(_Loaded _value, $Res Function(_Loaded) _then)
+      : super(_value, (v) => _then(v as _Loaded));
 
   @override
-  _Success get _value => super._value as _Success;
+  _Loaded get _value => super._value as _Loaded;
 }
 
-class _$_Success implements _Success {
-  const _$_Success();
+class _$_Loaded implements _Loaded {
+  const _$_Loaded();
 
   @override
   String toString() {
-    return 'StorePrefsActorState.success()';
+    return 'StorePrefsActorState.loaded()';
   }
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is _Success);
+    return identical(this, other) || (other is _Loaded);
   }
 
   @override
@@ -318,14 +316,14 @@ class _$_Success implements _Success {
   Result when<Result extends Object>({
     @required Result initial(),
     @required Result loading(),
-    @required Result success(),
-    @required Result failure(StoreFailure f),
+    @required Result loaded(),
+    @required Result failure(),
   }) {
     assert(initial != null);
     assert(loading != null);
-    assert(success != null);
+    assert(loaded != null);
     assert(failure != null);
-    return success();
+    return loaded();
   }
 
   @override
@@ -333,13 +331,13 @@ class _$_Success implements _Success {
   Result maybeWhen<Result extends Object>({
     Result initial(),
     Result loading(),
-    Result success(),
-    Result failure(StoreFailure f),
+    Result loaded(),
+    Result failure(),
     @required Result orElse(),
   }) {
     assert(orElse != null);
-    if (success != null) {
-      return success();
+    if (loaded != null) {
+      return loaded();
     }
     return orElse();
   }
@@ -349,14 +347,14 @@ class _$_Success implements _Success {
   Result map<Result extends Object>({
     @required Result initial(_Initial value),
     @required Result loading(_Loading value),
-    @required Result success(_Success value),
+    @required Result loaded(_Loaded value),
     @required Result failure(_Failure value),
   }) {
     assert(initial != null);
     assert(loading != null);
-    assert(success != null);
+    assert(loaded != null);
     assert(failure != null);
-    return success(this);
+    return loaded(this);
   }
 
   @override
@@ -364,28 +362,25 @@ class _$_Success implements _Success {
   Result maybeMap<Result extends Object>({
     Result initial(_Initial value),
     Result loading(_Loading value),
-    Result success(_Success value),
+    Result loaded(_Loaded value),
     Result failure(_Failure value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
-    if (success != null) {
-      return success(this);
+    if (loaded != null) {
+      return loaded(this);
     }
     return orElse();
   }
 }
 
-abstract class _Success implements StorePrefsActorState {
-  const factory _Success() = _$_Success;
+abstract class _Loaded implements StorePrefsActorState {
+  const factory _Loaded() = _$_Loaded;
 }
 
 abstract class _$FailureCopyWith<$Res> {
   factory _$FailureCopyWith(_Failure value, $Res Function(_Failure) then) =
       __$FailureCopyWithImpl<$Res>;
-  $Res call({StoreFailure f});
-
-  $StoreFailureCopyWith<$Res> get f;
 }
 
 class __$FailureCopyWithImpl<$Res>
@@ -396,67 +391,37 @@ class __$FailureCopyWithImpl<$Res>
 
   @override
   _Failure get _value => super._value as _Failure;
-
-  @override
-  $Res call({
-    Object f = freezed,
-  }) {
-    return _then(_Failure(
-      f == freezed ? _value.f : f as StoreFailure,
-    ));
-  }
-
-  @override
-  $StoreFailureCopyWith<$Res> get f {
-    if (_value.f == null) {
-      return null;
-    }
-    return $StoreFailureCopyWith<$Res>(_value.f, (value) {
-      return _then(_value.copyWith(f: value));
-    });
-  }
 }
 
 class _$_Failure implements _Failure {
-  const _$_Failure(this.f) : assert(f != null);
-
-  @override
-  final StoreFailure f;
+  const _$_Failure();
 
   @override
   String toString() {
-    return 'StorePrefsActorState.failure(f: $f)';
+    return 'StorePrefsActorState.failure()';
   }
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other is _Failure &&
-            (identical(other.f, f) ||
-                const DeepCollectionEquality().equals(other.f, f)));
+    return identical(this, other) || (other is _Failure);
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(f);
-
-  @override
-  _$FailureCopyWith<_Failure> get copyWith =>
-      __$FailureCopyWithImpl<_Failure>(this, _$identity);
+  int get hashCode => runtimeType.hashCode;
 
   @override
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result initial(),
     @required Result loading(),
-    @required Result success(),
-    @required Result failure(StoreFailure f),
+    @required Result loaded(),
+    @required Result failure(),
   }) {
     assert(initial != null);
     assert(loading != null);
-    assert(success != null);
+    assert(loaded != null);
     assert(failure != null);
-    return failure(f);
+    return failure();
   }
 
   @override
@@ -464,13 +429,13 @@ class _$_Failure implements _Failure {
   Result maybeWhen<Result extends Object>({
     Result initial(),
     Result loading(),
-    Result success(),
-    Result failure(StoreFailure f),
+    Result loaded(),
+    Result failure(),
     @required Result orElse(),
   }) {
     assert(orElse != null);
     if (failure != null) {
-      return failure(f);
+      return failure();
     }
     return orElse();
   }
@@ -480,12 +445,12 @@ class _$_Failure implements _Failure {
   Result map<Result extends Object>({
     @required Result initial(_Initial value),
     @required Result loading(_Loading value),
-    @required Result success(_Success value),
+    @required Result loaded(_Loaded value),
     @required Result failure(_Failure value),
   }) {
     assert(initial != null);
     assert(loading != null);
-    assert(success != null);
+    assert(loaded != null);
     assert(failure != null);
     return failure(this);
   }
@@ -495,7 +460,7 @@ class _$_Failure implements _Failure {
   Result maybeMap<Result extends Object>({
     Result initial(_Initial value),
     Result loading(_Loading value),
-    Result success(_Success value),
+    Result loaded(_Loaded value),
     Result failure(_Failure value),
     @required Result orElse(),
   }) {
@@ -508,8 +473,5 @@ class _$_Failure implements _Failure {
 }
 
 abstract class _Failure implements StorePrefsActorState {
-  const factory _Failure(StoreFailure f) = _$_Failure;
-
-  StoreFailure get f;
-  _$FailureCopyWith<_Failure> get copyWith;
+  const factory _Failure() = _$_Failure;
 }

@@ -27,16 +27,16 @@ import 'domain/store/i_store_repository.dart';
 import 'infrastucture/core/image_injectable_module.dart';
 import 'infrastucture/store/image_repository.dart';
 import 'application/global_bloc/location/location_cubit.dart';
+import 'application/screens/store/setting/bloc/location_form/location_form_cubit.dart';
 import 'infrastucture/location/location_injectable_modules.dart';
 import 'infrastucture/location/location_repository.dart';
 import 'infrastucture/chat/message_repository.dart';
 import 'application/screens/onboarding/bloc/onboarding_cubit.dart';
 import 'application/screens/profile/bloc/store_own_watcher/owned_store_watcher_cubit.dart';
+import 'application/screens/store/setting/bloc/range_form/range_form_cubit.dart';
 import 'application/screens/store/chat/bloc/watcher/store_chat_watcher_cubit.dart';
 import 'application/screens/store/form/bloc/store_form_cubit.dart';
-import 'application/screens/store/form/bloc/store_form_location/store_form_location_cubit.dart';
 import 'application/screens/home_page/bloc/store_feed/nearby/store_near_cubit.dart';
-import 'application/screens/store/form/bloc/store/prefs/actor/store_prefs_actor_cubit.dart';
 import 'infrastucture/store/store_repository.dart';
 import 'application/screens/store/view_page/bloc/store_view_cubit.dart';
 
@@ -68,6 +68,7 @@ GetIt $initGetIt(
       () => MessageRepository(get<FirebaseFirestore>()));
   gh.lazySingleton<ImagePicker>(() => imageInjectableModule.imagePicker);
   gh.lazySingleton<Location>(() => locationInjectableModule.location);
+  gh.factory<RangeFormCubit>(() => RangeFormCubit());
   gh.lazySingleton<StorageReference>(
       () => firebaseInjectableModule.firebaseStorage);
   gh.factory<StoreChatWatcherCubit>(() =>
@@ -89,6 +90,8 @@ GetIt $initGetIt(
           ),
       registerFor: {_prod});
   gh.factory<LocationCubit>(() => LocationCubit(get<ILocationRepository>()));
+  gh.factory<LocationFormCubit>(
+      () => LocationFormCubit(get<ILocationRepository>()));
   gh.factory<OnboardingCubit>(
       () => OnboardingCubit(get<ILocationRepository>()));
   gh.factory<OwnedStoreWatcherCubit>(() => OwnedStoreWatcherCubit(
@@ -101,16 +104,13 @@ GetIt $initGetIt(
             get<ILocationRepository>(),
           ),
       registerFor: {_prod});
-  gh.factory<StoreFormLocationCubit>(
-      () => StoreFormLocationCubit(get<ILocationRepository>()));
   gh.factory<StoreNearCubit>(() => StoreNearCubit(
         get<IStoreRepository>(),
         get<ILocationRepository>(),
         get<IAuthFacade>(),
       ));
-  gh.factory<StorePrefsActorCubit>(
-      () => StorePrefsActorCubit(get<IStoreRepository>()));
-  gh.factory<StoreViewCubit>(() => StoreViewCubit(get<IStoreRepository>()));
+  gh.factory<StoreViewCubit>(() =>
+      StoreViewCubit(get<IStoreRepository>(), get<ILocationRepository>()));
   return get;
 }
 
