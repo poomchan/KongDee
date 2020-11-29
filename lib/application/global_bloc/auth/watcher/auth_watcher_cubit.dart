@@ -4,18 +4,17 @@ import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:fluttertaladsod/domain/auth/i_auth_facade.dart';
 import 'package:fluttertaladsod/domain/auth/user.dart';
+import 'package:fluttertaladsod/injection.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:injectable/injectable.dart';
 
 part 'auth_watcher_state.dart';
 part 'auth_watcher_cubit.freezed.dart';
 
-@injectable
 class AuthWatcherCubit extends Cubit<AuthWatcherState> {
-  final IAuthFacade _iAuthFacade;
+  final IAuthFacade _iAuthFacade = getIt<IAuthFacade>();
   StreamSubscription userSubscription;
 
-  AuthWatcherCubit(this._iAuthFacade) : super(_Initial());
+  AuthWatcherCubit() : super(_Initial());
 
   Future<void> watchUser() async {
     emit(AuthWatcherState.loading());

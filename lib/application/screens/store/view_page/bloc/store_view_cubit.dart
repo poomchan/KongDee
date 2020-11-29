@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
@@ -9,19 +11,20 @@ import 'package:fluttertaladsod/domain/location/i_location_repository.dart';
 import 'package:fluttertaladsod/domain/store/i_store_repository.dart';
 import 'package:fluttertaladsod/domain/store/store.dart';
 import 'package:fluttertaladsod/domain/store/store_failures.dart';
+import 'package:fluttertaladsod/injection.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:injectable/injectable.dart';
+import 'package:get/get.dart';
 
 part 'store_view_state.dart';
 part 'store_view_cubit.freezed.dart';
 
-@injectable
 class StoreViewCubit extends Cubit<StoreViewState> {
-  final IStoreRepository _iStoreRepository;
-  final ILocationRepository _iLocationRepository;
+  final IStoreRepository _iStoreRepository = getIt<IStoreRepository>();
+  final ILocationRepository _iLocationRepository = getIt<ILocationRepository>();
+  StreamSubscription storeSubscription;
 
-  StoreViewCubit(this._iStoreRepository, this._iLocationRepository)
-      : super(_Initial());
+  StoreViewCubit() : super(_Initial());
+
 
   Future<void> watchStoreStarted(BuildContext context,
       {@required UniqueId storeId}) async {
@@ -39,12 +42,13 @@ class StoreViewCubit extends Cubit<StoreViewState> {
             orElse: () => none(),
           );
 
-          final storeOrFailureStream = _iStoreRepository.watchSingleStore(
-            storeId: storeId,
-            location: location,
-            userOption: userOption,
-          );
-          storeOrFailureStream.listen(
+          print(storeId);
+          print(state.hashCode);
+
+          storeSubscription = _iStoreRepository
+              .watchSingleStore(
+                  storeId: storeId, location: location, userOption: userOption)
+              .listen(
             (storeOrF) {
               return storeOrF.fold(
                 (f) => emit(StoreViewState.failure(f)),
@@ -57,5 +61,13 @@ class StoreViewCubit extends Cubit<StoreViewState> {
         }
       },
     );
+  }
+
+  @override
+  Future<void> close() {
+    print('bloc closed');
+    Get.delete<StoreViewCubit>();
+    storeSubscription.cancel();
+    return super.close();
   }
 }

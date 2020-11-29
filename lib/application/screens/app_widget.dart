@@ -4,10 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertaladsod/application/core/theme.dart';
 import 'package:fluttertaladsod/application/global_bloc/auth/actor/auth_actor_cubit.dart';
 import 'package:fluttertaladsod/application/global_bloc/auth/watcher/auth_watcher_cubit.dart';
-import 'package:fluttertaladsod/application/global_bloc/location/location_cubit.dart';
 import 'package:fluttertaladsod/application/routes/route_guards.dart';
 import 'package:fluttertaladsod/application/routes/router.gr.dart' as _router;
-import 'package:fluttertaladsod/injection.dart';
+import 'package:get/instance_manager.dart';
 
 class AppWidget extends StatelessWidget {
   final bool isLocationGranted;
@@ -21,22 +20,11 @@ class AppWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        // BlocProvider<LocationCubit>(
-        //   create: (context) {
-        //     if (isLocationGranted) {
-        //       // old user, get the location
-        //       return getIt<LocationCubit>()..getUserLocation();
-        //     } else {
-        //       // new user
-        //       return getIt<LocationCubit>();
-        //     }
-        //   },
-        // ),
         BlocProvider<AuthWatcherCubit>(
-          create: (context) => getIt<AuthWatcherCubit>()..watchUser(),
+          create: (context) => Get.put<AuthWatcherCubit>(AuthWatcherCubit())..watchUser(),
         ),
         BlocProvider<AuthActorCubit>(
-          create: (context) => getIt<AuthActorCubit>(),
+          create: (context) => Get.put<AuthActorCubit>(AuthActorCubit()),
         ),
       ],
       child: MaterialApp(

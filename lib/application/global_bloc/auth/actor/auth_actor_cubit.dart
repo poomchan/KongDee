@@ -3,17 +3,16 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/widgets.dart';
 import 'package:fluttertaladsod/application/routes/router.gr.dart';
 import 'package:fluttertaladsod/domain/auth/i_auth_facade.dart';
+import 'package:fluttertaladsod/injection.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:injectable/injectable.dart';
 
 part 'auth_actor_cubit.freezed.dart';
 part 'auth_actor_state.dart';
 
-@injectable
 class AuthActorCubit extends Cubit<AuthActorState> {
-  final IAuthFacade _iAuthFacade;
+  final IAuthFacade _iAuthFacade = getIt<IAuthFacade>();
 
-  AuthActorCubit(this._iAuthFacade) : super(_Initial());
+  AuthActorCubit() : super(_Initial());
 
   Future<void> signInWithGoogle() async {
     emit(AuthActorState.loading());

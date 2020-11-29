@@ -5,8 +5,7 @@ import 'package:fluttertaladsod/application/screens/store/form/widgets/reusable_
 import 'package:fluttertaladsod/application/screens/store/setting/bloc/prefs_actor/store_prefs_actor_cubit.dart';
 import 'package:fluttertaladsod/application/screens/store/view_page/bloc/store_view_cubit.dart';
 import 'package:fluttertaladsod/application/screens/store/view_page/widgets/store_setting_button.dart';
-import 'package:fluttertaladsod/domain/store/i_store_repository.dart';
-import 'package:fluttertaladsod/injection.dart';
+import 'package:get/instance_manager.dart';
 import 'package:settings_ui/settings_ui.dart';
 
 import 'edit_store_button.dart';
@@ -22,10 +21,7 @@ class Console extends StatelessWidget {
           failure: (s) => Icon(Icons.error),
           success: (s) => s.store.isOwner
               ? BlocProvider<StorePrefsActorCubit>(
-                  create: (_) => StorePrefsActorCubit(
-                    storeViewCubit: BlocProvider.of<StoreViewCubit>(context),
-                    iStoreRepository: getIt<IStoreRepository>(),
-                  ),
+                  create: (_) => Get.put<StorePrefsActorCubit>(StorePrefsActorCubit()),
                   child: ConsoleWidget(isOpen: s.store.prefs.isOpen),
                 )
               : const SizedBox(),

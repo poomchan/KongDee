@@ -80,7 +80,7 @@ class Router extends RouterBase {
   final _pagesMap = <Type, AutoRouteFactory>{
     HomePage: (data) {
       return buildAdaptivePageRoute<dynamic>(
-        builder: (context) => HomePage().wrappedRoute(context),
+        builder: (context) => HomePage(),
         settings: data,
       );
     },
@@ -157,7 +157,7 @@ class Router extends RouterBase {
         builder: (context) => StoreViewPage2(
           key: args.key,
           storeId: args.storeId,
-        ).wrappedRoute(context),
+        ),
         settings: data,
       );
     },

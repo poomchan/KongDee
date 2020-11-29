@@ -10,6 +10,7 @@ import 'package:fluttertaladsod/domain/store/location/store_location.dart';
 import 'package:fluttertaladsod/domain/store/store.dart';
 import 'package:fluttertaladsod/domain/store/store_failures.dart';
 import 'package:fluttertaladsod/domain/store/value_objects.dart';
+import 'package:fluttertaladsod/injection.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 
@@ -19,14 +20,12 @@ part 'store_form_cubit.freezed.dart';
 @prod
 @injectable
 class StoreFormCubit extends Cubit<StoreFormState> {
-  final IImageRepository _iImageRepository;
-  final IStoreRepository _iStoreRepository;
-  final IAuthFacade _iAuthFacade;
-  final ILocationRepository _iLocationRepository;
+  final IImageRepository _iImageRepository = getIt<IImageRepository>();
+  final IStoreRepository _iStoreRepository = getIt<IStoreRepository>();
+  final IAuthFacade _iAuthFacade = getIt<IAuthFacade>();
+  final ILocationRepository _iLocationRepository = getIt<ILocationRepository>();
 
-  StoreFormCubit(this._iImageRepository, this._iStoreRepository,
-      this._iAuthFacade, this._iLocationRepository)
-      : super(StoreFormState.initial());
+  StoreFormCubit() : super(StoreFormState.initial());
 
   Future<void> initializeForm({
     @required Option<Store> initialStore,

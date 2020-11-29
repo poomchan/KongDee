@@ -2,18 +2,16 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:fluttertaladsod/domain/location/i_location_repository.dart';
 import 'package:fluttertaladsod/domain/store/location/store_location.dart';
+import 'package:fluttertaladsod/injection.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:injectable/injectable.dart';
 
 part 'location_form_state.dart';
 part 'location_form_cubit.freezed.dart';
 
-@injectable
 class LocationFormCubit extends Cubit<LocationFormState> {
-  final ILocationRepository _iLocationRepository;
+  final ILocationRepository _iLocationRepository = getIt<ILocationRepository>();
 
-  LocationFormCubit(this._iLocationRepository)
-      : super(LocationFormState.initial());
+  LocationFormCubit() : super(LocationFormState.initial());
 
   Future<void> initializeForm(
     StoreLocation initLocation,

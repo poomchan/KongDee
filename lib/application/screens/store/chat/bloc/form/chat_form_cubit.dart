@@ -6,6 +6,7 @@ import 'package:fluttertaladsod/domain/message/i_message_repository.dart';
 import 'package:fluttertaladsod/domain/message/message.dart';
 import 'package:fluttertaladsod/domain/message/message_failure.dart';
 import 'package:fluttertaladsod/domain/message/value_objects.dart';
+import 'package:fluttertaladsod/injection.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 
@@ -14,11 +15,10 @@ part 'chat_form_cubit.freezed.dart';
 
 @injectable
 class ChatFormCubit extends Cubit<ChatFormState> {
-  ChatFormCubit(this._iChatRepository, this._iAuthFacade)
-      : super(ChatFormState.inital());
+  final IMessageRepository _iChatRepository = getIt<IMessageRepository>();
+  final IAuthFacade _iAuthFacade = getIt<IAuthFacade>();
 
-  final IMessageRepository _iChatRepository;
-  final IAuthFacade _iAuthFacade;
+  ChatFormCubit() : super(ChatFormState.inital());
 
   Future<void> uploadChat({@required UniqueId storeId}) async {
     final userOption = await _iAuthFacade.getSignedInUser();

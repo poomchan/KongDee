@@ -2,16 +2,15 @@ import 'package:bloc/bloc.dart';
 import 'package:fluttertaladsod/domain/location/i_location_repository.dart';
 import 'package:fluttertaladsod/domain/location/location.dart';
 import 'package:fluttertaladsod/domain/location/location_failures.dart';
+import 'package:fluttertaladsod/injection.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:injectable/injectable.dart';
 
 part 'location_state.dart';
 part 'location_cubit.freezed.dart';
 
-@injectable
 class LocationCubit extends Cubit<LocationState> {
-  final ILocationRepository _iLocationRepository;
-  LocationCubit(this._iLocationRepository) : super(_Initial());
+  final ILocationRepository _iLocationRepository = getIt<ILocationRepository>();
+  LocationCubit() : super(_Initial());
 
   Future<void> getUserLocation() async {
     emit(LocationState.getting());

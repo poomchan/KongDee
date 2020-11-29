@@ -2,17 +2,16 @@ import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:fluttertaladsod/domain/location/i_location_repository.dart';
 import 'package:fluttertaladsod/domain/location/location_failures.dart';
+import 'package:fluttertaladsod/injection.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:injectable/injectable.dart';
 
 part 'onboarding_state.dart';
 part 'onboarding_cubit.freezed.dart';
 
-@injectable
 class OnboardingCubit extends Cubit<OnboardingState> {
-  final ILocationRepository _locationRepository;
+  final ILocationRepository _locationRepository = getIt<ILocationRepository>();
 
-  OnboardingCubit(this._locationRepository) : super(const _Initial());
+  OnboardingCubit() : super(const _Initial());
 
   Future<void> requestLocationPermission() async {
     final Either<LocationFailures, Unit> result =

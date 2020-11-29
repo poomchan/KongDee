@@ -4,14 +4,13 @@ import 'package:fluttertaladsod/application/core/components/progress_indicator.d
 import 'package:fluttertaladsod/application/screens/home_page/bloc/store_feed/nearby/store_near_cubit.dart';
 import 'package:fluttertaladsod/application/screens/store/widgets/store_card2.dart';
 import 'package:fluttertaladsod/domain/store/store.dart';
+import 'package:fluttertaladsod/domain/store/store_failures.dart';
+import 'package:get/instance_manager.dart';
 
 class NearStoreFeed extends StatelessWidget {
+  final bloc = Get.put<StoreNearCubit>(StoreNearCubit());
   @override
   Widget build(BuildContext context) {
-    return _buildViewFeed(context);
-  }
-
-  Widget _buildViewFeed(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -21,48 +20,31 @@ class NearStoreFeed extends StatelessWidget {
         ),
         const SizedBox(height: 10.0),
         const Divider(height: 0.0),
-        _buildLoadingIndicator(),
+        _buildLoadingIndicator(context),
         BlocBuilder<StoreNearCubit, StoreNearState>(
+          cubit: bloc..watchNearbyStore(),
           builder: (context, state) => state.map(
-            inital: (state) => circularProgress(context),
-            loading: (state) =>
-                _buildFeed(storeList: state.previousStoreList),
-            failure: (state) => Center(
-              child: state.f.map(
-                noStore: (_) => Text('No store nearby, try adding more radius'),
-                unexpected: (state) =>
-                    Text('Unexpected Error \n For nerds: ${state.e}'),
-                locationNotGranted: (_) => null,
-                timeout: (_) => Column(
-                  children: [
-                    Text('Timeout'),
-                    TextButton(
-                      onPressed: () =>
-                          context.read<StoreNearCubit>().watchNearbyStore(),
-                      child: Text('Try again'),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            loaded: (state) => _buildFeed(storeList: state.storeList),
+            inital: (_) => circularProgress(context),
+            loading: (s) => _buildFeed(storeList: s.previousStoreList),
+            loaded: (s) => _buildFeed(storeList: s.storeList),
+            failure: (s) => _buildErrorWidgeds(s.f),
           ),
         ),
         ButtonBar(
           children: [
             BlocBuilder<StoreNearCubit, StoreNearState>(
+              cubit: bloc,
               builder: (context, state) => state.maybeMap(
-                loaded: (state) => Text('Searched in ${state.rad} km'),
+                loaded: (s) => Text('Searched in ${s.rad} km'),
                 orElse: () => const SizedBox(height: 10.0 + 4.0),
               ),
             ),
             RaisedButton(
-              onPressed: () =>
-                  context.read<StoreNearCubit>().requestMoreRadius(),
+              onPressed: () => bloc.requestMoreRadius(),
               child: Text('Add Radius'),
             ),
             RaisedButton(
-              onPressed: () => context.read<StoreNearCubit>().drainRadius(),
+              onPressed: () => bloc.drainRadius(),
               child: Text('Drain Radius'),
             ),
           ],
@@ -78,7 +60,7 @@ class NearStoreFeed extends StatelessWidget {
       gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
         maxCrossAxisExtent: 200,
         crossAxisSpacing: 8,
-        mainAxisSpacing: 8,
+        mainAxisSpacing: 3,
         childAspectRatio: 0.7,
       ),
       itemCount: storeList.length,
@@ -93,12 +75,33 @@ class NearStoreFeed extends StatelessWidget {
     );
   }
 
-  Widget _buildLoadingIndicator(){
-    return BlocBuilder<StoreNearCubit, StoreNearState>(
-          builder: (context, state) => state.maybeMap(
-            loading: (state) => linearProgress(context),
-            orElse: () => const SizedBox(height: 10.0 + 4.0),
-          ),
-        );
+  Widget _buildLoadingIndicator(BuildContext context) {
+    return bloc.state.maybeMap(
+      loading: (state) => linearProgress(context),
+      orElse: () => const SizedBox(height: 10.0 + 4.0),
+    );
+  }
+
+  Widget _buildErrorWidgeds(StoreFailure f) {
+    return Center(
+      child: f.map(
+        noStore: (_) => Text(
+          'No store nearby, try adding more radius',
+        ),
+        unexpected: (state) => Text(
+          'Unexpected Error \n For nerds: ${state.e}',
+        ),
+        locationNotGranted: (_) => null,
+        timeout: (_) => Column(
+          children: [
+            Text('Timeout'),
+            TextButton(
+              onPressed: () => bloc.watchNearbyStore(),
+              child: Text('Try again'),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

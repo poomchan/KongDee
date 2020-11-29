@@ -8,24 +8,22 @@ import 'package:fluttertaladsod/domain/core/value_objects.dart';
 import 'package:fluttertaladsod/domain/message/i_message_repository.dart';
 import 'package:fluttertaladsod/domain/message/message.dart';
 import 'package:fluttertaladsod/domain/message/message_failure.dart';
+import 'package:fluttertaladsod/injection.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:injectable/injectable.dart';
 
 part 'store_chat_watcher_state.dart';
 part 'store_chat_watcher_cubit.freezed.dart';
 
-@injectable
 class StoreChatWatcherCubit extends Cubit<StoreChatWatcherState> {
-  final IMessageRepository _iMessageRepository;
-  final IAuthFacade _iAuthFacade;
+  final IMessageRepository _iMessageRepository = getIt<IMessageRepository>();
+  final IAuthFacade _iAuthFacade = getIt<IAuthFacade>();
 
   UserDomain user;
   List<MessageDomain> finalMessageList = [];
   List<MessageDomain> recentMessageList = [];
   List<MessageDomain> moreMessageList = [];
 
-  StoreChatWatcherCubit(this._iMessageRepository, this._iAuthFacade)
-      : super(_Initial());
+  StoreChatWatcherCubit() : super(_Initial());
 
   Future<void> watchStarted(UniqueId storeId) async {
     emit(StoreChatWatcherState.loading(finalMessageList));

@@ -1,24 +1,8 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertaladsod/application/screens/home_page/bloc/store_feed/nearby/store_near_cubit.dart';
 import 'package:fluttertaladsod/application/screens/home_page/widgets/near_store_feed.dart';
 import 'package:fluttertaladsod/application/screens/home_page/widgets/profile_avatar.dart';
-import 'package:fluttertaladsod/injection.dart';
 
-class HomePage extends StatelessWidget implements AutoRouteWrapper {
-  @override
-  Widget wrappedRoute(BuildContext parentContext) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider<StoreNearCubit>(
-          create: (context) => getIt<StoreNearCubit>()..watchNearbyStore(),
-        ),
-      ],
-      child: this,
-    );
-  }
-
+class HomePage extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
