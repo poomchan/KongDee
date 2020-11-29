@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertaladsod/application/core/components/my_network_image.dart';
 import 'package:fluttertaladsod/application/core/components/progress_indicator.dart';
 import 'package:fluttertaladsod/application/screens/store/view_page/bloc/store_view_cubit.dart';
+import 'package:get/get.dart';
 
 class ImageGridView extends StatelessWidget {
   final int index;
@@ -17,44 +18,42 @@ class ImageGridView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      // color: Colors.blue,
-      child: Stack(
-        clipBehavior: Clip.none,
-        children: [
-          Container(
-            margin:
-                EdgeInsets.only(right: _topRightMargin, top: _topRightMargin),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(15.0),
-              child: GestureDetector(
-                onTap: () => print('zooming?'),
-                child: AspectRatio(
-                  aspectRatio: _aspectRatio,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15.0),
-                    ),
-                    child: BlocBuilder<StoreViewCubit, StoreViewState>(
-                      builder: (context, state) => state.map(
-                          inital: (state) => circularProgress(context),
-                          loading: (state) => circularProgress(context),
-                          success: (state) => state.store.pics
-                              .getOrCrash()[index]
-                              .fileOrUrl
-                              .fold(
-                                (file) => throw 'network image cannot be File',
-                                (url) => MyNetworkImage(imageUrl: url)
-                              ),
-                          failure: (state) => Icon(Icons.error)),
-                    ),
+    return Stack(
+      clipBehavior: Clip.none,
+      children: [
+        Container(
+          margin:
+              EdgeInsets.only(right: _topRightMargin, top: _topRightMargin),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(15.0),
+            child: GestureDetector(
+              onTap: () => print('zooming?'),
+              child: AspectRatio(
+                aspectRatio: _aspectRatio,
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                  child: BlocBuilder<StoreViewCubit, StoreViewState>(
+                    cubit: Get.find<StoreViewCubit>(),
+                    builder: (context, state) => state.map(
+                        inital: (state) => circularProgress(context),
+                        loading: (state) => circularProgress(context),
+                        success: (state) => state.store.pics
+                            .getOrCrash()[index]
+                            .fileOrUrl
+                            .fold(
+                              (file) => throw 'network image cannot be File',
+                              (url) => MyNetworkImage(imageUrl: url)
+                            ),
+                        failure: (state) => Icon(Icons.error)),
                   ),
                 ),
               ),
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

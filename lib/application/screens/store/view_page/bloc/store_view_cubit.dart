@@ -25,12 +25,10 @@ class StoreViewCubit extends Cubit<StoreViewState> {
 
   StoreViewCubit() : super(_Initial());
 
-
   Future<void> watchStoreStarted(BuildContext context,
       {@required UniqueId storeId}) async {
     assert(storeId != null);
     emit(StoreViewState.loading());
-
     final locationOption = await _iLocationRepository.getLocation();
     locationOption.fold(
       () => emit(StoreViewState.failure(StoreFailure.locationNotGranted())),
@@ -41,9 +39,6 @@ class StoreViewCubit extends Cubit<StoreViewState> {
             authenticated: (state) => some(state.user),
             orElse: () => none(),
           );
-
-          print(storeId);
-          print(state.hashCode);
 
           storeSubscription = _iStoreRepository
               .watchSingleStore(
@@ -65,7 +60,6 @@ class StoreViewCubit extends Cubit<StoreViewState> {
 
   @override
   Future<void> close() {
-    print('bloc closed');
     Get.delete<StoreViewCubit>();
     storeSubscription.cancel();
     return super.close();

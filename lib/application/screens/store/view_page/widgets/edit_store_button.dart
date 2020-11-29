@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertaladsod/application/core/components/progress_indicator.dart';
 import 'package:fluttertaladsod/application/routes/router.gr.dart';
 import 'package:fluttertaladsod/application/screens/store/view_page/bloc/store_view_cubit.dart';
+import 'package:get/get.dart';
 
 class EditStoreButton extends StatelessWidget {
   const EditStoreButton({
@@ -14,6 +15,7 @@ class EditStoreButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<StoreViewCubit, StoreViewState>(
+      cubit: Get.find<StoreViewCubit>(),
       builder: (context, state) {
         return state.map(
           inital: (state) => circularProgress(context),

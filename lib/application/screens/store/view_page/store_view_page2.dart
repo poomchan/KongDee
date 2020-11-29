@@ -18,22 +18,30 @@ class StoreViewPage2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bloc = Get.put(StoreViewCubit());
+    final bloc = Get.put(StoreViewCubit())
+      ..watchStoreStarted(context, storeId: storeId);
     final screenWidth = MediaQuery.of(context).size.width;
-    return BlocProvider<StoreViewCubit>(
-      lazy: false,
-      create: (_) => bloc..watchStoreStarted(context, storeId: storeId),
-      child: Builder(
-        builder: (context) {
-          final storeViewBloc = context.watch<StoreViewCubit>();
-          return ColorFiltered(
-            colorFilter: storeViewBloc.state.maybeMap(
-              orElse: () =>
-                  ColorFilter.mode(Colors.transparent, BlendMode.saturation),
-              success: (s) => s.store.prefs.isOpen
-                  ? ColorFilter.mode(Colors.transparent, BlendMode.saturation)
-                  : ColorFilter.mode(Colors.grey, BlendMode.saturation),
+
+    return BlocBuilder<StoreViewCubit, StoreViewState>(
+        cubit: bloc,
+        buildWhen: (p, c) =>
+            p.maybeMap(
+              success: (s) => s.store.prefs.isOpen,
+              orElse: () => true,
+            ) ==
+            c.maybeMap(
+              success: (s) => s.store.prefs.isOpen,
+              orElse: () => true,
             ),
+        builder: (_, state) {
+          final bool isOpen = state.maybeMap(
+            success: (s) => s.store.prefs.isOpen,
+            orElse: () => false,
+          );
+          return ColorFiltered(
+            colorFilter: isOpen
+                ? ColorFilter.mode(Colors.transparent, BlendMode.saturation)
+                : ColorFilter.mode(Colors.grey, BlendMode.saturation),
             child: Scaffold(
               floatingActionButton: Row(
                 mainAxisSize: MainAxisSize.min,
@@ -89,8 +97,6 @@ class StoreViewPage2 extends StatelessWidget {
               ),
             ),
           );
-        },
-      ),
-    );
+        });
   }
 }
