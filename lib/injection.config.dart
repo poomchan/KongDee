@@ -14,7 +14,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:location/location.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
-import 'application/screens/store/chat/bloc/form/chat_form_cubit.dart';
 import 'infrastucture/auth/firebase_auth_facade.dart';
 import 'infrastucture/core/firebase_injectable_module.dart';
 import 'domain/auth/i_auth_facade.dart';
@@ -27,7 +26,6 @@ import 'infrastucture/store/image_repository.dart';
 import 'infrastucture/location/location_injectable_modules.dart';
 import 'infrastucture/location/location_repository.dart';
 import 'infrastucture/chat/message_repository.dart';
-import 'application/screens/store/setting/bloc/range_form/range_form_cubit.dart';
 import 'application/screens/store/form/bloc/store_form_cubit.dart';
 import 'infrastucture/store/store_repository.dart';
 
@@ -46,7 +44,6 @@ GetIt $initGetIt(
   final firebaseInjectableModule = _$FirebaseInjectableModule();
   final locationInjectableModule = _$LocationInjectableModule();
   final imageInjectableModule = _$ImageInjectableModule();
-  gh.factory<ChatFormCubit>(() => ChatFormCubit());
   gh.lazySingleton<FirebaseAuth>(() => firebaseInjectableModule.firebaseAuth);
   gh.lazySingleton<FirebaseFirestore>(
       () => firebaseInjectableModule.firebaseFirestore);
@@ -60,7 +57,6 @@ GetIt $initGetIt(
       () => MessageRepository(get<FirebaseFirestore>()));
   gh.lazySingleton<ImagePicker>(() => imageInjectableModule.imagePicker);
   gh.lazySingleton<Location>(() => locationInjectableModule.location);
-  gh.factory<RangeFormCubit>(() => RangeFormCubit());
   gh.lazySingleton<StorageReference>(
       () => firebaseInjectableModule.firebaseStorage);
   gh.factory<StoreFormCubit>(() => StoreFormCubit(), registerFor: {_prod});

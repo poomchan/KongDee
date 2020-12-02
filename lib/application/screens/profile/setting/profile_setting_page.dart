@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertaladsod/application/global_bloc/auth/actor/auth_actor_cubit.dart';
 import 'package:fluttertaladsod/application/routes/router.gr.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -69,7 +70,7 @@ class ProfileSettingPage extends StatelessWidget {
             padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 30.0),
             child: RaisedButton(
               color: Theme.of(context).accentColor,
-              onPressed: () => context.read<AuthActorCubit>().signOut(context),
+              onPressed: () => Get.find<AuthActorCubit>().signOut(context).then((_) => Get.back()),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: const [

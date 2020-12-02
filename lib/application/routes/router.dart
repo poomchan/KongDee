@@ -3,7 +3,7 @@ import 'package:fluttertaladsod/application/routes/route_guards.dart';
 import 'package:fluttertaladsod/application/screens/home_page/home_page.dart';
 import 'package:fluttertaladsod/application/screens/profile/profile_page.dart';
 import 'package:fluttertaladsod/application/screens/profile/setting/language.dart';
-import 'package:fluttertaladsod/application/screens/profile/setting/profile_setting.dart';
+import 'package:fluttertaladsod/application/screens/profile/setting/profile_setting_page.dart';
 import 'package:fluttertaladsod/application/screens/splash/sign_in_splash.dart';
 import 'package:fluttertaladsod/application/screens/store/chat/chat_page.dart';
 import 'package:fluttertaladsod/application/screens/store/form/store_form.dart';

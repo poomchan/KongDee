@@ -8,9 +8,9 @@ import 'package:fluttertaladsod/domain/store/store_failures.dart';
 import 'package:get/instance_manager.dart';
 
 class NearStoreFeed extends StatelessWidget {
-  final bloc = Get.put<StoreNearCubit>(StoreNearCubit());
   @override
   Widget build(BuildContext context) {
+    final bloc = Get.put<StoreNearCubit>(StoreNearCubit()..watchNearbyStore());
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -22,7 +22,7 @@ class NearStoreFeed extends StatelessWidget {
         const Divider(height: 0.0),
         _buildLoadingIndicator(context),
         BlocBuilder<StoreNearCubit, StoreNearState>(
-          cubit: bloc..watchNearbyStore(),
+          cubit: bloc,
           builder: (context, state) => state.map(
             inital: (_) => circularProgress(context),
             loading: (s) => _buildFeed(storeList: s.previousStoreList),
@@ -76,13 +76,19 @@ class NearStoreFeed extends StatelessWidget {
   }
 
   Widget _buildLoadingIndicator(BuildContext context) {
-    return bloc.state.maybeMap(
-      loading: (state) => linearProgress(context),
-      orElse: () => const SizedBox(height: 10.0 + 4.0),
+    return BlocBuilder<StoreNearCubit,StoreNearState>(
+      cubit: Get.find<StoreNearCubit>(),
+      builder: (_, state) {
+        return state.maybeMap(
+          loading: (_) => linearProgress(context),
+          orElse: () => const SizedBox(height: 10.0 + 4.0),
+        );
+      }
     );
   }
 
   Widget _buildErrorWidgeds(StoreFailure f) {
+    final bloc = Get.find<StoreNearCubit>();
     return Center(
       child: f.map(
         noStore: (_) => Text(

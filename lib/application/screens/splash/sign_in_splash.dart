@@ -5,14 +5,18 @@ import 'package:fluttertaladsod/application/core/components/progress_indicator.d
 import 'package:fluttertaladsod/application/core/theme.dart';
 import 'package:fluttertaladsod/application/global_bloc/auth/actor/auth_actor_cubit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 
 class SignInSplash extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final actorBloc = Get.find<AuthActorCubit>();
     return BlocConsumer<AuthActorCubit, AuthActorState>(
+      cubit: actorBloc,
       listener: (context, state) {
         state.maybeMap(
-            success: (_) => ExtendedNavigator.of(context).pop(), orElse: () {});
+            success: (_) => ExtendedNavigator.of(context).pop(),
+            orElse: () => null);
       },
       builder: (context, state) => Stack(
         children: [
@@ -26,8 +30,7 @@ class SignInSplash extends StatelessWidget {
                   child: FlatButton(
                     padding: EdgeInsets.all(10.0),
                     onPressed: () {
-                      BlocProvider.of<AuthActorCubit>(context)
-                          .signInWithGoogle();
+                      actorBloc.signInWithGoogle();
                     },
                     color: Colors.teal,
                     child: Row(

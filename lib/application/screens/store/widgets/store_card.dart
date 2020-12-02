@@ -14,15 +14,14 @@ class StoreCard extends StatelessWidget {
     Key key,
     @required this.store,
   }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return AspectRatio(
       aspectRatio: 100 / 30,
       child: GestureDetector(
-        onTap: () {
-          ExtendedNavigator.of(context).push(Routes.storeViewPage2,
-              arguments: StoreViewPage2Arguments(storeId: store.id));
-        },
+        onTap: () =>
+            ExtendedNavigator.of(context).pushStoreViewPage2(storeId: store.id),
         child: Stack(
           children: [
             FlexibleTopLeftMargin(
@@ -59,10 +58,11 @@ class StoreCard extends StatelessWidget {
                   ],
                 ),
                 Expanded(
-                  child: Container(
-                    // color: Colors.blue,
-                    padding:
-                        EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 15.0,
+                      horizontal: 10.0,
+                    ),
                     child: Column(
                       children: [
                         Row(

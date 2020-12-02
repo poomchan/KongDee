@@ -12,16 +12,16 @@ class StoreSettingButton extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext ctx) {
+  Widget build(BuildContext context) {
     return BlocBuilder<StoreViewCubit, StoreViewState>(
       cubit: Get.find<StoreViewCubit>(),
-      builder: (context, s) {
-        return s.map(
+      builder: (_, state) {
+        return state.map(
           inital: (_) => circularProgress(context),
           loading: (_) => circularProgress(context),
           failure: (_) => Icon(Icons.error),
           success: (_) => OutlineButton(
-            onPressed: () => ExtendedNavigator.of(ctx).pushStoreSettingPage(parentContext: ctx),
+            onPressed: () => ExtendedNavigator.of(context).pushStoreSettingPage(),
             padding: EdgeInsets.symmetric(
               vertical: 10.0,
               horizontal: 10.0,

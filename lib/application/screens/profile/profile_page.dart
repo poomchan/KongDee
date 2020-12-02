@@ -1,34 +1,19 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertaladsod/application/core/components/buttom_sheet.dart';
 import 'package:fluttertaladsod/application/routes/router.gr.dart';
-import 'package:fluttertaladsod/application/screens/profile/bloc/store_own_watcher/owned_store_watcher_cubit.dart';
 import 'package:fluttertaladsod/domain/auth/user.dart';
-import 'package:fluttertaladsod/injection.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'widgets/owned_store_view.dart';
 
-class ProfilePage extends StatelessWidget implements AutoRouteWrapper {
+class ProfilePage extends StatelessWidget{
   final UserDomain user;
 
-  const ProfilePage({Key key, @required this.user}) : super(key: key);
-  @override
-  Widget wrappedRoute(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider<OwnedStoreWatcherCubit>(
-          create: (context) {
-            return getIt<OwnedStoreWatcherCubit>()
-              ..watchOwnedStoreStarted(user: user);
-          },
-        ),
-      ],
-      child: this,
-    );
-  }
+  const ProfilePage({Key key, @required this.user})
+      : assert(user != null),
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {

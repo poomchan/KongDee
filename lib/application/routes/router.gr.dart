@@ -12,14 +12,12 @@ import 'package:flutter/material.dart';
 
 import '../../domain/auth/user.dart';
 import '../../domain/core/value_objects.dart';
-import '../../domain/store/location/store_location.dart';
 import '../../domain/store/store.dart';
-import '../../domain/store/value_objects.dart';
 import '../screens/home_page/home_page.dart';
 import '../screens/onboarding/onboarding_page.dart';
 import '../screens/profile/profile_page.dart';
 import '../screens/profile/setting/language.dart';
-import '../screens/profile/setting/profile_setting.dart';
+import '../screens/profile/setting/profile_setting_page.dart';
 import '../screens/splash/sign_in_splash.dart';
 import '../screens/store/chat/chat_page.dart';
 import '../screens/store/form/store_form.dart';
@@ -109,7 +107,7 @@ class Router extends RouterBase {
         builder: (context) => ProfilePage(
           key: args.key,
           user: args.user,
-        ).wrappedRoute(context),
+        ),
         settings: data,
       );
     },
@@ -133,7 +131,7 @@ class Router extends RouterBase {
         builder: (context) => ChatPage(
           key: args.key,
           storeId: args.storeId,
-        ).wrappedRoute(context),
+        ),
         settings: data,
       );
     },
@@ -150,9 +148,7 @@ class Router extends RouterBase {
       );
     },
     StoreViewPage2: (data) {
-      final args = data.getArgs<StoreViewPage2Arguments>(
-        orElse: () => StoreViewPage2Arguments(),
-      );
+      final args = data.getArgs<StoreViewPage2Arguments>(nullOk: false);
       return buildAdaptivePageRoute<dynamic>(
         builder: (context) => StoreViewPage2(
           key: args.key,
@@ -162,36 +158,20 @@ class Router extends RouterBase {
       );
     },
     StoreSettingPage: (data) {
-      final args = data.getArgs<StoreSettingPageArguments>(
-        orElse: () => StoreSettingPageArguments(),
-      );
       return buildAdaptivePageRoute<dynamic>(
-        builder: (context) => StoreSettingPage(
-          key: args.key,
-          parentContext: args.parentContext,
-        ).wrappedRoute(context),
+        builder: (context) => StoreSettingPage(),
         settings: data,
       );
     },
     SellingRangePage: (data) {
-      final args = data.getArgs<SellingRangePageArguments>(nullOk: false);
       return buildAdaptivePageRoute<dynamic>(
-        builder: (context) => SellingRangePage(
-          key: args.key,
-          parentContext: args.parentContext,
-          initSellingRange: args.initSellingRange,
-        ).wrappedRoute(context),
+        builder: (context) => const SellingRangePage(),
         settings: data,
       );
     },
     LocationSetting: (data) {
-      final args = data.getArgs<LocationSettingArguments>(nullOk: false);
       return buildAdaptivePageRoute<dynamic>(
-        builder: (context) => LocationSetting(
-          key: args.key,
-          parentContext: args.parentContext,
-          initLocation: args.initLocation,
-        ).wrappedRoute(context),
+        builder: (context) => const LocationSetting(),
         settings: data,
       );
     },
@@ -250,46 +230,21 @@ extension RouterExtendedNavigatorStateX on ExtendedNavigatorState {
 
   Future<dynamic> pushStoreViewPage2({
     Key key,
-    UniqueId storeId,
+    @required UniqueId storeId,
   }) =>
       push<dynamic>(
         Routes.storeViewPage2,
         arguments: StoreViewPage2Arguments(key: key, storeId: storeId),
       );
 
-  Future<dynamic> pushStoreSettingPage({
-    Key key,
-    BuildContext parentContext,
-  }) =>
-      push<dynamic>(
-        Routes.storeSettingPage,
-        arguments:
-            StoreSettingPageArguments(key: key, parentContext: parentContext),
-      );
+  Future<dynamic> pushStoreSettingPage() =>
+      push<dynamic>(Routes.storeSettingPage);
 
-  Future<dynamic> pushSellingRangePage({
-    Key key,
-    @required BuildContext parentContext,
-    @required SellingRange initSellingRange,
-  }) =>
-      push<dynamic>(
-        Routes.sellingRangePage,
-        arguments: SellingRangePageArguments(
-            key: key,
-            parentContext: parentContext,
-            initSellingRange: initSellingRange),
-      );
+  Future<dynamic> pushSellingRangePage() =>
+      push<dynamic>(Routes.sellingRangePage);
 
-  Future<dynamic> pushLocationSetting({
-    Key key,
-    @required BuildContext parentContext,
-    @required StoreLocation initLocation,
-  }) =>
-      push<dynamic>(
-        Routes.locationSetting,
-        arguments: LocationSettingArguments(
-            key: key, parentContext: parentContext, initLocation: initLocation),
-      );
+  Future<dynamic> pushLocationSetting() =>
+      push<dynamic>(Routes.locationSetting);
 }
 
 /// ************************************************************************
@@ -328,32 +283,5 @@ class ChatPageArguments {
 class StoreViewPage2Arguments {
   final Key key;
   final UniqueId storeId;
-  StoreViewPage2Arguments({this.key, this.storeId});
-}
-
-/// StoreSettingPage arguments holder class
-class StoreSettingPageArguments {
-  final Key key;
-  final BuildContext parentContext;
-  StoreSettingPageArguments({this.key, this.parentContext});
-}
-
-/// SellingRangePage arguments holder class
-class SellingRangePageArguments {
-  final Key key;
-  final BuildContext parentContext;
-  final SellingRange initSellingRange;
-  SellingRangePageArguments(
-      {this.key,
-      @required this.parentContext,
-      @required this.initSellingRange});
-}
-
-/// LocationSetting arguments holder class
-class LocationSettingArguments {
-  final Key key;
-  final BuildContext parentContext;
-  final StoreLocation initLocation;
-  LocationSettingArguments(
-      {this.key, @required this.parentContext, @required this.initLocation});
+  StoreViewPage2Arguments({this.key, @required this.storeId});
 }

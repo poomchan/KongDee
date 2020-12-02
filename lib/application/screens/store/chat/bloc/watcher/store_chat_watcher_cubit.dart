@@ -19,8 +19,11 @@ class StoreChatWatcherCubit extends Cubit<StoreChatWatcherState> {
   final IAuthFacade _iAuthFacade = getIt<IAuthFacade>();
 
   UserDomain user;
+  /// the only [Message] list to display on screen
   List<MessageDomain> finalMessageList = [];
+  /// rxList with listener
   List<MessageDomain> recentMessageList = [];
+  /// List with no listener
   List<MessageDomain> moreMessageList = [];
 
   StoreChatWatcherCubit() : super(_Initial());
@@ -78,6 +81,10 @@ class StoreChatWatcherCubit extends Cubit<StoreChatWatcherState> {
   @override
   Future<void> close() {
     _iMessageRepository.clearState();
+    user = null;
+    finalMessageList = null;
+    recentMessageList = null;
+    moreMessageList = null;
     return super.close();
   }
 }

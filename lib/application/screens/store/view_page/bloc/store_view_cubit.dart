@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
@@ -25,16 +24,16 @@ class StoreViewCubit extends Cubit<StoreViewState> {
 
   StoreViewCubit() : super(_Initial());
 
-  Future<void> watchStoreStarted(BuildContext context,
-      {@required UniqueId storeId}) async {
+  Future<void> watchStoreStarted({@required UniqueId storeId}) async {
     assert(storeId != null);
     emit(StoreViewState.loading());
+
     final locationOption = await _iLocationRepository.getLocation();
     locationOption.fold(
       () => emit(StoreViewState.failure(StoreFailure.locationNotGranted())),
       (location) async {
         try {
-          final userBloc = BlocProvider.of<AuthWatcherCubit>(context);
+          final userBloc = Get.find<AuthWatcherCubit>();
           final Option<UserDomain> userOption = userBloc.state.maybeMap(
             authenticated: (state) => some(state.user),
             orElse: () => none(),

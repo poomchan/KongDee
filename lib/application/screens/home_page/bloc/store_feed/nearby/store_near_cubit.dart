@@ -28,9 +28,7 @@ class StoreNearCubit extends Cubit<StoreNearState> {
 
   Future<void> watchNearbyStore() async {
     emit(StoreNearState.loading(storeList));
-
     final locationOption = await _iLocationRepository.getLocation();
-
     locationOption.fold(
       () => emit(StoreNearState.failure(StoreFailure.locationNotGranted())),
       (location) async {
@@ -65,6 +63,8 @@ class StoreNearCubit extends Cubit<StoreNearState> {
 
   @override
   Future<void> close() {
+    storeList = null;
+    rad = null;
     radiusSubject.close();
     return super.close();
   }
