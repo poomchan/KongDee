@@ -1,11 +1,9 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertaladsod/application/global_bloc/auth/actor/auth_actor_cubit.dart';
-import 'package:fluttertaladsod/application/routes/router.gr.dart';
+import 'package:fluttertaladsod/application/bloc/auth/actor/auth_actor_cubit.dart';
+import 'package:fluttertaladsod/application/routes/router.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:settings_ui/settings_ui.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProfileSettingPage extends StatelessWidget {
   @override
@@ -30,7 +28,7 @@ class ProfileSettingPage extends StatelessWidget {
                     title: 'Language',
                     subtitle: 'English',
                     leading: Icon(Icons.language),
-                    onTap: () => context.navigator.pushLanguageSetting(),
+                    onTap: () => Get.toNamed(Routes.languageSettingPage),
                   ),
                   SettingsTile.switchTile(
                     title: 'Use fingerprint',
@@ -70,7 +68,7 @@ class ProfileSettingPage extends StatelessWidget {
             padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 30.0),
             child: RaisedButton(
               color: Theme.of(context).accentColor,
-              onPressed: () => Get.find<AuthActorCubit>().signOut(context).then((_) => Get.back()),
+              onPressed: () => Get.find<AuthActorCubit>().signOut(),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: const [

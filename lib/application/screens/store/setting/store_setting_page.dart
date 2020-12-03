@@ -1,8 +1,7 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertaladsod/application/core/components/progress_indicator.dart';
-import 'package:fluttertaladsod/application/routes/router.gr.dart';
+import 'package:fluttertaladsod/application/routes/router.dart';
 import 'package:fluttertaladsod/application/screens/store/view_page/bloc/store_view_cubit.dart';
 import 'package:fluttertaladsod/domain/store/store.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -54,13 +53,13 @@ class StoreSettingPage extends StatelessWidget {
               title: 'Store Location',
               subtitle: store.location.address.getOrCrash(),
               leading: Icon(Icons.gps_fixed),
-              onTap: () => context.navigator.pushLocationSetting(),
+              onTap: () => Get.toNamed(Routes.locationSettingPage),
             ),
             SettingsTile(
               title: 'Selling Range',
               subtitle: 'with in ${store.prefs.sellingRange.getOrCrash()} km',
               leading: Icon(Icons.near_me),
-              onTap: () => context.navigator.pushSellingRangePage(),
+              onTap: () => Get.toNamed(Routes.sellingRangeSettingPage)
             ),
           ],
         ),

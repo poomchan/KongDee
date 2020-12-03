@@ -1,9 +1,9 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertaladsod/application/core/components/my_network_image.dart';
 import 'package:fluttertaladsod/application/core/theme.dart';
-import 'package:fluttertaladsod/application/routes/router.gr.dart';
+import 'package:fluttertaladsod/application/routes/router.dart';
 import 'package:fluttertaladsod/domain/store/store.dart';
+import 'package:get/get.dart';
 
 import '../../profile/widgets/layout_helpers.dart';
 
@@ -20,8 +20,7 @@ class StoreCard extends StatelessWidget {
     return AspectRatio(
       aspectRatio: 100 / 30,
       child: GestureDetector(
-        onTap: () =>
-            ExtendedNavigator.of(context).pushStoreViewPage2(storeId: store.id),
+        onTap: () => Get.toNamed(Routes.storeViewPage, arguments: store.id),
         child: Stack(
           children: [
             FlexibleTopLeftMargin(

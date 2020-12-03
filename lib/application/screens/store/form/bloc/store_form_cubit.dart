@@ -25,6 +25,8 @@ class StoreFormCubit extends Cubit<StoreFormState> {
   final IAuthFacade _iAuthFacade = getIt<IAuthFacade>();
   final ILocationRepository _iLocationRepository = getIt<ILocationRepository>();
 
+  final nameController = TextEditingController();
+
   StoreFormCubit() : super(StoreFormState.initial());
 
   Future<void> initializeForm({
@@ -230,5 +232,11 @@ class StoreFormCubit extends Cubit<StoreFormState> {
       ));
       return right(unit);
     });
+  }
+
+  @override
+  Future<void> close() {
+    nameController.dispose();
+    return super.close();
   }
 }

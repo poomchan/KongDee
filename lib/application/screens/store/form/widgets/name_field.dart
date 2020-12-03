@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:fluttertaladsod/application/screens/store/form/bloc/store_form_cubit.dart';
 import 'package:fluttertaladsod/application/screens/store/form/widgets/reusable_card.dart';
 import 'package:fluttertaladsod/domain/store/value_objects.dart';
+import 'package:get/get.dart';
 
-class NameField extends HookWidget {
+class NameField extends StatelessWidget {
+
   const NameField();
+  
   @override
   Widget build(BuildContext context) {
-    final _textFieldController = useTextEditingController();
-    // print('building the name field');
-
+    final bloc = Get.find<StoreFormCubit>();
+    final _textFieldController = bloc.nameController;
     return BlocListener<StoreFormCubit, StoreFormState>(
+      cubit: bloc,
       listenWhen: (p, c) => p.isEditting != c.isEditting,
       listener: (context, state) {
         if (state.isEditting) {

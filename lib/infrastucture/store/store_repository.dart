@@ -32,7 +32,6 @@ class StoreRepository implements IStoreRepository {
     @required Option<UserDomain> userOption,
   }) async* {
     yield* rad.switchMap((rad) {
-      print('repo: radius = $rad');
       return _geo
           .collection(collectionRef: _firestore.storeCollectionRef)
           .within(

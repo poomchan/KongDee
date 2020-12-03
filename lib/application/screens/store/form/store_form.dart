@@ -15,7 +15,7 @@ import 'bloc/store_form_cubit.dart';
 class StoreForm extends StatelessWidget implements AutoRouteWrapper {
   final Option<Store> initialStore;
 
-  const StoreForm({Key key, this.initialStore}) : super(key: key);
+  const StoreForm({Key key, @required this.initialStore}) : super(key: key);
 
   @override
   Widget wrappedRoute(BuildContext context) {

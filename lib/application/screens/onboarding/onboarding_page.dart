@@ -1,10 +1,9 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertaladsod/application/routes/router.gr.dart';
 import 'package:fluttertaladsod/application/screens/onboarding/bloc/onboarding_cubit.dart';
 import 'package:get/get.dart';
 import 'package:universal_platform/universal_platform.dart';
+import 'package:fluttertaladsod/application/routes/router.dart';
 
 class OnboardingPage extends StatefulWidget {
   final int initPage;
@@ -40,8 +39,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
       listener: (context, state) {
         // if permission granted => navigate to the home page
         state.maybeMap(
-          granted: (_) => context.navigator
-              .pushAndRemoveUntil(Routes.homePage, (route) => false),
+          granted: (_) => Get.offNamed(Routes.homePage),
           orElse: () => null,
         );
       },

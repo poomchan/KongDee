@@ -1,11 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertaladsod/application/core/components/buttom_sheet.dart';
-import 'package:fluttertaladsod/application/routes/router.gr.dart';
 import 'package:fluttertaladsod/domain/auth/user.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
+import 'package:get/get.dart';
+import 'package:fluttertaladsod/application/routes/router.dart';
 import 'widgets/owned_store_view.dart';
 
 class ProfilePage extends StatelessWidget{
@@ -31,32 +29,12 @@ class ProfilePage extends StatelessWidget{
           IconButton(
             padding: const EdgeInsets.only(right: 10.0),
             icon: Icon(Icons.more_horiz),
-            onPressed: () {
-              showAppButtomSheet(
-                context,
-                children: [
-                  ButtomSheetItem(
-                    title: 'Report user',
-                    icon: FontAwesomeIcons.flag,
-                    textColor: Colors.redAccent,
-                    onTap: () => print('report user'),
-                  ),
-                  Divider(height: 0.0, color: Colors.white24),
-                  ButtomSheetItem(
-                    title: 'Block user',
-                    icon: FontAwesomeIcons.ban,
-                    textColor: Colors.redAccent,
-                    onTap: () => print('blocking user'),
-                  ),
-                  Divider(height: 0.0, color: Colors.white24),
-                ],
-              );
-            },
+            onPressed: () => null,
           ),
           IconButton(
             padding: const EdgeInsets.only(right: 10.0),
             icon: Icon(Icons.settings),
-            onPressed: () => context.navigator.pushProfileSettingPage(),
+            onPressed: () => Get.toNamed(Routes.profileSettingPage)
           )
         ],
       ),

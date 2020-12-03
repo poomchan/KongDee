@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:fluttertaladsod/application/global_bloc/auth/watcher/auth_watcher_cubit.dart';
-import 'package:fluttertaladsod/domain/auth/user.dart';
+import 'package:fluttertaladsod/application/bloc/auth/watcher/auth_watcher_cubit.dart';
 import 'package:fluttertaladsod/domain/location/i_location_repository.dart';
 import 'package:fluttertaladsod/domain/store/i_store_repository.dart';
 import 'package:fluttertaladsod/domain/store/store.dart';

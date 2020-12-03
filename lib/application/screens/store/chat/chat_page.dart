@@ -6,7 +6,9 @@ import 'package:fluttertaladsod/domain/core/value_objects.dart';
 class ChatPage extends StatelessWidget {
   final UniqueId storeId;
 
-  const ChatPage({Key key, this.storeId}) : super(key: key);
+  const ChatPage({Key key, @required this.storeId})
+      : assert(storeId != null),
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {

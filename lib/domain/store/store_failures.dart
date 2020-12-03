@@ -6,7 +6,7 @@ part 'store_failures.freezed.dart';
 @freezed
 abstract class StoreFailure with _$StoreFailure {
   const factory StoreFailure.noStore() = _NoStoreOwned;
-  const factory StoreFailure.unexpected(e) = _Unexpected;
+  const factory StoreFailure.unexpected(detail) = _Unexpected;
   const factory StoreFailure.locationNotGranted() = _LocationNotGranted;
   const factory StoreFailure.timeout() = _Timeout;
 

@@ -1,7 +1,6 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertaladsod/application/routes/router.gr.dart';
+import 'package:fluttertaladsod/application/routes/router.dart';
 import 'package:fluttertaladsod/application/screens/store/view_page/widgets/banner_appbar2.dart';
 import 'package:fluttertaladsod/application/screens/store/view_page/widgets/console.dart';
 import 'package:fluttertaladsod/application/screens/store/view_page/widgets/image_view.dart';
@@ -69,10 +68,7 @@ class StoreViewPage2 extends StatelessWidget {
             SizedBox(width: 10.0),
             FloatingActionButton.extended(
               shape: StadiumBorder(),
-              onPressed: () => ExtendedNavigator.of(context).push(
-                Routes.chatPage,
-                arguments: ChatPageArguments(storeId: storeId),
-              ),
+              onPressed: () => Get.toNamed(Routes.chatPage, arguments: storeId),
               label: Row(
                 children: const [
                   Text('chat'),
@@ -119,7 +115,7 @@ class StoreViewPage2 extends StatelessWidget {
           Icon(Icons.error),
           f.map(
             noStore: (f) => Text('Error 404: No store found'),
-            unexpected: (f) => Text('Unexpected Error: ${f.e}'),
+            unexpected: (f) => Text('Unexpected Error: ${f.detail}'),
             locationNotGranted: (f) => Text('Please enable location'),
             timeout: (f) => Text('Time out, try reload again'),
           ),

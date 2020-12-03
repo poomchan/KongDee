@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:fluttertaladsod/application/global_bloc/auth/watcher/auth_watcher_cubit.dart';
+import 'package:fluttertaladsod/application/bloc/auth/watcher/auth_watcher_cubit.dart';
 import 'package:fluttertaladsod/domain/auth/i_auth_facade.dart';
 import 'package:fluttertaladsod/domain/auth/user.dart';
 import 'package:fluttertaladsod/domain/core/value_objects.dart';

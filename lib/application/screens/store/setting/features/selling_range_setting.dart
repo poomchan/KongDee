@@ -1,9 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertaladsod/application/screens/store/setting/bloc/prefs_actor/store_prefs_actor_cubit.dart';
 import 'package:fluttertaladsod/application/screens/store/setting/bloc/range_form/range_form_cubit.dart';
-import 'package:fluttertaladsod/domain/store/value_objects.dart';
 import 'package:get/get.dart';
 import 'package:settings_ui/settings_ui.dart';
 
