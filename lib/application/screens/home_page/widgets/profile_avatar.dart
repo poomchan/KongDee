@@ -1,33 +1,29 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertaladsod/application/bloc/auth/watcher/auth_watcher_cubit.dart';
+import 'package:fluttertaladsod/application/bloc/auth/auth_bloc.dart';
 import 'package:fluttertaladsod/application/core/components/progress_indicator.dart';
 import 'package:fluttertaladsod/domain/auth/user.dart';
 import 'package:get/get.dart';
 import 'package:fluttertaladsod/application/routes/router.dart';
 
 class ProfileAvatar extends StatelessWidget {
-  const ProfileAvatar({
-    Key key,
-  }) : super(key: key);
+  final authBloc = Get.find<AuthBloc>();
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AuthWatcherCubit, AuthWatcherState>(
-      cubit: Get.find<AuthWatcherCubit>(),
-      builder: (_, state) => state.map(
-        inital: (s) => null,
-        loading: (s) => circularProgress(context),
-        authenticated: (s) =>
-            _buildProfileAvatar(context, isAuth: true, user: s.user),
-        unAuthenticated: (s) => _buildProfileAvatar(context, isAuth: false),
+    return GetBuilder<AuthBloc>(
+      builder: (_) => authBloc.state.when(
+        inital: () => const SizedBox(),
+        loading: () => circularProgress(context),
+        loaded: () => _buildProfileAvatar(context),
+        failure: () => _buildProfileAvatar(context),
       ),
     );
   }
 
-  Widget _buildProfileAvatar(BuildContext context,
-      {@required bool isAuth, UserDomain user}) {
+  Widget _buildProfileAvatar(BuildContext context) {
+    final isAuth = authBloc.isAuth;
+    final user = authBloc.user;
     return GestureDetector(
       onTap: () => !isAuth
           ? Get.toNamed(Routes.signInSplash)

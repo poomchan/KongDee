@@ -11,19 +11,15 @@ import 'package:fluttertaladsod/domain/store/store.dart';
 import 'package:fluttertaladsod/domain/store/store_failures.dart';
 import 'package:fluttertaladsod/infrastucture/store/store_dto.dart';
 import 'package:geoflutterfire/geoflutterfire.dart';
-import 'package:injectable/injectable.dart';
+import 'package:get/get.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:uuid/uuid.dart';
 import 'package:fluttertaladsod/infrastucture/core/firestore_helper.dart';
 
-@prod
-@LazySingleton(as: IStoreRepository)
 class StoreRepository implements IStoreRepository {
-  final FirebaseFirestore _firestore;
-  final StorageReference _storage;
-  final Geoflutterfire _geo;
-
-  StoreRepository(this._firestore, this._storage, this._geo);
+  final _firestore = Get.find<FirebaseFirestore>();
+  final _storage = Get.find<StorageReference>();
+  final _geo = Get.find<Geoflutterfire>();
 
   @override
   Stream<Either<StoreFailure, List<Store>>> watchNearbyStore({
@@ -31,6 +27,10 @@ class StoreRepository implements IStoreRepository {
     @required BehaviorSubject<double> rad,
     @required Option<UserDomain> userOption,
   }) async* {
+    assert(location != null);
+    assert(rad != null);
+    assert(userOption != null);
+
     yield* rad.switchMap((rad) {
       return _geo
           .collection(collectionRef: _firestore.storeCollectionRef)

@@ -1,4 +1,3 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertaladsod/domain/auth/user.dart';
@@ -15,8 +14,8 @@ class ProfilePage extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = Get.width;
+    final screenHeight = Get.height;
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(

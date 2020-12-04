@@ -13,8 +13,8 @@ class _$AuthFailureTearOff {
   const _$AuthFailureTearOff();
 
 // ignore: unused_element
-  _CancelledByUser cancelledByUser() {
-    return const _CancelledByUser();
+  _Unauthenticated unauthenticated() {
+    return const _Unauthenticated();
   }
 
 // ignore: unused_element
@@ -29,23 +29,23 @@ const $AuthFailure = _$AuthFailureTearOff();
 mixin _$AuthFailure {
   @optionalTypeArgs
   Result when<Result extends Object>({
-    @required Result cancelledByUser(),
+    @required Result unauthenticated(),
     @required Result serverError(),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
-    Result cancelledByUser(),
+    Result unauthenticated(),
     Result serverError(),
     @required Result orElse(),
   });
   @optionalTypeArgs
   Result map<Result extends Object>({
-    @required Result cancelledByUser(_CancelledByUser value),
+    @required Result unauthenticated(_Unauthenticated value),
     @required Result serverError(_SeverError value),
   });
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
-    Result cancelledByUser(_CancelledByUser value),
+    Result unauthenticated(_Unauthenticated value),
     Result serverError(_SeverError value),
     @required Result orElse(),
   });
@@ -65,42 +65,42 @@ class _$AuthFailureCopyWithImpl<$Res> implements $AuthFailureCopyWith<$Res> {
   final $Res Function(AuthFailure) _then;
 }
 
-abstract class _$CancelledByUserCopyWith<$Res> {
-  factory _$CancelledByUserCopyWith(
-          _CancelledByUser value, $Res Function(_CancelledByUser) then) =
-      __$CancelledByUserCopyWithImpl<$Res>;
+abstract class _$UnauthenticatedCopyWith<$Res> {
+  factory _$UnauthenticatedCopyWith(
+          _Unauthenticated value, $Res Function(_Unauthenticated) then) =
+      __$UnauthenticatedCopyWithImpl<$Res>;
 }
 
-class __$CancelledByUserCopyWithImpl<$Res>
+class __$UnauthenticatedCopyWithImpl<$Res>
     extends _$AuthFailureCopyWithImpl<$Res>
-    implements _$CancelledByUserCopyWith<$Res> {
-  __$CancelledByUserCopyWithImpl(
-      _CancelledByUser _value, $Res Function(_CancelledByUser) _then)
-      : super(_value, (v) => _then(v as _CancelledByUser));
+    implements _$UnauthenticatedCopyWith<$Res> {
+  __$UnauthenticatedCopyWithImpl(
+      _Unauthenticated _value, $Res Function(_Unauthenticated) _then)
+      : super(_value, (v) => _then(v as _Unauthenticated));
 
   @override
-  _CancelledByUser get _value => super._value as _CancelledByUser;
+  _Unauthenticated get _value => super._value as _Unauthenticated;
 }
 
-class _$_CancelledByUser
+class _$_Unauthenticated
     with DiagnosticableTreeMixin
-    implements _CancelledByUser {
-  const _$_CancelledByUser();
+    implements _Unauthenticated {
+  const _$_Unauthenticated();
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'AuthFailure.cancelledByUser()';
+    return 'AuthFailure.unauthenticated()';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'AuthFailure.cancelledByUser'));
+    properties..add(DiagnosticsProperty('type', 'AuthFailure.unauthenticated'));
   }
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is _CancelledByUser);
+    return identical(this, other) || (other is _Unauthenticated);
   }
 
   @override
@@ -109,24 +109,24 @@ class _$_CancelledByUser
   @override
   @optionalTypeArgs
   Result when<Result extends Object>({
-    @required Result cancelledByUser(),
+    @required Result unauthenticated(),
     @required Result serverError(),
   }) {
-    assert(cancelledByUser != null);
+    assert(unauthenticated != null);
     assert(serverError != null);
-    return cancelledByUser();
+    return unauthenticated();
   }
 
   @override
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
-    Result cancelledByUser(),
+    Result unauthenticated(),
     Result serverError(),
     @required Result orElse(),
   }) {
     assert(orElse != null);
-    if (cancelledByUser != null) {
-      return cancelledByUser();
+    if (unauthenticated != null) {
+      return unauthenticated();
     }
     return orElse();
   }
@@ -134,31 +134,31 @@ class _$_CancelledByUser
   @override
   @optionalTypeArgs
   Result map<Result extends Object>({
-    @required Result cancelledByUser(_CancelledByUser value),
+    @required Result unauthenticated(_Unauthenticated value),
     @required Result serverError(_SeverError value),
   }) {
-    assert(cancelledByUser != null);
+    assert(unauthenticated != null);
     assert(serverError != null);
-    return cancelledByUser(this);
+    return unauthenticated(this);
   }
 
   @override
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
-    Result cancelledByUser(_CancelledByUser value),
+    Result unauthenticated(_Unauthenticated value),
     Result serverError(_SeverError value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
-    if (cancelledByUser != null) {
-      return cancelledByUser(this);
+    if (unauthenticated != null) {
+      return unauthenticated(this);
     }
     return orElse();
   }
 }
 
-abstract class _CancelledByUser implements AuthFailure {
-  const factory _CancelledByUser() = _$_CancelledByUser;
+abstract class _Unauthenticated implements AuthFailure {
+  const factory _Unauthenticated() = _$_Unauthenticated;
 }
 
 abstract class _$SeverErrorCopyWith<$Res> {
@@ -202,10 +202,10 @@ class _$_SeverError with DiagnosticableTreeMixin implements _SeverError {
   @override
   @optionalTypeArgs
   Result when<Result extends Object>({
-    @required Result cancelledByUser(),
+    @required Result unauthenticated(),
     @required Result serverError(),
   }) {
-    assert(cancelledByUser != null);
+    assert(unauthenticated != null);
     assert(serverError != null);
     return serverError();
   }
@@ -213,7 +213,7 @@ class _$_SeverError with DiagnosticableTreeMixin implements _SeverError {
   @override
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
-    Result cancelledByUser(),
+    Result unauthenticated(),
     Result serverError(),
     @required Result orElse(),
   }) {
@@ -227,10 +227,10 @@ class _$_SeverError with DiagnosticableTreeMixin implements _SeverError {
   @override
   @optionalTypeArgs
   Result map<Result extends Object>({
-    @required Result cancelledByUser(_CancelledByUser value),
+    @required Result unauthenticated(_Unauthenticated value),
     @required Result serverError(_SeverError value),
   }) {
-    assert(cancelledByUser != null);
+    assert(unauthenticated != null);
     assert(serverError != null);
     return serverError(this);
   }
@@ -238,7 +238,7 @@ class _$_SeverError with DiagnosticableTreeMixin implements _SeverError {
   @override
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
-    Result cancelledByUser(_CancelledByUser value),
+    Result unauthenticated(_Unauthenticated value),
     Result serverError(_SeverError value),
     @required Result orElse(),
   }) {

@@ -9,9 +9,9 @@ class HomePage extends StatelessWidget{
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        actions: const [
+        actions: [
           ProfileAvatar(),
-          SizedBox(width: 30),
+          const SizedBox(width: 30),
         ],
         elevation: 0.0,
         backgroundColor: Colors.transparent,

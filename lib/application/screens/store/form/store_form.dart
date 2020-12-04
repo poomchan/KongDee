@@ -1,64 +1,20 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertaladsod/application/core/components/dialogs.dart';
 import 'package:fluttertaladsod/application/screens/store/form/widgets/banner_field.dart';
 import 'package:fluttertaladsod/application/screens/store/form/widgets/image_field.dart';
 import 'package:fluttertaladsod/application/screens/store/form/widgets/menu_field.dart';
 import 'package:fluttertaladsod/application/screens/store/form/widgets/name_field.dart';
 import 'package:fluttertaladsod/domain/store/store.dart';
+import 'package:get/get.dart';
+import 'bloc/store_form_bloc.dart';
 
-import '../../../../injection.dart';
-import 'bloc/store_form_cubit.dart';
-
-class StoreForm extends StatelessWidget implements AutoRouteWrapper {
+class StoreForm extends StatelessWidget {
   final Option<Store> initialStore;
-
-  const StoreForm({Key key, @required this.initialStore}) : super(key: key);
-
-  @override
-  Widget wrappedRoute(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider<StoreFormCubit>(
-            create: (context) => getIt<StoreFormCubit>()
-              ..initializeForm(initialStore: initialStore)),
-      ],
-      child: MultiBlocListener(
-        listeners: [
-          BlocListener<StoreFormCubit, StoreFormState>(
-              listenWhen: (p, c) => p.isSaving != c.isSaving,
-              listener: (context, state) {
-                if (state.isSaving) {
-                  savingDialog(context).show();
-                } else {
-                  ExtendedNavigator.of(context).pop();
-                }
-              }),
-          BlocListener<StoreFormCubit, StoreFormState>(
-              listenWhen: (p, c) =>
-                  p.saveFailureOrSuccessOption != c.saveFailureOrSuccessOption,
-              listener: (context, state) async {
-                if (state.saveFailureOrSuccessOption.fold(() => false,
-                    (some) => some.fold((failue) => false, (unit) => true))) {
-                  await successDialog(context).show();
-                  ExtendedNavigator.of(context).pop();
-                }
-                if (state.saveFailureOrSuccessOption.fold(() => false,
-                    (some) => some.fold((failue) => true, (unit) => false))) {
-                  errorDialog(context).show();
-                }
-              }),
-        ],
-        child: this,
-      ),
-    );
-  }
+  const StoreForm({@required this.initialStore}) : assert(initialStore != null);
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
+    final bloc = Get.find<StoreFormBloc>();
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -66,7 +22,7 @@ class StoreForm extends StatelessWidget implements AutoRouteWrapper {
         elevation: 0.0,
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => BlocProvider.of<StoreFormCubit>(context).saved(),
+        onPressed: () => bloc.saved(),
         backgroundColor: Colors.green,
         child: Icon(Icons.done),
       ),
@@ -76,27 +32,13 @@ class StoreForm extends StatelessWidget implements AutoRouteWrapper {
         child: SingleChildScrollView(
           clipBehavior: Clip.none,
           child: Column(
-            children: [
+            children: const [
               BannerField(),
-              Container(
-                padding: EdgeInsets.all(10.0),
-                width: screenWidth,
-                child: BlocBuilder<StoreFormCubit, StoreFormState>(
-                  buildWhen: (p, c) => p.showErrorMessage != c.showErrorMessage,
-                  builder: (context, state) => Form(
-                    autovalidate: state.showErrorMessage,
-                    child: Column(
-                      children: [
-                        const NameField(),
-                        const SizedBox(height: 10.0),
-                        Menufield(),
-                        const SizedBox(height: 10.0),
-                        ImageField(),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
+              NameField(),
+              SizedBox(height: 10.0),
+              Menufield(),
+              SizedBox(height: 10.0),
+              ImageField(),
             ],
           ),
         ),

@@ -1,19 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertaladsod/application/core/components/progress_indicator.dart';
 import 'package:fluttertaladsod/application/routes/router.dart';
-import 'package:fluttertaladsod/application/screens/store/view_page/bloc/store_view_cubit.dart';
-import 'package:fluttertaladsod/domain/store/store.dart';
+import 'package:fluttertaladsod/application/screens/store/setting/bloc/store_setting_bloc.dart';
+import 'package:fluttertaladsod/application/screens/store/view_page/bloc/store_view_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:settings_ui/settings_ui.dart';
 
-import 'bloc/prefs_actor/store_prefs_actor_cubit.dart';
-
 class StoreSettingPage extends StatelessWidget {
-  final watcherBloc = Get.find<StoreViewCubit>();
-  final actorBloc = Get.find<StorePrefsActorCubit>();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,47 +15,50 @@ class StoreSettingPage extends StatelessWidget {
       appBar: AppBar(
         title: Text('Store Setting'),
       ),
-      body: BlocBuilder<StoreViewCubit, StoreViewState>(
-        cubit: watcherBloc,
-        builder: (_, s) => s.map(
-          inital: (_) => throw 'Bloc has not been init properly',
-          loading: (_) => circularProgress(context),
-          success: (s) => _buildSettingView(context, s.store),
-          failure: (s) => Icon(Icons.error),
+      body: GetBuilder<StoreViewBloc>(
+        builder: (watcherBloc) => watcherBloc.state.when(
+          inital: () => circularProgress(context),
+          loading: () => circularProgress(context),
+          loaded: () => _buildSettingView(context),
+          failure: () => Icon(Icons.error),
         ),
       ),
     );
   }
 
-  ListView _buildSettingView(BuildContext context, Store store) {
+  ListView _buildSettingView(BuildContext context) {
+    final watch = Get.find<StoreViewBloc>();
+    final bloc = Get.find<StoreSettingBloc>();
     return ListView(
       shrinkWrap: true,
       padding: EdgeInsets.symmetric(horizontal: 10.0),
       children: [
-        SettingsSection(
-          title: 'General',
-          tiles: [
-            SettingsTile.switchTile(
-              title: 'Open/Close Store',
-              leading: Icon(FontAwesomeIcons.clock),
-              switchValue: store.prefs.isOpen,
-              onToggle: (bool val) {
-                actorBloc.storeOpenChange(isOpen: val);
-              },
-            ),
-            SettingsTile(
-              title: 'Store Location',
-              subtitle: store.location.address.getOrCrash(),
-              leading: Icon(Icons.gps_fixed),
-              onTap: () => Get.toNamed(Routes.locationSettingPage),
-            ),
-            SettingsTile(
-              title: 'Selling Range',
-              subtitle: 'with in ${store.prefs.sellingRange.getOrCrash()} km',
-              leading: Icon(Icons.near_me),
-              onTap: () => Get.toNamed(Routes.sellingRangeSettingPage)
-            ),
-          ],
+        Obx(
+          () => SettingsSection(
+            title: 'General',
+            tiles: [
+              SettingsTile.switchTile(
+                title: 'Open/Close Store',
+                leading: Icon(FontAwesomeIcons.clock),
+                switchValue: watch.store.prefs.isOpen,
+                onToggle: (bool val) {
+                  bloc.onStoreOpenToggled(isOpen: val);
+                },
+              ),
+              SettingsTile(
+                title: 'Store Location',
+                subtitle: watch.store.location.address.getOrCrash(),
+                leading: Icon(Icons.gps_fixed),
+                onTap: () => Get.toNamed(Routes.locationSettingPage),
+              ),
+              SettingsTile(
+                  title: 'Selling Range',
+                  subtitle:
+                      'with in ${watch.store.prefs.sellingRange.getOrCrash()} km',
+                  leading: Icon(Icons.near_me),
+                  onTap: () => Get.toNamed(Routes.sellingRangeSettingPage)),
+            ],
+          ),
         ),
         SettingsSection(
           title: 'Additional Settings',
@@ -69,8 +66,8 @@ class StoreSettingPage extends StatelessWidget {
             SettingsTile.switchTile(
               title: 'Notifications',
               leading: Icon(Icons.notifications),
-              switchValue: store.prefs.isNotificationOn,
-              onToggle: (val) => actorBloc.storeNotificationChange(isOn: val),
+              switchValue: watch.store.prefs.isNotificationOn,
+              onToggle: (val) => bloc.onStoreNotificationToggled(isOn: val),
             ),
             SettingsTile(
               title: 'Blocked Users',

@@ -1,7 +1,5 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertaladsod/application/screens/store/setting/bloc/range_form/range_form_cubit.dart';
+import 'package:fluttertaladsod/application/screens/store/setting/bloc/store_setting_bloc.dart';
 import 'package:get/get.dart';
 import 'package:settings_ui/settings_ui.dart';
 
@@ -10,21 +8,18 @@ class SellingRangePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final formBloc = Get.put(RangeFormCubit()..initializeForm());
     return GestureDetector(
-      onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
+      onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         appBar: AppBar(title: Text('Selling Range')),
-        body: BlocBuilder<RangeFormCubit, RangeFormState>(
-          cubit: formBloc,
-          builder: (context, s) => ListView(
+        body: GetBuilder<StoreSettingBloc>(
+          builder: (bloc) => ListView(
             padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
             children: [
               SettingsTile.switchTile(
                 title: 'Unlimited',
-                switchValue: s.isInfinite,
-                onToggle: (val) =>
-                    formBloc.onInfiniteRangeChanged(isInfinite: val),
+                switchValue: bloc.sellingRange.isInFinite,
+                onToggle: (val) => bloc.onInfiniteRangeChanged(isInf: val),
               ),
               const Divider(height: 0),
               const RangePicker(),
@@ -34,8 +29,7 @@ class SellingRangePage extends StatelessWidget {
                   vertical: 10.0,
                 ),
                 color: Theme.of(context).accentColor,
-                onPressed: () => formBloc.onSaved()
-                  ..then((_) => ExtendedNavigator.of(context).pop()),
+                onPressed: () => bloc.onSellingRangeSaved(),
                 child: Text(
                   'Save',
                   style: TextStyle(
@@ -56,8 +50,8 @@ class RangePicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final formBloc = Get.find<RangeFormCubit>();
-    return !formBloc.state.isInfinite
+    final bloc = Get.find<StoreSettingBloc>();
+    return !bloc.sellingRange.isInFinite
         ? Container(
             padding: const EdgeInsets.symmetric(vertical: 10.0),
             color: Colors.white,
@@ -70,13 +64,12 @@ class RangePicker extends StatelessWidget {
                   SizedBox(
                     width: 100.0,
                     child: TextFormField(
-                      initialValue:
-                          formBloc.state.range.getOrCrash().toString(),
+                      initialValue: bloc.sellingRange.getOrCrash().toString(),
                       keyboardType:
                           TextInputType.numberWithOptions(decimal: true),
                       textAlign: TextAlign.center,
                       enableSuggestions: false,
-                      enabled: !formBloc.state.isInfinite,
+                      enabled: !bloc.sellingRange.isInFinite,
                       validator: (val) {
                         if (val.isEmpty) return 'cannot be empty';
                         try {
@@ -88,7 +81,7 @@ class RangePicker extends StatelessWidget {
                         }
                         return null;
                       },
-                      onChanged: (val) => formBloc.onRangeChanged(val),
+                      onChanged: (val) => bloc.onSellingRangeChanged(val),
                     ),
                   ),
                   Text('kilometers'),

@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertaladsod/application/core/components/my_network_image.dart';
-import 'package:fluttertaladsod/application/screens/store/form/bloc/store_form_cubit.dart';
+import 'package:fluttertaladsod/application/screens/store/form/bloc/store_form_bloc.dart';
+import 'package:get/get.dart';
 
 class ImageGrid extends StatelessWidget {
   // whether it is an empty grid or has an image
@@ -18,19 +18,19 @@ class ImageGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final storeFormCubit = context.watch<StoreFormCubit>();
+    final bloc = Get.find<StoreFormBloc>();
     return Stack(
       clipBehavior: Clip.none,
       children: [
         Container(
-          margin:
-              EdgeInsets.only(right: _topRightMargin, top: _topRightMargin),
+          margin: EdgeInsets.only(right: _topRightMargin, top: _topRightMargin),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(15.0),
             child: GestureDetector(
-              onTap: indexOption.fold(
-                  () => storeFormCubit.picsChangeRequested,
-                  (indx) => null),
+              onTap: () => indexOption.fold(
+                () => bloc.picsSelectionRequested(),
+                (indx) => bloc.zoomImage(indx),
+              ),
               child: AspectRatio(
                 aspectRatio: _aspectRatio,
                 child: Container(
@@ -40,21 +40,7 @@ class ImageGrid extends StatelessWidget {
                         () => Border.all(width: 3, color: Colors.black87),
                         (a) => null),
                   ),
-                  child: indexOption.fold(
-                    () => Icon(Icons.add),
-                    (indx) => BlocBuilder<StoreFormCubit, StoreFormState>(
-                      buildWhen: (p, c) => p.store.pics != c.store.pics,
-                      builder: (context, state) =>
-                          state.store.pics.getOrCrash()[indx].fileOrUrl.fold(
-                                (file) => Image.file(
-                                  file,
-                                  fit: BoxFit.cover,
-                                  cacheWidth: 200,
-                                ),
-                                (url) => MyNetworkImage(imageUrl: url),
-                              ),
-                    ),
-                  ),
+                  child: _buildRxImageWidget(),
                 ),
               ),
             ),
@@ -65,8 +51,7 @@ class ImageGrid extends StatelessWidget {
           (indx) => Align(
             alignment: Alignment.topRight,
             child: GestureDetector(
-              onTap: () =>
-                  context.read<StoreFormCubit>().picDeleteRequested(indx),
+              onTap: () => bloc.picDeleteRequested(indx),
               child: Container(
                 decoration: BoxDecoration(
                   color: Colors.white,
@@ -82,6 +67,22 @@ class ImageGrid extends StatelessWidget {
           ),
         )
       ],
+    );
+  }
+
+  Widget _buildRxImageWidget() {
+    return indexOption.fold(
+      () => Icon(Icons.add),
+      (indx) => GetBuilder<StoreFormBloc>(
+        builder: (bloc) => bloc.store.pics.getOrCrash()[indx].fileOrUrl.fold(
+              (file) => Image.file(
+                file,
+                fit: BoxFit.cover,
+                cacheWidth: 200,
+              ),
+              (url) => MyNetworkImage(imageUrl: url),
+            ),
+      ),
     );
   }
 }

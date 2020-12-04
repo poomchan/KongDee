@@ -1,53 +1,45 @@
 import 'dart:async';
-
-import 'package:bloc/bloc.dart';
-import 'package:flutter/material.dart';
-import 'package:fluttertaladsod/domain/auth/i_auth_facade.dart';
-import 'package:fluttertaladsod/domain/auth/user.dart';
+import 'package:flutter/widgets.dart';
+import 'package:fluttertaladsod/application/bloc/auth/auth_bloc.dart';
+import 'package:fluttertaladsod/application/bloc/core/action_state.dart';
 import 'package:fluttertaladsod/domain/core/value_objects.dart';
 import 'package:fluttertaladsod/domain/message/i_message_repository.dart';
 import 'package:fluttertaladsod/domain/message/message.dart';
 import 'package:fluttertaladsod/domain/message/message_failure.dart';
-import 'package:fluttertaladsod/injection.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:get/get.dart';
 
-part 'store_chat_watcher_state.dart';
-part 'store_chat_watcher_cubit.freezed.dart';
+class StoreChatWatcherBloc extends GetxController
+    with SimpleStateSetter<MessageFailure> {
+  final IMessageRepository _iMessageRepository = Get.find<IMessageRepository>();
+  final AuthBloc _authBloc = Get.find<AuthBloc>();
 
-class StoreChatWatcherCubit extends Cubit<StoreChatWatcherState> {
-  final IMessageRepository _iMessageRepository = getIt<IMessageRepository>();
-  final IAuthFacade _iAuthFacade = getIt<IAuthFacade>();
+  final _scrollController = ScrollController();
+  ScrollController get scrollController => _scrollController;
 
-  UserDomain user;
   /// the only [Message] list to display on screen
-  List<MessageDomain> finalMessageList = [];
-  /// rxList with listener
-  List<MessageDomain> recentMessageList = [];
-  /// List with no listener
-  List<MessageDomain> moreMessageList = [];
+  List<MessageDomain> _finalMessageList = [];
 
-  StoreChatWatcherCubit() : super(_Initial());
+  /// rxList with listener
+  List<MessageDomain> _recentMessageList = [];
+
+  /// List with no listener
+  List<MessageDomain> _moreMessageList = [];
+  List<MessageDomain> get messageList => _finalMessageList;
 
   Future<void> watchStarted(UniqueId storeId) async {
-    emit(StoreChatWatcherState.loading(finalMessageList));
-
-    final userOption = await _iAuthFacade.getSignedInUser();
-    user = userOption.getOrElse(
-      () => throw 'User unauthenticated',
-      // emit a failure to navigate to sign-in screen, then return
-    );
-
+    setLoadingState();
+    final user = _authBloc.user;
     _iMessageRepository
         .watchMessages(storeId: storeId, viewerId: user.id)
         .listen(
       (failreOrChats) {
         failreOrChats.fold(
-          (f) => emit(StoreChatWatcherState.failure(f)),
+          (f) => setFailureState(f),
           (chatList) async {
-            recentMessageList = List.from(chatList.reversed);
-            finalMessageList = List.from(recentMessageList);
-            finalMessageList.addAll(moreMessageList);
-            emit(StoreChatWatcherState.loaded(finalMessageList));
+            _recentMessageList = List.from(chatList.reversed);
+            _finalMessageList = List.from(_recentMessageList);
+            _finalMessageList.addAll(_moreMessageList);
+            setLoadedState();
           },
         );
       },
@@ -55,10 +47,10 @@ class StoreChatWatcherCubit extends Cubit<StoreChatWatcherState> {
   }
 
   Future<void> fetchMoreChat(UniqueId storeId) async {
-    assert(user != null);
+    final user = _authBloc.user;
 
     // no need to paginate if the total messages in the room is below 20
-    if (moreMessageList.length % IMessageRepository.itemPerPage != 0) return;
+    if (_moreMessageList.length % IMessageRepository.itemPerPage != 0) return;
 
     final fOrMessageList = await _iMessageRepository.fetchMoreMessages(
         storeId: storeId, viewerId: user.id);
@@ -67,24 +59,29 @@ class StoreChatWatcherCubit extends Cubit<StoreChatWatcherState> {
       if (f == MessageFailure.emptyChatRoom()) {
         return;
       } else {
-        emit(StoreChatWatcherState.failure(f));
+        setFailureState(f);
       }
     }, (mList) {
-      moreMessageList.addAll(mList);
-      finalMessageList = List.from(recentMessageList);
-      finalMessageList.addAll(moreMessageList);
-      emit(StoreChatWatcherState.inital());
-      emit(StoreChatWatcherState.loaded(finalMessageList));
+      _moreMessageList.addAll(mList);
+      _finalMessageList = List.from(_recentMessageList);
+      _finalMessageList.addAll(_moreMessageList);
+      setLoadedState();
     });
   }
 
   @override
-  Future<void> close() {
+  Future<void> onReady() async {
+    await watchStarted(Get.arguments as UniqueId);
+    super.onReady();
+  }
+
+  @override
+  void onClose() {
     _iMessageRepository.clearState();
-    user = null;
-    finalMessageList = null;
-    recentMessageList = null;
-    moreMessageList = null;
-    return super.close();
+    _scrollController.dispose();
+    _finalMessageList = null;
+    _recentMessageList = null;
+    _moreMessageList = null;
+    super.onClose();
   }
 }

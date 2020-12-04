@@ -1,9 +1,7 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertaladsod/application/screens/onboarding/bloc/onboarding_cubit.dart';
+import 'package:fluttertaladsod/application/screens/onboarding/bloc/onboarding_bloc.dart';
 import 'package:get/get.dart';
-import 'package:universal_platform/universal_platform.dart';
-import 'package:fluttertaladsod/application/routes/router.dart';
 
 class OnboardingPage extends StatefulWidget {
   final int initPage;
@@ -34,104 +32,94 @@ class _OnboardingPageState extends State<OnboardingPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<OnboardingCubit, OnboardingState>(
-      cubit: bloc,
-      listener: (context, state) {
-        // if permission granted => navigate to the home page
-        state.maybeMap(
-          granted: (_) => Get.offNamed(Routes.homePage),
-          orElse: () => null,
-        );
-      },
-      child: Scaffold(
-        body: Stack(
-          children: <Widget>[
-            PageView(
-              physics: const ClampingScrollPhysics(),
-              controller: _pageViewController,
-              onPageChanged: (int page) {
-                setState(() {
-                  _pageIndex = page;
-                });
-              },
-              children: <Widget>[
-                buildIPageContent(
-                  body: 'Easy to buy and sell anything nearby\nNo commision.',
-                  backgroundColor: const Color(0x9F3C60FF),
-                  svgName: 'food',
-                ),
-                buildIPageContent(
-                  body: 'Realtime chat with your own deal',
-                  backgroundColor: const Color(0xFFFFA131),
-                  svgName: 'men',
-                ),
-                buildIPageContent(
-                  body: 'Turn on location to find nearby people',
-                  backgroundColor: const Color(0xFFFF7252),
-                  svgName: 'location2',
-                  isAskingPermission: true,
+    return Scaffold(
+      body: Stack(
+        children: <Widget>[
+          PageView(
+            physics: const ClampingScrollPhysics(),
+            controller: _pageViewController,
+            onPageChanged: (int page) {
+              setState(() {
+                _pageIndex = page;
+              });
+            },
+            children: <Widget>[
+              buildIPageContent(
+                body: 'Easy to buy and sell anything nearby\nNo commision.',
+                backgroundColor: const Color(0x9F3C60FF),
+                svgName: 'food',
+              ),
+              buildIPageContent(
+                body: 'Realtime chat with your own deal',
+                backgroundColor: const Color(0xFFFFA131),
+                svgName: 'men',
+              ),
+              buildIPageContent(
+                body: 'Turn on location to find nearby people',
+                backgroundColor: const Color(0xFFFF7252),
+                svgName: 'location2',
+                isAskingPermission: true,
+              ),
+            ],
+          ),
+          Positioned(
+            bottom: 40,
+            left: MediaQuery.of(context).size.width * .05,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  alignment: Alignment.center,
+                  width: MediaQuery.of(context).size.width * .9,
+                  child: Row(
+                    children: [
+                      for (int i = 0; i < _totalPages; i++)
+                        i == _pageIndex
+                            ? _buildPageIndicator(true)
+                            : _buildPageIndicator(false),
+                      const Spacer(),
+                      if (_pageIndex != 2)
+                        GestureDetector(
+                          onTap: () {
+                            _pageViewController.nextPage(
+                                duration: const Duration(milliseconds: 250),
+                                curve: Curves.fastOutSlowIn);
+                            setState(() {});
+                          },
+                          child: Container(
+                            height: Platform.isIOS ? 70 : 60,
+                            alignment: Alignment.center,
+                            child: const Text(
+                              'Next',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 20),
+                            ),
+                          ),
+                        ),
+                      if (_pageIndex == 2)
+                        GestureDetector(
+                          onTap: () => bloc.requestLocationPermission(),
+                          child: Container(
+                            height: Platform.isIOS ? 70 : 60,
+                            alignment: Alignment.center,
+                            child: const Text(
+                              'Start Now!',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 20),
+                            ),
+                          ),
+                        ),
+                    ],
+                  ),
                 ),
               ],
             ),
-            Positioned(
-              bottom: 40,
-              left: MediaQuery.of(context).size.width * .05,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    alignment: Alignment.center,
-                    width: MediaQuery.of(context).size.width * .9,
-                    child: Row(
-                      children: [
-                        for (int i = 0; i < _totalPages; i++)
-                          i == _pageIndex
-                              ? _buildPageIndicator(true)
-                              : _buildPageIndicator(false),
-                        const Spacer(),
-                        if (_pageIndex != 2)
-                          GestureDetector(
-                            onTap: () {
-                              _pageViewController.nextPage(
-                                  duration: const Duration(milliseconds: 250),
-                                  curve: Curves.fastOutSlowIn);
-                              setState(() {});
-                            },
-                            child: Container(
-                              height: UniversalPlatform.isIOS ? 70 : 60,
-                              alignment: Alignment.center,
-                              child: const Text(
-                                'Next',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 20),
-                              ),
-                            ),
-                          ),
-                        if (_pageIndex == 2)
-                          GestureDetector(
-                            onTap: () => bloc.requestLocationPermission(),
-                            child: Container(
-                              height: UniversalPlatform.isIOS ? 70 : 60,
-                              alignment: Alignment.center,
-                              child: const Text(
-                                'Start Now!',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 20),
-                              ),
-                            ),
-                          ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

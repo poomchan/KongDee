@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertaladsod/application/bloc/auth/actor/auth_actor_cubit.dart';
+import 'package:fluttertaladsod/application/bloc/auth/auth_bloc.dart';
 import 'package:fluttertaladsod/application/routes/router.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -68,7 +68,7 @@ class ProfileSettingPage extends StatelessWidget {
             padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 30.0),
             child: RaisedButton(
               color: Theme.of(context).accentColor,
-              onPressed: () => Get.find<AuthActorCubit>().signOut(),
+              onPressed: () => Get.find<AuthBloc>().signOut(),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: const [

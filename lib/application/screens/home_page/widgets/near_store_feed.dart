@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertaladsod/application/core/components/progress_indicator.dart';
-import 'package:fluttertaladsod/application/screens/home_page/bloc/store_feed/nearby/near_store_bloc.dart';
+import 'package:fluttertaladsod/application/screens/home_page/bloc/store_feed/near_store_bloc.dart';
 import 'package:fluttertaladsod/application/screens/store/widgets/store_card2.dart';
 import 'package:fluttertaladsod/domain/store/store.dart';
 import 'package:get/get.dart';

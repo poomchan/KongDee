@@ -1,23 +1,16 @@
 import 'dart:io';
-
 import 'package:dartz/dartz.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertaladsod/domain/store/i_image_repository.dart';
+import 'package:get/get.dart';
 import 'package:image/image.dart' as im;
 import 'package:image_picker/image_picker.dart';
-import 'package:injectable/injectable.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:uuid/uuid.dart';
 
-@prod
-@LazySingleton(as: IImageRepository)
 class ImageRepository implements IImageRepository {
-  final ImagePicker _imagePicker;
-
-  ImageRepository(
-    this._imagePicker,
-  );
+  final _imagePicker = Get.find<ImagePicker>();
 
   @override
   Future<Option<File>> getImage() async {

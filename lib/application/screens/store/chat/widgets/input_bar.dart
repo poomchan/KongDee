@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertaladsod/application/screens/store/chat/bloc/form/chat_form_cubit.dart';
+import 'package:fluttertaladsod/application/screens/store/chat/bloc/form/chat_form_bloc.dart';
 import 'package:fluttertaladsod/domain/core/value_objects.dart';
-import 'package:fluttertaladsod/domain/message/value_objects.dart';
 import 'package:get/get.dart';
 
 class InputBar extends StatelessWidget {
@@ -14,10 +12,8 @@ class InputBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final formBloc = Get.put(ChatFormCubit());
-    return BlocBuilder<ChatFormCubit, ChatFormState>(
-      cubit: formBloc,
-      builder: (_, state) => Container(
+    return GetBuilder<ChatFormBloc>(
+      builder: (formBloc) => Container(
         height: 70,
         padding: const EdgeInsets.symmetric(horizontal: 10.0),
         child: Row(

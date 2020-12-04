@@ -1,28 +1,28 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluttertaladsod/domain/auth/i_auth_facade.dart';
 import 'package:fluttertaladsod/domain/auth/user.dart';
-import 'package:fluttertaladsod/injection.dart';
+import 'package:get/get.dart';
 
 extension FirestoreX on FirebaseFirestore {
   CollectionReference get userCollectionRef =>
-      getIt<FirebaseFirestore>().collection('users');
+      Get.find<FirebaseFirestore>().collection('users');
 
   CollectionReference get storeCollectionRef =>
-      getIt<FirebaseFirestore>().collection('stores');
+      Get.find<FirebaseFirestore>().collection('stores');
 
   Future<DocumentReference> userDocument() async {
-    final userOption = await getIt<IAuthFacade>().getSignedInUser();
+    final userOption = await Get.find<IAuthFacade>().getSignedInUser();
     final UserDomain user =
-        userOption.fold(() => throw 'user unauthenticated', (user) => user);
+        userOption.fold((f) => throw 'user unauthenticated', (user) => user);
     return FirebaseFirestore.instance
         .collection('users')
         .doc(user.id.getOrCrash());
   }
 
   Future<UserDomain> userDomain() async {
-    final userOption = await getIt<IAuthFacade>().getSignedInUser();
+    final userOption = await Get.find<IAuthFacade>().getSignedInUser();
     final UserDomain user =
-        userOption.fold(() => throw 'user unauthenticated', (user) => user);
+        userOption.fold((f) => throw 'user unauthenticated', (user) => user);
     return user;
   }
 }
