@@ -70,7 +70,8 @@ class Router {
         initialStore: Get.arguments as Option<Store>,
       ),
       binding: StoreFormPB(),
-      transitionDuration: Duration(milliseconds: 800),
+      transitionDuration: Duration(milliseconds: 500),
+      popGesture: false,
     ),
     GetPage(
       name: Routes.storeSettingPage,
@@ -122,8 +123,8 @@ class Routes {
   static const chatPage = '/chat';
   static const profileSettingPage = '/profile-setting';
   static const languageSettingPage = '/language-setting';
-  static const storeViewPage = '.store-view';
-  static const storeSettingPage = 'store-setting';
-  static const locationSettingPage = 'location-setting';
-  static const sellingRangeSettingPage = 'selling-range-setting';
+  static const storeViewPage = '/store-view';
+  static const storeSettingPage = '/store-setting';
+  static const locationSettingPage = '/location-setting';
+  static const sellingRangeSettingPage = '/selling-range-setting';
 }

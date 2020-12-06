@@ -27,16 +27,17 @@ class ImageGridView extends StatelessWidget {
               borderRadius: BorderRadius.circular(15.0),
             ),
             child: GetBuilder<StoreViewBloc>(
+              autoRemove: false,
               builder: (bloc) => bloc.state.when(
-                  inital: () => circularProgress(context),
-                  loading: () => circularProgress(context),
-                  loaded: () => bloc.store.pics
-                      .getOrCrash()[index]
-                      .fileOrUrl
-                      .fold(
-                          (file) => throw 'network image cannot be File',
-                          (url) => MyNetworkImage(imageUrl: url)),
-                  failure: () => Icon(Icons.error)),
+                inital: () => circularProgress(context),
+                loading: () => circularProgress(context),
+                loaded: () => bloc.store.pics
+                    .getOrCrash()[index]
+                    .fileOrUrl
+                    .fold((file) => throw 'network image cannot be File',
+                        (url) => MyNetworkImage(imageUrl: url)),
+                failure: () => Icon(Icons.error),
+              ),
             ),
           ),
         ),

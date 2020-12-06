@@ -9,24 +9,25 @@ class NameField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bloc = Get.find<StoreFormBloc>();
     return ReusableCard(
       children: [
-        GetBuilder<StoreFormBloc>(
-          builder: (bloc) => TextFormField(
-            decoration: InputDecoration(labelText: 'store name'),
-            style: TextStyle(fontSize: 30.0),
-            maxLines: 1,
-            maxLength: StoreName.maxLength,
-            onChanged: (val) => bloc.nameChanged(val),
-            validator: (_) => bloc.store.name.value.fold(
-              (f) => f.maybeMap(
-                empty: (_) => 'name must not be emty!',
-                multiline: (_) => 'name must have only one line',
-                exceedingLength: (_) => 'name is too long',
-                orElse: () => null,
-              ),
-              (r) => null,
+        TextFormField(
+          initialValue: bloc.store.name.getOrCrash(),
+          decoration: InputDecoration(labelText: 'store name'),
+          style: TextStyle(fontSize: 30.0),
+          maxLines: 1,
+          maxLength: StoreName.maxLength,
+          onChanged: (val) => bloc.nameChanged(val),
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+          validator: (_) => bloc.store.name.value.fold(
+            (f) => f.maybeMap(
+              empty: (_) => 'name must not be emty!',
+              multiline: (_) => 'name must have only one line',
+              exceedingLength: (_) => 'name is too long',
+              orElse: () => null,
             ),
+            (r) => null,
           ),
         ),
         Text(

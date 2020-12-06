@@ -12,6 +12,7 @@ class AppWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      smartManagement: SmartManagement.full,
       getPages: Router.pages,
       initialRoute: Routes.startUpSplash,
       initialBinding: AppBinding(),

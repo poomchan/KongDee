@@ -1,7 +1,9 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertaladsod/application/bloc/core/action_state.dart';
 import 'package:fluttertaladsod/application/bloc/location/location_bloc.dart';
+import 'package:fluttertaladsod/application/core/components/dialogs.dart';
 import 'package:fluttertaladsod/domain/auth/i_auth_facade.dart';
 import 'package:fluttertaladsod/domain/store/i_image_repository.dart';
 import 'package:fluttertaladsod/domain/store/i_store_repository.dart';
@@ -12,7 +14,7 @@ import 'package:fluttertaladsod/domain/store/value_objects.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:get/get.dart';
 
-class StoreFormBloc extends GetxController {
+class StoreFormBloc extends GetxController with SimpleStateSetter {
   final IImageRepository _iImageRepository = Get.find<IImageRepository>();
   final IStoreRepository _iStoreRepository = Get.find<IStoreRepository>();
   final IAuthFacade _iAuthFacade = Get.find<IAuthFacade>();
@@ -30,15 +32,20 @@ class StoreFormBloc extends GetxController {
   Future<void> initializeForm({
     @required Option<Store> initialStore,
   }) async {
+    setLoadingState();
     final location = _locationBloc.location;
     initialStore.fold(
-      () => updateStore(store.copyWith(
-        location: StoreLocation.fromLocationDomain(location),
-      )),
+      () {
+        updateStore(store.copyWith(
+          location: StoreLocation.fromLocationDomain(location),
+        ));
+        setLoadedState();
+      },
       (initStore) async {
-        await Future.delayed(Duration.zero);
-        updateStore(initStore);
+        // await Future.delayed(Duration(milliseconds: 10));
         _isCreating = true;
+        updateStore(initStore);
+        setLoadedState();
       },
     );
   }
@@ -72,6 +79,7 @@ class StoreFormBloc extends GetxController {
       },
     );
   }
+
   Future<void> zoomImage(int index) async {
     print('zooming');
   }
@@ -87,6 +95,7 @@ class StoreFormBloc extends GetxController {
     Either<StoreFailure, Unit> failureOrSuccess;
     // send the latest store to firestore (either update or create is checked by [isEditting])
     if (store.failureOption.isNone()) {
+      savingDialog(Get.context).show();
       final userOption = await _iAuthFacade.getSignedInUser();
       final user = userOption.getOrElse(() => throw 'user not authenticated');
       updateStore(store.copyWith(ownerId: user.id));
@@ -109,8 +118,12 @@ class StoreFormBloc extends GetxController {
       );
 
       failureOrSuccess.fold(
-        (f) => null,
-        (ok) => Get.back(),
+        (f) => errorDialog(Get.context),
+        (ok) async {
+          Get.back();
+          await successDialog(Get.context).show();
+          Get.back(closeOverlays: true);
+        },
       );
     } else {
       // stoer is not valid

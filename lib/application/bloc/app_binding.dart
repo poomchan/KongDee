@@ -9,7 +9,7 @@ import 'package:fluttertaladsod/infrastucture/auth/firebase_auth_facade.dart';
 import 'package:fluttertaladsod/infrastucture/chat/message_repository.dart';
 import 'package:fluttertaladsod/infrastucture/core/injectable_modules.dart';
 import 'package:fluttertaladsod/infrastucture/location/location_repository.dart';
-import 'package:fluttertaladsod/infrastucture/store/image_repository.dart';
+import 'package:fluttertaladsod/infrastucture/image/image_repository.dart';
 import 'package:fluttertaladsod/infrastucture/store/store_repository.dart';
 import 'package:get/get.dart';
 
