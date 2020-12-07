@@ -3,6 +3,7 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertaladsod/application/bloc/auth/auth_bloc.dart';
 import 'package:fluttertaladsod/application/bloc/core/action_state.dart';
+import 'package:fluttertaladsod/application/screens/store/setting/bloc/store_setting_bloc.dart';
 import 'package:fluttertaladsod/domain/auth/user.dart';
 import 'package:fluttertaladsod/domain/core/value_objects.dart';
 import 'package:fluttertaladsod/domain/location/i_location_repository.dart';
@@ -59,6 +60,7 @@ class StoreViewBloc extends GetxController
   void onClose() {
     _storeSubscription.cancel();
     _store.close();
+    Get.delete<StoreSettingBloc>();
     super.onClose();
   }
 }

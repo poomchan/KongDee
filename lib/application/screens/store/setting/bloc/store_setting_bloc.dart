@@ -17,6 +17,8 @@ class StoreSettingBloc extends GetxController
   SellingRange sellingRange;
   bool isInfinite = true;
 
+  StoreViewBloc get watherBloc => _watcherBloc;
+
   Future<void> onLocationUpdated() async {
     setLoadingState();
     final locationOption = await _iLocationRepo.getLocation();
@@ -24,7 +26,6 @@ class StoreSettingBloc extends GetxController
         locationOption.getOrElse(() => throw 'location not granted');
     location = StoreLocation.fromLocationDomain(locationDomain);
     setLoadingState();
-    update();
   }
 
   Future<void> onLocationSaved() async {
@@ -37,7 +38,7 @@ class StoreSettingBloc extends GetxController
     );
   }
 
-  void onInfiniteRangeChanged({bool isInf}) {
+  void onInfiniteRangeToggled({bool isInf}) {
     if (isInf) {
       sellingRange = SellingRange.infinite();
     } else {
@@ -95,15 +96,21 @@ class StoreSettingBloc extends GetxController
     setLoadedState();
   }
 
-  @override
-  void onInit() {
-    setLoadingState();
-    super.onInit();
+  void resetState() {
     location = _watcherBloc.store.location;
     sellingRange = _watcherBloc.store.prefs.sellingRange;
     if (!sellingRange.isInFinite) {
       isInfinite = false;
+    } else {
+      isInfinite = true;
     }
+  }
+
+  @override
+  void onInit() {
+    setLoadingState();
+    super.onInit();
+    resetState();
     setLoadedState();
   }
 

@@ -1,12 +1,13 @@
 
 
+import 'package:fluttertaladsod/application/screens/profile/bloc/profile_bloc.dart';
 import 'package:get/get.dart';
-import 'owened_store/owned_store_watcher_cubit.dart';
+import 'owned_store_bloc.dart';
 
 class ProfilePB extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut(() => OwnedStoreBloc());
+    Get.lazyPut(() => ProfileBloc());
   }
-
 }

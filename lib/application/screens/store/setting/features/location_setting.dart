@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertaladsod/application/bloc/core/view_widget.dart';
 import 'package:fluttertaladsod/application/screens/store/setting/bloc/store_setting_bloc.dart';
 import 'package:get/get.dart';
 
-class LocationSetting extends StatelessWidget {
+class LocationSetting extends ViewWidget<StoreSettingBloc> {
   const LocationSetting({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final bloc = Get.find<StoreSettingBloc>();
     return Scaffold(
       appBar: AppBar(title: Text('Location Setting')),
       body: ListView(
@@ -22,9 +22,10 @@ class LocationSetting extends StatelessWidget {
                   width: 200,
                   child: GetBuilder<StoreSettingBloc>(
                     builder: (bloc) => Text(
-                      bloc.location.address.toString(),
+                      bloc.location.address.getOrCrash(),
                       overflow: TextOverflow.clip,
                     ),
+                    dispose: (s) => bloc.resetState(),
                   ),
                 ),
                 RaisedButton(

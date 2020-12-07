@@ -1,12 +1,11 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/widgets.dart';
+import 'package:fluttertaladsod/application/screens/store/view_page/bloc/store_view_bloc.dart';
 import 'package:fluttertaladsod/domain/auth/i_auth_facade.dart';
-import 'package:fluttertaladsod/domain/core/value_objects.dart';
 import 'package:fluttertaladsod/domain/message/i_message_repository.dart';
 import 'package:fluttertaladsod/domain/message/message.dart';
 import 'package:fluttertaladsod/domain/message/message_failure.dart';
 import 'package:fluttertaladsod/domain/message/value_objects.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:get/get.dart';
 import 'chat_form_state.dart';
 
@@ -14,12 +13,14 @@ import 'chat_form_state.dart';
 class ChatFormBloc extends GetxController {
   final IMessageRepository _iChatRepository = Get.find<IMessageRepository>();
   final IAuthFacade _iAuthFacade = Get.find<IAuthFacade>();
+  final StoreViewBloc _storeViewBloc = Get.find<StoreViewBloc>();
 
   final textController = TextEditingController();
   ChatFormState state = ChatFormState.inital();
 
-  Future<void> uploadChat({@required UniqueId storeId}) async {
+  Future<void> uploadChat() async {
     Either<MessageFailure, Unit> failureOrSuccess;
+    final storeId = _storeViewBloc.store.id;
 
     if (state.chat.failureOption.isNone()) {
       textController.text = '';

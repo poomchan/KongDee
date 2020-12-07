@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:fluttertaladsod/application/screens/home_page/widgets/near_store_feed.dart';
 import 'package:fluttertaladsod/application/screens/home_page/widgets/profile_avatar.dart';
 
-class HomePage extends StatelessWidget{
+class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        actions: [
+        actions: const [
           ProfileAvatar(),
-          const SizedBox(width: 30),
+          SizedBox(width: 30),
         ],
         elevation: 0.0,
         backgroundColor: Colors.transparent,
@@ -21,7 +21,7 @@ class HomePage extends StatelessWidget{
           padding: const EdgeInsets.all(10.0),
           child: SingleChildScrollView(
             child: Column(
-              children: [
+              children: const [ 
                 NearStoreFeed(),
               ],
             ),
@@ -30,6 +30,4 @@ class HomePage extends StatelessWidget{
       ),
     );
   }
-
 }
-

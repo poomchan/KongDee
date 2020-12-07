@@ -1,19 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertaladsod/application/bloc/core/view_widget.dart';
 import 'package:fluttertaladsod/application/core/components/progress_indicator.dart';
 import 'package:fluttertaladsod/application/screens/store/chat/bloc/watcher/store_chat_watcher_cubit.dart';
 import 'package:fluttertaladsod/application/screens/store/chat/widgets/day_card.dart';
 import 'package:fluttertaladsod/application/screens/store/chat/widgets/message.dart';
-import 'package:fluttertaladsod/domain/core/value_objects.dart';
 import 'package:fluttertaladsod/domain/message/message.dart';
 import 'package:get/get.dart';
 
-class MessageView extends StatelessWidget {
-  final UniqueId storeId;
-
-  const MessageView({
-    Key key,
-    @required this.storeId,
-  }) : super(key: key);
+class MessageView extends ViewWidget<StoreChatWatcherBloc> {
+  const MessageView({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -33,12 +28,11 @@ class MessageView extends StatelessWidget {
   }
 
   Widget _buildMessageView(BuildContext context) {
-    final bloc = Get.find<StoreChatWatcherBloc>();
     return NotificationListener<ScrollNotification>(
       onNotification: (ScrollNotification notification) {
         if (notification is ScrollEndNotification &&
             bloc.scrollController.position.extentAfter == 0) {
-          bloc.fetchMoreChat(storeId);
+          bloc.fetchMoreChat();
         }
         return null;
       },
@@ -79,11 +73,11 @@ class MessageView extends StatelessWidget {
 
   Widget _buildErrorWidget(BuildContext context) {
     return GetBuilder<StoreChatWatcherBloc>(
-      builder: (bloc) => bloc.failure.map(
-        unexpected: (f) => Text('Unexpected Error: $f'),
-        severFailure: (f) => Text('Server failure, please try again later'),
-        noSuchMessage: (f) => Text("Error 404: No such message"),
-        emptyChatRoom: (f) => Text("Let's send a message to the seller"),
+      builder: (bloc) => bloc.failure.when(
+        unexpected: () => Text('Unexpected Error'),
+        severFailure: () => Text('Server failure, please try again later'),
+        noSuchMessage: () => Text("Error 404: No such message"),
+        emptyChatRoom: () => Text("Let's send a message to the seller"),
       ),
     );
   }

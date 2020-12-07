@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertaladsod/application/bloc/core/view_widget.dart';
 import 'package:fluttertaladsod/application/core/components/progress_indicator.dart';
 import 'package:fluttertaladsod/application/screens/home_page/bloc/store_feed/near_store_bloc.dart';
 import 'package:fluttertaladsod/application/screens/store/widgets/store_card2.dart';
 import 'package:fluttertaladsod/domain/store/store.dart';
 import 'package:get/get.dart';
 
-class NearStoreFeed extends StatelessWidget {
-  final bloc = Get.find<NearStoreBloc>();
+class NearStoreFeed extends ViewWidget<NearStoreBloc> {
+  const NearStoreFeed();
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           'Stores close to you',
           style: TextStyle(fontSize: 25.0),
         ),
@@ -21,28 +22,28 @@ class NearStoreFeed extends StatelessWidget {
         const Divider(height: 0.0),
         _buildRxLoadingIndicator(context),
         GetBuilder<NearStoreBloc>(
-          builder: (b) => b.state.map(
-            inital: (_) => circularProgress(context),
-            loading: (_) => _buildRxStoreFeed(),
-            loaded: (_) => _buildRxStoreFeed(),
-            failure: (_) => _buildErrorWidget(),
+          builder: (bloc) => bloc.state.when(
+            inital: () => circularProgress(context),
+            loading: () => _buildRxStoreFeed(),
+            loaded: () => _buildRxStoreFeed(),
+            failure: () => _buildErrorWidget(),
           ),
         ),
         ButtonBar(
           children: [
             GetBuilder<NearStoreBloc>(
-              builder: (_) => bloc.state.maybeMap(
-                loaded: (s) => _buildRxTextRadius(),
-                loading: (s) => _buildRxTextRadius(),
+              builder: (bloc) => bloc.state.maybeWhen(
+                loaded: () => _buildRxTextRadius(),
+                loading: () => _buildRxTextRadius(),
                 orElse: () => const SizedBox(height: 10.0 + 4.0),
               ),
             ),
             RaisedButton(
-              onPressed: () => bloc.requestMoreRadius(),
+              onPressed: bloc.requestMoreRadius,
               child: Text('Add Radius'),
             ),
             RaisedButton(
-              onPressed: () => bloc.drainRadius(),
+              onPressed: bloc.drainRadius,
               child: Text('Drain Radius'),
             ),
           ],
@@ -83,8 +84,8 @@ class NearStoreFeed extends StatelessWidget {
 
   Widget _buildRxLoadingIndicator(BuildContext context) {
     return GetBuilder<NearStoreBloc>(
-      builder: (bloc) => bloc.state.maybeMap(
-        loading: (_) => linearProgress(context),
+      builder: (bloc) => bloc.state.maybeWhen(
+        loading: () => linearProgress(context),
         orElse: () => const SizedBox(height: 10.0 + 4.0),
       ),
     );
@@ -92,15 +93,15 @@ class NearStoreFeed extends StatelessWidget {
 
   Widget _buildErrorWidget() {
     return Center(
-      child: bloc.failure.map(
-        noStore: (_) => Text(
+      child: bloc.failure.when(
+        noStore: () => Text(
           'No store nearby, try adding more radius',
         ),
-        unexpected: (f) => Text(
-          'Unexpected Error \n For nerds: ${f.detail}',
+        unexpected: (e) => Text(
+          'Unexpected Error \n For nerds: ${e.detail}',
         ),
-        locationNotGranted: (_) => null,
-        timeout: (_) => Column(
+        locationNotGranted: () => null,
+        timeout: () => Column(
           children: [
             Text('Timeout'),
             TextButton(

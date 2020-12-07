@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/widgets.dart';
 import 'package:fluttertaladsod/application/bloc/auth/auth_bloc.dart';
 import 'package:fluttertaladsod/application/bloc/core/action_state.dart';
+import 'package:fluttertaladsod/application/screens/store/view_page/bloc/store_view_bloc.dart';
 import 'package:fluttertaladsod/domain/core/value_objects.dart';
 import 'package:fluttertaladsod/domain/message/i_message_repository.dart';
 import 'package:fluttertaladsod/domain/message/message.dart';
@@ -12,6 +13,7 @@ class StoreChatWatcherBloc extends GetxController
     with SimpleStateSetter<MessageFailure> {
   final IMessageRepository _iMessageRepository = Get.find<IMessageRepository>();
   final AuthBloc _authBloc = Get.find<AuthBloc>();
+  final StoreViewBloc _storeViewBloc = Get.find<StoreViewBloc>();
 
   final _scrollController = ScrollController();
   ScrollController get scrollController => _scrollController;
@@ -26,8 +28,9 @@ class StoreChatWatcherBloc extends GetxController
   List<MessageDomain> _moreMessageList = [];
   List<MessageDomain> get messageList => _finalMessageList;
 
-  Future<void> watchStarted(UniqueId storeId) async {
+  Future<void> watchStarted() async {
     setLoadingState();
+    final storeId = _storeViewBloc.store.id;
     final user = _authBloc.user;
     _iMessageRepository
         .watchMessages(storeId: storeId, viewerId: user.id)
@@ -46,8 +49,9 @@ class StoreChatWatcherBloc extends GetxController
     );
   }
 
-  Future<void> fetchMoreChat(UniqueId storeId) async {
+  Future<void> fetchMoreChat() async {
     final user = _authBloc.user;
+    final storeId = _storeViewBloc.store.id;
 
     // no need to paginate if the total messages in the room is below 20
     if (_moreMessageList.length % IMessageRepository.itemPerPage != 0) return;
@@ -71,7 +75,7 @@ class StoreChatWatcherBloc extends GetxController
 
   @override
   Future<void> onReady() async {
-    await watchStarted(Get.arguments as UniqueId);
+    await watchStarted();
     super.onReady();
   }
 

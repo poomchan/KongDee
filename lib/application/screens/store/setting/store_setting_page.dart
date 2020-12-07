@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertaladsod/application/bloc/core/view_widget.dart';
 import 'package:fluttertaladsod/application/core/components/progress_indicator.dart';
 import 'package:fluttertaladsod/application/routes/router.dart';
 import 'package:fluttertaladsod/application/screens/store/setting/bloc/store_setting_bloc.dart';
@@ -7,7 +8,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:settings_ui/settings_ui.dart';
 
-class StoreSettingPage extends StatelessWidget {
+class StoreSettingPage extends ViewWidget<StoreSettingBloc> {
+
+  StoreViewBloc get watch => bloc.watherBloc;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,18 +21,16 @@ class StoreSettingPage extends StatelessWidget {
       ),
       body: GetBuilder<StoreViewBloc>(
         builder: (watcherBloc) => watcherBloc.state.when(
-          inital: () => circularProgress(context),
+          inital: () => const SizedBox(),
           loading: () => circularProgress(context),
           loaded: () => _buildSettingView(context),
-          failure: () => Icon(Icons.error),
+          failure: () => const Icon(Icons.error),
         ),
       ),
     );
   }
 
   ListView _buildSettingView(BuildContext context) {
-    final watch = Get.find<StoreViewBloc>();
-    final bloc = Get.find<StoreSettingBloc>();
     return ListView(
       shrinkWrap: true,
       padding: EdgeInsets.symmetric(horizontal: 10.0),

@@ -81,9 +81,7 @@ class Router {
     ),
     GetPage(
       name: Routes.chatPage,
-      page: () => ChatPage(
-        storeId: Get.arguments as UniqueId,
-      ),
+      page: () => ChatPage(),
       binding: ChatPB(),
       transitionDuration: Duration(milliseconds: 500),
     ),

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertaladsod/application/bloc/core/view_widget.dart';
 import 'package:fluttertaladsod/application/screens/store/form/widgets/reusable_card.dart';
 import 'package:fluttertaladsod/application/screens/store/setting/bloc/store_setting_bloc.dart';
 import 'package:fluttertaladsod/application/screens/store/view_page/bloc/store_view_bloc.dart';
@@ -8,8 +9,10 @@ import 'package:get/get.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'edit_store_button.dart';
 
-class Console extends StatelessWidget {
+class Console extends ViewWidget<StoreViewBloc> {
   const Console();
+
+  StoreSettingBloc get settingBloc => Get.find<StoreSettingBloc>();
 
   @override
   Widget build(BuildContext context) {
@@ -25,8 +28,6 @@ class Console extends StatelessWidget {
   }
 
   Widget _buildRxConsole(BuildContext context) {
-    final bloc = Get.find<StoreViewBloc>();
-    final setting = Get.find<StoreSettingBloc>();
     return ReusableCard(
       title: 'Console',
       border: Border.all(color: Theme.of(context).accentColor, width: 4.0),
@@ -34,7 +35,7 @@ class Console extends StatelessWidget {
         Obx(
           () => SettingsTile.switchTile(
             title: 'Open - Close Store',
-            onToggle: (val) => setting.onStoreOpenToggled(isOpen: val),
+            onToggle: (val) => settingBloc.onStoreOpenToggled(isOpen: val),
             switchValue: bloc.store.prefs.isOpen,
           ),
         ),

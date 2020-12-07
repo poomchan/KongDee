@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertaladsod/application/bloc/core/view_widget.dart';
 import 'package:fluttertaladsod/application/core/components/progress_indicator.dart';
 import 'package:fluttertaladsod/application/routes/router.dart';
 import 'package:fluttertaladsod/application/screens/store/view_page/widgets/banner_appbar2.dart';
@@ -10,7 +11,7 @@ import 'package:fluttertaladsod/domain/core/value_objects.dart';
 import 'package:get/get.dart';
 import 'bloc/store_view_bloc.dart';
 
-class StoreViewPage2 extends StatelessWidget {
+class StoreViewPage2 extends ViewWidget<StoreViewBloc> {
   final UniqueId storeId;
 
   const StoreViewPage2({Key key, @required this.storeId})
@@ -33,11 +34,11 @@ class StoreViewPage2 extends StatelessWidget {
 
   Widget _buildStoreView(BuildContext context) {
     final screenWidth = Get.width;
-    return GetX<StoreViewBloc>(
-      builder: (bloc) => ColorFiltered(
+    return Obx(
+      () => ColorFiltered(
         colorFilter: bloc.store.prefs.isOpen
-            ? ColorFilter.mode(Colors.transparent, BlendMode.saturation)
-            : ColorFilter.mode(Colors.grey, BlendMode.saturation),
+            ? const ColorFilter.mode(Colors.transparent, BlendMode.saturation)
+            : const ColorFilter.mode(Colors.grey, BlendMode.saturation),
         child: Scaffold(
           floatingActionButton: Row(
             mainAxisSize: MainAxisSize.min,
@@ -45,15 +46,14 @@ class StoreViewPage2 extends StatelessWidget {
               FloatingActionButton(
                 heroTag: null,
                 backgroundColor: Colors.blueAccent,
-                shape: StadiumBorder(),
+                shape: const StadiumBorder(),
                 onPressed: () => print('linking'),
-                child: Icon(Icons.thumb_up),
+                child: const Icon(Icons.thumb_up),
               ),
-              SizedBox(width: 10.0),
+              const SizedBox(width: 10.0),
               FloatingActionButton.extended(
-                shape: StadiumBorder(),
-                onPressed: () =>
-                    Get.toNamed(Routes.chatPage, arguments: storeId),
+                shape: const StadiumBorder(),
+                onPressed: () => Get.toNamed(Routes.chatPage),
                 label: Row(
                   children: const [
                     Text('chat'),
@@ -65,21 +65,21 @@ class StoreViewPage2 extends StatelessWidget {
           ),
           body: CustomScrollView(
             slivers: <Widget>[
-              BannerAppbar2(),
+              const BannerAppbar2(),
               SliverToBoxAdapter(
                 child: Column(
                   children: [
                     Container(
-                      padding: EdgeInsets.all(10.0),
+                      padding: const EdgeInsets.all(10.0),
                       width: screenWidth,
                       child: Column(
-                        children: [
+                        children: const [
                           Console(),
-                          const SizedBox(height: 10.0),
+                          SizedBox(height: 10.0),
                           NameView(),
-                          const SizedBox(height: 10.0),
+                          SizedBox(height: 10.0),
                           MenuView(),
-                          const SizedBox(height: 10.0),
+                          SizedBox(height: 10.0),
                           ImageView(),
                         ],
                       ),

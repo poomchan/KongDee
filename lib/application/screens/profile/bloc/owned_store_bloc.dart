@@ -19,15 +19,17 @@ class OwnedStoreBloc extends GetxController
 
   Future<void> watchOwnedStoreStarted() async {
     setLoadingState();
+
     final locationOption = await _iLocationRepo.getLocation();
-    final user = _authBloc.state.maybeWhen(
-      loaded: () => _authBloc.user,
-      orElse: () => throw 'user not authenticated',
-    );
 
     locationOption.fold(
       (f) => setFailureState(StoreFailure.locationNotGranted()),
       (location) {
+        final user = _authBloc.state.maybeWhen(
+          loaded: () => _authBloc.user,
+          orElse: () => throw 'user not authenticated',
+        );
+        
         _ownedStoreSub = _iStoreRepo
             .watchOwnedStore(
               ownerId: user.id,
@@ -48,7 +50,7 @@ class OwnedStoreBloc extends GetxController
   }
 
   @override
-  Future<void> onReady() async{
+  Future<void> onReady() async {
     await watchOwnedStoreStarted();
     super.onReady();
   }
