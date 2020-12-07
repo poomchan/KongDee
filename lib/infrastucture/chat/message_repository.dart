@@ -6,17 +6,14 @@ import 'package:fluttertaladsod/domain/message/i_message_repository.dart';
 import 'package:fluttertaladsod/domain/message/message.dart';
 import 'package:fluttertaladsod/domain/message/message_failure.dart';
 import 'package:fluttertaladsod/infrastucture/chat/message_dto.dart';
-import 'package:injectable/injectable.dart';
 import 'package:fluttertaladsod/infrastucture/core/firestore_helper.dart';
+import 'package:get/get.dart';
 
-@LazySingleton(as: IMessageRepository)
 class MessageRepository implements IMessageRepository {
   static const String collection = 'chats';
   static const String timestamp = 'timestamp';
-  final FirebaseFirestore _firestore;
+  final _firestore = Get.find<FirebaseFirestore>();
   DocumentSnapshot lastDoc;
-
-  MessageRepository(this._firestore);
 
   @override
   Stream<Either<MessageFailure, List<MessageDomain>>> watchMessages({

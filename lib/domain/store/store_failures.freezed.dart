@@ -18,9 +18,9 @@ class _$StoreFailureTearOff {
   }
 
 // ignore: unused_element
-  _Unexpected unexpected(dynamic e) {
+  _Unexpected unexpected(dynamic detail) {
     return _Unexpected(
-      e,
+      detail,
     );
   }
 
@@ -42,14 +42,14 @@ mixin _$StoreFailure {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result noStore(),
-    @required Result unexpected(dynamic e),
+    @required Result unexpected(dynamic detail),
     @required Result locationNotGranted(),
     @required Result timeout(),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result noStore(),
-    Result unexpected(dynamic e),
+    Result unexpected(dynamic detail),
     Result locationNotGranted(),
     Result timeout(),
     @required Result orElse(),
@@ -121,7 +121,7 @@ class _$_NoStoreOwned implements _NoStoreOwned {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result noStore(),
-    @required Result unexpected(dynamic e),
+    @required Result unexpected(dynamic detail),
     @required Result locationNotGranted(),
     @required Result timeout(),
   }) {
@@ -136,7 +136,7 @@ class _$_NoStoreOwned implements _NoStoreOwned {
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result noStore(),
-    Result unexpected(dynamic e),
+    Result unexpected(dynamic detail),
     Result locationNotGranted(),
     Result timeout(),
     @required Result orElse(),
@@ -188,7 +188,7 @@ abstract class _$UnexpectedCopyWith<$Res> {
   factory _$UnexpectedCopyWith(
           _Unexpected value, $Res Function(_Unexpected) then) =
       __$UnexpectedCopyWithImpl<$Res>;
-  $Res call({dynamic e});
+  $Res call({dynamic detail});
 }
 
 class __$UnexpectedCopyWithImpl<$Res> extends _$StoreFailureCopyWithImpl<$Res>
@@ -202,36 +202,36 @@ class __$UnexpectedCopyWithImpl<$Res> extends _$StoreFailureCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object e = freezed,
+    Object detail = freezed,
   }) {
     return _then(_Unexpected(
-      e == freezed ? _value.e : e,
+      detail == freezed ? _value.detail : detail,
     ));
   }
 }
 
 class _$_Unexpected implements _Unexpected {
-  const _$_Unexpected(this.e) : assert(e != null);
+  const _$_Unexpected(this.detail) : assert(detail != null);
 
   @override
-  final dynamic e;
+  final dynamic detail;
 
   @override
   String toString() {
-    return 'StoreFailure.unexpected(e: $e)';
+    return 'StoreFailure.unexpected(detail: $detail)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _Unexpected &&
-            (identical(other.e, e) ||
-                const DeepCollectionEquality().equals(other.e, e)));
+            (identical(other.detail, detail) ||
+                const DeepCollectionEquality().equals(other.detail, detail)));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(e);
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(detail);
 
   @override
   _$UnexpectedCopyWith<_Unexpected> get copyWith =>
@@ -241,7 +241,7 @@ class _$_Unexpected implements _Unexpected {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result noStore(),
-    @required Result unexpected(dynamic e),
+    @required Result unexpected(dynamic detail),
     @required Result locationNotGranted(),
     @required Result timeout(),
   }) {
@@ -249,21 +249,21 @@ class _$_Unexpected implements _Unexpected {
     assert(unexpected != null);
     assert(locationNotGranted != null);
     assert(timeout != null);
-    return unexpected(e);
+    return unexpected(detail);
   }
 
   @override
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result noStore(),
-    Result unexpected(dynamic e),
+    Result unexpected(dynamic detail),
     Result locationNotGranted(),
     Result timeout(),
     @required Result orElse(),
   }) {
     assert(orElse != null);
     if (unexpected != null) {
-      return unexpected(e);
+      return unexpected(detail);
     }
     return orElse();
   }
@@ -301,9 +301,9 @@ class _$_Unexpected implements _Unexpected {
 }
 
 abstract class _Unexpected implements StoreFailure {
-  const factory _Unexpected(dynamic e) = _$_Unexpected;
+  const factory _Unexpected(dynamic detail) = _$_Unexpected;
 
-  dynamic get e;
+  dynamic get detail;
   _$UnexpectedCopyWith<_Unexpected> get copyWith;
 }
 
@@ -344,7 +344,7 @@ class _$_LocationNotGranted implements _LocationNotGranted {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result noStore(),
-    @required Result unexpected(dynamic e),
+    @required Result unexpected(dynamic detail),
     @required Result locationNotGranted(),
     @required Result timeout(),
   }) {
@@ -359,7 +359,7 @@ class _$_LocationNotGranted implements _LocationNotGranted {
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result noStore(),
-    Result unexpected(dynamic e),
+    Result unexpected(dynamic detail),
     Result locationNotGranted(),
     Result timeout(),
     @required Result orElse(),
@@ -441,7 +441,7 @@ class _$_Timeout implements _Timeout {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result noStore(),
-    @required Result unexpected(dynamic e),
+    @required Result unexpected(dynamic detail),
     @required Result locationNotGranted(),
     @required Result timeout(),
   }) {
@@ -456,7 +456,7 @@ class _$_Timeout implements _Timeout {
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result noStore(),
-    Result unexpected(dynamic e),
+    Result unexpected(dynamic detail),
     Result locationNotGranted(),
     Result timeout(),
     @required Result orElse(),

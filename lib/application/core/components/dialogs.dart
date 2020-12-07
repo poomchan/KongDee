@@ -1,4 +1,5 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import 'progress_indicator.dart';
@@ -9,8 +10,14 @@ AwesomeDialog savingDialog(BuildContext context) {
     dialogType: DialogType.NO_HEADER,
     body: Column(
       children: [
-        Text('saving'),
         circularProgress(context),
+        Text(
+          'saving',
+          style: TextStyle(
+            color: Colors.black54,
+            fontSize: 18.0,
+          ),
+        ),
       ],
     ),
     dismissOnBackKeyPress: false,
@@ -20,11 +27,12 @@ AwesomeDialog savingDialog(BuildContext context) {
 
 AwesomeDialog successDialog(BuildContext context) {
   return AwesomeDialog(
-      context: context,
-      dialogType: DialogType.SUCCES,
-      title: '',
-      desc: '',
-      autoHide: Duration(milliseconds: 2000));
+    context: context,
+    dialogType: DialogType.SUCCES,
+    title: '',
+    desc: '',
+    autoHide: Duration(milliseconds: 2000),
+  );
 }
 
 AwesomeDialog errorDialog(BuildContext context) {
@@ -33,5 +41,6 @@ AwesomeDialog errorDialog(BuildContext context) {
     dialogType: DialogType.ERROR,
     title: '',
     desc: '',
+    autoHide: Duration(milliseconds: 2000),
   );
 }

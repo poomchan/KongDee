@@ -1,33 +1,16 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertaladsod/application/bloc/core/view_widget.dart';
 import 'package:fluttertaladsod/application/core/components/progress_indicator.dart';
-import 'package:fluttertaladsod/application/routes/router.gr.dart';
-import 'package:fluttertaladsod/application/screens/store/view_page/bloc/store_view_cubit.dart';
-import 'package:fluttertaladsod/domain/store/store.dart';
+import 'package:fluttertaladsod/application/routes/router.dart';
+import 'package:fluttertaladsod/application/screens/store/setting/bloc/store_setting_bloc.dart';
+import 'package:fluttertaladsod/application/screens/store/view_page/bloc/store_view_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 import 'package:settings_ui/settings_ui.dart';
 
-import 'bloc/prefs_actor/store_prefs_actor_cubit.dart';
+class StoreSettingPage extends ViewWidget<StoreSettingBloc> {
 
-class StoreSettingPage extends StatelessWidget with AutoRouteWrapper {
-  final BuildContext parentContext;
-  const StoreSettingPage({Key key, this.parentContext}) : super(key: key);
-
-  @override
-  Widget wrappedRoute(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider.value(
-          value: BlocProvider.of<StorePrefsActorCubit>(parentContext),
-        ),
-        BlocProvider.value(
-          value: BlocProvider.of<StoreViewCubit>(parentContext),
-        ),
-      ],
-      child: this,
-    );
-  }
+  StoreViewBloc get watch => bloc.watherBloc;
 
   @override
   Widget build(BuildContext context) {
@@ -36,53 +19,48 @@ class StoreSettingPage extends StatelessWidget with AutoRouteWrapper {
       appBar: AppBar(
         title: Text('Store Setting'),
       ),
-      body: BlocBuilder<StoreViewCubit, StoreViewState>(
-        builder: (context, s) => s.map(
-          inital: (s) => circularProgress(context),
-          loading: (s) => circularProgress(context),
-          success: (s) => _buildSettingView(context, s.store),
-          failure: (s) => Icon(Icons.error),
+      body: GetBuilder<StoreViewBloc>(
+        builder: (watcherBloc) => watcherBloc.state.when(
+          inital: () => const SizedBox(),
+          loading: () => circularProgress(context),
+          loaded: () => _buildSettingView(context),
+          failure: () => const Icon(Icons.error),
         ),
       ),
     );
   }
 
-  ListView _buildSettingView(BuildContext context, Store store) {
-    final actorBloc = BlocProvider.of<StorePrefsActorCubit>(context);
+  ListView _buildSettingView(BuildContext context) {
     return ListView(
       shrinkWrap: true,
       padding: EdgeInsets.symmetric(horizontal: 10.0),
       children: [
-        SettingsSection(
-          title: 'General',
-          tiles: [
-            SettingsTile.switchTile(
-              title: 'Open/Close Store',
-              leading: Icon(FontAwesomeIcons.clock),
-              switchValue: store.prefs.isOpen,
-              onToggle: (bool val) {
-                actorBloc.storeOpenChange(isOpen: val);
-              },
-            ),
-            SettingsTile(
-              title: 'Store Location',
-              subtitle: store.location.address.getOrCrash(),
-              leading: Icon(Icons.gps_fixed),
-              onTap: () => context.navigator.pushLocationSetting(
-                parentContext: context,
-                initLocation: store.location,
+        Obx(
+          () => SettingsSection(
+            title: 'General',
+            tiles: [
+              SettingsTile.switchTile(
+                title: 'Open/Close Store',
+                leading: Icon(FontAwesomeIcons.clock),
+                switchValue: watch.store.prefs.isOpen,
+                onToggle: (bool val) {
+                  bloc.onStoreOpenToggled(isOpen: val);
+                },
               ),
-            ),
-            SettingsTile(
-              title: 'Selling Range',
-              subtitle: 'with in ${store.prefs.sellingRange.getOrCrash()} km',
-              leading: Icon(Icons.near_me),
-              onTap: () => context.navigator.pushSellingRangePage(
-                parentContext: context,
-                initSellingRange: store.prefs.sellingRange,
+              SettingsTile(
+                title: 'Store Location',
+                subtitle: watch.store.location.address.getOrCrash(),
+                leading: Icon(Icons.gps_fixed),
+                onTap: () => Get.toNamed(Routes.locationSettingPage),
               ),
-            ),
-          ],
+              SettingsTile(
+                  title: 'Selling Range',
+                  subtitle:
+                      'with in ${watch.store.prefs.sellingRange.getOrCrash()} km',
+                  leading: Icon(Icons.near_me),
+                  onTap: () => Get.toNamed(Routes.sellingRangeSettingPage)),
+            ],
+          ),
         ),
         SettingsSection(
           title: 'Additional Settings',
@@ -90,8 +68,8 @@ class StoreSettingPage extends StatelessWidget with AutoRouteWrapper {
             SettingsTile.switchTile(
               title: 'Notifications',
               leading: Icon(Icons.notifications),
-              switchValue: store.prefs.isNotificationOn,
-              onToggle: (val) => actorBloc.storeNotificationChange(isOn: val),
+              switchValue: watch.store.prefs.isNotificationOn,
+              onToggle: (val) => bloc.onStoreNotificationToggled(isOn: val),
             ),
             SettingsTile(
               title: 'Blocked Users',

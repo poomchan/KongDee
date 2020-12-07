@@ -1,77 +1,41 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertaladsod/application/core/components/buttom_sheet.dart';
-import 'package:fluttertaladsod/application/routes/router.gr.dart';
-import 'package:fluttertaladsod/application/screens/profile/bloc/store_own_watcher/owned_store_watcher_cubit.dart';
+import 'package:fluttertaladsod/application/bloc/core/view_widget.dart';
+import 'package:fluttertaladsod/application/screens/profile/bloc/profile_bloc.dart';
 import 'package:fluttertaladsod/domain/auth/user.dart';
-import 'package:fluttertaladsod/injection.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
+import 'package:get/get.dart';
+import 'package:fluttertaladsod/application/routes/router.dart';
 import 'widgets/owned_store_view.dart';
 
-class ProfilePage extends StatelessWidget implements AutoRouteWrapper {
+class ProfilePage extends ViewWidget<ProfileBloc> {
   final UserDomain user;
 
-  const ProfilePage({Key key, @required this.user}) : super(key: key);
-  @override
-  Widget wrappedRoute(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider<OwnedStoreWatcherCubit>(
-          create: (context) {
-            return getIt<OwnedStoreWatcherCubit>()
-              ..watchOwnedStoreStarted(user: user);
-          },
-        ),
-      ],
-      child: this,
-    );
-  }
+  const ProfilePage({Key key, @required this.user})
+      : assert(user != null),
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = Get.width;
+    final screenHeight = Get.height;
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
-        title: Text('Profile'),
+        title: const Text('Profile'),
         backgroundColor: Colors.transparent,
         elevation: 0.0,
-        iconTheme: IconThemeData(color: Colors.black),
+        iconTheme: const IconThemeData(color: Colors.black),
         textTheme: Theme.of(context).textTheme,
         actions: [
           IconButton(
             padding: const EdgeInsets.only(right: 10.0),
-            icon: Icon(Icons.more_horiz),
-            onPressed: () {
-              showAppButtomSheet(
-                context,
-                children: [
-                  ButtomSheetItem(
-                    title: 'Report user',
-                    icon: FontAwesomeIcons.flag,
-                    textColor: Colors.redAccent,
-                    onTap: () => print('report user'),
-                  ),
-                  Divider(height: 0.0, color: Colors.white24),
-                  ButtomSheetItem(
-                    title: 'Block user',
-                    icon: FontAwesomeIcons.ban,
-                    textColor: Colors.redAccent,
-                    onTap: () => print('blocking user'),
-                  ),
-                  Divider(height: 0.0, color: Colors.white24),
-                ],
-              );
-            },
+            icon: const Icon(Icons.more_horiz),
+            onPressed: bloc.showDiaglog,
           ),
           IconButton(
             padding: const EdgeInsets.only(right: 10.0),
             icon: Icon(Icons.settings),
-            onPressed: () => context.navigator.pushProfileSettingPage(),
+            onPressed: () => Get.toNamed(Routes.profileSettingPage),
           )
         ],
       ),
@@ -79,20 +43,21 @@ class ProfilePage extends StatelessWidget implements AutoRouteWrapper {
         children: [
           Column(
             children: [
-              SizedBox(
-                height: kToolbarHeight / 3,
-              ),
+              const SizedBox(height: kToolbarHeight / 3),
               Center(
                 child: Hero(
                   tag: user.photoURL,
                   child: Container(
-                    decoration: BoxDecoration(boxShadow: const [
-                      BoxShadow(
-                        blurRadius: 5.0,
-                        spreadRadius: 1.0,
-                        color: Colors.black26,
-                      ),
-                    ], borderRadius: BorderRadius.circular(60.0)),
+                    decoration: BoxDecoration(
+                      boxShadow: const [
+                        BoxShadow(
+                          blurRadius: 5.0,
+                          spreadRadius: 1.0,
+                          color: Colors.black26,
+                        ),
+                      ],
+                      borderRadius: BorderRadius.circular(60.0),
+                    ),
                     child: CircleAvatar(
                       radius: 60.0,
                       backgroundImage:
@@ -101,27 +66,22 @@ class ProfilePage extends StatelessWidget implements AutoRouteWrapper {
                   ),
                 ),
               ),
-              SizedBox(
-                height: 15.0,
-              ),
+              const SizedBox(height: 15.0),
               Text(
                 user.displayName,
                 style: TextStyle()
                     .copyWith(fontSize: 20.0, fontWeight: FontWeight.w500),
               ),
-              SizedBox(
-                height: 10.0,
-              ),
+              const SizedBox(height: 10.0),
               Container(
                 decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10.0)),
-                padding: EdgeInsets.symmetric(vertical: 3.0, horizontal: 10.0),
-                child: Text('Basic'),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 3.0, horizontal: 10.0),
+                child: const Text('Basic'),
               ),
-              SizedBox(
-                height: screenHeight * 0.07,
-              ),
+              SizedBox(height: screenHeight * 0.07),
             ],
           ),
           Align(
@@ -144,7 +104,7 @@ class ProfilePage extends StatelessWidget implements AutoRouteWrapper {
                 ),
               ),
               child: Column(
-                children: [
+                children: const [
                   OwnedStoreView(),
                 ],
               ),

@@ -1,25 +1,29 @@
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:fluttertaladsod/application/global_bloc/auth/watcher/auth_watcher_cubit.dart';
+import 'package:fluttertaladsod/domain/auth/auth_failure.dart';
 import 'package:fluttertaladsod/domain/auth/i_auth_facade.dart';
 import 'package:fluttertaladsod/domain/auth/user.dart';
-import 'package:fluttertaladsod/domain/core/value_objects.dart';
-import 'package:fluttertaladsod/injection.dart';
+import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:injectable/injectable.dart';
 import 'package:fluttertaladsod/infrastucture/auth/firebase_user_mapper.dart';
 
-@prod
-@LazySingleton(as: IAuthFacade)
 class FirebaseAuthFacade implements IAuthFacade {
-  final GoogleSignIn _googleSignIn;
-  final FirebaseAuth _firebaseAuth;
-
-  FirebaseAuthFacade(this._googleSignIn, this._firebaseAuth);
+  final _googleSignIn = Get.find<GoogleSignIn>();
+  final FirebaseAuth _firebaseAuth = Get.find<FirebaseAuth>();
 
   @override
-  Future<Option<UserDomain>> getSignedInUser() async =>
-      optionOf(_firebaseAuth.currentUser?.toDomain());
+  Future<Either<AuthFailure, UserDomain>> getSignedInUser() async {
+    try {
+      final user = _firebaseAuth.currentUser;
+      if (user != null) {
+        return right(user.toDomain());
+      } else {
+        return left(AuthFailure.unauthenticated());
+      }
+    } catch (e) {
+      return left(AuthFailure.serverError());
+    }
+  }
 
   @override
   Future<void> signInWithGoogle() async {
@@ -44,25 +48,21 @@ class FirebaseAuthFacade implements IAuthFacade {
   }
 
   @override
-  Stream<Option<UserDomain>> watchSignedInUser() async* {
-    final userStream = _firebaseAuth.authStateChanges();
-    yield* userStream.map((User user) {
-      return optionOf(
-        user == null
-            ? null
-            : UserDomain(
-                displayName: user.displayName,
-                email: user.email,
-                id: UniqueId.fromUniqueString(user.uid),
-                photoURL: user.photoURL,
-              ),
-      );
-    });
+  Stream<Either<AuthFailure, UserDomain>> watchSignedInUser() async* {
+    try {
+      final userStream = _firebaseAuth.authStateChanges();
+      yield* userStream.map((User user) {
+        if (user == null) {
+          return left(AuthFailure.unauthenticated());
+        } else {
+          // can create user in database and update the latest active status here
+          return right(user.toDomain());
+        }
+      });
+    } catch (e) {
+      yield left(AuthFailure.serverError());
+    }
   }
-
-  UserDomain get user => getIt<AuthWatcherState>().maybeMap(
-      authenticated: (state) => state.user,
-      orElse: throw 'unauthenticated user');
 
   @override
   bool isAuthenticated() {

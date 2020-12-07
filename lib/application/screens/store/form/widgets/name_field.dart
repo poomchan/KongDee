@@ -1,53 +1,40 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:fluttertaladsod/application/screens/store/form/bloc/store_form_cubit.dart';
+import 'package:fluttertaladsod/application/screens/store/form/bloc/store_form_bloc.dart';
 import 'package:fluttertaladsod/application/screens/store/form/widgets/reusable_card.dart';
 import 'package:fluttertaladsod/domain/store/value_objects.dart';
+import 'package:get/get.dart';
 
-class NameField extends HookWidget {
+class NameField extends StatelessWidget {
   const NameField();
+
   @override
   Widget build(BuildContext context) {
-    final _textFieldController = useTextEditingController();
-    // print('building the name field');
-
-    return BlocListener<StoreFormCubit, StoreFormState>(
-      listenWhen: (p, c) => p.isEditting != c.isEditting,
-      listener: (context, state) {
-        if (state.isEditting) {
-          _textFieldController.text = state.store.name.getOrCrash();
-        }
-      },
-      child: ReusableCard(
-        children: [
-          TextFormField(
-            decoration: InputDecoration(labelText: 'store name'),
-            controller: _textFieldController,
-            style: TextStyle(fontSize: 30.0),
-            maxLines: 1,
-            maxLength: StoreName.maxLength,
-            onChanged: (val) => context.read<StoreFormCubit>().nameChanged(val),
-            validator: (_) => context
-                .read<StoreFormCubit>()
-                .state
-                .store
-                .name
-                .value
-                .fold(
-                    (f) => f.maybeMap(
-                        empty: (_) => 'name must not be emty!',
-                        multiline: (_) => 'name must have only one line',
-                        exceedingLength: (_) => 'name is too long',
-                        orElse: () => null),
-                    (r) => null),
+    final bloc = Get.find<StoreFormBloc>();
+    return ReusableCard(
+      children: [
+        TextFormField(
+          initialValue: bloc.store.name.getOrCrash(),
+          decoration: InputDecoration(labelText: 'store name'),
+          style: TextStyle(fontSize: 30.0),
+          maxLines: 1,
+          maxLength: StoreName.maxLength,
+          onChanged: (val) => bloc.nameChanged(val),
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+          validator: (_) => bloc.store.name.value.fold(
+            (f) => f.maybeMap(
+              empty: (_) => 'name must not be emty!',
+              multiline: (_) => 'name must have only one line',
+              exceedingLength: (_) => 'name is too long',
+              orElse: () => null,
+            ),
+            (r) => null,
           ),
-          Text(
-            'Location',
-            style: TextStyle(fontSize: 20.0),
-          ),
-        ],
-      ),
+        ),
+        Text(
+          'Location',
+          style: TextStyle(fontSize: 20.0),
+        ),
+      ],
     );
   }
 }

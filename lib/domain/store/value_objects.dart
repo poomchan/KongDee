@@ -92,6 +92,7 @@ class SellingRange extends ValueObject<double> {
   @override
   final Either<ValueFailure<double>, double> value;
   static const maxRange = 16;
+  bool get isInFinite => value.fold((f) => throw 'value failure', (val) => val == double.infinity);
 
   factory SellingRange(double input) {
     return SellingRange._(right(input));

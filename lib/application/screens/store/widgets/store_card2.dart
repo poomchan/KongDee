@@ -1,8 +1,8 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertaladsod/application/core/components/my_network_image.dart';
-import 'package:fluttertaladsod/application/routes/router.gr.dart';
+import 'package:fluttertaladsod/application/routes/router.dart';
 import 'package:fluttertaladsod/domain/store/store.dart';
+import 'package:get/get.dart';
 
 class StoreCard2 extends StatelessWidget {
   final Store store;
@@ -13,7 +13,7 @@ class StoreCard2 extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () =>
-          ExtendedNavigator.of(context).pushStoreViewPage2(storeId: store.id),
+          Get.toNamed(Routes.storeViewPage, arguments: store.id),
       child: Card(
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),

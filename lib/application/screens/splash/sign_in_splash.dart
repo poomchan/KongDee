@@ -1,70 +1,71 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertaladsod/application/bloc/auth/auth_bloc.dart';
+import 'package:fluttertaladsod/application/bloc/core/view_widget.dart';
 import 'package:fluttertaladsod/application/core/components/progress_indicator.dart';
 import 'package:fluttertaladsod/application/core/theme.dart';
-import 'package:fluttertaladsod/application/global_bloc/auth/actor/auth_actor_cubit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 
-class SignInSplash extends StatelessWidget {
+class SignInSplash extends ViewWidget<AuthBloc> {
+  const SignInSplash();
+
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<AuthActorCubit, AuthActorState>(
-      listener: (context, state) {
-        state.maybeMap(
-            success: (_) => ExtendedNavigator.of(context).pop(), orElse: () {});
-      },
-      builder: (context, state) => Stack(
-        children: [
-          Scaffold(
-            appBar: AppBar(),
-            body: ListView(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 40.0, vertical: 40.0),
-                  child: FlatButton(
-                    padding: EdgeInsets.all(10.0),
-                    onPressed: () {
-                      BlocProvider.of<AuthActorCubit>(context)
-                          .signInWithGoogle();
-                    },
-                    color: Colors.teal,
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            FontAwesomeIcons.google,
-                            color: Colors.white,
-                          ),
-                          SizedBox(width: 15.0),
-                          Text(
-                            'SignIn with Google',
-                            style: TextStyle(color: Colors.white),
-                          )
-                        ]),
+    return Stack(
+      children: [
+        Scaffold(
+          appBar: AppBar(),
+          body: ListView(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 40.0, vertical: 40.0),
+                child: FlatButton(
+                  padding: EdgeInsets.all(10.0),
+                  onPressed: bloc.signInWithGoogle,
+                  color: Colors.teal,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Icon(
+                        FontAwesomeIcons.google,
+                        color: Colors.white,
+                      ),
+                      SizedBox(width: 15.0),
+                      Text(
+                        'SignIn with Google',
+                        style: TextStyle(color: Colors.white),
+                      )
+                    ],
                   ),
                 ),
-                Center(
-                  child: Text(
-                    'This is the sign in page',
-                    style: kBlackHeaderTextStyle,
-                  ),
+              ),
+              const Center(
+                child: Text(
+                  'This is the sign in page',
+                  style: kBlackHeaderTextStyle,
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-          state.maybeMap(
-              loading: (_) => Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height,
-                    color: Colors.black45,
-                    child: Center(
-                      child: circularProgress(context),
-                    ),
-                  ),
-              orElse: () => Container()),
-        ],
+        ),
+        _buildRxOverlay(context),
+      ],
+    );
+  }
+
+  Widget _buildRxOverlay(BuildContext context) {
+    return GetBuilder<AuthBloc>(
+      builder: (b) => b.state.maybeWhen(
+        loading: () => Container(
+          width: Get.width,
+          height: Get.height,
+          color: Colors.black45,
+          child: Center(
+            child: circularProgress(context),
+          ),
+        ),
+        orElse: () => const SizedBox(),
       ),
     );
   }

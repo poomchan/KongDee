@@ -54,3 +54,12 @@ May 29
 
 Octobrer 15
 - most important parts of the app are done =D
+
+December 1
+- Using GetX as dependency injection with BLoc(Cubit) works amazingly perfect
+- Can access the bloc without BuildContext, No BlocProvider needed
+- Can share Bloc as a singleton and close it easily
+
+
+Lessons
+- avoid api-call in the build medthod (because it rebuilds several times even on different screens and will cause unexpected api-call (bloc will emit weird states)) => instead, use init api call in create() for BlocProvider or put() for getX.

@@ -1,42 +1,10 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertaladsod/application/screens/store/setting/bloc/location_form/location_form_cubit.dart';
-import 'package:fluttertaladsod/application/screens/store/setting/bloc/prefs_actor/store_prefs_actor_cubit.dart';
-import 'package:fluttertaladsod/domain/store/location/store_location.dart';
+import 'package:fluttertaladsod/application/bloc/core/view_widget.dart';
+import 'package:fluttertaladsod/application/screens/store/setting/bloc/store_setting_bloc.dart';
+import 'package:get/get.dart';
 
-import '../../../../../injection.dart';
-
-class LocationSetting extends StatefulWidget with AutoRouteWrapper {
-  final BuildContext parentContext;
-  final StoreLocation initLocation;
-
-  const LocationSetting(
-      {Key key, @required this.parentContext, @required this.initLocation})
-      : super(key: key);
-
-  @override
-  _LocationSettingState createState() => _LocationSettingState();
-
-  @override
-  Widget wrappedRoute(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider.value(
-          value: BlocProvider.of<StorePrefsActorCubit>(parentContext),
-        ),
-        BlocProvider(
-          create: (context) =>
-              getIt<LocationFormCubit>()..initializeForm(initLocation),
-        ),
-      ],
-      child: this,
-    );
-  }
-}
-
-class _LocationSettingState extends State<LocationSetting> {
-  StoreLocation selectedLocation;
+class LocationSetting extends ViewWidget<StoreSettingBloc> {
+  const LocationSetting({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -51,31 +19,29 @@ class _LocationSettingState extends State<LocationSetting> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 SizedBox(
-                  width: 200.0,
-                  child: BlocBuilder<LocationFormCubit, LocationFormState>(
-                    builder: (_, s) => Text(
-                      s.location.address.getOrCrash(),
+                  width: 200,
+                  child: GetBuilder<StoreSettingBloc>(
+                    builder: (bloc) => Text(
+                      bloc.location.address.getOrCrash(),
                       overflow: TextOverflow.clip,
                     ),
+                    dispose: (s) => bloc.resetState(),
                   ),
                 ),
                 RaisedButton(
-                  onPressed: () =>
-                      context.read<LocationFormCubit>().locationRequested(),
+                  onPressed: bloc.onLocationUpdated,
                   child: Text('Update'),
                 )
               ],
             ),
           ),
-          Divider(height: 0),
+          const Divider(height: 0),
           Padding(
             padding:
                 const EdgeInsets.symmetric(horizontal: 30.0, vertical: 10.0),
             child: RaisedButton(
               color: Theme.of(context).accentColor,
-              onPressed: () => context.read<StorePrefsActorCubit>().updateLocation(
-                            context.read<LocationFormCubit>().state.location,
-                          ),
+              onPressed: bloc.onLocationSaved,
               child: Text(
                 'Save',
                 style: TextStyle(
