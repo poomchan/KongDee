@@ -5,7 +5,7 @@ import 'package:fluttertaladsod/application/routes/router.dart';
 import 'package:fluttertaladsod/domain/store/store.dart';
 import 'package:get/get.dart';
 
-import '../../profile/widgets/layout_helpers.dart';
+import 'layout_helpers.dart';
 
 class StoreCard extends StatelessWidget {
   final Store store;
@@ -66,34 +66,20 @@ class StoreCard extends StatelessWidget {
                       children: [
                         Row(
                           children: [
-                            Column(
-                              children: [
-                                Text(
-                                  store.name.getOrCrash(),
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20.0,
-                                  ),
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ],
-                            ),
-                            Spacer(),
-                            Container(
-                              width: 45,
-                              height: 20,
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                  color: Colors.lightGreenAccent[100],
-                                  borderRadius: BorderRadius.circular(10.0)),
+                            SizedBox(
+                              width: 120.0,
                               child: Text(
-                                'on',
+                                store.name.getOrCrash(),
                                 style: TextStyle(
-                                  fontSize: 15.0,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20.0,
                                 ),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
                               ),
                             ),
+                            const Spacer(),
+                            _buildRxStoreOpenStatus(),
                           ],
                         ),
                         Spacer(),
@@ -135,6 +121,25 @@ class StoreCard extends StatelessWidget {
               ],
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  Container _buildRxStoreOpenStatus() {
+    final isOpen = store.prefs.isOpen;
+    return Container(
+      width: 45,
+      height: 20,
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        color: isOpen ? Colors.lightGreenAccent[100] : Colors.black12,
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+      child: Text(
+        isOpen ? 'on' : 'off',
+        style: TextStyle(
+          fontSize: 15.0,
         ),
       ),
     );
