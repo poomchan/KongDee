@@ -31,8 +31,8 @@ class StoreCard2 extends StatelessWidget {
 
   Container buildDescription() {
     return Container(
-      height: 85,
-      padding: const EdgeInsets.all(10.0),
+      height: 90,
+      padding: const EdgeInsets.all(8.0),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -44,13 +44,13 @@ class StoreCard2 extends StatelessWidget {
             style: TextStyle(
               color: Colors.black87,
               fontSize: 16.0,
-              fontWeight: FontWeight.w500,
+              fontWeight: FontWeight.w600,
             ),
           ),
           const Spacer(),
           Row(
             children: [
-              Spacer(),
+              const Spacer(),
               SizedBox(
                 width: 100.0,
                 child: Text(
@@ -72,7 +72,7 @@ class StoreCard2 extends StatelessWidget {
 
   SizedBox buildBanner() {
     return SizedBox(
-      height: 130.0,
+      height: 125.0,
       child: Stack(
         fit: StackFit.expand,
         children: [
