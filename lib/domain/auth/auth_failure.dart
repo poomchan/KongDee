@@ -8,4 +8,6 @@ part 'auth_failure.freezed.dart';
 abstract class AuthFailure with _$AuthFailure {
   const factory AuthFailure.unauthenticated() = _Unauthenticated;
   const factory AuthFailure.serverError() = _SeverError;
+  const factory AuthFailure.unexpected(dynamic f) = _Unexpected;
+
 }

@@ -21,6 +21,13 @@ class _$AuthFailureTearOff {
   _SeverError serverError() {
     return const _SeverError();
   }
+
+// ignore: unused_element
+  _Unexpected unexpected(dynamic f) {
+    return _Unexpected(
+      f,
+    );
+  }
 }
 
 // ignore: unused_element
@@ -31,22 +38,26 @@ mixin _$AuthFailure {
   Result when<Result extends Object>({
     @required Result unauthenticated(),
     @required Result serverError(),
+    @required Result unexpected(dynamic f),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result unauthenticated(),
     Result serverError(),
+    Result unexpected(dynamic f),
     @required Result orElse(),
   });
   @optionalTypeArgs
   Result map<Result extends Object>({
     @required Result unauthenticated(_Unauthenticated value),
     @required Result serverError(_SeverError value),
+    @required Result unexpected(_Unexpected value),
   });
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
     Result unauthenticated(_Unauthenticated value),
     Result serverError(_SeverError value),
+    Result unexpected(_Unexpected value),
     @required Result orElse(),
   });
 }
@@ -111,9 +122,11 @@ class _$_Unauthenticated
   Result when<Result extends Object>({
     @required Result unauthenticated(),
     @required Result serverError(),
+    @required Result unexpected(dynamic f),
   }) {
     assert(unauthenticated != null);
     assert(serverError != null);
+    assert(unexpected != null);
     return unauthenticated();
   }
 
@@ -122,6 +135,7 @@ class _$_Unauthenticated
   Result maybeWhen<Result extends Object>({
     Result unauthenticated(),
     Result serverError(),
+    Result unexpected(dynamic f),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -136,9 +150,11 @@ class _$_Unauthenticated
   Result map<Result extends Object>({
     @required Result unauthenticated(_Unauthenticated value),
     @required Result serverError(_SeverError value),
+    @required Result unexpected(_Unexpected value),
   }) {
     assert(unauthenticated != null);
     assert(serverError != null);
+    assert(unexpected != null);
     return unauthenticated(this);
   }
 
@@ -147,6 +163,7 @@ class _$_Unauthenticated
   Result maybeMap<Result extends Object>({
     Result unauthenticated(_Unauthenticated value),
     Result serverError(_SeverError value),
+    Result unexpected(_Unexpected value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -204,9 +221,11 @@ class _$_SeverError with DiagnosticableTreeMixin implements _SeverError {
   Result when<Result extends Object>({
     @required Result unauthenticated(),
     @required Result serverError(),
+    @required Result unexpected(dynamic f),
   }) {
     assert(unauthenticated != null);
     assert(serverError != null);
+    assert(unexpected != null);
     return serverError();
   }
 
@@ -215,6 +234,7 @@ class _$_SeverError with DiagnosticableTreeMixin implements _SeverError {
   Result maybeWhen<Result extends Object>({
     Result unauthenticated(),
     Result serverError(),
+    Result unexpected(dynamic f),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -229,9 +249,11 @@ class _$_SeverError with DiagnosticableTreeMixin implements _SeverError {
   Result map<Result extends Object>({
     @required Result unauthenticated(_Unauthenticated value),
     @required Result serverError(_SeverError value),
+    @required Result unexpected(_Unexpected value),
   }) {
     assert(unauthenticated != null);
     assert(serverError != null);
+    assert(unexpected != null);
     return serverError(this);
   }
 
@@ -240,6 +262,7 @@ class _$_SeverError with DiagnosticableTreeMixin implements _SeverError {
   Result maybeMap<Result extends Object>({
     Result unauthenticated(_Unauthenticated value),
     Result serverError(_SeverError value),
+    Result unexpected(_Unexpected value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -252,4 +275,129 @@ class _$_SeverError with DiagnosticableTreeMixin implements _SeverError {
 
 abstract class _SeverError implements AuthFailure {
   const factory _SeverError() = _$_SeverError;
+}
+
+abstract class _$UnexpectedCopyWith<$Res> {
+  factory _$UnexpectedCopyWith(
+          _Unexpected value, $Res Function(_Unexpected) then) =
+      __$UnexpectedCopyWithImpl<$Res>;
+  $Res call({dynamic f});
+}
+
+class __$UnexpectedCopyWithImpl<$Res> extends _$AuthFailureCopyWithImpl<$Res>
+    implements _$UnexpectedCopyWith<$Res> {
+  __$UnexpectedCopyWithImpl(
+      _Unexpected _value, $Res Function(_Unexpected) _then)
+      : super(_value, (v) => _then(v as _Unexpected));
+
+  @override
+  _Unexpected get _value => super._value as _Unexpected;
+
+  @override
+  $Res call({
+    Object f = freezed,
+  }) {
+    return _then(_Unexpected(
+      f == freezed ? _value.f : f as dynamic,
+    ));
+  }
+}
+
+class _$_Unexpected with DiagnosticableTreeMixin implements _Unexpected {
+  const _$_Unexpected(this.f) : assert(f != null);
+
+  @override
+  final dynamic f;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'AuthFailure.unexpected(f: $f)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'AuthFailure.unexpected'))
+      ..add(DiagnosticsProperty('f', f));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _Unexpected &&
+            (identical(other.f, f) ||
+                const DeepCollectionEquality().equals(other.f, f)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(f);
+
+  @override
+  _$UnexpectedCopyWith<_Unexpected> get copyWith =>
+      __$UnexpectedCopyWithImpl<_Unexpected>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result unauthenticated(),
+    @required Result serverError(),
+    @required Result unexpected(dynamic f),
+  }) {
+    assert(unauthenticated != null);
+    assert(serverError != null);
+    assert(unexpected != null);
+    return unexpected(f);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result unauthenticated(),
+    Result serverError(),
+    Result unexpected(dynamic f),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (unexpected != null) {
+      return unexpected(f);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result unauthenticated(_Unauthenticated value),
+    @required Result serverError(_SeverError value),
+    @required Result unexpected(_Unexpected value),
+  }) {
+    assert(unauthenticated != null);
+    assert(serverError != null);
+    assert(unexpected != null);
+    return unexpected(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result unauthenticated(_Unauthenticated value),
+    Result serverError(_SeverError value),
+    Result unexpected(_Unexpected value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (unexpected != null) {
+      return unexpected(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Unexpected implements AuthFailure {
+  const factory _Unexpected(dynamic f) = _$_Unexpected;
+
+  dynamic get f;
+  _$UnexpectedCopyWith<_Unexpected> get copyWith;
 }

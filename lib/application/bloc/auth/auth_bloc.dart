@@ -7,9 +7,10 @@ import 'package:fluttertaladsod/domain/auth/user.dart';
 import 'package:get/get.dart';
 
 class AuthBloc extends GetxController with SimpleStateSetter<AuthFailure> {
-  final _iAuthFacade = Get.find<IAuthFacade>();
+  IAuthFacade get _iAuthFacade => Get.find<IAuthFacade>();
 
   final _user = Rx<UserDomain>();
+  Rx<UserDomain> get rxUser => _user;
   UserDomain get user => _user.value;
   bool get isAuth => _user.value != null;
 
@@ -20,7 +21,10 @@ class AuthBloc extends GetxController with SimpleStateSetter<AuthFailure> {
     final userOrFailureStream = _iAuthFacade.watchSignedInUser();
     _userSub = userOrFailureStream.listen((userOrFailure) {
       return userOrFailure.fold(
-        (f) => setFailureState(f),
+        (f) {
+          _user.value = null;
+          setFailureState(f);
+        },
         (user) {
           _user.value = user;
           setLoadedState();
@@ -29,17 +33,9 @@ class AuthBloc extends GetxController with SimpleStateSetter<AuthFailure> {
     });
   }
 
-  Future<void> signInWithGoogle() async {
-    setLoadingState();
-    await _iAuthFacade.signInWithGoogle();
-    setLoadedState();
-  }
-
   Future<void> signOut() async {
-    setLoadingState();
     await _iAuthFacade.signOut();
-    setLoadedState();
-    await Get.offAllNamed(Routes.homePage);
+    navigator.popUntil((route) => route.settings.name == Routes.homePage);
   }
 
   @override

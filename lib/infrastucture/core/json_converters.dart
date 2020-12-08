@@ -22,5 +22,5 @@ class TimestampConverter implements JsonConverter<Timestamp, Object> {
   }
 
   @override
-  Object toJson(Timestamp timestamp) => timestamp;
+  Object toJson(Timestamp timestamp) => Timestamp.now();
 }

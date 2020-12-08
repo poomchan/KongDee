@@ -43,7 +43,7 @@ class ChatFormBloc extends GetxController {
             .copyWith(
               senderId: user.id,
               senderName: SenderName(user.displayName),
-              senderAvatarUrl: SenderAvatarUrl(user.photoURL),
+              senderAvatarUrl: SenderAvatarUrl(user.photoUrl),
             ),
       );
 

@@ -1,8 +1,10 @@
 import 'package:get/get.dart';
 
 class ProfileBloc extends GetxController {
-
   void showDiaglog() {
-    Get.showSnackbar(GetBar(title: 'Hello!',));
+    Get.showSnackbar(GetBar(
+      message: 'Hello!',
+      duration: Duration(milliseconds: 1500),
+    ));
   }
 }

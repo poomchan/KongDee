@@ -3,6 +3,9 @@ import 'package:fluttertaladsod/domain/auth/i_auth_facade.dart';
 import 'package:fluttertaladsod/domain/auth/user.dart';
 import 'package:get/get.dart';
 
+/// for easier import
+class FirestoreHelper {}
+
 extension FirestoreX on FirebaseFirestore {
   CollectionReference get userCollectionRef =>
       Get.find<FirebaseFirestore>().collection('users');

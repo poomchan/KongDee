@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertaladsod/domain/core/value_objects.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -9,6 +11,8 @@ abstract class UserDomain with _$UserDomain {
     @required UniqueId id,
     @required String displayName,
     @required String email,
-    @required String photoURL,
+    @required String photoUrl,
+    @required Map<String, bool> blockedStores,
+    @required Timestamp lastActive,
   }) = _User;
 }

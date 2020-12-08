@@ -6,7 +6,8 @@ import 'package:fluttertaladsod/application/screens/profile/bloc/profile_page_bi
 import 'package:fluttertaladsod/application/screens/profile/profile_page.dart';
 import 'package:fluttertaladsod/application/screens/profile/setting/language.dart';
 import 'package:fluttertaladsod/application/screens/profile/setting/profile_setting_page.dart';
-import 'package:fluttertaladsod/application/screens/splash/sign_in_splash.dart';
+import 'package:fluttertaladsod/application/screens/splash/sign_in/sign_in_page_binding.dart';
+import 'package:fluttertaladsod/application/screens/splash/sign_in/sign_in_splash.dart';
 import 'package:fluttertaladsod/application/screens/splash/start_up_splash.dart';
 import 'package:fluttertaladsod/application/screens/store/chat/bloc/chat_page_binding.dart';
 import 'package:fluttertaladsod/application/screens/store/chat/chat_page.dart';
@@ -106,6 +107,7 @@ class Router {
     GetPage(
       name: Routes.signInSplash,
       page: () => SignInSplash(),
+      binding: SignInPB(),
       fullscreenDialog: true,
     ),
   ];

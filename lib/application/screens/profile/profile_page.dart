@@ -46,7 +46,7 @@ class ProfilePage extends ViewWidget<ProfileBloc> {
               const SizedBox(height: kToolbarHeight / 3),
               Center(
                 child: Hero(
-                  tag: user.photoURL,
+                  tag: user.photoUrl,
                   child: Container(
                     decoration: BoxDecoration(
                       boxShadow: const [
@@ -61,7 +61,7 @@ class ProfilePage extends ViewWidget<ProfileBloc> {
                     child: CircleAvatar(
                       radius: 60.0,
                       backgroundImage:
-                          CachedNetworkImageProvider(user.photoURL),
+                          CachedNetworkImageProvider(user.photoUrl),
                     ),
                   ),
                 ),

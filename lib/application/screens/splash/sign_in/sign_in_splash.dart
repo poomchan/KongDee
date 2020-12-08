@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertaladsod/application/bloc/auth/auth_bloc.dart';
 import 'package:fluttertaladsod/application/bloc/core/view_widget.dart';
 import 'package:fluttertaladsod/application/core/components/progress_indicator.dart';
 import 'package:fluttertaladsod/application/core/theme.dart';
+import 'package:fluttertaladsod/application/screens/splash/sign_in/sign_in_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
-class SignInSplash extends ViewWidget<AuthBloc> {
+class SignInSplash extends ViewWidget<SignInBloc> {
   const SignInSplash();
 
   @override
@@ -49,24 +49,20 @@ class SignInSplash extends ViewWidget<AuthBloc> {
             ],
           ),
         ),
-        _buildRxOverlay(context),
-      ],
-    );
-  }
-
-  Widget _buildRxOverlay(BuildContext context) {
-    return GetBuilder<AuthBloc>(
-      builder: (b) => b.state.maybeWhen(
-        loading: () => Container(
-          width: Get.width,
-          height: Get.height,
-          color: Colors.black45,
-          child: Center(
-            child: circularProgress(context),
+        GetBuilder<SignInBloc>(
+          builder: (b) => b.state.maybeWhen(
+            loading: () => Container(
+              width: Get.width,
+              height: Get.height,
+              color: Colors.black45,
+              child: Center(
+                child: circularProgress(context),
+              ),
+            ),
+            orElse: () => const SizedBox(),
           ),
         ),
-        orElse: () => const SizedBox(),
-      ),
+      ],
     );
   }
 }

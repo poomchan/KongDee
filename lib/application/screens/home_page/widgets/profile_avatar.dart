@@ -29,13 +29,13 @@ class ProfileAvatar extends ViewWidget<AuthBloc> {
           ? Get.toNamed(Routes.signInSplash)
           : Get.toNamed(Routes.profilePage, arguments: user),
       child: Hero(
-        tag: user?.photoURL ?? "",
+        tag: user?.photoUrl ?? "",
         child: CircleAvatar(
           backgroundColor:
               isAuth ? Colors.transparent : Theme.of(context).accentColor,
           radius: 30.0,
           backgroundImage:
-              isAuth ? CachedNetworkImageProvider(user.photoURL) : null,
+              isAuth ? CachedNetworkImageProvider(user.photoUrl) : null,
           child: isAuth ? null : Icon(Icons.supervised_user_circle),
         ),
       ),
@@ -46,6 +46,7 @@ class ProfileAvatar extends ViewWidget<AuthBloc> {
     return bloc.failure.when(
       unauthenticated: () => _buildProfileAvatar(context),
       serverError: () => Icon(Icons.error),
+      unexpected: (f) => Icon(Icons.error),
     );
   }
 }

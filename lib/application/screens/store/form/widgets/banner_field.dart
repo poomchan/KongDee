@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertaladsod/application/bloc/core/view_widget.dart';
 import 'package:fluttertaladsod/application/core/components/my_network_image.dart';
 import 'package:fluttertaladsod/application/screens/store/form/bloc/store_form_bloc.dart';
 import 'package:get/get.dart';
 import '../../constant.dart';
 
-class BannerField extends StatelessWidget {
+class BannerField extends ViewWidget<StoreFormBloc> {
   const BannerField();
 
   @override
   Widget build(BuildContext context) {
-    final formBloc = Get.find<StoreFormBloc>();
     final screenWidth = Get.width;
     return Stack(
       children: [
@@ -18,7 +18,7 @@ class BannerField extends StatelessWidget {
             bottom: Radius.circular(20.0),
           ),
           child: GestureDetector(
-            onTap: () => formBloc.bannerChangeRequested(),
+            onTap: () => bloc.bannerChangeRequested(),
             child: Container(
               width: screenWidth,
               height: kStoreBannerHeight,
