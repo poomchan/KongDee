@@ -14,22 +14,26 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:get/get.dart';
 
 class StoreViewBloc extends GetxController
-    with SimpleStateSetter<StoreFailure> {
+    with SimepleProgressSetter<StoreFailure> {
   final IStoreRepository _iStoreRepository = Get.find<IStoreRepository>();
   final ILocationRepository _iLocationRepository =
       Get.find<ILocationRepository>();
   final _authBloc = Get.find<AuthBloc>();
+
   StreamSubscription _storeSubscription;
+
   final _store = Rx<Store>();
   Store get store => _store.value;
   set store(Store store) => _store.value = store;
 
+  bool get isStoreOwner => _authBloc.user.id == store.ownerId;
+
   Future<void> watchStoreStarted({@required UniqueId storeId}) async {
     assert(storeId != null);
-    setLoadingState();
+    updateWithLoading();
     final locationOption = await _iLocationRepository.getLocation();
     locationOption.fold(
-      (f) => setFailureState(StoreFailure.locationNotGranted()),
+      (f) => updateWithFailure(StoreFailure.locationNotGranted()),
       (location) async {
         final Option<UserDomain> userOption = optionOf(_authBloc.user);
         _storeSubscription = _iStoreRepository
@@ -38,10 +42,10 @@ class StoreViewBloc extends GetxController
             .listen(
           (storeOrF) {
             return storeOrF.fold(
-              (f) => setFailureState(f),
+              (f) => updateWithFailure(f),
               (store) {
                 this.store = store;
-                setLoadedState();
+                updateWithLoaded();
               },
             );
           },

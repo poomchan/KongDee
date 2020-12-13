@@ -7,16 +7,16 @@ import 'package:fluttertaladsod/domain/message/message.dart';
 import 'package:fluttertaladsod/domain/message/message_failure.dart';
 import 'package:fluttertaladsod/domain/message/value_objects.dart';
 import 'package:get/get.dart';
-import 'chat_form_state.dart';
+import 'input_bar_state.dart';
 
 
-class ChatFormBloc extends GetxController {
+class InputBarBloc extends GetxController {
   final IMessageRepository _iChatRepository = Get.find<IMessageRepository>();
   final IAuthFacade _iAuthFacade = Get.find<IAuthFacade>();
   final StoreViewBloc _storeViewBloc = Get.find<StoreViewBloc>();
 
   final textController = TextEditingController();
-  ChatFormState state = ChatFormState.inital();
+  InputBarState state = InputBarState.inital();
 
   Future<void> uploadChat() async {
     Either<MessageFailure, Unit> failureOrSuccess;

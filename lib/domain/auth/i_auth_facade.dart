@@ -12,5 +12,4 @@ abstract class IAuthFacade {
   Future<Either<AuthFailure, UserDomain>> getSignedInUser();
   bool isAuthenticated();
   Future<void> signOut();
-  Future<Either<AuthFailure, Unit>> updateUser(UserDomain user);
 }

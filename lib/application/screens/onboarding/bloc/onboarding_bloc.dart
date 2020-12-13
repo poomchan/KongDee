@@ -6,7 +6,7 @@ import 'package:fluttertaladsod/domain/location/i_location_repository.dart';
 import 'package:fluttertaladsod/domain/location/location_failure.dart';
 import 'package:get/get.dart';
 
-class OnboardingBloc extends GetxController with SimpleStateSetter {
+class OnboardingBloc extends GetxController with SimepleProgressSetter {
   final ILocationRepository _locationRepository =
       Get.find<ILocationRepository>();
   final int totalPages = 3;

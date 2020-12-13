@@ -12,7 +12,7 @@ class ProfileAvatar extends ViewWidget<AuthBloc> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<AuthBloc>(
-      builder: (_) => bloc.state.when(
+      builder: (_) => bloc.progress.when(
         inital: () => const SizedBox(),
         loading: () => circularProgress(context),
         loaded: () => _buildProfileAvatar(context),
@@ -27,7 +27,7 @@ class ProfileAvatar extends ViewWidget<AuthBloc> {
     return GestureDetector(
       onTap: () => !isAuth
           ? Get.toNamed(Routes.signInSplash)
-          : Get.toNamed(Routes.profilePage, arguments: user),
+          : Get.toNamed(Routes.profilePage, arguments: user.id),
       child: Hero(
         tag: user?.photoUrl ?? "",
         child: CircleAvatar(

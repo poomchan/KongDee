@@ -1,27 +1,32 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertaladsod/domain/message/message.dart';
 import 'message_avatar.dart';
 import 'message_bubble.dart';
 
 class Message extends StatelessWidget {
-  final String text;
-  final String avatarUrl;
-  final bool isSender;
+  final MessageDomain m;
   final bool isTop;
-  final String senderName;
-  final Timestamp timestamp;
   static const double sidePaddding = 20.0;
   static const double verticalPadding = 1.1;
 
-  const Message({
+  const Message(
+    this.m, {
     Key key,
-    @required this.text,
-    @required this.isSender,
-    @required this.avatarUrl,
     @required this.isTop,
-    @required this.senderName,
-    @required this.timestamp,
-  }) : super(key: key);
+  })  : assert(
+          m != null,
+          isTop != null,
+        ),
+        super(key: key);
+
+  bool get isSender => m.isSender;
+  String get text => m.body.getOrCrash();
+  String get senderId => m.senderId.getOrCrash();
+  String get avatarUrl => m.senderAvatarUrl.getOrCrash();
+  String get senderName => m.senderName.getOrCrash();
+  Timestamp get timestamp => m.timestamp;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -42,7 +47,7 @@ class Message extends StatelessWidget {
                           SizedBox(width: sidePaddding),
                           Container(
                             child: Text(
-                              TimeOfDay.fromDateTime(timestamp.toDate())
+                              TimeOfDay.fromDateTime(m.timestamp.toDate())
                                   .format(context),
                               style: TextStyle(fontSize: 10.0),
                             ),
@@ -69,6 +74,8 @@ class Message extends StatelessWidget {
                   avatarUrl: avatarUrl,
                   isSender: isSender,
                   hideAvatarImage: !isTop,
+                  senderId: senderId,
+                  senderName: senderName,
                 ),
                 Expanded(
                   child: Column(

@@ -35,7 +35,7 @@ class BannerAppbar2 extends StatelessWidget {
 
   Widget _rxBuildBackground(BuildContext context) {
     return GetX<StoreViewBloc>(
-      builder: (bloc) => bloc.state.when(
+      builder: (bloc) => bloc.progress.when(
         inital: () => circularProgress(context),
         loading: () => circularProgress(context),
         failure: () => const Icon(Icons.error),
@@ -52,7 +52,7 @@ class BannerAppbar2 extends StatelessWidget {
 
   Widget _rxStoreName() {
     return GetX<StoreViewBloc>(
-      builder: (bloc) => bloc.state.when(
+      builder: (bloc) => bloc.progress.when(
         inital: () => Text('Cubit in in initial state'),
         loading: () => Text(''),
         loaded: () => Text(bloc.store.name.getOrCrash()),

@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 
 const double BUBBLE_RADIUS = 16;
 
-///basic chat bubble type
-///
 ///chat bubble [BorderRadius] can be customized using [bubbleRadius]
 ///chat bubble color can be customized using [color]
 ///chat bubble tail can be customized  using [tail]
@@ -22,7 +20,7 @@ class MessageBubble extends StatelessWidget {
   final bool delivered;
   final bool seen;
 
-  MessageBubble({
+  const MessageBubble({
     Key key,
     @required this.text,
     this.bubbleRadius,
@@ -75,10 +73,14 @@ class MessageBubble extends StatelessWidget {
               bottomLeft: Radius.circular(bubbleRadius ?? BUBBLE_RADIUS),
               bottomRight: Radius.circular(bubbleRadius ?? BUBBLE_RADIUS),
               topLeft: Radius.circular(tail
-                  ? isSender ? bubbleRadius ?? BUBBLE_RADIUS : 0
+                  ? isSender
+                      ? bubbleRadius ?? BUBBLE_RADIUS
+                      : 0
                   : BUBBLE_RADIUS),
               topRight: Radius.circular(tail
-                  ? isSender ? 0 : bubbleRadius ?? BUBBLE_RADIUS
+                  ? isSender
+                      ? 0
+                      : bubbleRadius ?? BUBBLE_RADIUS
                   : BUBBLE_RADIUS),
             ),
           ),
@@ -97,15 +99,16 @@ class MessageBubble extends StatelessWidget {
                   textAlign: TextAlign.left,
                 ),
               ),
-              stateTick
-                  ? Positioned(
-                      bottom: 4,
-                      right: 6,
-                      child: stateIcon,
-                    )
-                  : SizedBox(
-                      width: 1,
-                    ),
+              if (stateTick)
+                Positioned(
+                  bottom: 4,
+                  right: 6,
+                  child: stateIcon,
+                )
+              else
+                SizedBox(
+                  width: 1,
+                ),
             ],
           ),
         ),

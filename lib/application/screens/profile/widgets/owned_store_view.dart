@@ -12,12 +12,13 @@ class OwnedStoreView extends ViewWidget<OwnedStoreBloc> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<OwnedStoreBloc>(
-      builder: (bloc) => bloc.state.when(
+      builder: (bloc) => bloc.progress.when(
         inital: () => const SizedBox(),
         loading: () => circularProgress(context),
         loaded: () => _buildSuccessWidget(context),
         failure: () => _buildErrorWidget(context),
       ),
+      dispose: (_) => Get.delete<OwnedStoreBloc>(),
     );
   }
 

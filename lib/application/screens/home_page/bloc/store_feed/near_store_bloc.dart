@@ -9,7 +9,7 @@ import 'package:get/get.dart';
 import 'package:rxdart/subjects.dart';
 import '../../../../bloc/core/action_state.dart';
 
-class NearStoreBloc extends GetxController with SimpleStateSetter<StoreFailure> {
+class NearStoreBloc extends GetxController with SimepleProgressSetter<StoreFailure> {
   final _iStoreRepository = Get.find<IStoreRepository>();
   final _authBloc = Get.find<AuthBloc>();
   final _locationBloc = Get.find<LocationBloc>();
@@ -31,7 +31,7 @@ class NearStoreBloc extends GetxController with SimpleStateSetter<StoreFailure> 
   }
 
   Future<void> watchNearbyStore() async {
-    setLoadingState();
+    updateWithLoading();
     final location = _locationBloc.location;
     final user = _authBloc.user;
     storeSub = _iStoreRepository
@@ -39,17 +39,17 @@ class NearStoreBloc extends GetxController with SimpleStateSetter<StoreFailure> 
             location: location, rad: radiusSubject, userOption: optionOf(user))
         .listen(
           (failureOrStoreList) => failureOrStoreList.fold(
-            (f) => setFailureState(f),
+            (f) => updateWithFailure(f),
             (storeList) {
               this.storeList = storeList.obs;
-              setLoadedState();
+              updateWithLoaded();
             },
           ),
         );
   }
 
   void requestMoreRadius() {
-    setLoadingState();
+    updateWithLoading();
     _rad.value += 0.5;
     radiusSubject.add(rad);
   }

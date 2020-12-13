@@ -28,7 +28,7 @@ class ImageGridView extends StatelessWidget {
             ),
             child: GetBuilder<StoreViewBloc>(
               autoRemove: false,
-              builder: (bloc) => bloc.state.when(
+              builder: (bloc) => bloc.progress.when(
                 inital: () => circularProgress(context),
                 loading: () => circularProgress(context),
                 loaded: () => bloc.store.pics

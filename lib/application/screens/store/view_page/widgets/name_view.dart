@@ -12,7 +12,7 @@ class NameView extends StatelessWidget {
     return ReusableCard(
       children: [
         GetBuilder<StoreViewBloc>(builder: (bloc) {
-          return bloc.state.when(
+          return bloc.progress.when(
             inital: () => circularProgress(context),
             loading: () => circularProgress(context),
             loaded: () => _buildRxNameField(context),

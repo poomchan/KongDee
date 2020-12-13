@@ -22,7 +22,7 @@ class StoreViewPage2 extends ViewWidget<StoreViewBloc> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: GetBuilder<StoreViewBloc>(
-        builder: (bloc) => bloc.state.when(
+        builder: (bloc) => bloc.progress.when(
           inital: () => circularProgress(context),
           loading: () => circularProgress(context),
           loaded: () => _buildStoreView(context),

@@ -1,35 +1,36 @@
 import 'dart:async';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:fluttertaladsod/application/bloc/auth/auth_bloc.dart';
 import 'package:fluttertaladsod/application/bloc/core/action_state.dart';
+import 'package:fluttertaladsod/application/screens/store/chat/bloc/message_view/message_view_state.dart';
+import 'package:fluttertaladsod/application/screens/store/chat/widgets/chat_avatar_dialog.dart';
 import 'package:fluttertaladsod/application/screens/store/view_page/bloc/store_view_bloc.dart';
-import 'package:fluttertaladsod/domain/core/value_objects.dart';
 import 'package:fluttertaladsod/domain/message/i_message_repository.dart';
 import 'package:fluttertaladsod/domain/message/message.dart';
 import 'package:fluttertaladsod/domain/message/message_failure.dart';
 import 'package:get/get.dart';
 
-class StoreChatWatcherBloc extends GetxController
-    with SimpleStateSetter<MessageFailure> {
-  final IMessageRepository _iMessageRepository = Get.find<IMessageRepository>();
-  final AuthBloc _authBloc = Get.find<AuthBloc>();
-  final StoreViewBloc _storeViewBloc = Get.find<StoreViewBloc>();
+class MessageViewBloc extends GetxController
+    with SimepleProgressSetter<MessageFailure> {
+  IMessageRepository get _iMessageRepository => Get.find<IMessageRepository>();
+  AuthBloc get _authBloc => Get.find<AuthBloc>();
+  StoreViewBloc get _storeViewBloc => Get.find<StoreViewBloc>();
 
   final _scrollController = ScrollController();
   ScrollController get scrollController => _scrollController;
-
-  /// the only [Message] list to display on screen
-  List<MessageDomain> _finalMessageList = [];
 
   /// rxList with listener
   List<MessageDomain> _recentMessageList = [];
 
   /// List with no listener
   List<MessageDomain> _moreMessageList = [];
-  List<MessageDomain> get messageList => _finalMessageList;
+
+  MessageViewState state = MessageViewState.initial();
 
   Future<void> watchStarted() async {
-    setLoadingState();
+    updateWithLoading();
     final storeId = _storeViewBloc.store.id;
     final user = _authBloc.user;
     _iMessageRepository
@@ -37,12 +38,14 @@ class StoreChatWatcherBloc extends GetxController
         .listen(
       (failreOrChats) {
         failreOrChats.fold(
-          (f) => setFailureState(f),
-          (chatList) async {
-            _recentMessageList = List.from(chatList.reversed);
-            _finalMessageList = List.from(_recentMessageList);
-            _finalMessageList.addAll(_moreMessageList);
-            setLoadedState();
+          (f) => updateWithFailure(f),
+          (mList) async {
+            _recentMessageList = List.from(mList.reversed);
+            state = state.copyWith(
+              messageList: List.from(_recentMessageList)
+                ..addAll(_moreMessageList),
+            );
+            updateWithLoaded();
           },
         );
       },
@@ -63,14 +66,22 @@ class StoreChatWatcherBloc extends GetxController
       if (f == MessageFailure.emptyChatRoom()) {
         return;
       } else {
-        setFailureState(f);
+        updateWithFailure(f);
       }
     }, (mList) {
       _moreMessageList.addAll(mList);
-      _finalMessageList = List.from(_recentMessageList);
-      _finalMessageList.addAll(_moreMessageList);
-      setLoadedState();
+      state = state.copyWith(
+        messageList: state.messageList..addAll(_moreMessageList),
+      );
+      updateWithLoaded();
     });
+  }
+
+  void onMessageAvatarTapped(String name) {
+    showCupertinoModalPopup(
+      context: Get.context,
+      builder: (_) => buildAvatarActionSheet(name),
+    );
   }
 
   @override
@@ -81,9 +92,9 @@ class StoreChatWatcherBloc extends GetxController
 
   @override
   void onClose() {
+    state = null;
     _iMessageRepository.clearState();
     _scrollController.dispose();
-    _finalMessageList = null;
     _recentMessageList = null;
     _moreMessageList = null;
     super.onClose();

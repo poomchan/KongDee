@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertaladsod/application/bloc/core/view_widget.dart';
 import 'package:fluttertaladsod/application/core/components/progress_indicator.dart';
-import 'package:fluttertaladsod/application/screens/store/chat/bloc/watcher/store_chat_watcher_cubit.dart';
-import 'package:fluttertaladsod/application/screens/store/chat/widgets/day_card.dart';
+import 'package:fluttertaladsod/application/screens/store/chat/bloc/message_view/message_view_bloc.dart';
+import 'package:fluttertaladsod/application/screens/store/chat/widgets/date_card.dart';
 import 'package:fluttertaladsod/application/screens/store/chat/widgets/message.dart';
 import 'package:fluttertaladsod/domain/message/message.dart';
 import 'package:get/get.dart';
 
-class MessageView extends ViewWidget<StoreChatWatcherBloc> {
+class MessageView extends ViewWidget<MessageViewBloc> {
   const MessageView({Key key}) : super(key: key);
 
   @override
@@ -15,8 +15,8 @@ class MessageView extends ViewWidget<StoreChatWatcherBloc> {
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: GetBuilder<StoreChatWatcherBloc>(
-          builder: (bloc) => bloc.state.when(
+        child: GetBuilder<MessageViewBloc>(
+          builder: (bloc) => bloc.progress.when(
             inital: () => const Text('Cubit not initialized'),
             failure: () => _buildErrorWidget(context),
             loading: () => circularProgress(context),
@@ -40,8 +40,8 @@ class MessageView extends ViewWidget<StoreChatWatcherBloc> {
         controller: bloc.scrollController,
         shrinkWrap: true,
         reverse: true,
-        itemCount: bloc.messageList.length,
-        itemBuilder: (context, index) => _buildMessage(bloc.messageList, index),
+        itemCount: bloc.state.messageList.length,
+        itemBuilder: (context, index) => _buildMessage(bloc.state.messageList, index),
       ),
     );
   }
@@ -55,24 +55,20 @@ class MessageView extends ViewWidget<StoreChatWatcherBloc> {
         else
           m.timestamp.toDate().weekday !=
                   messages[index + 1].timestamp.toDate().weekday
-              ? DayCard(dateTime: m.timestamp.toDate())
+              ? DateCard(dateTime: m.timestamp.toDate())
               : const SizedBox(height: 0),
         Message(
-          text: m.body.getOrCrash(),
-          isSender: m.isSender,
-          avatarUrl: m.senderAvatarUrl.getOrCrash(),
+          m,
           isTop: index == messages.length - 1
               ? true
               : m.senderId != messages[index + 1].senderId,
-          senderName: m.senderName.getOrCrash(),
-          timestamp: m.timestamp,
         ),
       ],
     );
   }
 
   Widget _buildErrorWidget(BuildContext context) {
-    return GetBuilder<StoreChatWatcherBloc>(
+    return GetBuilder<MessageViewBloc>(
       builder: (bloc) => bloc.failure.when(
         unexpected: () => Text('Unexpected Error'),
         severFailure: () => Text('Server failure, please try again later'),

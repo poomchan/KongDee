@@ -6,7 +6,7 @@ import 'package:fluttertaladsod/domain/auth/i_auth_facade.dart';
 import 'package:fluttertaladsod/domain/auth/user.dart';
 import 'package:get/get.dart';
 
-class AuthBloc extends GetxController with SimpleStateSetter<AuthFailure> {
+class AuthBloc extends GetxController with SimepleProgressSetter<AuthFailure> {
   IAuthFacade get _iAuthFacade => Get.find<IAuthFacade>();
 
   final _user = Rx<UserDomain>();
@@ -17,17 +17,17 @@ class AuthBloc extends GetxController with SimpleStateSetter<AuthFailure> {
   StreamSubscription _userSub;
 
   Future<void> watchUser() async {
-    setLoadingState();
+    updateWithLoading();
     final userOrFailureStream = _iAuthFacade.watchSignedInUser();
     _userSub = userOrFailureStream.listen((userOrFailure) {
       return userOrFailure.fold(
         (f) {
           _user.value = null;
-          setFailureState(f);
+          updateWithFailure(f);
         },
         (user) {
           _user.value = user;
-          setLoadedState();
+          updateWithLoaded();
         },
       );
     });

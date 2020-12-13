@@ -9,7 +9,7 @@ import 'package:fluttertaladsod/domain/store/value_objects.dart';
 import 'package:get/get.dart';
 
 class StoreSettingBloc extends GetxController
-    with SimpleStateSetter<StoreFailure> {
+    with SimepleProgressSetter<StoreFailure> {
   final _watcherBloc = Get.find<StoreViewBloc>();
   final _iLocationRepo = Get.find<ILocationRepository>();
   final _iStoreRepo = Get.find<IStoreRepository>();
@@ -20,16 +20,16 @@ class StoreSettingBloc extends GetxController
   StoreViewBloc get watherBloc => _watcherBloc;
 
   Future<void> onLocationUpdated() async {
-    setLoadingState();
+    updateWithLoading();
     final locationOption = await _iLocationRepo.getLocation();
     final locationDomain =
         locationOption.getOrElse(() => throw 'location not granted');
     location = StoreLocation.fromLocationDomain(locationDomain);
-    setLoadingState();
+    updateWithLoading();
   }
 
   Future<void> onLocationSaved() async {
-    setLoadingState();
+    updateWithLoading();
     final fOrUnit = await _iStoreRepo
         .update(_watcherBloc.store.copyWith(location: location));
     fOrUnit.fold(
@@ -61,7 +61,7 @@ class StoreSettingBloc extends GetxController
   }
 
   Future<void> onSellingRangeSaved() async {
-    setLoadingState();
+    updateWithLoading();
     final Store store = _watcherBloc.store;
     final fOrUnit = await _iStoreRepo.update(
       store.copyWith(
@@ -75,25 +75,25 @@ class StoreSettingBloc extends GetxController
   }
 
   Future<void> onStoreOpenToggled({bool isOpen}) async {
-    setLoadingState();
+    updateWithLoading();
     final Store store = _watcherBloc.store;
     await _iStoreRepo.update(
       store.copyWith(
         prefs: store.prefs.copyWith(isOpen: isOpen),
       ),
     );
-    setLoadedState();
+    updateWithLoaded();
   }
 
   Future<void> onStoreNotificationToggled({bool isOn}) async {
-    setLoadingState();
+    updateWithLoading();
     final Store store = _watcherBloc.store;
     await _iStoreRepo.update(
       store.copyWith(
         prefs: store.prefs.copyWith(isNotificationOn: isOn),
       ),
     );
-    setLoadedState();
+    updateWithLoaded();
   }
 
   void resetState() {
@@ -108,10 +108,10 @@ class StoreSettingBloc extends GetxController
 
   @override
   void onInit() {
-    setLoadingState();
+    updateWithLoading();
     super.onInit();
     resetState();
-    setLoadedState();
+    updateWithLoaded();
   }
 
   @override

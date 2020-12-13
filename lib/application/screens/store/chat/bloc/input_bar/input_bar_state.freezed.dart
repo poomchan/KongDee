@@ -1,7 +1,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies
 
-part of 'chat_form_state.dart';
+part of 'input_bar_state.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -9,11 +9,11 @@ part of 'chat_form_state.dart';
 
 T _$identity<T>(T value) => value;
 
-class _$ChatFormStateTearOff {
-  const _$ChatFormStateTearOff();
+class _$InputBarStateTearOff {
+  const _$InputBarStateTearOff();
 
 // ignore: unused_element
-  _ChatFormState call(
+  _InputBarState call(
       {@required
           Option<MessageDomain> uploadingChat,
       @required
@@ -22,7 +22,7 @@ class _$ChatFormStateTearOff {
           bool isUploading,
       @required
           Option<Either<MessageFailure, Unit>> uploadSuccessOrFailureOption}) {
-    return _ChatFormState(
+    return _InputBarState(
       uploadingChat: uploadingChat,
       chat: chat,
       isUploading: isUploading,
@@ -32,21 +32,21 @@ class _$ChatFormStateTearOff {
 }
 
 // ignore: unused_element
-const $ChatFormState = _$ChatFormStateTearOff();
+const $InputBarState = _$InputBarStateTearOff();
 
-mixin _$ChatFormState {
+mixin _$InputBarState {
   Option<MessageDomain> get uploadingChat;
   MessageDomain get chat;
   bool get isUploading;
   Option<Either<MessageFailure, Unit>> get uploadSuccessOrFailureOption;
 
-  $ChatFormStateCopyWith<ChatFormState> get copyWith;
+  $InputBarStateCopyWith<InputBarState> get copyWith;
 }
 
-abstract class $ChatFormStateCopyWith<$Res> {
-  factory $ChatFormStateCopyWith(
-          ChatFormState value, $Res Function(ChatFormState) then) =
-      _$ChatFormStateCopyWithImpl<$Res>;
+abstract class $InputBarStateCopyWith<$Res> {
+  factory $InputBarStateCopyWith(
+          InputBarState value, $Res Function(InputBarState) then) =
+      _$InputBarStateCopyWithImpl<$Res>;
   $Res call(
       {Option<MessageDomain> uploadingChat,
       MessageDomain chat,
@@ -56,13 +56,13 @@ abstract class $ChatFormStateCopyWith<$Res> {
   $MessageDomainCopyWith<$Res> get chat;
 }
 
-class _$ChatFormStateCopyWithImpl<$Res>
-    implements $ChatFormStateCopyWith<$Res> {
-  _$ChatFormStateCopyWithImpl(this._value, this._then);
+class _$InputBarStateCopyWithImpl<$Res>
+    implements $InputBarStateCopyWith<$Res> {
+  _$InputBarStateCopyWithImpl(this._value, this._then);
 
-  final ChatFormState _value;
+  final InputBarState _value;
   // ignore: unused_field
-  final $Res Function(ChatFormState) _then;
+  final $Res Function(InputBarState) _then;
 
   @override
   $Res call({
@@ -96,11 +96,11 @@ class _$ChatFormStateCopyWithImpl<$Res>
   }
 }
 
-abstract class _$ChatFormStateCopyWith<$Res>
-    implements $ChatFormStateCopyWith<$Res> {
-  factory _$ChatFormStateCopyWith(
-          _ChatFormState value, $Res Function(_ChatFormState) then) =
-      __$ChatFormStateCopyWithImpl<$Res>;
+abstract class _$InputBarStateCopyWith<$Res>
+    implements $InputBarStateCopyWith<$Res> {
+  factory _$InputBarStateCopyWith(
+          _InputBarState value, $Res Function(_InputBarState) then) =
+      __$InputBarStateCopyWithImpl<$Res>;
   @override
   $Res call(
       {Option<MessageDomain> uploadingChat,
@@ -112,15 +112,15 @@ abstract class _$ChatFormStateCopyWith<$Res>
   $MessageDomainCopyWith<$Res> get chat;
 }
 
-class __$ChatFormStateCopyWithImpl<$Res>
-    extends _$ChatFormStateCopyWithImpl<$Res>
-    implements _$ChatFormStateCopyWith<$Res> {
-  __$ChatFormStateCopyWithImpl(
-      _ChatFormState _value, $Res Function(_ChatFormState) _then)
-      : super(_value, (v) => _then(v as _ChatFormState));
+class __$InputBarStateCopyWithImpl<$Res>
+    extends _$InputBarStateCopyWithImpl<$Res>
+    implements _$InputBarStateCopyWith<$Res> {
+  __$InputBarStateCopyWithImpl(
+      _InputBarState _value, $Res Function(_InputBarState) _then)
+      : super(_value, (v) => _then(v as _InputBarState));
 
   @override
-  _ChatFormState get _value => super._value as _ChatFormState;
+  _InputBarState get _value => super._value as _InputBarState;
 
   @override
   $Res call({
@@ -129,7 +129,7 @@ class __$ChatFormStateCopyWithImpl<$Res>
     Object isUploading = freezed,
     Object uploadSuccessOrFailureOption = freezed,
   }) {
-    return _then(_ChatFormState(
+    return _then(_InputBarState(
       uploadingChat: uploadingChat == freezed
           ? _value.uploadingChat
           : uploadingChat as Option<MessageDomain>,
@@ -144,8 +144,8 @@ class __$ChatFormStateCopyWithImpl<$Res>
   }
 }
 
-class _$_ChatFormState implements _ChatFormState {
-  const _$_ChatFormState(
+class _$_InputBarState implements _InputBarState {
+  const _$_InputBarState(
       {@required this.uploadingChat,
       @required this.chat,
       @required this.isUploading,
@@ -166,13 +166,13 @@ class _$_ChatFormState implements _ChatFormState {
 
   @override
   String toString() {
-    return 'ChatFormState(uploadingChat: $uploadingChat, chat: $chat, isUploading: $isUploading, uploadSuccessOrFailureOption: $uploadSuccessOrFailureOption)';
+    return 'InputBarState(uploadingChat: $uploadingChat, chat: $chat, isUploading: $isUploading, uploadSuccessOrFailureOption: $uploadSuccessOrFailureOption)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _ChatFormState &&
+        (other is _InputBarState &&
             (identical(other.uploadingChat, uploadingChat) ||
                 const DeepCollectionEquality()
                     .equals(other.uploadingChat, uploadingChat)) &&
@@ -197,12 +197,12 @@ class _$_ChatFormState implements _ChatFormState {
       const DeepCollectionEquality().hash(uploadSuccessOrFailureOption);
 
   @override
-  _$ChatFormStateCopyWith<_ChatFormState> get copyWith =>
-      __$ChatFormStateCopyWithImpl<_ChatFormState>(this, _$identity);
+  _$InputBarStateCopyWith<_InputBarState> get copyWith =>
+      __$InputBarStateCopyWithImpl<_InputBarState>(this, _$identity);
 }
 
-abstract class _ChatFormState implements ChatFormState {
-  const factory _ChatFormState(
+abstract class _InputBarState implements InputBarState {
+  const factory _InputBarState(
       {@required
           Option<MessageDomain> uploadingChat,
       @required
@@ -211,7 +211,7 @@ abstract class _ChatFormState implements ChatFormState {
           bool isUploading,
       @required
           Option<Either<MessageFailure, Unit>>
-              uploadSuccessOrFailureOption}) = _$_ChatFormState;
+              uploadSuccessOrFailureOption}) = _$_InputBarState;
 
   @override
   Option<MessageDomain> get uploadingChat;
@@ -222,5 +222,5 @@ abstract class _ChatFormState implements ChatFormState {
   @override
   Option<Either<MessageFailure, Unit>> get uploadSuccessOrFailureOption;
   @override
-  _$ChatFormStateCopyWith<_ChatFormState> get copyWith;
+  _$InputBarStateCopyWith<_InputBarState> get copyWith;
 }

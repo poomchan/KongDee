@@ -9,5 +9,4 @@ class StoreViewPB extends Bindings {
     Get.lazyPut(() => StoreViewBloc());
     Get.lazyPut(() => StoreSettingBloc());
   }
-
 }

@@ -31,7 +31,7 @@ class StoreForm extends ViewWidget<StoreFormBloc> {
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: GetBuilder<StoreFormBloc>(
-          builder: (bloc) => bloc.state.maybeWhen(
+          builder: (bloc) => bloc.progress.maybeWhen(
             orElse: () => const SizedBox(height: 0),
             loaded: () => ListView(
               padding: EdgeInsets.zero,

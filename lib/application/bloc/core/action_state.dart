@@ -12,23 +12,23 @@ abstract class ActionState with _$ActionState {
 }
 
 /// Mixin contains basic [ActioinState] i.e. initial, loading, loaded, failure.
-/// It takes [T] as a Failure type to create [failure] property
-mixin SimpleStateSetter<T> on GetxController {
+/// It takes [F] as a Failure type to create [failure] property
+mixin SimepleProgressSetter<F> on GetxController {
   /// [ActionState] Union for defining actions of the controller
   ActionState _state = ActionState.inital();
-  ActionState get state => _state;
+  ActionState get progress => _state;
 
-  T _failure;
-  T get failure => _failure;
+  F _failure;
+  F get failure => _failure;
 
-  void _setState(ActionState state, {T f}) {
+  void _setState(ActionState state, {F f}) {
     if (f != null) _failure = f;
     _state = state;
     update();
   }
 
-  /// set [state] with calling [update()]
-  void setLoadingState() => _setState(ActionState.loading());
-  void setLoadedState() => _setState(ActionState.loaded());
-  void setFailureState(T f) => _setState(ActionState.failure(), f:f);
+  /// set [progress] with calling [update()]
+  void updateWithLoading() => _setState(ActionState.loading());
+  void updateWithLoaded() => _setState(ActionState.loaded());
+  void updateWithFailure(F f) => _setState(ActionState.failure(), f:f);
 }

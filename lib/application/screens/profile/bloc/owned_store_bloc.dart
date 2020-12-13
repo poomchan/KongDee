@@ -8,7 +8,7 @@ import 'package:fluttertaladsod/domain/store/store_failures.dart';
 import 'package:get/get.dart';
 
 class OwnedStoreBloc extends GetxController
-    with SimpleStateSetter<StoreFailure> {
+    with SimepleProgressSetter<StoreFailure> {
   final IStoreRepository _iStoreRepo = Get.find<IStoreRepository>();
   final ILocationRepository _iLocationRepo = Get.find<ILocationRepository>();
   final _authBloc = Get.find<AuthBloc>();
@@ -18,14 +18,14 @@ class OwnedStoreBloc extends GetxController
   StreamSubscription _ownedStoreSub;
 
   Future<void> watchOwnedStoreStarted() async {
-    setLoadingState();
+    updateWithLoading();
 
     final locationOption = await _iLocationRepo.getLocation();
 
     locationOption.fold(
-      (f) => setFailureState(StoreFailure.locationNotGranted()),
+      (f) => updateWithFailure(StoreFailure.locationNotGranted()),
       (location) {
-        final user = _authBloc.state.maybeWhen(
+        final user = _authBloc.progress.maybeWhen(
           loaded: () => _authBloc.user,
           orElse: () => throw 'user not authenticated',
         );
@@ -38,10 +38,10 @@ class OwnedStoreBloc extends GetxController
             )
             .listen(
               (storeOrF) => storeOrF.fold(
-                (f) => setFailureState(f),
+                (f) => updateWithFailure(f),
                 (store) {
                   _store.value = store;
-                  setLoadedState();
+                  updateWithLoaded();
                 },
               ),
             );

@@ -1,10 +1,15 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertaladsod/application/bloc/core/view_widget.dart';
+import 'package:fluttertaladsod/application/screens/store/chat/bloc/message_view/message_view_bloc.dart';
+import 'package:fluttertaladsod/domain/core/value_objects.dart';
 
-class MessageAvatar extends StatelessWidget {
+class MessageAvatar extends ViewWidget<MessageViewBloc> {
+  final String senderId;
   final String avatarUrl;
   final bool isSender;
   final bool hideAvatarImage;
+  final String senderName;
 
   static const double radius = 20.0;
 
@@ -13,19 +18,25 @@ class MessageAvatar extends StatelessWidget {
     @required this.avatarUrl,
     @required this.isSender,
     @required this.hideAvatarImage,
+    @required this.senderId,
+    @required this.senderName, 
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        hideAvatarImage
-            ? Container(width: radius * 2)
-            : CircleAvatar(
-                radius: radius,
-                backgroundImage: CachedNetworkImageProvider(avatarUrl),
-                backgroundColor: Colors.white,
-              ),
+        if (hideAvatarImage)
+          Container(width: radius * 2)
+        else
+          GestureDetector(
+            onTap: () => bloc.onMessageAvatarTapped(senderName),
+            child: CircleAvatar(
+              radius: radius,
+              backgroundImage: CachedNetworkImageProvider(avatarUrl),
+              backgroundColor: Colors.white,
+            ),
+          ),
       ],
     );
   }

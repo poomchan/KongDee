@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-class DayCard extends StatelessWidget {
+class DateCard extends StatelessWidget {
   final DateTime dateTime;
-  const DayCard({Key key, @required this.dateTime}) : super(key: key);
+  const DateCard({Key key, @required this.dateTime}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     final day = dateTime.day.toString();

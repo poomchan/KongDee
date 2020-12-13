@@ -6,16 +6,16 @@ import 'package:fluttertaladsod/domain/auth/auth_failure.dart';
 import 'package:fluttertaladsod/domain/auth/i_auth_facade.dart';
 import 'package:get/get.dart';
 
-class SignInBloc extends GetxController with SimpleStateSetter<AuthFailure> {
+class SignInBloc extends GetxController with SimepleProgressSetter<AuthFailure> {
   IAuthFacade get _iAuthFacade => Get.find<IAuthFacade>();
   AuthBloc get _authBloc => Get.find<AuthBloc>();
   StreamSubscription userStream;
 
   Future<void> signInWithGoogle() async {
-    setLoadingState();
+    updateWithLoading();
     final success = await _iAuthFacade.signInWithGoogle();
     if (!success) {
-      setLoadedState();
+      updateWithLoaded();
     }
   }
 

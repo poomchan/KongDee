@@ -22,7 +22,7 @@ class NearStoreFeed extends ViewWidget<NearStoreBloc> {
         const Divider(height: 0.0),
         _buildRxLoadingIndicator(context),
         GetBuilder<NearStoreBloc>(
-          builder: (bloc) => bloc.state.when(
+          builder: (bloc) => bloc.progress.when(
             inital: () => circularProgress(context),
             loading: () => _buildRxStoreFeed(),
             loaded: () => _buildRxStoreFeed(),
@@ -32,7 +32,7 @@ class NearStoreFeed extends ViewWidget<NearStoreBloc> {
         ButtonBar(
           children: [
             GetBuilder<NearStoreBloc>(
-              builder: (bloc) => bloc.state.maybeWhen(
+              builder: (bloc) => bloc.progress.maybeWhen(
                 loaded: () => _buildRxTextRadius(),
                 loading: () => _buildRxTextRadius(),
                 orElse: () => const SizedBox(height: 10.0 + 4.0),
@@ -84,7 +84,7 @@ class NearStoreFeed extends ViewWidget<NearStoreBloc> {
 
   Widget _buildRxLoadingIndicator(BuildContext context) {
     return GetBuilder<NearStoreBloc>(
-      builder: (bloc) => bloc.state.maybeWhen(
+      builder: (bloc) => bloc.progress.maybeWhen(
         loading: () => linearProgress(context),
         orElse: () => const SizedBox(height: 10.0 + 4.0),
       ),

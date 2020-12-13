@@ -50,7 +50,7 @@ class SignInSplash extends ViewWidget<SignInBloc> {
           ),
         ),
         GetBuilder<SignInBloc>(
-          builder: (b) => b.state.maybeWhen(
+          builder: (b) => b.progress.maybeWhen(
             loading: () => Container(
               width: Get.width,
               height: Get.height,

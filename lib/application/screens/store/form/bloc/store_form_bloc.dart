@@ -14,7 +14,7 @@ import 'package:fluttertaladsod/domain/store/value_objects.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:get/get.dart';
 
-class StoreFormBloc extends GetxController with SimpleStateSetter {
+class StoreFormBloc extends GetxController with SimepleProgressSetter {
   final IImageRepository _iImageRepository = Get.find<IImageRepository>();
   final IStoreRepository _iStoreRepository = Get.find<IStoreRepository>();
   final IAuthFacade _iAuthFacade = Get.find<IAuthFacade>();
@@ -32,20 +32,20 @@ class StoreFormBloc extends GetxController with SimpleStateSetter {
   Future<void> initializeForm({
     @required Option<Store> initialStore,
   }) async {
-    setLoadingState();
+    updateWithLoading();
     final location = _locationBloc.location;
     initialStore.fold(
       () {
         updateStore(store.copyWith(
           location: StoreLocation.fromLocationDomain(location),
         ));
-        setLoadedState();
+        updateWithLoaded();
       },
       (initStore) async {
         // await Future.delayed(Duration(milliseconds: 10));
         _isCreating = true;
         updateStore(initStore);
-        setLoadedState();
+        updateWithLoaded();
       },
     );
   }

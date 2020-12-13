@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertaladsod/application/screens/store/chat/bloc/form/chat_form_bloc.dart';
+import 'package:fluttertaladsod/application/screens/store/chat/bloc/input_bar/input_bar_bloc.dart';
 import 'package:get/get.dart';
 
 class InputBar extends StatelessWidget {
@@ -7,7 +7,7 @@ class InputBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<ChatFormBloc>(
+    return GetBuilder<InputBarBloc>(
       builder: (bloc) => Container(
         height: 70,
         padding: const EdgeInsets.symmetric(horizontal: 10.0),

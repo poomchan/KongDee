@@ -17,7 +17,7 @@ class Console extends ViewWidget<StoreViewBloc> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<StoreViewBloc>(builder: (bloc) {
-      return bloc.state.when(
+      return bloc.progress.when(
         inital: () => const SizedBox(),
         loading: () => const SizedBox(height: 100),
         failure: () => Icon(Icons.error),

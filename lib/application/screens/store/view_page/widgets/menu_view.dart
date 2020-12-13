@@ -14,7 +14,7 @@ class MenuView extends StatelessWidget {
       children: [
         GetX<StoreViewBloc>(
           builder: (bloc) {
-            return bloc.state.when(
+            return bloc.progress.when(
                 inital: () => circularProgress(context),
                 loading: () => circularProgress(context),
                 loaded: () => Text(bloc.store.menu.getOrCrash()),

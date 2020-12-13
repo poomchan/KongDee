@@ -3,18 +3,18 @@ import 'package:fluttertaladsod/domain/message/message.dart';
 import 'package:fluttertaladsod/domain/message/message_failure.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'chat_form_state.freezed.dart';
+part 'input_bar_state.freezed.dart';
 
 @freezed
-abstract class ChatFormState with _$ChatFormState {
-  const factory ChatFormState({
+abstract class InputBarState with _$InputBarState {
+  const factory InputBarState({
     @required Option<MessageDomain> uploadingChat,
     @required MessageDomain chat,
     @required bool isUploading,
     @required Option<Either<MessageFailure, Unit>> uploadSuccessOrFailureOption,
-  }) = _ChatFormState;
+  }) = _InputBarState;
 
-  factory ChatFormState.inital() => ChatFormState(
+  factory InputBarState.inital() => InputBarState(
         chat: MessageDomain.empty(),
         uploadingChat: none(),
         isUploading: false,

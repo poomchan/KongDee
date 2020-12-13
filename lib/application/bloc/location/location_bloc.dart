@@ -6,7 +6,7 @@ import 'package:fluttertaladsod/domain/location/location_failure.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 
-class LocationBloc extends GetxController with SimpleStateSetter<LocationFailure> {
+class LocationBloc extends GetxController with SimepleProgressSetter<LocationFailure> {
   final _iLocationRepository = Get.find<ILocationRepository>();
   final _location = Rx<LocationDomain>();
   LocationDomain get location => _location.value;
@@ -14,18 +14,18 @@ class LocationBloc extends GetxController with SimpleStateSetter<LocationFailure
 
 
   Future<void> checkLocationPermission() async {
-    setLoadingState();
+    updateWithLoading();
     isLocationGranted = await _iLocationRepository.isPermissionGranted();
     if(isLocationGranted){
       await getUserLocation();
     } else {
       Get.offAllNamed(Routes.onboardingPage);
     }
-    setLoadedState();
+    updateWithLoaded();
   }
 
   Future<void> getUserLocation() async {
-    setLoadingState();
+    updateWithLoading();
     final fOrlocation = await _iLocationRepository.getLocation();
     fOrlocation.fold(
       (f) => f.maybeWhen(
@@ -36,7 +36,7 @@ class LocationBloc extends GetxController with SimpleStateSetter<LocationFailure
       (location) {
         _location.value = location;
         Get.offAllNamed(Routes.homePage);
-        setLoadedState();
+        updateWithLoaded();
       },
     );
   }
