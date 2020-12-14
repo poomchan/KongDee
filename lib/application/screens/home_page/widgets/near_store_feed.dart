@@ -76,6 +76,12 @@ class NearStoreFeed extends ViewWidget<NearStoreBloc> {
   }
 
   Widget _buildStoreCard(Store store) {
+    if (store.failureOption.isSome()) {
+      return Card(
+        color: Colors.white10,
+        child: Icon(Icons.error),
+      );
+    }
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: StoreCard2(store: store),
