@@ -13,6 +13,7 @@ class AuthBloc extends GetxController with SimepleProgressSetter<AuthFailure> {
   Rx<UserDomain> get rxUser => _user;
   UserDomain get user => _user.value;
   bool get isAuth => _user.value != null;
+  RxBool get rxIsAuth => RxBool(false)..bindStream(_user.map((user) => user == null));
 
   StreamSubscription _userSub;
 

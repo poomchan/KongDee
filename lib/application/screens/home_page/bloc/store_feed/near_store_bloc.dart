@@ -9,7 +9,8 @@ import 'package:fluttertaladsod/domain/store/store_failures.dart';
 import 'package:get/get.dart';
 import 'package:rxdart/subjects.dart';
 
-class NearStoreBloc extends GetxController with SimepleProgressSetter<StoreFailure> {
+class NearStoreBloc extends GetxController
+    with SimepleProgressSetter<StoreFailure> {
   final _iStoreRepository = Get.find<IStoreRepository>();
   final _authBloc = Get.find<AuthBloc>();
   final _locationBloc = Get.find<LocationBloc>();
@@ -18,6 +19,7 @@ class NearStoreBloc extends GetxController with SimepleProgressSetter<StoreFailu
 
   RxList<Store> storeList = List<Store>.empty().obs;
   StreamSubscription storeSub;
+  StreamSubscription authSub;
 
   final _rad = 1.0.obs;
   double get rad => _rad.value;
@@ -27,7 +29,11 @@ class NearStoreBloc extends GetxController with SimepleProgressSetter<StoreFailu
   @override
   Future<void> onReady() async {
     super.onReady();
-    await watchNearbyStore();
+    authSub = _authBloc.rxIsAuth.listen(
+      (isAuth) async {
+        await watchNearbyStore();
+      },
+    );
   }
 
   Future<void> watchNearbyStore() async {
@@ -41,11 +47,23 @@ class NearStoreBloc extends GetxController with SimepleProgressSetter<StoreFailu
           (failureOrStoreList) => failureOrStoreList.fold(
             (f) => updateWithFailure(f),
             (storeList) {
-              this.storeList = storeList.obs;
+              this.storeList = filterBlockedUsers(storeList).obs;
               updateWithLoaded();
             },
           ),
         );
+  }
+
+  List<Store> filterBlockedUsers(List<Store> sl) {
+    if (_authBloc.isAuth) {
+      final List<Store> filteredList = [];
+      final watcherId = _authBloc.user.id.getOrCrash();
+      for (final s in sl) {
+        if (s.blockedUsers[watcherId] != true) filteredList.add(s);
+      }
+      return filteredList;
+    }
+    return sl;
   }
 
   void requestMoreRadius() {
