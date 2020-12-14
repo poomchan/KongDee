@@ -102,7 +102,7 @@ class StoreViewPage2 extends ViewWidget<StoreViewBloc> {
             Icon(Icons.error),
             bloc.failure.when(
               noStore: () => Text('Error 404: No store found'),
-              unexpected: (err) => Text('Unexpected Error: ${err.detail}'),
+              unexpected: (err) => Text('Unexpected Error: $err'),
               locationNotGranted: () => Text('Please enable location'),
               timeout: () => Text('Time out, try reload again'),
             ),

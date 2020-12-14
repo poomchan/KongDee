@@ -3,6 +3,7 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertaladsod/application/bloc/auth/auth_bloc.dart';
 import 'package:fluttertaladsod/application/bloc/core/simple_progress_setter.dart';
+import 'package:fluttertaladsod/application/routes/router.dart';
 import 'package:fluttertaladsod/application/screens/store/setting/bloc/store_setting_bloc.dart';
 import 'package:fluttertaladsod/domain/auth/user/user.dart';
 import 'package:fluttertaladsod/domain/core/value_objects.dart';
@@ -45,6 +46,7 @@ class StoreViewBloc extends GetxController
               (f) => updateWithFailure(f),
               (store) {
                 this.store = store;
+                filterBlockedUsers(store);
                 updateWithLoaded();
               },
             );
@@ -52,6 +54,16 @@ class StoreViewBloc extends GetxController
         );
       },
     );
+  }
+
+  void filterBlockedUsers(Store s) {
+    final isAuth = _authBloc.isAuth;
+    if (isAuth) {
+      final watcherId = _authBloc.user.id;
+      if (s.blockedUsers[watcherId.getOrCrash()] == true) {
+        Get.offAllNamed(Routes.homePage);
+      }
+    }
   }
 
   @override
