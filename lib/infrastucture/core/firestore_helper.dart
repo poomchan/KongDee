@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluttertaladsod/domain/auth/i_auth_facade.dart';
-import 'package:fluttertaladsod/domain/auth/user.dart';
+import 'package:fluttertaladsod/domain/auth/user/user.dart';
 import 'package:get/get.dart';
 
 /// for easier import

@@ -22,7 +22,8 @@ class _$StoreTearOff {
       @required UniqueId ownerId,
       @required StoreLocation location,
       @required StorePrefs prefs,
-      @required bool isOwner}) {
+      @required bool isOwner,
+      @required Map<String, bool> blockedUsers}) {
     return _Store(
       id: id,
       name: name,
@@ -33,6 +34,7 @@ class _$StoreTearOff {
       location: location,
       prefs: prefs,
       isOwner: isOwner,
+      blockedUsers: blockedUsers,
     );
   }
 }
@@ -50,6 +52,7 @@ mixin _$Store {
   StoreLocation get location;
   StorePrefs get prefs;
   bool get isOwner;
+  Map<String, bool> get blockedUsers;
 
   $StoreCopyWith<Store> get copyWith;
 }
@@ -66,7 +69,8 @@ abstract class $StoreCopyWith<$Res> {
       UniqueId ownerId,
       StoreLocation location,
       StorePrefs prefs,
-      bool isOwner});
+      bool isOwner,
+      Map<String, bool> blockedUsers});
 
   $StoreLocationCopyWith<$Res> get location;
   $StorePrefsCopyWith<$Res> get prefs;
@@ -90,6 +94,7 @@ class _$StoreCopyWithImpl<$Res> implements $StoreCopyWith<$Res> {
     Object location = freezed,
     Object prefs = freezed,
     Object isOwner = freezed,
+    Object blockedUsers = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed ? _value.id : id as UniqueId,
@@ -102,6 +107,9 @@ class _$StoreCopyWithImpl<$Res> implements $StoreCopyWith<$Res> {
           location == freezed ? _value.location : location as StoreLocation,
       prefs: prefs == freezed ? _value.prefs : prefs as StorePrefs,
       isOwner: isOwner == freezed ? _value.isOwner : isOwner as bool,
+      blockedUsers: blockedUsers == freezed
+          ? _value.blockedUsers
+          : blockedUsers as Map<String, bool>,
     ));
   }
 
@@ -139,7 +147,8 @@ abstract class _$StoreCopyWith<$Res> implements $StoreCopyWith<$Res> {
       UniqueId ownerId,
       StoreLocation location,
       StorePrefs prefs,
-      bool isOwner});
+      bool isOwner,
+      Map<String, bool> blockedUsers});
 
   @override
   $StoreLocationCopyWith<$Res> get location;
@@ -166,6 +175,7 @@ class __$StoreCopyWithImpl<$Res> extends _$StoreCopyWithImpl<$Res>
     Object location = freezed,
     Object prefs = freezed,
     Object isOwner = freezed,
+    Object blockedUsers = freezed,
   }) {
     return _then(_Store(
       id: id == freezed ? _value.id : id as UniqueId,
@@ -178,6 +188,9 @@ class __$StoreCopyWithImpl<$Res> extends _$StoreCopyWithImpl<$Res>
           location == freezed ? _value.location : location as StoreLocation,
       prefs: prefs == freezed ? _value.prefs : prefs as StorePrefs,
       isOwner: isOwner == freezed ? _value.isOwner : isOwner as bool,
+      blockedUsers: blockedUsers == freezed
+          ? _value.blockedUsers
+          : blockedUsers as Map<String, bool>,
     ));
   }
 }
@@ -192,7 +205,8 @@ class _$_Store extends _Store {
       @required this.ownerId,
       @required this.location,
       @required this.prefs,
-      @required this.isOwner})
+      @required this.isOwner,
+      @required this.blockedUsers})
       : assert(id != null),
         assert(name != null),
         assert(banner != null),
@@ -202,6 +216,7 @@ class _$_Store extends _Store {
         assert(location != null),
         assert(prefs != null),
         assert(isOwner != null),
+        assert(blockedUsers != null),
         super._();
 
   @override
@@ -222,10 +237,12 @@ class _$_Store extends _Store {
   final StorePrefs prefs;
   @override
   final bool isOwner;
+  @override
+  final Map<String, bool> blockedUsers;
 
   @override
   String toString() {
-    return 'Store(id: $id, name: $name, banner: $banner, menu: $menu, pics: $pics, ownerId: $ownerId, location: $location, prefs: $prefs, isOwner: $isOwner)';
+    return 'Store(id: $id, name: $name, banner: $banner, menu: $menu, pics: $pics, ownerId: $ownerId, location: $location, prefs: $prefs, isOwner: $isOwner, blockedUsers: $blockedUsers)';
   }
 
   @override
@@ -251,7 +268,11 @@ class _$_Store extends _Store {
             (identical(other.prefs, prefs) ||
                 const DeepCollectionEquality().equals(other.prefs, prefs)) &&
             (identical(other.isOwner, isOwner) ||
-                const DeepCollectionEquality().equals(other.isOwner, isOwner)));
+                const DeepCollectionEquality()
+                    .equals(other.isOwner, isOwner)) &&
+            (identical(other.blockedUsers, blockedUsers) ||
+                const DeepCollectionEquality()
+                    .equals(other.blockedUsers, blockedUsers)));
   }
 
   @override
@@ -265,7 +286,8 @@ class _$_Store extends _Store {
       const DeepCollectionEquality().hash(ownerId) ^
       const DeepCollectionEquality().hash(location) ^
       const DeepCollectionEquality().hash(prefs) ^
-      const DeepCollectionEquality().hash(isOwner);
+      const DeepCollectionEquality().hash(isOwner) ^
+      const DeepCollectionEquality().hash(blockedUsers);
 
   @override
   _$StoreCopyWith<_Store> get copyWith =>
@@ -283,7 +305,8 @@ abstract class _Store extends Store {
       @required UniqueId ownerId,
       @required StoreLocation location,
       @required StorePrefs prefs,
-      @required bool isOwner}) = _$_Store;
+      @required bool isOwner,
+      @required Map<String, bool> blockedUsers}) = _$_Store;
 
   @override
   UniqueId get id;
@@ -303,6 +326,8 @@ abstract class _Store extends Store {
   StorePrefs get prefs;
   @override
   bool get isOwner;
+  @override
+  Map<String, bool> get blockedUsers;
   @override
   _$StoreCopyWith<_Store> get copyWith;
 }

@@ -21,6 +21,9 @@ _$_StoreDto _$_$_StoreDtoFromJson(Map<String, dynamic> json) {
         : StorePrefsDto.fromJson(json['prefs'] as Map<String, dynamic>),
     serverTimeStamp:
         const ServerTimestampConverter().fromJson(json['serverTimeStamp']),
+    blockedUsers: (json['blockedUsers'] as Map<String, dynamic>)?.map(
+      (k, e) => MapEntry(k, e as bool),
+    ),
   );
 }
 
@@ -35,4 +38,5 @@ Map<String, dynamic> _$_$_StoreDtoToJson(_$_StoreDto instance) =>
       'prefs': instance.prefs?.toJson(),
       'serverTimeStamp':
           const ServerTimestampConverter().toJson(instance.serverTimeStamp),
+      'blockedUsers': instance.blockedUsers,
     };

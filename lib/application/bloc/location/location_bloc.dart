@@ -1,4 +1,4 @@
-import 'package:fluttertaladsod/application/bloc/core/action_state.dart';
+import 'package:fluttertaladsod/application/bloc/core/simple_progress_setter.dart';
 import 'package:fluttertaladsod/application/routes/router.dart';
 import 'package:fluttertaladsod/domain/location/i_location_repository.dart';
 import 'package:fluttertaladsod/domain/location/location.dart';
@@ -7,7 +7,8 @@ import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 
 class LocationBloc extends GetxController with SimepleProgressSetter<LocationFailure> {
-  final _iLocationRepository = Get.find<ILocationRepository>();
+  ILocationRepository get _iLocationRepository => Get.find();
+  
   final _location = Rx<LocationDomain>();
   LocationDomain get location => _location.value;
   bool isLocationGranted = false;

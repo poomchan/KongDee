@@ -1,15 +1,15 @@
 import 'package:fluttertaladsod/application/bloc/auth/auth_bloc.dart';
-import 'package:fluttertaladsod/application/bloc/core/action_state.dart';
-import 'package:fluttertaladsod/domain/auth/user.dart';
+import 'package:fluttertaladsod/application/bloc/core/simple_progress_setter.dart';
+import 'package:fluttertaladsod/domain/auth/user/user.dart';
+import 'package:fluttertaladsod/domain/auth/user/i_user_repository.dart';
 import 'package:fluttertaladsod/domain/core/value_objects.dart';
-import 'package:fluttertaladsod/domain/user/i_user_repository.dart';
 import 'package:get/get.dart';
 
 class ProfileBloc extends GetxController with SimepleProgressSetter {
   final userId = Get.arguments as UniqueId;
 
-  AuthBloc get authBloc => Get.find<AuthBloc>();
-  IUserRepository get _iUserRepo => Get.find<IUserRepository>();
+  AuthBloc get authBloc => Get.find();
+  IUserRepository get _iUserRepo => Get.find();
   bool get isOwner => userId == authBloc.user.id;
 
   final _user = Rx<UserDomain>();

@@ -22,6 +22,7 @@ abstract class Store implements _$Store {
     @required StoreLocation location,
     @required StorePrefs prefs,
     @required bool isOwner,
+    @required Map<String, bool> blockedUsers,
   }) = _Store;
 
   double distanceFrom(GeoPoint geoPoint) {
@@ -43,6 +44,7 @@ abstract class Store implements _$Store {
         location: StoreLocation.created(),
         prefs: StorePrefs.created(),
         isOwner: true,
+        blockedUsers: {},
       );
 
   Option<ValueFailure<dynamic>> get failureOption {

@@ -1,9 +1,9 @@
 import 'dart:async';
-import 'package:fluttertaladsod/application/bloc/core/action_state.dart';
+import 'package:fluttertaladsod/application/bloc/core/simple_progress_setter.dart';
 import 'package:fluttertaladsod/application/routes/router.dart';
 import 'package:fluttertaladsod/domain/auth/auth_failure.dart';
 import 'package:fluttertaladsod/domain/auth/i_auth_facade.dart';
-import 'package:fluttertaladsod/domain/auth/user.dart';
+import 'package:fluttertaladsod/domain/auth/user/user.dart';
 import 'package:get/get.dart';
 
 class AuthBloc extends GetxController with SimepleProgressSetter<AuthFailure> {

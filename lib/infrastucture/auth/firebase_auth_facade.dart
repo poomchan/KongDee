@@ -3,7 +3,7 @@ import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertaladsod/domain/auth/auth_failure.dart';
 import 'package:fluttertaladsod/domain/auth/i_auth_facade.dart';
-import 'package:fluttertaladsod/domain/auth/user.dart';
+import 'package:fluttertaladsod/domain/auth/user/user.dart';
 import 'package:fluttertaladsod/infrastucture/auth/user_dto.dart';
 import 'package:fluttertaladsod/infrastucture/core/firestore_helper.dart';
 import 'package:get/get.dart';

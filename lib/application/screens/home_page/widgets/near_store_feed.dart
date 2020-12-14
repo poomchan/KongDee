@@ -98,7 +98,7 @@ class NearStoreFeed extends ViewWidget<NearStoreBloc> {
           'No store nearby, try adding more radius',
         ),
         unexpected: (e) => Text(
-          'Unexpected Error \n For nerds: ${e.detail}',
+          'Unexpected Error \n For nerds: $e',
         ),
         locationNotGranted: () => null,
         timeout: () => Column(

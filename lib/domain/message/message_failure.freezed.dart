@@ -13,8 +13,10 @@ class _$MessageFailureTearOff {
   const _$MessageFailureTearOff();
 
 // ignore: unused_element
-  _Unexpected unexpected() {
-    return const _Unexpected();
+  _Unexpected unexpected(dynamic err) {
+    return _Unexpected(
+      err,
+    );
   }
 
 // ignore: unused_element
@@ -39,14 +41,14 @@ const $MessageFailure = _$MessageFailureTearOff();
 mixin _$MessageFailure {
   @optionalTypeArgs
   Result when<Result extends Object>({
-    @required Result unexpected(),
+    @required Result unexpected(dynamic err),
     @required Result severFailure(),
     @required Result noSuchMessage(),
     @required Result emptyChatRoom(),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
-    Result unexpected(),
+    Result unexpected(dynamic err),
     Result severFailure(),
     Result noSuchMessage(),
     Result emptyChatRoom(),
@@ -88,6 +90,7 @@ abstract class _$UnexpectedCopyWith<$Res> {
   factory _$UnexpectedCopyWith(
           _Unexpected value, $Res Function(_Unexpected) then) =
       __$UnexpectedCopyWithImpl<$Res>;
+  $Res call({dynamic err});
 }
 
 class __$UnexpectedCopyWithImpl<$Res> extends _$MessageFailureCopyWithImpl<$Res>
@@ -98,28 +101,48 @@ class __$UnexpectedCopyWithImpl<$Res> extends _$MessageFailureCopyWithImpl<$Res>
 
   @override
   _Unexpected get _value => super._value as _Unexpected;
+
+  @override
+  $Res call({
+    Object err = freezed,
+  }) {
+    return _then(_Unexpected(
+      err == freezed ? _value.err : err as dynamic,
+    ));
+  }
 }
 
 class _$_Unexpected implements _Unexpected {
-  const _$_Unexpected();
+  const _$_Unexpected(this.err) : assert(err != null);
+
+  @override
+  final dynamic err;
 
   @override
   String toString() {
-    return 'MessageFailure.unexpected()';
+    return 'MessageFailure.unexpected(err: $err)';
   }
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is _Unexpected);
+    return identical(this, other) ||
+        (other is _Unexpected &&
+            (identical(other.err, err) ||
+                const DeepCollectionEquality().equals(other.err, err)));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(err);
+
+  @override
+  _$UnexpectedCopyWith<_Unexpected> get copyWith =>
+      __$UnexpectedCopyWithImpl<_Unexpected>(this, _$identity);
 
   @override
   @optionalTypeArgs
   Result when<Result extends Object>({
-    @required Result unexpected(),
+    @required Result unexpected(dynamic err),
     @required Result severFailure(),
     @required Result noSuchMessage(),
     @required Result emptyChatRoom(),
@@ -128,13 +151,13 @@ class _$_Unexpected implements _Unexpected {
     assert(severFailure != null);
     assert(noSuchMessage != null);
     assert(emptyChatRoom != null);
-    return unexpected();
+    return unexpected(err);
   }
 
   @override
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
-    Result unexpected(),
+    Result unexpected(dynamic err),
     Result severFailure(),
     Result noSuchMessage(),
     Result emptyChatRoom(),
@@ -142,7 +165,7 @@ class _$_Unexpected implements _Unexpected {
   }) {
     assert(orElse != null);
     if (unexpected != null) {
-      return unexpected();
+      return unexpected(err);
     }
     return orElse();
   }
@@ -180,7 +203,10 @@ class _$_Unexpected implements _Unexpected {
 }
 
 abstract class _Unexpected implements MessageFailure {
-  const factory _Unexpected() = _$_Unexpected;
+  const factory _Unexpected(dynamic err) = _$_Unexpected;
+
+  dynamic get err;
+  _$UnexpectedCopyWith<_Unexpected> get copyWith;
 }
 
 abstract class _$SeverFailureCopyWith<$Res> {
@@ -219,7 +245,7 @@ class _$_SeverFailure implements _SeverFailure {
   @override
   @optionalTypeArgs
   Result when<Result extends Object>({
-    @required Result unexpected(),
+    @required Result unexpected(dynamic err),
     @required Result severFailure(),
     @required Result noSuchMessage(),
     @required Result emptyChatRoom(),
@@ -234,7 +260,7 @@ class _$_SeverFailure implements _SeverFailure {
   @override
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
-    Result unexpected(),
+    Result unexpected(dynamic err),
     Result severFailure(),
     Result noSuchMessage(),
     Result emptyChatRoom(),
@@ -319,7 +345,7 @@ class _$_NoSuchMessage implements _NoSuchMessage {
   @override
   @optionalTypeArgs
   Result when<Result extends Object>({
-    @required Result unexpected(),
+    @required Result unexpected(dynamic err),
     @required Result severFailure(),
     @required Result noSuchMessage(),
     @required Result emptyChatRoom(),
@@ -334,7 +360,7 @@ class _$_NoSuchMessage implements _NoSuchMessage {
   @override
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
-    Result unexpected(),
+    Result unexpected(dynamic err),
     Result severFailure(),
     Result noSuchMessage(),
     Result emptyChatRoom(),
@@ -419,7 +445,7 @@ class _$_EmptyChatRoom implements _EmptyChatRoom {
   @override
   @optionalTypeArgs
   Result when<Result extends Object>({
-    @required Result unexpected(),
+    @required Result unexpected(dynamic err),
     @required Result severFailure(),
     @required Result noSuchMessage(),
     @required Result emptyChatRoom(),
@@ -434,7 +460,7 @@ class _$_EmptyChatRoom implements _EmptyChatRoom {
   @override
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
-    Result unexpected(),
+    Result unexpected(dynamic err),
     Result severFailure(),
     Result noSuchMessage(),
     Result emptyChatRoom(),

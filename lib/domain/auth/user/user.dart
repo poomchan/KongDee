@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertaladsod/domain/core/value_objects.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'user.freezed.dart';
+part '../user.freezed.dart';
 
 @freezed
 abstract class UserDomain with _$UserDomain {

@@ -3,9 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:fluttertaladsod/application/bloc/auth/auth_bloc.dart';
-import 'package:fluttertaladsod/application/bloc/core/action_state.dart';
+import 'package:fluttertaladsod/application/bloc/core/simple_progress_setter.dart';
 import 'package:fluttertaladsod/application/screens/store/chat/bloc/message_view/message_view_state.dart';
-import 'package:fluttertaladsod/application/screens/store/chat/widgets/chat_avatar_dialog.dart';
 import 'package:fluttertaladsod/application/screens/store/view_page/bloc/store_view_bloc.dart';
 import 'package:fluttertaladsod/domain/message/i_message_repository.dart';
 import 'package:fluttertaladsod/domain/message/message.dart';
@@ -14,17 +13,14 @@ import 'package:get/get.dart';
 
 class MessageViewBloc extends GetxController
     with SimepleProgressSetter<MessageFailure> {
-  IMessageRepository get _iMessageRepository => Get.find<IMessageRepository>();
-  AuthBloc get _authBloc => Get.find<AuthBloc>();
-  StoreViewBloc get _storeViewBloc => Get.find<StoreViewBloc>();
+  IMessageRepository get _iMessageRepository => Get.find();
+  AuthBloc get _authBloc => Get.find();
+  StoreViewBloc get _storeViewBloc => Get.find();
 
   final _scrollController = ScrollController();
   ScrollController get scrollController => _scrollController;
 
-  /// rxList with listener
   List<MessageDomain> _recentMessageList = [];
-
-  /// List with no listener
   List<MessageDomain> _moreMessageList = [];
 
   MessageViewState state = MessageViewState.initial();
@@ -75,13 +71,6 @@ class MessageViewBloc extends GetxController
       );
       updateWithLoaded();
     });
-  }
-
-  void onMessageAvatarTapped(String name) {
-    showCupertinoModalPopup(
-      context: Get.context,
-      builder: (_) => buildAvatarActionSheet(name),
-    );
   }
 
   @override

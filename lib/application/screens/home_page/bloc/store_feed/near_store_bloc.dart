@@ -1,13 +1,13 @@
 import 'dart:async';
 import 'package:dartz/dartz.dart';
 import 'package:fluttertaladsod/application/bloc/auth/auth_bloc.dart';
+import 'package:fluttertaladsod/application/bloc/core/simple_progress_setter.dart';
 import 'package:fluttertaladsod/application/bloc/location/location_bloc.dart';
 import 'package:fluttertaladsod/domain/store/i_store_repository.dart';
 import 'package:fluttertaladsod/domain/store/store.dart';
 import 'package:fluttertaladsod/domain/store/store_failures.dart';
 import 'package:get/get.dart';
 import 'package:rxdart/subjects.dart';
-import '../../../../bloc/core/action_state.dart';
 
 class NearStoreBloc extends GetxController with SimepleProgressSetter<StoreFailure> {
   final _iStoreRepository = Get.find<IStoreRepository>();

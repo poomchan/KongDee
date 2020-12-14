@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertaladsod/application/bloc/core/action_state.dart';
+import 'package:fluttertaladsod/application/bloc/core/simple_progress_setter.dart';
 import 'package:fluttertaladsod/application/bloc/location/location_bloc.dart';
 import 'package:fluttertaladsod/application/core/components/dialogs.dart';
 import 'package:fluttertaladsod/domain/auth/i_auth_facade.dart';
@@ -15,10 +15,10 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:get/get.dart';
 
 class StoreFormBloc extends GetxController with SimepleProgressSetter {
-  final IImageRepository _iImageRepository = Get.find<IImageRepository>();
-  final IStoreRepository _iStoreRepository = Get.find<IStoreRepository>();
-  final IAuthFacade _iAuthFacade = Get.find<IAuthFacade>();
-  final _locationBloc = Get.find<LocationBloc>();
+  IImageRepository get _iImageRepository => Get.find();
+  IStoreRepository get _iStoreRepository => Get.find();
+  IAuthFacade get _iAuthFacade => Get.find();
+  LocationBloc get _locationBloc => Get.find();
 
   Store _store = Store.created();
   Store get store => _store;

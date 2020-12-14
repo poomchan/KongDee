@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:fluttertaladsod/application/bloc/auth/auth_bloc.dart';
-import 'package:fluttertaladsod/application/bloc/core/action_state.dart';
+import 'package:fluttertaladsod/application/bloc/core/simple_progress_setter.dart';
 import 'package:fluttertaladsod/domain/location/i_location_repository.dart';
 import 'package:fluttertaladsod/domain/store/i_store_repository.dart';
 import 'package:fluttertaladsod/domain/store/store.dart';
@@ -9,9 +9,9 @@ import 'package:get/get.dart';
 
 class OwnedStoreBloc extends GetxController
     with SimepleProgressSetter<StoreFailure> {
-  final IStoreRepository _iStoreRepo = Get.find<IStoreRepository>();
-  final ILocationRepository _iLocationRepo = Get.find<ILocationRepository>();
-  final _authBloc = Get.find<AuthBloc>();
+  IStoreRepository get _iStoreRepo => Get.find();
+  ILocationRepository get _iLocationRepo => Get.find();
+  AuthBloc get _authBloc => Get.find();
 
   final _store = Store.created().obs;
   Store get store => _store.value;
@@ -29,7 +29,7 @@ class OwnedStoreBloc extends GetxController
           loaded: () => _authBloc.user,
           orElse: () => throw 'user not authenticated',
         );
-        
+
         _ownedStoreSub = _iStoreRepo
             .watchOwnedStore(
               ownerId: user.id,

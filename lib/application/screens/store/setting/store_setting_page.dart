@@ -20,7 +20,7 @@ class StoreSettingPage extends ViewWidget<StoreSettingBloc> {
         title: Text('Store Setting'),
       ),
       body: GetBuilder<StoreViewBloc>(
-        builder: (watcherBloc) => watcherBloc.progress.when(
+        builder: (watch) => watch.progress.when(
           inital: () => const SizedBox(),
           loading: () => circularProgress(context),
           loaded: () => _buildSettingView(context),

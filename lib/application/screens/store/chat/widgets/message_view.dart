@@ -70,7 +70,7 @@ class MessageView extends ViewWidget<MessageViewBloc> {
   Widget _buildErrorWidget(BuildContext context) {
     return GetBuilder<MessageViewBloc>(
       builder: (bloc) => bloc.failure.when(
-        unexpected: () => Text('Unexpected Error'),
+        unexpected: (err) => Text('Unexpected Error: $err'),
         severFailure: () => Text('Server failure, please try again later'),
         noSuchMessage: () => Text("Error 404: No such message"),
         emptyChatRoom: () => Text("Let's send a message to the seller"),

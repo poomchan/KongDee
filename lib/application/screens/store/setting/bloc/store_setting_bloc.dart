@@ -1,4 +1,4 @@
-import 'package:fluttertaladsod/application/bloc/core/action_state.dart';
+import 'package:fluttertaladsod/application/bloc/core/simple_progress_setter.dart';
 import 'package:fluttertaladsod/application/screens/store/view_page/bloc/store_view_bloc.dart';
 import 'package:fluttertaladsod/domain/location/i_location_repository.dart';
 import 'package:fluttertaladsod/domain/store/i_store_repository.dart';
@@ -10,9 +10,10 @@ import 'package:get/get.dart';
 
 class StoreSettingBloc extends GetxController
     with SimepleProgressSetter<StoreFailure> {
-  final _watcherBloc = Get.find<StoreViewBloc>();
-  final _iLocationRepo = Get.find<ILocationRepository>();
-  final _iStoreRepo = Get.find<IStoreRepository>();
+  StoreViewBloc get _watcherBloc => Get.find();
+  ILocationRepository get _iLocationRepo => Get.find();
+  IStoreRepository get _iStoreRepo => Get.find();
+
   StoreLocation location;
   SellingRange sellingRange;
   bool isInfinite = true;
