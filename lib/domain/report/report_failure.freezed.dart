@@ -23,6 +23,11 @@ class _$ReportFailureTearOff {
   _ServerError serverError() {
     return const _ServerError();
   }
+
+// ignore: unused_element
+  _Timeout timeout() {
+    return const _Timeout();
+  }
 }
 
 // ignore: unused_element
@@ -33,22 +38,26 @@ mixin _$ReportFailure {
   Result when<Result extends Object>({
     @required Result unexpected(dynamic err),
     @required Result serverError(),
+    @required Result timeout(),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result unexpected(dynamic err),
     Result serverError(),
+    Result timeout(),
     @required Result orElse(),
   });
   @optionalTypeArgs
   Result map<Result extends Object>({
     @required Result unexpected(_Unexpected value),
     @required Result serverError(_ServerError value),
+    @required Result timeout(_Timeout value),
   });
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
     Result unexpected(_Unexpected value),
     Result serverError(_ServerError value),
+    Result timeout(_Timeout value),
     @required Result orElse(),
   });
 }
@@ -126,9 +135,11 @@ class _$_Unexpected implements _Unexpected {
   Result when<Result extends Object>({
     @required Result unexpected(dynamic err),
     @required Result serverError(),
+    @required Result timeout(),
   }) {
     assert(unexpected != null);
     assert(serverError != null);
+    assert(timeout != null);
     return unexpected(err);
   }
 
@@ -137,6 +148,7 @@ class _$_Unexpected implements _Unexpected {
   Result maybeWhen<Result extends Object>({
     Result unexpected(dynamic err),
     Result serverError(),
+    Result timeout(),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -151,9 +163,11 @@ class _$_Unexpected implements _Unexpected {
   Result map<Result extends Object>({
     @required Result unexpected(_Unexpected value),
     @required Result serverError(_ServerError value),
+    @required Result timeout(_Timeout value),
   }) {
     assert(unexpected != null);
     assert(serverError != null);
+    assert(timeout != null);
     return unexpected(this);
   }
 
@@ -162,6 +176,7 @@ class _$_Unexpected implements _Unexpected {
   Result maybeMap<Result extends Object>({
     Result unexpected(_Unexpected value),
     Result serverError(_ServerError value),
+    Result timeout(_Timeout value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -216,9 +231,11 @@ class _$_ServerError implements _ServerError {
   Result when<Result extends Object>({
     @required Result unexpected(dynamic err),
     @required Result serverError(),
+    @required Result timeout(),
   }) {
     assert(unexpected != null);
     assert(serverError != null);
+    assert(timeout != null);
     return serverError();
   }
 
@@ -227,6 +244,7 @@ class _$_ServerError implements _ServerError {
   Result maybeWhen<Result extends Object>({
     Result unexpected(dynamic err),
     Result serverError(),
+    Result timeout(),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -241,9 +259,11 @@ class _$_ServerError implements _ServerError {
   Result map<Result extends Object>({
     @required Result unexpected(_Unexpected value),
     @required Result serverError(_ServerError value),
+    @required Result timeout(_Timeout value),
   }) {
     assert(unexpected != null);
     assert(serverError != null);
+    assert(timeout != null);
     return serverError(this);
   }
 
@@ -252,6 +272,7 @@ class _$_ServerError implements _ServerError {
   Result maybeMap<Result extends Object>({
     Result unexpected(_Unexpected value),
     Result serverError(_ServerError value),
+    Result timeout(_Timeout value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -264,4 +285,95 @@ class _$_ServerError implements _ServerError {
 
 abstract class _ServerError implements ReportFailure {
   const factory _ServerError() = _$_ServerError;
+}
+
+abstract class _$TimeoutCopyWith<$Res> {
+  factory _$TimeoutCopyWith(_Timeout value, $Res Function(_Timeout) then) =
+      __$TimeoutCopyWithImpl<$Res>;
+}
+
+class __$TimeoutCopyWithImpl<$Res> extends _$ReportFailureCopyWithImpl<$Res>
+    implements _$TimeoutCopyWith<$Res> {
+  __$TimeoutCopyWithImpl(_Timeout _value, $Res Function(_Timeout) _then)
+      : super(_value, (v) => _then(v as _Timeout));
+
+  @override
+  _Timeout get _value => super._value as _Timeout;
+}
+
+class _$_Timeout implements _Timeout {
+  const _$_Timeout();
+
+  @override
+  String toString() {
+    return 'ReportFailure.timeout()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is _Timeout);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result unexpected(dynamic err),
+    @required Result serverError(),
+    @required Result timeout(),
+  }) {
+    assert(unexpected != null);
+    assert(serverError != null);
+    assert(timeout != null);
+    return timeout();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result unexpected(dynamic err),
+    Result serverError(),
+    Result timeout(),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (timeout != null) {
+      return timeout();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result unexpected(_Unexpected value),
+    @required Result serverError(_ServerError value),
+    @required Result timeout(_Timeout value),
+  }) {
+    assert(unexpected != null);
+    assert(serverError != null);
+    assert(timeout != null);
+    return timeout(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result unexpected(_Unexpected value),
+    Result serverError(_ServerError value),
+    Result timeout(_Timeout value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (timeout != null) {
+      return timeout(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Timeout implements ReportFailure {
+  const factory _Timeout() = _$_Timeout;
 }

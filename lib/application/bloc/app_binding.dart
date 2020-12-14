@@ -17,7 +17,7 @@ import 'package:fluttertaladsod/infrastucture/store/store_repository.dart';
 import 'package:fluttertaladsod/infrastucture/user/user_repository.dart';
 import 'package:get/get.dart';
 
-class AppBinding extends Bindings{
+class AppBinding extends Bindings {
   final m = InjectMod();
   @override
   void dependencies() {
@@ -32,13 +32,13 @@ class AppBinding extends Bindings{
     Get.lazyPut(() => m.imagePicker);
 
     /// App Interfaces
-    Get.lazyPut<ILocationRepository>(() => LocationRepository());
-    Get.lazyPut<IAuthFacade>(() => FirebaseAuthFacade());
-    Get.lazyPut<IStoreRepository>(() => StoreRepository());
-    Get.lazyPut<IImageRepository>(() => ImageRepository());
-    Get.lazyPut<IMessageRepository>(() => MessageRepository());
-    Get.lazyPut<IUserRepository>(() => UserRepository());
-    Get.lazyPut<IReportRepository>(() => ReportRepository());
+    Get.lazyPut<ILocationRepository>(() => LocationRepository(), fenix: true);
+    Get.lazyPut<IAuthFacade>(() => FirebaseAuthFacade(), fenix: true);
+    Get.lazyPut<IStoreRepository>(() => StoreRepository(), fenix: true);
+    Get.lazyPut<IImageRepository>(() => ImageRepository(), fenix: true);
+    Get.lazyPut<IMessageRepository>(() => MessageRepository(), fenix: true);
+    Get.lazyPut<IUserRepository>(() => UserRepository(), fenix: true);
+    Get.lazyPut<IReportRepository>(() => ReportRepository(), fenix: true);
 
     /// Global Blocs
     Get.put(AuthBloc());
@@ -46,4 +46,4 @@ class AppBinding extends Bindings{
   }
 }
 
-class InjectMod extends InjectableModule{}
+class InjectMod extends InjectableModule {}

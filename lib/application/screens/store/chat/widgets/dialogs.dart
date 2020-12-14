@@ -59,7 +59,6 @@ Widget buildReportDialog() {
         orElse: () => [],
       ),
     ),
-    dispose: (_) => Get.delete<ActionBloc>(),
   );
 }
 
@@ -71,7 +70,6 @@ Widget buildBlockingDialog() {
       loaded: () => const SizedBox(),
       failure: () => buildErrorDialog(),
     ),
-    dispose: (_) => Get.delete<ActionBloc>(),
   );
 }
 

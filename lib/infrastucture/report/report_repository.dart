@@ -17,7 +17,11 @@ class ReportRepository implements IReportRepository {
       await _firestore
           .collection('reports')
           .doc(UniqueId().getOrCrash())
-          .set(data);
+          .set(data)
+          .timeout(
+            Duration(seconds: 5),
+            onTimeout: () => left(ReportFailure.timeout()),
+          );
       return right(unit);
     } catch (err) {
       return left(ReportFailure.unexpected(err));

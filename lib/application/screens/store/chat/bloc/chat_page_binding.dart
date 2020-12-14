@@ -12,7 +12,13 @@ class ChatPB extends Bindings {
   void dependencies() {
     Get.lazyPut(() => InputBarBloc());
     Get.lazyPut(() => MessageViewBloc());
-    Get.lazyPut(() => ActionBloc(), fenix: true);
+    Get.lazyPut(() => ActionBloc());
+  }
+
+  static void close() {
+    Get.delete<ActionBloc>();
+    Get.delete<InputBarBloc>();
+    Get.delete<MessageViewBloc>();
   }
 
 }

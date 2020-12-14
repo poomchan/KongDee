@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:dartz/dartz.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttertaladsod/application/bloc/auth/auth_bloc.dart';
 import 'package:fluttertaladsod/application/bloc/core/simple_progress_setter.dart';
 import 'package:fluttertaladsod/application/screens/store/chat/bloc/action/chat_user.dart';
@@ -16,13 +17,13 @@ import 'package:fluttertaladsod/domain/store/store_failures.dart';
 import 'package:get/get.dart';
 
 class ActionBloc extends GetxController with SimepleProgressSetter<dynamic> {
-  IReportRepository get _iReportRepositoty => Get.find();
+  IReportRepository get _iReportRepository => Get.find();
   IStoreRepository get _iStoreRepository => Get.find();
   StoreViewBloc get _storeViewBloc => Get.find();
   AuthBloc get _authBloc => Get.find();
 
   ChatUser user;
-  String reportReason;
+  String reportReason = '';
   bool isActionSheetDismissable = true;
 
   bool get isBlocked {
@@ -37,6 +38,7 @@ class ActionBloc extends GetxController with SimepleProgressSetter<dynamic> {
 
   void onMessageAvatarTapped(String name, String userId) {
     updateWithLoaded();
+    HapticFeedback.mediumImpact();
     user = ChatUser(name: name, id: userId);
     showCupertinoModalPopup(
       context: Get.context,
@@ -54,7 +56,12 @@ class ActionBloc extends GetxController with SimepleProgressSetter<dynamic> {
     final fOrUnit = await _blockUser(block);
     fOrUnit.fold(
       (f) => updateWithFailure(MessageFailure.unexpected(f)),
-      (unit) => Get.back(),
+      (unit) async {
+        Get.back();
+        HapticFeedback.lightImpact();
+        await Future.delayed(Duration(milliseconds: 100));
+        HapticFeedback.mediumImpact();
+      },
     );
   }
 
@@ -79,20 +86,29 @@ class ActionBloc extends GetxController with SimepleProgressSetter<dynamic> {
   }
 
   Future<void> onReportSubmitTapped() async {
-    updateWithLoading();
-    final user = _authBloc.user;
-    final fOrUnit = await _iReportRepositoty.sendReport(Report.user(
-      reporter: user.id,
-      userId: UniqueId.fromUniqueString(this.user.id),
-      description: reportReason,
-    ));
-    fOrUnit.fold(
-      (f) => updateWithFailure(f),
-      (unit) {
-        updateWithLoaded();
-        Get.back();
-      },
-    );
+    try {
+      updateWithLoading();
+      final user = _authBloc.user;
+      final fOrUnit = await _iReportRepository.sendReport(
+        Report.user(
+          reporter: user.id,
+          userId: UniqueId.fromUniqueString(this.user.id),
+          description: reportReason,
+        ),
+      );
+      fOrUnit.fold(
+        (f) => updateWithFailure(f),
+        (unit) async {
+          updateWithLoaded();
+          HapticFeedback.lightImpact();
+          await Future.delayed(Duration(milliseconds: 100));
+          HapticFeedback.mediumImpact();
+          Get.back();
+        },
+      );
+    } catch (e) {
+      print(e);
+    }
   }
 
   @override
