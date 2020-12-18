@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertaladsod/application/bloc/auth/auth_bloc.dart';
 import 'package:fluttertaladsod/application/bloc/core/simple_progress_setter.dart';
+import 'package:fluttertaladsod/application/core/haptic_feedback.dart';
 import 'package:fluttertaladsod/application/screens/store/chat/bloc/action/chat_user.dart';
 import 'package:fluttertaladsod/application/screens/store/chat/widgets/dialogs.dart';
 import 'package:fluttertaladsod/application/screens/store/view_page/bloc/store_view_bloc.dart';
@@ -16,24 +17,20 @@ import 'package:fluttertaladsod/domain/store/i_store_repository.dart';
 import 'package:fluttertaladsod/domain/store/store_failures.dart';
 import 'package:get/get.dart';
 
-class ActionBloc extends GetxController with SimepleProgressSetter<dynamic> {
+class ChatUserActionSheetBloc extends GetxController
+    with SimepleProgressSetter<dynamic> {
   IReportRepository get _iReportRepository => Get.find();
   IStoreRepository get _iStoreRepository => Get.find();
   StoreViewBloc get _storeViewBloc => Get.find();
   AuthBloc get _authBloc => Get.find();
 
+  bool get isStoreOwner => _storeViewBloc.isStoreOwner;
   ChatUser user;
   String reportReason = '';
-  bool isActionSheetDismissable = true;
 
   bool get isBlocked {
-    final blockedUsers = _storeViewBloc.store.blockedUsers;
-    if (blockedUsers.containsKey(user.id)) {
-      if (blockedUsers[user.id] == true) {
-        return true;
-      }
-    }
-    return false;
+    final map = _storeViewBloc.store.blockedUsers;
+    return map[user.id] == true;
   }
 
   void onMessageAvatarTapped(String name, String userId) {
@@ -58,9 +55,7 @@ class ActionBloc extends GetxController with SimepleProgressSetter<dynamic> {
       (f) => updateWithFailure(MessageFailure.unexpected(f)),
       (unit) async {
         Get.back();
-        HapticFeedback.lightImpact();
-        await Future.delayed(Duration(milliseconds: 100));
-        HapticFeedback.mediumImpact();
+        await doubleHapticFeedback();
       },
     );
   }
@@ -86,29 +81,23 @@ class ActionBloc extends GetxController with SimepleProgressSetter<dynamic> {
   }
 
   Future<void> onReportSubmitTapped() async {
-    try {
-      updateWithLoading();
-      final user = _authBloc.user;
-      final fOrUnit = await _iReportRepository.sendReport(
-        Report.user(
-          reporter: user.id,
-          userId: UniqueId.fromUniqueString(this.user.id),
-          description: reportReason,
-        ),
-      );
-      fOrUnit.fold(
-        (f) => updateWithFailure(f),
-        (unit) async {
-          updateWithLoaded();
-          HapticFeedback.lightImpact();
-          await Future.delayed(Duration(milliseconds: 100));
-          HapticFeedback.mediumImpact();
-          Get.back();
-        },
-      );
-    } catch (e) {
-      print(e);
-    }
+    updateWithLoading();
+    final user = _authBloc.user;
+    final fOrUnit = await _iReportRepository.sendReport(
+      Report.user(
+        reporter: user.id,
+        userId: UniqueId.fromUniqueString(this.user.id),
+        description: reportReason,
+      ),
+    );
+    fOrUnit.fold(
+      (f) => updateWithFailure(f),
+      (unit) async {
+        updateWithLoaded();
+        await doubleHapticFeedback();
+        Get.back();
+      },
+    );
   }
 
   @override

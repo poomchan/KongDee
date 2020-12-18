@@ -11,9 +11,9 @@ import 'package:rxdart/subjects.dart';
 
 class NearStoreBloc extends GetxController
     with SimepleProgressSetter<StoreFailure> {
-  final _iStoreRepository = Get.find<IStoreRepository>();
-  final _authBloc = Get.find<AuthBloc>();
-  final _locationBloc = Get.find<LocationBloc>();
+  IStoreRepository get _iStoreRepository => Get.find();
+  AuthBloc get _authBloc => Get.find();
+  LocationBloc get _locationBloc => Get.find();
 
   static const initRad = 1.0;
 
@@ -27,39 +27,42 @@ class NearStoreBloc extends GetxController
   final radiusSubject = BehaviorSubject<double>.seeded(1.0);
 
   @override
-  Future<void> onReady() async {
+  void onReady() {
     super.onReady();
-    authSub = _authBloc.rxIsAuth.listen(
-      (isAuth) async {
-        await watchNearbyStore();
-      },
-    );
+    watchNearbyStore();
+    authSub = _authBloc.rxUser.listen((_) => watchNearbyStore());
   }
 
-  Future<void> watchNearbyStore() async {
+  void watchNearbyStore() {
     updateWithLoading();
     final location = _locationBloc.location;
     final user = _authBloc.user;
     storeSub = _iStoreRepository
         .watchNearbyStore(
-            location: location, rad: radiusSubject, userOption: optionOf(user))
+          location: location,
+          rad: radiusSubject,
+          userOption: optionOf(user),
+        )
         .listen(
           (failureOrStoreList) => failureOrStoreList.fold(
             (f) => updateWithFailure(f),
             (storeList) {
-              this.storeList = filterBlockedUsers(storeList).obs;
+              this.storeList = filterBlocked(storeList).obs;
               updateWithLoaded();
             },
           ),
         );
   }
 
-  List<Store> filterBlockedUsers(List<Store> sl) {
+  List<Store> filterBlocked(List<Store> sl) {
     if (_authBloc.isAuth) {
       final List<Store> filteredList = [];
       final watcherId = _authBloc.user.id.getOrCrash();
+      final userBlocked = _authBloc.user.blockedStores;
       for (final s in sl) {
-        if (s.blockedUsers[watcherId] != true) filteredList.add(s);
+        final blockedByUser = userBlocked[s.id.getOrCrash()] == true;
+        final blockedByStore = s.blockedUsers[watcherId] != true;
+        if (!blockedByUser || !blockedByStore) filteredList.add(s);
       }
       return filteredList;
     }
@@ -79,10 +82,11 @@ class NearStoreBloc extends GetxController
 
   @override
   void onClose() {
-    storeList.close();
-    _rad.close();
-    radiusSubject.close();
-    storeSub.cancel();
+    storeList?.close();
+    _rad?.close();
+    radiusSubject?.close();
+    storeSub?.cancel();
+    authSub?.cancel();
     super.onClose();
   }
 }

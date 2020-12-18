@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertaladsod/application/bloc/core/view_widget.dart';
 import 'package:fluttertaladsod/application/core/components/my_network_image.dart';
 import 'package:fluttertaladsod/application/core/components/progress_indicator.dart';
+import 'package:fluttertaladsod/application/screens/store/view_page/bloc/store_action_sheet_bloc.dart';
 import 'package:fluttertaladsod/application/screens/store/view_page/bloc/store_view_bloc.dart';
 import 'package:get/get.dart';
 
 import '../../constant.dart';
 
-class BannerAppbar2 extends StatelessWidget {
+class BannerAppbar2 extends ViewWidget<StoreViewBloc> {
   const BannerAppbar2();
 
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
+      actions: [buildMoreButton()],
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(20.0),
@@ -47,6 +50,17 @@ class BannerAppbar2 extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  Widget buildMoreButton() {
+    return GetBuilder<StoreActionSheetBloc>(
+      builder: (bloc) => bloc.isStoreOwner
+          ? IconButton(
+              icon: Icon(Icons.more_horiz),
+              onPressed: bloc.onMoreTapped,
+            )
+          : const SizedBox(),
     );
   }
 

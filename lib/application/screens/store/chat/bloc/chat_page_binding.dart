@@ -2,7 +2,7 @@
 
 import 'package:get/get.dart';
 
-import 'action/action_bloc.dart';
+import 'action/chat_user_action_sheet_bloc.dart';
 import 'input_bar/input_bar_bloc.dart';
 import 'message_view/message_view_bloc.dart';
 
@@ -12,11 +12,11 @@ class ChatPB extends Bindings {
   void dependencies() {
     Get.lazyPut(() => InputBarBloc());
     Get.lazyPut(() => MessageViewBloc());
-    Get.lazyPut(() => ActionBloc());
+    Get.lazyPut(() => ChatUserActionSheetBloc());
   }
 
   static void close() {
-    Get.delete<ActionBloc>();
+    Get.delete<ChatUserActionSheetBloc>();
     Get.delete<InputBarBloc>();
     Get.delete<MessageViewBloc>();
   }

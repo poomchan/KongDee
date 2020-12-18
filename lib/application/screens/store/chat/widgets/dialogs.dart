@@ -1,13 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertaladsod/application/core/components/progress_indicator.dart';
-import 'package:fluttertaladsod/application/screens/store/chat/bloc/action/action_bloc.dart';
-import 'package:fluttertaladsod/application/screens/store/view_page/bloc/store_view_bloc.dart';
+import 'package:fluttertaladsod/application/screens/store/chat/bloc/action/chat_user_action_sheet_bloc.dart';
 import 'package:get/get.dart';
 
 Widget buildAvatarActionSheet() {
-  final storeBloc = Get.find<StoreViewBloc>();
-  return GetBuilder<ActionBloc>(
+  return GetBuilder<ChatUserActionSheetBloc>(
     builder: (bloc) {
       final name = bloc.user.name;
       return bloc.progress.when(
@@ -15,7 +13,7 @@ Widget buildAvatarActionSheet() {
         loading: () => circularProgress(),
         loaded: () => CupertinoActionSheet(
           actions: [
-            if (storeBloc.isStoreOwner)
+            if (bloc.isStoreOwner)
               CupertinoActionSheetAction(
                 onPressed: () => bloc.onBlockUserTapped(block: !bloc.isBlocked),
                 isDestructiveAction: true,
@@ -39,7 +37,7 @@ Widget buildAvatarActionSheet() {
 }
 
 Widget buildReportDialog() {
-  return GetBuilder<ActionBloc>(
+  return GetBuilder<ChatUserActionSheetBloc>(
     builder: (bloc) => AlertDialog(
       title: Text('Why do you want to report?'),
       content: TextField(
@@ -63,7 +61,7 @@ Widget buildReportDialog() {
 }
 
 Widget buildBlockingDialog() {
-  return GetBuilder<ActionBloc>(
+  return GetBuilder<ChatUserActionSheetBloc>(
     builder: (bloc) => bloc.progress.when(
       inital: () => throw 'bloc has not init properly',
       loading: () => circularProgress(),
@@ -74,7 +72,7 @@ Widget buildBlockingDialog() {
 }
 
 Widget buildErrorDialog() {
-  return GetBuilder<ActionBloc>(
+  return GetBuilder<ChatUserActionSheetBloc>(
     builder: (bloc) => AlertDialog(
       title: Text('We are sorry =('),
       content: Text(

@@ -27,7 +27,7 @@ class StoreViewBloc extends GetxController
   Rx<Store> get rxStore => _store;
   set store(Store store) => _store.value = store;
 
-  bool get isStoreOwner => _authBloc.user.id == store.ownerId;
+  bool get isStoreOwner => _authBloc.user?.id == store?.ownerId ?? false;
 
   Future<void> watchStoreStarted({@required UniqueId storeId}) async {
     assert(storeId != null);
@@ -64,6 +64,10 @@ class StoreViewBloc extends GetxController
         Get.offAllNamed(Routes.homePage);
       }
     }
+  }
+
+  void onMoreTapped() {
+    
   }
 
   @override

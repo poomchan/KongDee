@@ -13,7 +13,7 @@ abstract class Report with _$Report {
     @required String description,
   }) = _User;
   const factory Report.store({
-    @required UniqueId storesId,
+    @required UniqueId storeId,
     @required UniqueId reporter,
     @required String description,
   }) = _Store;

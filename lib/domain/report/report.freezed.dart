@@ -26,11 +26,11 @@ class _$ReportTearOff {
 
 // ignore: unused_element
   _Store store(
-      {@required UniqueId storesId,
+      {@required UniqueId storeId,
       @required UniqueId reporter,
       @required String description}) {
     return _Store(
-      storesId: storesId,
+      storeId: storeId,
       reporter: reporter,
       description: description,
     );
@@ -49,12 +49,12 @@ mixin _$Report {
     @required
         Result user(UniqueId userId, UniqueId reporter, String description),
     @required
-        Result store(UniqueId storesId, UniqueId reporter, String description),
+        Result store(UniqueId storeId, UniqueId reporter, String description),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result user(UniqueId userId, UniqueId reporter, String description),
-    Result store(UniqueId storesId, UniqueId reporter, String description),
+    Result store(UniqueId storeId, UniqueId reporter, String description),
     @required Result orElse(),
   });
   @optionalTypeArgs
@@ -190,7 +190,7 @@ class _$_User with DiagnosticableTreeMixin implements _User {
     @required
         Result user(UniqueId userId, UniqueId reporter, String description),
     @required
-        Result store(UniqueId storesId, UniqueId reporter, String description),
+        Result store(UniqueId storeId, UniqueId reporter, String description),
   }) {
     assert(user != null);
     assert(store != null);
@@ -201,7 +201,7 @@ class _$_User with DiagnosticableTreeMixin implements _User {
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result user(UniqueId userId, UniqueId reporter, String description),
-    Result store(UniqueId storesId, UniqueId reporter, String description),
+    Result store(UniqueId storeId, UniqueId reporter, String description),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -256,7 +256,7 @@ abstract class _$StoreCopyWith<$Res> implements $ReportCopyWith<$Res> {
   factory _$StoreCopyWith(_Store value, $Res Function(_Store) then) =
       __$StoreCopyWithImpl<$Res>;
   @override
-  $Res call({UniqueId storesId, UniqueId reporter, String description});
+  $Res call({UniqueId storeId, UniqueId reporter, String description});
 }
 
 class __$StoreCopyWithImpl<$Res> extends _$ReportCopyWithImpl<$Res>
@@ -269,12 +269,12 @@ class __$StoreCopyWithImpl<$Res> extends _$ReportCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object storesId = freezed,
+    Object storeId = freezed,
     Object reporter = freezed,
     Object description = freezed,
   }) {
     return _then(_Store(
-      storesId: storesId == freezed ? _value.storesId : storesId as UniqueId,
+      storeId: storeId == freezed ? _value.storeId : storeId as UniqueId,
       reporter: reporter == freezed ? _value.reporter : reporter as UniqueId,
       description:
           description == freezed ? _value.description : description as String,
@@ -284,15 +284,15 @@ class __$StoreCopyWithImpl<$Res> extends _$ReportCopyWithImpl<$Res>
 
 class _$_Store with DiagnosticableTreeMixin implements _Store {
   const _$_Store(
-      {@required this.storesId,
+      {@required this.storeId,
       @required this.reporter,
       @required this.description})
-      : assert(storesId != null),
+      : assert(storeId != null),
         assert(reporter != null),
         assert(description != null);
 
   @override
-  final UniqueId storesId;
+  final UniqueId storeId;
   @override
   final UniqueId reporter;
   @override
@@ -300,7 +300,7 @@ class _$_Store with DiagnosticableTreeMixin implements _Store {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Report.store(storesId: $storesId, reporter: $reporter, description: $description)';
+    return 'Report.store(storeId: $storeId, reporter: $reporter, description: $description)';
   }
 
   @override
@@ -308,7 +308,7 @@ class _$_Store with DiagnosticableTreeMixin implements _Store {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'Report.store'))
-      ..add(DiagnosticsProperty('storesId', storesId))
+      ..add(DiagnosticsProperty('storeId', storeId))
       ..add(DiagnosticsProperty('reporter', reporter))
       ..add(DiagnosticsProperty('description', description));
   }
@@ -317,9 +317,9 @@ class _$_Store with DiagnosticableTreeMixin implements _Store {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _Store &&
-            (identical(other.storesId, storesId) ||
+            (identical(other.storeId, storeId) ||
                 const DeepCollectionEquality()
-                    .equals(other.storesId, storesId)) &&
+                    .equals(other.storeId, storeId)) &&
             (identical(other.reporter, reporter) ||
                 const DeepCollectionEquality()
                     .equals(other.reporter, reporter)) &&
@@ -331,7 +331,7 @@ class _$_Store with DiagnosticableTreeMixin implements _Store {
   @override
   int get hashCode =>
       runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(storesId) ^
+      const DeepCollectionEquality().hash(storeId) ^
       const DeepCollectionEquality().hash(reporter) ^
       const DeepCollectionEquality().hash(description);
 
@@ -345,23 +345,23 @@ class _$_Store with DiagnosticableTreeMixin implements _Store {
     @required
         Result user(UniqueId userId, UniqueId reporter, String description),
     @required
-        Result store(UniqueId storesId, UniqueId reporter, String description),
+        Result store(UniqueId storeId, UniqueId reporter, String description),
   }) {
     assert(user != null);
     assert(store != null);
-    return store(storesId, reporter, description);
+    return store(storeId, reporter, description);
   }
 
   @override
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result user(UniqueId userId, UniqueId reporter, String description),
-    Result store(UniqueId storesId, UniqueId reporter, String description),
+    Result store(UniqueId storeId, UniqueId reporter, String description),
     @required Result orElse(),
   }) {
     assert(orElse != null);
     if (store != null) {
-      return store(storesId, reporter, description);
+      return store(storeId, reporter, description);
     }
     return orElse();
   }
@@ -394,11 +394,11 @@ class _$_Store with DiagnosticableTreeMixin implements _Store {
 
 abstract class _Store implements Report {
   const factory _Store(
-      {@required UniqueId storesId,
+      {@required UniqueId storeId,
       @required UniqueId reporter,
       @required String description}) = _$_Store;
 
-  UniqueId get storesId;
+  UniqueId get storeId;
   @override
   UniqueId get reporter;
   @override

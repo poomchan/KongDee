@@ -40,7 +40,7 @@ abstract class ReportDto implements _$ReportDto {
       ),
       store: (s) => ReportDto.store(
         type: 'STORE',
-        storeId: s.storesId.getOrCrash(),
+        storeId: s.storeId.getOrCrash(),
         reporter: s.reporter.getOrCrash(),
         description: s.description,
         received: false,
@@ -56,7 +56,7 @@ abstract class ReportDto implements _$ReportDto {
           description: u.description,
         ),
         store: (s) => Report.store(
-          storesId: UniqueId.fromUniqueString(s.storeId),
+          storeId: UniqueId.fromUniqueString(s.storeId),
           reporter: UniqueId.fromUniqueString(s.reporter),
           description: s.description,
         ),
