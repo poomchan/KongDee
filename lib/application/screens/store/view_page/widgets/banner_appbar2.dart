@@ -56,11 +56,11 @@ class BannerAppbar2 extends ViewWidget<StoreViewBloc> {
   Widget buildMoreButton() {
     return GetBuilder<StoreActionSheetBloc>(
       builder: (bloc) => bloc.isStoreOwner
-          ? IconButton(
+          ? const SizedBox()
+          : IconButton(
               icon: Icon(Icons.more_horiz),
               onPressed: bloc.onMoreTapped,
-            )
-          : const SizedBox(),
+            ),
     );
   }
 

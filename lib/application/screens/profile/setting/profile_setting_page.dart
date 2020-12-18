@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertaladsod/application/bloc/auth/auth_bloc.dart';
+import 'package:fluttertaladsod/application/bloc/core/view_widget.dart';
 import 'package:fluttertaladsod/application/routes/router.dart';
+import 'package:fluttertaladsod/application/screens/profile/setting/bloc/blocked_store_bloc.dart';
+import 'package:fluttertaladsod/application/screens/profile/setting/bloc/profile_setting_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:settings_ui/settings_ui.dart';
 
-class ProfileSettingPage extends StatelessWidget {
+class ProfileSettingPage extends ViewWidget<ProfileSettingBloc> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,11 +33,11 @@ class ProfileSettingPage extends StatelessWidget {
                     leading: Icon(Icons.language),
                     onTap: () => Get.toNamed(Routes.languageSettingPage),
                   ),
-                  SettingsTile.switchTile(
-                    title: 'Use fingerprint',
-                    leading: Icon(Icons.fingerprint),
-                    switchValue: true,
-                    onToggle: (bool value) {},
+                  SettingsTile(
+                    title: 'Blocked store',
+                    subtitle: '',
+                    leading: Icon(Icons.block),
+                    onTap: () => Get.toNamed(Routes.blockedStoreSettingPage),
                   ),
                 ],
               ),

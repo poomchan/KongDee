@@ -64,7 +64,7 @@ class StoreViewPage2 extends ViewWidget<StoreViewBloc> {
             ],
           ),
           body: CustomScrollView(
-            slivers: <Widget>[
+            slivers: <Widget> [
               const BannerAppbar2(),
               SliverToBoxAdapter(
                 child: Column(

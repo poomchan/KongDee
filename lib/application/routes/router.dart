@@ -4,6 +4,8 @@ import 'package:fluttertaladsod/application/screens/home_page/bloc/home_page_bin
 import 'package:fluttertaladsod/application/screens/home_page/home_page.dart';
 import 'package:fluttertaladsod/application/screens/profile/bloc/profile_page_binding.dart';
 import 'package:fluttertaladsod/application/screens/profile/profile_page.dart';
+import 'package:fluttertaladsod/application/screens/profile/setting/bloc/profile_setting_pb.dart';
+import 'package:fluttertaladsod/application/screens/profile/setting/blocked_store_setting.dart';
 import 'package:fluttertaladsod/application/screens/profile/setting/language.dart';
 import 'package:fluttertaladsod/application/screens/profile/setting/profile_setting_page.dart';
 import 'package:fluttertaladsod/application/screens/splash/sign_in/sign_in_page_binding.dart';
@@ -88,7 +90,7 @@ class Router {
     GetPage(
       name: Routes.profileSettingPage,
       page: () => ProfileSettingPage(),
-      binding: ProfilePB(),
+      binding: ProfileSettingPB(),
       transitionDuration: Duration(milliseconds: 500),
     ),
     GetPage(
@@ -109,6 +111,10 @@ class Router {
       binding: SignInPB(),
       fullscreenDialog: true,
     ),
+    GetPage(
+      name: Routes.blockedStoreSettingPage,
+      page: () => BlockedStoreSetting(),
+    ),
   ];
 }
 
@@ -126,4 +132,5 @@ class Routes {
   static const storeSettingPage = '/store-setting';
   static const locationSettingPage = '/location-setting';
   static const sellingRangeSettingPage = '/selling-range-setting';
+  static const blockedStoreSettingPage = '/blocked-store-setting-page';
 }
