@@ -10,8 +10,6 @@ import 'package:settings_ui/settings_ui.dart';
 
 class StoreSettingPage extends ViewWidget<StoreSettingBloc> {
 
-  StoreViewBloc get watch => bloc.watherBloc;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,7 +18,7 @@ class StoreSettingPage extends ViewWidget<StoreSettingBloc> {
         title: Text('Store Setting'),
       ),
       body: GetBuilder<StoreViewBloc>(
-        builder: (watch) => watch.progress.when(
+        builder: (watcher) => watcher.progress.when(
           inital: () => const SizedBox(),
           loading: () => circularProgress(context),
           loaded: () => _buildSettingView(context),
@@ -42,21 +40,21 @@ class StoreSettingPage extends ViewWidget<StoreSettingBloc> {
               SettingsTile.switchTile(
                 title: 'Open/Close Store',
                 leading: Icon(FontAwesomeIcons.clock),
-                switchValue: watch.store.prefs.isOpen,
+                switchValue: bloc.store.prefs.isOpen,
                 onToggle: (bool val) {
                   bloc.onStoreOpenToggled(isOpen: val);
                 },
               ),
               SettingsTile(
                 title: 'Store Location',
-                subtitle: watch.store.location.address.getOrCrash(),
+                subtitle: bloc.store.location.address.getOrCrash(),
                 leading: Icon(Icons.gps_fixed),
                 onTap: () => Get.toNamed(Routes.locationSettingPage),
               ),
               SettingsTile(
                   title: 'Selling Range',
                   subtitle:
-                      'with in ${watch.store.prefs.sellingRange.getOrCrash()} km',
+                      'with in ${bloc.store.prefs.sellingRange.getOrCrash()} km',
                   leading: Icon(Icons.near_me),
                   onTap: () => Get.toNamed(Routes.sellingRangeSettingPage)),
             ],
@@ -68,17 +66,13 @@ class StoreSettingPage extends ViewWidget<StoreSettingBloc> {
             SettingsTile.switchTile(
               title: 'Notifications',
               leading: Icon(Icons.notifications),
-              switchValue: watch.store.prefs.isNotificationOn,
+              switchValue: bloc.store.prefs.isNotificationOn,
               onToggle: (val) => bloc.onStoreNotificationToggled(isOn: val),
             ),
             SettingsTile(
               title: 'Blocked Users',
               leading: Icon(Icons.block),
-              onTap: () => showAboutDialog(
-                context: context,
-                applicationName: 'Kong Dee',
-                applicationVersion: '0.0.1',
-              ),
+              onTap: () => Get.toNamed(Routes.blockedUsersSettingPage),
             ),
           ],
         ),

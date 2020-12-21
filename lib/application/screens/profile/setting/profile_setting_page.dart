@@ -37,7 +37,7 @@ class ProfileSettingPage extends ViewWidget<ProfileSettingBloc> {
                     title: 'Blocked store',
                     subtitle: '',
                     leading: Icon(Icons.block),
-                    onTap: () => Get.toNamed(Routes.blockedStoreSettingPage),
+                    onTap: () => Get.toNamed(Routes.blockedStoresSettingPage),
                   ),
                 ],
               ),

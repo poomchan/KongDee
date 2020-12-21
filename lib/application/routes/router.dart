@@ -15,7 +15,9 @@ import 'package:fluttertaladsod/application/screens/store/chat/bloc/chat_page_bi
 import 'package:fluttertaladsod/application/screens/store/chat/chat_page.dart';
 import 'package:fluttertaladsod/application/screens/store/form/bloc/store_form_page_binding.dart';
 import 'package:fluttertaladsod/application/screens/store/form/store_form.dart';
+import 'package:fluttertaladsod/application/screens/store/setting/bloc/blocked_users_pb.dart';
 import 'package:fluttertaladsod/application/screens/store/setting/bloc/store_setting_page_binding.dart';
+import 'package:fluttertaladsod/application/screens/store/setting/features/blocked_user_setting.dart';
 import 'package:fluttertaladsod/application/screens/store/setting/features/location_setting.dart';
 import 'package:fluttertaladsod/application/screens/store/setting/features/selling_range_setting.dart';
 import 'package:fluttertaladsod/application/screens/store/setting/store_setting_page.dart';
@@ -112,8 +114,13 @@ class Router {
       fullscreenDialog: true,
     ),
     GetPage(
-      name: Routes.blockedStoreSettingPage,
+      name: Routes.blockedStoresSettingPage,
       page: () => BlockedStoreSetting(),
+    ),
+    GetPage(
+      name: Routes.blockedUsersSettingPage,
+      page: () => BlockedUsersSettingPage(),
+      binding: BlockedUsersSettingPB(),
     ),
   ];
 }
@@ -132,5 +139,6 @@ class Routes {
   static const storeSettingPage = '/store-setting';
   static const locationSettingPage = '/location-setting';
   static const sellingRangeSettingPage = '/selling-range-setting';
-  static const blockedStoreSettingPage = '/blocked-store-setting-page';
+  static const blockedStoresSettingPage = '/blocked-stores-setting-page';
+  static const blockedUsersSettingPage = '/blocked-users-setting-page';
 }

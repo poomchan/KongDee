@@ -14,11 +14,14 @@ class StoreSettingBloc extends GetxController
   ILocationRepository get _iLocationRepo => Get.find();
   IStoreRepository get _iStoreRepo => Get.find();
 
+  Store get store => _watcherBloc.store;
+
   StoreLocation location;
-  SellingRange sellingRange;
+
+  SellingRange sellingRange = SellingRange.created();
   bool isInfinite = true;
 
-  StoreViewBloc get watherBloc => _watcherBloc;
+  Map<String, bool> blockedUsers = {};  
 
   Future<void> onLocationUpdated() async {
     updateWithLoading();
