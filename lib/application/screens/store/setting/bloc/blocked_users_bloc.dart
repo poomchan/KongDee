@@ -31,20 +31,26 @@ class BlockedUsersSettingBloc extends GetxController
 
   Future<void> getBlockedUsers() async {
     bool isFailed = false;
+    UserFailure f;
     for (final uid in map.keys) {
+      if (isFailed) break;
       if (map[uid] == true) {
         final fOrUser =
             await _iUserRepository.getUser(UniqueId.fromUniqueString(uid));
         fOrUser.fold(
           (f) {
+            f = f;
             isFailed = true;
-            updateWithFailure(f);
           },
           (user) => blockedUserList.add(user),
         );
       }
     }
-    if (!isFailed) updateWithLoaded();
+    if (isFailed) {
+      updateWithFailure(f);
+    } else {
+      updateWithLoaded();
+    }
   }
 
   void onUserTapped(UserDomain user) {

@@ -15,5 +15,6 @@
     "/*.g.dart": false,
     "/CVS": false
   },
-  "explorerExclude.backup": null
+  "explorerExclude.backup": null,
+  "eslint.enable": false
 }
