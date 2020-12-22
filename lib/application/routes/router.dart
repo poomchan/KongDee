@@ -7,6 +7,7 @@ import 'package:fluttertaladsod/application/screens/profile/profile_page.dart';
 import 'package:fluttertaladsod/application/screens/profile/setting/bloc/profile_setting_pb.dart';
 import 'package:fluttertaladsod/application/screens/profile/setting/blocked_store_setting.dart';
 import 'package:fluttertaladsod/application/screens/profile/setting/language.dart';
+import 'package:fluttertaladsod/application/screens/profile/setting/legal_page.dart';
 import 'package:fluttertaladsod/application/screens/profile/setting/profile_setting_page.dart';
 import 'package:fluttertaladsod/application/screens/splash/sign_in/sign_in_page_binding.dart';
 import 'package:fluttertaladsod/application/screens/splash/sign_in/sign_in_splash.dart';
@@ -122,6 +123,10 @@ class Router {
       page: () => BlockedUsersSettingPage(),
       binding: BlockedUsersSettingPB(),
     ),
+    GetPage(
+      name: Routes.legalPage,
+      page: () => LegalPage(),
+    ),
   ];
 }
 
@@ -139,6 +144,7 @@ class Routes {
   static const storeSettingPage = '/store-setting';
   static const locationSettingPage = '/location-setting';
   static const sellingRangeSettingPage = '/selling-range-setting';
-  static const blockedStoresSettingPage = '/blocked-stores-setting-page';
-  static const blockedUsersSettingPage = '/blocked-users-setting-page';
+  static const blockedStoresSettingPage = '/blocked-stores-setting';
+  static const blockedUsersSettingPage = '/blocked-users-setting';
+  static const legalPage = '/legal';
 }

@@ -47,12 +47,12 @@ class ProfileSettingPage extends ViewWidget<ProfileSettingBloc> {
                   SettingsTile(
                     title: 'Privacy Policy',
                     leading: Icon(Icons.privacy_tip),
-                    onTap: () {},
+                    onTap: () => Get.toNamed(Routes.legalPage),
                   ),
                   SettingsTile(
                     title: 'Terms of Use',
                     leading: Icon(Icons.policy),
-                    onTap: () {},
+                    onTap: () => Get.toNamed(Routes.legalPage),
                   ),
                   SettingsTile(
                     title: 'About the Application',
