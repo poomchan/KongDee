@@ -16,5 +16,5 @@
     "/CVS": false
   },
   "explorerExclude.backup": null,
-  "eslint.enable": false
+  "eslint.enable": true
 }

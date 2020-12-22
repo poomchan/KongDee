@@ -63,3 +63,10 @@ December 1
 
 Lessons
 - avoid api-call in the build medthod (because it rebuilds several times even on different screens and will cause unexpected api-call (bloc will emit weird states)) => instead, use init api call in create() for BlocProvider or put() for getX.
+
+Tricks
+- use this to update firebase-tools (if npm does not work)
+    curl -sL firebase.tools | upgrade=true bash
+- to use nvm in a dir
+    export NVM_DIR="/Users/poom/.nvm"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
