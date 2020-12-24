@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertaladsod/application/bloc/core/simple_progress_setter.dart';
 import 'package:fluttertaladsod/application/bloc/location/location_bloc.dart';
 import 'package:fluttertaladsod/application/core/components/dialogs.dart';
+import 'package:fluttertaladsod/application/routes/router.dart';
 import 'package:fluttertaladsod/domain/auth/i_auth_facade.dart';
 import 'package:fluttertaladsod/domain/store/i_image_repository.dart';
 import 'package:fluttertaladsod/domain/store/i_store_repository.dart';
@@ -36,15 +37,13 @@ class StoreFormBloc extends GetxController with SimepleProgressSetter {
     final location = _locationBloc.location;
     initialStore.fold(
       () {
-        updateStore(store.copyWith(
-          location: StoreLocation.fromLocationDomain(location),
-        ));
+        _store = store.copyWith(
+            location: StoreLocation.fromLocationDomain(location));
         updateWithLoaded();
       },
       (initStore) async {
-        // await Future.delayed(Duration(milliseconds: 10));
         _isCreating = true;
-        updateStore(initStore);
+        _store = initStore;
         updateWithLoaded();
       },
     );
@@ -69,6 +68,11 @@ class StoreFormBloc extends GetxController with SimepleProgressSetter {
   }
 
   Future<void> picsSelectionRequested() async {
+    bool isPremium = false;
+    if (!isPremium) {
+      Get.toNamed(Routes.upgradeSplash);
+      return;
+    }
     final imageOption = await _iImageRepository.getImage();
     imageOption.fold(
       () => null,

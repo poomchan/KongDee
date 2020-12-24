@@ -57,27 +57,21 @@ abstract class StoreDto implements _$StoreDto {
   factory StoreDto.fromJson(Map<String, dynamic> json) =>
       _$StoreDtoFromJson(json);
 
-  factory StoreDto.fromFirestore({
-    @required DocumentSnapshot snap,
-  }) {
-    return StoreDto.fromJson(snap.data()).copyWith(id: snap.id);
-  }
+  factory StoreDto.fromFirestore(
+    DocumentSnapshot snap,
+  ) =>
+      StoreDto.fromJson(snap.data()).copyWith(id: snap.id);
 
-  Store toDomain(LocationDomain l, _dz.Option<UserDomain> u) {
+  Store toDomain(
+    LocationDomain l,
+    _dz.Option<UserDomain> u,
+  ) {
     return Store(
       id: UniqueId.fromUniqueString(id),
       name: StoreName(name),
       menu: StoreMenu(menu),
       banner: StoreBanner.url(bannerUrl),
-      pics: StorePic16(
-        List.from(
-          picUrls
-              .map(
-                (url) => StorePic.url(url),
-              )
-              .toList(),
-        ),
-      ),
+      pics: StorePic16(picUrls.map((url) => StorePic.url(url)).toList()),
       ownerId: UniqueId.fromUniqueString(ownerId),
       location: location.toDomain(l),
       prefs: prefs.toDomain(),

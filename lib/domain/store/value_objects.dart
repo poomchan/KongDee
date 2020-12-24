@@ -67,6 +67,9 @@ class StorePic {
     return StorePic._(left(input));
   }
 
+  bool get isUrl => fileOrUrl.isRight();
+  bool get isFile => fileOrUrl.isLeft();
+
   const StorePic._(this.fileOrUrl);
 }
 
@@ -80,11 +83,10 @@ class StorePic16 extends ValueObject<List<StorePic>> {
     return StorePic16._(validateMaxListLength(input, maxLength));
   }
 
-  const StorePic16._(this.value);
-
   int get length => value.getOrElse(() => List.empty()).length;
-
   bool get isFull => length == maxLength;
+
+  const StorePic16._(this.value);
 }
 
 // range in meter
