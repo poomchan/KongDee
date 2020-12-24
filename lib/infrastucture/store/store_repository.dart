@@ -1,24 +1,19 @@
-import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/widgets.dart';
-import 'package:fluttertaladsod/domain/auth/user/user.dart';
-import 'package:fluttertaladsod/domain/core/value_objects.dart';
 import 'package:fluttertaladsod/domain/location/location.dart';
 import 'package:fluttertaladsod/domain/store/i_store_repository.dart';
 import 'package:fluttertaladsod/domain/store/store.dart';
 import 'package:fluttertaladsod/domain/store/store_failures.dart';
-import 'package:fluttertaladsod/infrastucture/store/store_dto.dart';
+import 'package:fluttertaladsod/domain/user/user.dart';
 import 'package:geoflutterfire/geoflutterfire.dart';
 import 'package:get/get.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:uuid/uuid.dart';
 import 'package:fluttertaladsod/infrastucture/core/firestore_helper.dart';
 
 class StoreRepository implements IStoreRepository {
   final _firestore = Get.find<FirebaseFirestore>();
-  final _storage = Get.find<StorageReference>();
   final _geo = Get.find<Geoflutterfire>();
 
   @override
@@ -47,10 +42,11 @@ class StoreRepository implements IStoreRepository {
         }
         return right<StoreFailure, List<Store>>(
           snapshots
-              .map(
-                (snap) => StoreDto.fromFirestore(snap)
-                    .toDomain(location, userOption),
-              )
+              .map((snap) => Store.fromFirestore(
+                    snap,
+                    l: location,
+                    userOption: userOption,
+                  ))
               .toList(),
         );
       },
@@ -68,19 +64,19 @@ class StoreRepository implements IStoreRepository {
 
   @override
   Stream<Either<StoreFailure, Store>> watchSingleStore({
-    @required UniqueId storeId,
+    @required String storeId,
     @required LocationDomain location,
     @required Option<UserDomain> userOption,
   }) async* {
-    yield* _firestore.storeCollectionRef
-        .doc(storeId.getOrCrash())
-        .snapshots()
-        .map((snap) {
+    yield* _firestore.storeCollectionRef.doc(storeId).snapshots().map((snap) {
       if (!snap.exists) {
         return left<StoreFailure, Store>(StoreFailure.noStore());
       } else {
-        return right<StoreFailure, Store>(
-            StoreDto.fromFirestore(snap).toDomain(location, userOption));
+        return right<StoreFailure, Store>(Store.fromFirestore(
+          snap,
+          userOption: userOption,
+          l: location,
+        ));
       }
     }).onErrorReturnWith((err) {
       // print error onto the console here
@@ -90,12 +86,12 @@ class StoreRepository implements IStoreRepository {
 
   @override
   Stream<Either<StoreFailure, Store>> watchOwnedStore({
-    @required UniqueId ownerId,
+    @required String ownerId,
     @required LocationDomain location,
     @required UserDomain user,
   }) async* {
     yield* _firestore.storeCollectionRef
-        .where('ownerId', isEqualTo: ownerId.getOrCrash())
+        .where('ownerId', isEqualTo: ownerId)
         .snapshots()
         .map((snapshot) {
       if (snapshot.docs.isEmpty) {
@@ -103,8 +99,11 @@ class StoreRepository implements IStoreRepository {
       } else {
         return right<StoreFailure, Store>(snapshot.docs
             .map(
-              (doc) => StoreDto.fromFirestore(doc)
-                  .toDomain(location, some(user)),
+              (doc) => Store.fromFirestore(
+                doc,
+                l: location,
+                userOption: some(user),
+              ),
             )
             .toList()
             .first);
@@ -117,9 +116,9 @@ class StoreRepository implements IStoreRepository {
 
   @override
   Future<Either<StoreFailure, Unit>> create(Store store) async {
-    final jsonData = StoreDto.fromDomain(store).toJson();
     try {
-      _firestore.storeCollectionRef.doc(UniqueId().getOrCrash()).set(jsonData);
+      final jsonData = store.toJson();
+      _firestore.storeCollectionRef.doc(store.id).set(jsonData);
     } catch (err) {
       return left(StoreFailure.unexpected(err));
     }
@@ -128,10 +127,9 @@ class StoreRepository implements IStoreRepository {
 
   @override
   Future<Either<StoreFailure, Unit>> update(Store store) async {
-    final jsonData = StoreDto.fromDomain(store).toJson();
-
     try {
-      _firestore.storeCollectionRef.doc(store.id.getOrCrash()).update(jsonData);
+      final jsonData = store.toJson();
+      _firestore.storeCollectionRef.doc(store.id).update(jsonData);
     } catch (err) {
       return left(StoreFailure.unexpected(err));
     }
@@ -139,32 +137,11 @@ class StoreRepository implements IStoreRepository {
   }
 
   @override
-  Future<Either<StoreFailure, Unit>> delete(UniqueId storeId) async {
+  Future<Either<StoreFailure, Unit>> delete(String storeId) async {
     try {
-      await _firestore.storeCollectionRef.doc(storeId.getOrCrash()).delete();
+      await _firestore.storeCollectionRef.doc(storeId).delete();
       return right(unit);
     } catch (err) {
-      return left(StoreFailure.unexpected(err));
-    }
-  }
-
-  @override
-  Future<Either<StoreFailure, String>> uploadFileImage(
-      File img, String path) async {
-    final imageId = Uuid().v4();
-    try {
-      // upload (path in firebase storage)
-      final StorageUploadTask uploadTask =
-          _storage.child("$path/img_$imageId").putFile(img);
-
-      // wait for completion
-      final StorageTaskSnapshot storageSnap = await uploadTask.onComplete;
-
-      //get download Url
-      final String mediaUrl = await storageSnap.ref.getDownloadURL() as String;
-      return right(mediaUrl);
-    } catch (err) {
-      // log error here
       return left(StoreFailure.unexpected(err));
     }
   }

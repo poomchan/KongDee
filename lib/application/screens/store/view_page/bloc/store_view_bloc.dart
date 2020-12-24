@@ -5,12 +5,11 @@ import 'package:fluttertaladsod/application/bloc/auth/auth_bloc.dart';
 import 'package:fluttertaladsod/application/bloc/core/simple_progress_setter.dart';
 import 'package:fluttertaladsod/application/routes/router.dart';
 import 'package:fluttertaladsod/application/screens/store/setting/bloc/store_setting_bloc.dart';
-import 'package:fluttertaladsod/domain/auth/user/user.dart';
-import 'package:fluttertaladsod/domain/core/value_objects.dart';
 import 'package:fluttertaladsod/domain/location/i_location_repository.dart';
 import 'package:fluttertaladsod/domain/store/i_store_repository.dart';
 import 'package:fluttertaladsod/domain/store/store.dart';
 import 'package:fluttertaladsod/domain/store/store_failures.dart';
+import 'package:fluttertaladsod/domain/user/user.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:get/get.dart';
 
@@ -29,7 +28,7 @@ class StoreViewBloc extends GetxController
 
   bool get isStoreOwner => _authBloc.user?.id == store?.ownerId ?? false;
 
-  Future<void> watchStoreStarted({@required UniqueId storeId}) async {
+  Future<void> watchStoreStarted({@required String storeId}) async {
     assert(storeId != null);
     updateWithLoading();
     final locationOption = await _iLocationRepository.getLocation();
@@ -60,7 +59,7 @@ class StoreViewBloc extends GetxController
     final isAuth = _authBloc.isAuth;
     if (isAuth) {
       final watcherId = _authBloc.user.id;
-      if (s.blockedUsers[watcherId.getOrCrash()] == true) {
+      if (s.blockedUsers[watcherId] == true) {
         Get.offAllNamed(Routes.homePage);
       }
     }
@@ -72,7 +71,7 @@ class StoreViewBloc extends GetxController
 
   @override
   Future<void> onReady() async {
-    await watchStoreStarted(storeId: Get.arguments as UniqueId);
+    await watchStoreStarted(storeId: Get.arguments as String);
     super.onReady();
   }
 

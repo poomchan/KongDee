@@ -3,8 +3,7 @@ import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertaladsod/domain/auth/auth_failure.dart';
 import 'package:fluttertaladsod/domain/auth/i_auth_facade.dart';
-import 'package:fluttertaladsod/domain/auth/user/user.dart';
-import 'package:fluttertaladsod/infrastucture/auth/user_dto.dart';
+import 'package:fluttertaladsod/domain/user/user.dart';
 import 'package:fluttertaladsod/infrastucture/core/firestore_helper.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -66,7 +65,7 @@ class FirebaseAuthFacade implements IAuthFacade {
       final userRef = _firestore.userCollectionRef;
       final userDoc = await userRef.doc(user.uid).get();
       if (user != null) {
-        return right(UserDto.fromFirestore(userDoc).toDomain());
+        return right(UserDomain.fromFirestore(userDoc));
       } else {
         return left(AuthFailure.unauthenticated());
       }
@@ -105,12 +104,12 @@ class FirebaseAuthFacade implements IAuthFacade {
       if (userDoc.exists) {
         await userRef
             .doc(user.uid)
-            .update(UserDto.fromFirestore(userDoc).toJson());
+            .update(UserDomain.fromFirestore(userDoc).toJson());
       } else {
-        await userRef.doc(user.uid).set(UserDto.fromNewUser(user).toJson());
+        await userRef.doc(user.uid).set(UserDomain.fromFirebaseUser(user).toJson());
       }
       userDoc = await userRef.doc(user.uid).get();
-      return right(UserDto.fromFirestore(userDoc).toDomain());
+      return right(UserDomain.fromFirestore(userDoc));
     } catch (err) {
       print(err);
       return left(AuthFailure.unexpected(err));

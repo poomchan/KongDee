@@ -8,31 +8,50 @@ part of 'report.dart';
 // **************************************************************************
 
 T _$identity<T>(T value) => value;
+Report _$ReportFromJson(Map<String, dynamic> json) {
+  switch (json['runtimeType'] as String) {
+    case 'user':
+      return _User.fromJson(json);
+    case 'store':
+      return _Store.fromJson(json);
+
+    default:
+      throw FallThroughError();
+  }
+}
 
 class _$ReportTearOff {
   const _$ReportTearOff();
 
 // ignore: unused_element
   _User user(
-      {@required UniqueId userId,
-      @required UniqueId reporter,
-      @required String description}) {
+      {@required String id,
+      @required String userId,
+      @required String reporter,
+      @required String description,
+      @required bool recieve}) {
     return _User(
+      id: id,
       userId: userId,
       reporter: reporter,
       description: description,
+      recieve: recieve,
     );
   }
 
 // ignore: unused_element
   _Store store(
-      {@required UniqueId storeId,
-      @required UniqueId reporter,
-      @required String description}) {
+      {@required String id,
+      @required String storeId,
+      @required String reporter,
+      @required String description,
+      @required bool recieve}) {
     return _Store(
+      id: id,
       storeId: storeId,
       reporter: reporter,
       description: description,
+      recieve: recieve,
     );
   }
 }
@@ -41,20 +60,26 @@ class _$ReportTearOff {
 const $Report = _$ReportTearOff();
 
 mixin _$Report {
-  UniqueId get reporter;
+  String get id;
+  String get reporter;
   String get description;
+  bool get recieve;
 
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required
-        Result user(UniqueId userId, UniqueId reporter, String description),
+        Result user(String id, String userId, String reporter,
+            String description, bool recieve),
     @required
-        Result store(UniqueId storeId, UniqueId reporter, String description),
+        Result store(String id, String storeId, String reporter,
+            String description, bool recieve),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
-    Result user(UniqueId userId, UniqueId reporter, String description),
-    Result store(UniqueId storeId, UniqueId reporter, String description),
+    Result user(String id, String userId, String reporter, String description,
+        bool recieve),
+    Result store(String id, String storeId, String reporter, String description,
+        bool recieve),
     @required Result orElse(),
   });
   @optionalTypeArgs
@@ -68,14 +93,14 @@ mixin _$Report {
     Result store(_Store value),
     @required Result orElse(),
   });
-
+  Map<String, dynamic> toJson();
   $ReportCopyWith<Report> get copyWith;
 }
 
 abstract class $ReportCopyWith<$Res> {
   factory $ReportCopyWith(Report value, $Res Function(Report) then) =
       _$ReportCopyWithImpl<$Res>;
-  $Res call({UniqueId reporter, String description});
+  $Res call({String id, String reporter, String description, bool recieve});
 }
 
 class _$ReportCopyWithImpl<$Res> implements $ReportCopyWith<$Res> {
@@ -87,13 +112,17 @@ class _$ReportCopyWithImpl<$Res> implements $ReportCopyWith<$Res> {
 
   @override
   $Res call({
+    Object id = freezed,
     Object reporter = freezed,
     Object description = freezed,
+    Object recieve = freezed,
   }) {
     return _then(_value.copyWith(
-      reporter: reporter == freezed ? _value.reporter : reporter as UniqueId,
+      id: id == freezed ? _value.id : id as String,
+      reporter: reporter == freezed ? _value.reporter : reporter as String,
       description:
           description == freezed ? _value.description : description as String,
+      recieve: recieve == freezed ? _value.recieve : recieve as bool,
     ));
   }
 }
@@ -102,7 +131,12 @@ abstract class _$UserCopyWith<$Res> implements $ReportCopyWith<$Res> {
   factory _$UserCopyWith(_User value, $Res Function(_User) then) =
       __$UserCopyWithImpl<$Res>;
   @override
-  $Res call({UniqueId userId, UniqueId reporter, String description});
+  $Res call(
+      {String id,
+      String userId,
+      String reporter,
+      String description,
+      bool recieve});
 }
 
 class __$UserCopyWithImpl<$Res> extends _$ReportCopyWithImpl<$Res>
@@ -115,38 +149,55 @@ class __$UserCopyWithImpl<$Res> extends _$ReportCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object id = freezed,
     Object userId = freezed,
     Object reporter = freezed,
     Object description = freezed,
+    Object recieve = freezed,
   }) {
     return _then(_User(
-      userId: userId == freezed ? _value.userId : userId as UniqueId,
-      reporter: reporter == freezed ? _value.reporter : reporter as UniqueId,
+      id: id == freezed ? _value.id : id as String,
+      userId: userId == freezed ? _value.userId : userId as String,
+      reporter: reporter == freezed ? _value.reporter : reporter as String,
       description:
           description == freezed ? _value.description : description as String,
+      recieve: recieve == freezed ? _value.recieve : recieve as bool,
     ));
   }
 }
 
-class _$_User with DiagnosticableTreeMixin implements _User {
+@JsonSerializable()
+class _$_User extends _User with DiagnosticableTreeMixin {
   const _$_User(
-      {@required this.userId,
+      {@required this.id,
+      @required this.userId,
       @required this.reporter,
-      @required this.description})
-      : assert(userId != null),
+      @required this.description,
+      @required this.recieve})
+      : assert(id != null),
+        assert(userId != null),
         assert(reporter != null),
-        assert(description != null);
+        assert(description != null),
+        assert(recieve != null),
+        super._();
+
+  factory _$_User.fromJson(Map<String, dynamic> json) =>
+      _$_$_UserFromJson(json);
 
   @override
-  final UniqueId userId;
+  final String id;
   @override
-  final UniqueId reporter;
+  final String userId;
+  @override
+  final String reporter;
   @override
   final String description;
+  @override
+  final bool recieve;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Report.user(userId: $userId, reporter: $reporter, description: $description)';
+    return 'Report.user(id: $id, userId: $userId, reporter: $reporter, description: $description, recieve: $recieve)';
   }
 
   @override
@@ -154,15 +205,19 @@ class _$_User with DiagnosticableTreeMixin implements _User {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'Report.user'))
+      ..add(DiagnosticsProperty('id', id))
       ..add(DiagnosticsProperty('userId', userId))
       ..add(DiagnosticsProperty('reporter', reporter))
-      ..add(DiagnosticsProperty('description', description));
+      ..add(DiagnosticsProperty('description', description))
+      ..add(DiagnosticsProperty('recieve', recieve));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _User &&
+            (identical(other.id, id) ||
+                const DeepCollectionEquality().equals(other.id, id)) &&
             (identical(other.userId, userId) ||
                 const DeepCollectionEquality().equals(other.userId, userId)) &&
             (identical(other.reporter, reporter) ||
@@ -170,15 +225,19 @@ class _$_User with DiagnosticableTreeMixin implements _User {
                     .equals(other.reporter, reporter)) &&
             (identical(other.description, description) ||
                 const DeepCollectionEquality()
-                    .equals(other.description, description)));
+                    .equals(other.description, description)) &&
+            (identical(other.recieve, recieve) ||
+                const DeepCollectionEquality().equals(other.recieve, recieve)));
   }
 
   @override
   int get hashCode =>
       runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(id) ^
       const DeepCollectionEquality().hash(userId) ^
       const DeepCollectionEquality().hash(reporter) ^
-      const DeepCollectionEquality().hash(description);
+      const DeepCollectionEquality().hash(description) ^
+      const DeepCollectionEquality().hash(recieve);
 
   @override
   _$UserCopyWith<_User> get copyWith =>
@@ -188,25 +247,29 @@ class _$_User with DiagnosticableTreeMixin implements _User {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required
-        Result user(UniqueId userId, UniqueId reporter, String description),
+        Result user(String id, String userId, String reporter,
+            String description, bool recieve),
     @required
-        Result store(UniqueId storeId, UniqueId reporter, String description),
+        Result store(String id, String storeId, String reporter,
+            String description, bool recieve),
   }) {
     assert(user != null);
     assert(store != null);
-    return user(userId, reporter, description);
+    return user(id, userId, reporter, description, recieve);
   }
 
   @override
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
-    Result user(UniqueId userId, UniqueId reporter, String description),
-    Result store(UniqueId storeId, UniqueId reporter, String description),
+    Result user(String id, String userId, String reporter, String description,
+        bool recieve),
+    Result store(String id, String storeId, String reporter, String description,
+        bool recieve),
     @required Result orElse(),
   }) {
     assert(orElse != null);
     if (user != null) {
-      return user(userId, reporter, description);
+      return user(id, userId, reporter, description, recieve);
     }
     return orElse();
   }
@@ -235,19 +298,33 @@ class _$_User with DiagnosticableTreeMixin implements _User {
     }
     return orElse();
   }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$_$_UserToJson(this)..['runtimeType'] = 'user';
+  }
 }
 
-abstract class _User implements Report {
+abstract class _User extends Report {
+  const _User._() : super._();
   const factory _User(
-      {@required UniqueId userId,
-      @required UniqueId reporter,
-      @required String description}) = _$_User;
+      {@required String id,
+      @required String userId,
+      @required String reporter,
+      @required String description,
+      @required bool recieve}) = _$_User;
 
-  UniqueId get userId;
+  factory _User.fromJson(Map<String, dynamic> json) = _$_User.fromJson;
+
   @override
-  UniqueId get reporter;
+  String get id;
+  String get userId;
+  @override
+  String get reporter;
   @override
   String get description;
+  @override
+  bool get recieve;
   @override
   _$UserCopyWith<_User> get copyWith;
 }
@@ -256,7 +333,12 @@ abstract class _$StoreCopyWith<$Res> implements $ReportCopyWith<$Res> {
   factory _$StoreCopyWith(_Store value, $Res Function(_Store) then) =
       __$StoreCopyWithImpl<$Res>;
   @override
-  $Res call({UniqueId storeId, UniqueId reporter, String description});
+  $Res call(
+      {String id,
+      String storeId,
+      String reporter,
+      String description,
+      bool recieve});
 }
 
 class __$StoreCopyWithImpl<$Res> extends _$ReportCopyWithImpl<$Res>
@@ -269,38 +351,55 @@ class __$StoreCopyWithImpl<$Res> extends _$ReportCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object id = freezed,
     Object storeId = freezed,
     Object reporter = freezed,
     Object description = freezed,
+    Object recieve = freezed,
   }) {
     return _then(_Store(
-      storeId: storeId == freezed ? _value.storeId : storeId as UniqueId,
-      reporter: reporter == freezed ? _value.reporter : reporter as UniqueId,
+      id: id == freezed ? _value.id : id as String,
+      storeId: storeId == freezed ? _value.storeId : storeId as String,
+      reporter: reporter == freezed ? _value.reporter : reporter as String,
       description:
           description == freezed ? _value.description : description as String,
+      recieve: recieve == freezed ? _value.recieve : recieve as bool,
     ));
   }
 }
 
-class _$_Store with DiagnosticableTreeMixin implements _Store {
+@JsonSerializable()
+class _$_Store extends _Store with DiagnosticableTreeMixin {
   const _$_Store(
-      {@required this.storeId,
+      {@required this.id,
+      @required this.storeId,
       @required this.reporter,
-      @required this.description})
-      : assert(storeId != null),
+      @required this.description,
+      @required this.recieve})
+      : assert(id != null),
+        assert(storeId != null),
         assert(reporter != null),
-        assert(description != null);
+        assert(description != null),
+        assert(recieve != null),
+        super._();
+
+  factory _$_Store.fromJson(Map<String, dynamic> json) =>
+      _$_$_StoreFromJson(json);
 
   @override
-  final UniqueId storeId;
+  final String id;
   @override
-  final UniqueId reporter;
+  final String storeId;
+  @override
+  final String reporter;
   @override
   final String description;
+  @override
+  final bool recieve;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Report.store(storeId: $storeId, reporter: $reporter, description: $description)';
+    return 'Report.store(id: $id, storeId: $storeId, reporter: $reporter, description: $description, recieve: $recieve)';
   }
 
   @override
@@ -308,15 +407,19 @@ class _$_Store with DiagnosticableTreeMixin implements _Store {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'Report.store'))
+      ..add(DiagnosticsProperty('id', id))
       ..add(DiagnosticsProperty('storeId', storeId))
       ..add(DiagnosticsProperty('reporter', reporter))
-      ..add(DiagnosticsProperty('description', description));
+      ..add(DiagnosticsProperty('description', description))
+      ..add(DiagnosticsProperty('recieve', recieve));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _Store &&
+            (identical(other.id, id) ||
+                const DeepCollectionEquality().equals(other.id, id)) &&
             (identical(other.storeId, storeId) ||
                 const DeepCollectionEquality()
                     .equals(other.storeId, storeId)) &&
@@ -325,15 +428,19 @@ class _$_Store with DiagnosticableTreeMixin implements _Store {
                     .equals(other.reporter, reporter)) &&
             (identical(other.description, description) ||
                 const DeepCollectionEquality()
-                    .equals(other.description, description)));
+                    .equals(other.description, description)) &&
+            (identical(other.recieve, recieve) ||
+                const DeepCollectionEquality().equals(other.recieve, recieve)));
   }
 
   @override
   int get hashCode =>
       runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(id) ^
       const DeepCollectionEquality().hash(storeId) ^
       const DeepCollectionEquality().hash(reporter) ^
-      const DeepCollectionEquality().hash(description);
+      const DeepCollectionEquality().hash(description) ^
+      const DeepCollectionEquality().hash(recieve);
 
   @override
   _$StoreCopyWith<_Store> get copyWith =>
@@ -343,25 +450,29 @@ class _$_Store with DiagnosticableTreeMixin implements _Store {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required
-        Result user(UniqueId userId, UniqueId reporter, String description),
+        Result user(String id, String userId, String reporter,
+            String description, bool recieve),
     @required
-        Result store(UniqueId storeId, UniqueId reporter, String description),
+        Result store(String id, String storeId, String reporter,
+            String description, bool recieve),
   }) {
     assert(user != null);
     assert(store != null);
-    return store(storeId, reporter, description);
+    return store(id, storeId, reporter, description, recieve);
   }
 
   @override
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
-    Result user(UniqueId userId, UniqueId reporter, String description),
-    Result store(UniqueId storeId, UniqueId reporter, String description),
+    Result user(String id, String userId, String reporter, String description,
+        bool recieve),
+    Result store(String id, String storeId, String reporter, String description,
+        bool recieve),
     @required Result orElse(),
   }) {
     assert(orElse != null);
     if (store != null) {
-      return store(storeId, reporter, description);
+      return store(id, storeId, reporter, description, recieve);
     }
     return orElse();
   }
@@ -390,19 +501,33 @@ class _$_Store with DiagnosticableTreeMixin implements _Store {
     }
     return orElse();
   }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$_$_StoreToJson(this)..['runtimeType'] = 'store';
+  }
 }
 
-abstract class _Store implements Report {
+abstract class _Store extends Report {
+  const _Store._() : super._();
   const factory _Store(
-      {@required UniqueId storeId,
-      @required UniqueId reporter,
-      @required String description}) = _$_Store;
+      {@required String id,
+      @required String storeId,
+      @required String reporter,
+      @required String description,
+      @required bool recieve}) = _$_Store;
 
-  UniqueId get storeId;
+  factory _Store.fromJson(Map<String, dynamic> json) = _$_Store.fromJson;
+
   @override
-  UniqueId get reporter;
+  String get id;
+  String get storeId;
+  @override
+  String get reporter;
   @override
   String get description;
+  @override
+  bool get recieve;
   @override
   _$StoreCopyWith<_Store> get copyWith;
 }

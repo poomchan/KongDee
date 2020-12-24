@@ -79,14 +79,14 @@ class ImageGrid extends ViewWidget<StoreFormBloc> {
       () => Icon(Icons.add),
       (indx) {
         return GetBuilder<StoreFormBloc>(
-          builder: (bloc) => bloc.store.pics.getOrCrash()[indx].fileOrUrl.fold(
-                (file) => Image.file(
-                  file,
-                  fit: BoxFit.cover,
-                  cacheWidth: 200,
-                ),
-                (url) => MyNetworkImage(imageUrl: url),
-              ),
+          builder: (bloc) => bloc.store.pics[indx].fold(
+            (file) => Image.file(
+              file,
+              fit: BoxFit.cover,
+              cacheWidth: 200,
+            ),
+            (url) => MyNetworkImage(imageUrl: url),
+          ),
         );
       },
     );

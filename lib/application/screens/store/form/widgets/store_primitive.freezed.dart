@@ -14,8 +14,8 @@ class _$StorePrimitiveTearOff {
 
 // ignore: unused_element
   _StorePrimitive call(
-      {@required UniqueId id,
-      @required UniqueId ownerId,
+      {@required String id,
+      @required String ownerId,
       @required String name,
       @required String menu,
       @required Either<File, String> banner,
@@ -41,8 +41,8 @@ class _$StorePrimitiveTearOff {
 const $StorePrimitive = _$StorePrimitiveTearOff();
 
 mixin _$StorePrimitive {
-  UniqueId get id;
-  UniqueId get ownerId;
+  String get id;
+  String get ownerId;
   String get name;
   String get menu;
   Either<File, String> get banner;
@@ -59,8 +59,8 @@ abstract class $StorePrimitiveCopyWith<$Res> {
           StorePrimitive value, $Res Function(StorePrimitive) then) =
       _$StorePrimitiveCopyWithImpl<$Res>;
   $Res call(
-      {UniqueId id,
-      UniqueId ownerId,
+      {String id,
+      String ownerId,
       String name,
       String menu,
       Either<File, String> banner,
@@ -94,8 +94,8 @@ class _$StorePrimitiveCopyWithImpl<$Res>
     Object blockedUser = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed ? _value.id : id as UniqueId,
-      ownerId: ownerId == freezed ? _value.ownerId : ownerId as UniqueId,
+      id: id == freezed ? _value.id : id as String,
+      ownerId: ownerId == freezed ? _value.ownerId : ownerId as String,
       name: name == freezed ? _value.name : name as String,
       menu: menu == freezed ? _value.menu : menu as String,
       banner:
@@ -138,8 +138,8 @@ abstract class _$StorePrimitiveCopyWith<$Res>
       __$StorePrimitiveCopyWithImpl<$Res>;
   @override
   $Res call(
-      {UniqueId id,
-      UniqueId ownerId,
+      {String id,
+      String ownerId,
       String name,
       String menu,
       Either<File, String> banner,
@@ -177,8 +177,8 @@ class __$StorePrimitiveCopyWithImpl<$Res>
     Object blockedUser = freezed,
   }) {
     return _then(_StorePrimitive(
-      id: id == freezed ? _value.id : id as UniqueId,
-      ownerId: ownerId == freezed ? _value.ownerId : ownerId as UniqueId,
+      id: id == freezed ? _value.id : id as String,
+      ownerId: ownerId == freezed ? _value.ownerId : ownerId as String,
       name: name == freezed ? _value.name : name as String,
       menu: menu == freezed ? _value.menu : menu as String,
       banner:
@@ -217,9 +217,9 @@ class _$_StorePrimitive extends _StorePrimitive {
         super._();
 
   @override
-  final UniqueId id;
+  final String id;
   @override
-  final UniqueId ownerId;
+  final String ownerId;
   @override
   final String name;
   @override
@@ -288,8 +288,8 @@ class _$_StorePrimitive extends _StorePrimitive {
 abstract class _StorePrimitive extends StorePrimitive {
   const _StorePrimitive._() : super._();
   const factory _StorePrimitive(
-      {@required UniqueId id,
-      @required UniqueId ownerId,
+      {@required String id,
+      @required String ownerId,
       @required String name,
       @required String menu,
       @required Either<File, String> banner,
@@ -299,9 +299,9 @@ abstract class _StorePrimitive extends StorePrimitive {
       @required Map<String, bool> blockedUser}) = _$_StorePrimitive;
 
   @override
-  UniqueId get id;
+  String get id;
   @override
-  UniqueId get ownerId;
+  String get ownerId;
   @override
   String get name;
   @override

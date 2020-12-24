@@ -47,14 +47,14 @@ class StoreSettingPage extends ViewWidget<StoreSettingBloc> {
               ),
               SettingsTile(
                 title: 'Store Location',
-                subtitle: bloc.store.location.address.getOrCrash(),
+                subtitle: bloc.store.location.address,
                 leading: Icon(Icons.gps_fixed),
                 onTap: () => Get.toNamed(Routes.locationSettingPage),
               ),
               SettingsTile(
                   title: 'Selling Range',
                   subtitle:
-                      'with in ${bloc.store.prefs.sellingRange.getOrCrash()} km',
+                      'with in ${bloc.store.prefs.sellingRange} km',
                   leading: Icon(Icons.near_me),
                   onTap: () => Get.toNamed(Routes.sellingRangeSettingPage)),
             ],

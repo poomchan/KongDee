@@ -57,10 +57,10 @@ class NearStoreBloc extends GetxController
   List<Store> filterBlocked(List<Store> sl) {
     if (_authBloc.isAuth) {
       final List<Store> filteredList = [];
-      final watcherId = _authBloc.user.id.getOrCrash();
+      final watcherId = _authBloc.user.id;
       final userBlocked = _authBloc.user.blockedStores;
       for (final s in sl) {
-        final blockedByUser = userBlocked[s.id.getOrCrash()] == true;
+        final blockedByUser = userBlocked[s.id] == true;
         final blockedByStore = s.blockedUsers[watcherId] != true;
         if (!blockedByUser || !blockedByStore) filteredList.add(s);
       }

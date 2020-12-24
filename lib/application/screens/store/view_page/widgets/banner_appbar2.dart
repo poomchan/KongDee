@@ -43,9 +43,9 @@ class BannerAppbar2 extends ViewWidget<StoreViewBloc> {
         loading: () => circularProgress(context),
         failure: () => const Icon(Icons.error),
         loaded: () => Hero(
-          tag: bloc.store.banner.url,
+          tag: bloc.store.banner,
           child: MyNetworkImage(
-            imageUrl: bloc.store.banner.url,
+            imageUrl: bloc.store.banner,
             memCacheWidth: 600,
           ),
         ),
@@ -69,7 +69,7 @@ class BannerAppbar2 extends ViewWidget<StoreViewBloc> {
       builder: (bloc) => bloc.progress.when(
         inital: () => Text('Cubit in in initial state'),
         loading: () => Text(''),
-        loaded: () => Text(bloc.store.name.getOrCrash()),
+        loaded: () => Text(bloc.store.name),
         failure: () => Text('error'),
       ),
     );

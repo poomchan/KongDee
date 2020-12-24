@@ -26,7 +26,6 @@ import 'package:fluttertaladsod/application/screens/store/setting/features/selli
 import 'package:fluttertaladsod/application/screens/store/setting/store_setting_page.dart';
 import 'package:fluttertaladsod/application/screens/store/view_page/bloc/store_view_page_binding.dart';
 import 'package:fluttertaladsod/application/screens/store/view_page/store_view_page2.dart';
-import 'package:fluttertaladsod/domain/core/value_objects.dart';
 import 'package:fluttertaladsod/domain/store/store.dart';
 import 'package:get/route_manager.dart';
 import '../screens/onboarding/onboarding_page.dart';
@@ -55,7 +54,7 @@ class Router {
     GetPage(
       name: Routes.profilePage,
       page: () => ProfilePage(
-        userId: Get.arguments as UniqueId,
+        userId: Get.arguments as String,
       ),
       binding: ProfilePB(),
       transition: Transition.fadeIn,
@@ -65,7 +64,7 @@ class Router {
     GetPage(
       name: Routes.storeViewPage,
       page: () => StoreViewPage2(
-        storeId: Get.arguments as UniqueId,
+        storeId: Get.arguments as String,
       ),
       binding: StoreViewPB(),
       transition: Transition.fadeIn,

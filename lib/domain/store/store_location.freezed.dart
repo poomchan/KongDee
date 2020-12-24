@@ -8,15 +8,18 @@ part of 'store_location.dart';
 // **************************************************************************
 
 T _$identity<T>(T value) => value;
+StoreLocation _$StoreLocationFromJson(Map<String, dynamic> json) {
+  return _StoreLocation.fromJson(json);
+}
 
 class _$StoreLocationTearOff {
   const _$StoreLocationTearOff();
 
 // ignore: unused_element
   _StoreLocation call(
-      {@required StoreAddress address,
-      GeoFirePoint geoFirePoint,
-      double distanceAway}) {
+      {@required @JsonKey(defaultValue: '') String address,
+      @GeoFirePointConverter() GeoFirePoint geoFirePoint,
+      @JsonKey(ignore: true) double distanceAway}) {
     return _StoreLocation(
       address: address,
       geoFirePoint: geoFirePoint,
@@ -29,10 +32,14 @@ class _$StoreLocationTearOff {
 const $StoreLocation = _$StoreLocationTearOff();
 
 mixin _$StoreLocation {
-  StoreAddress get address;
+  @JsonKey(defaultValue: '')
+  String get address;
+  @GeoFirePointConverter()
   GeoFirePoint get geoFirePoint;
+  @JsonKey(ignore: true)
   double get distanceAway;
 
+  Map<String, dynamic> toJson();
   $StoreLocationCopyWith<StoreLocation> get copyWith;
 }
 
@@ -41,7 +48,9 @@ abstract class $StoreLocationCopyWith<$Res> {
           StoreLocation value, $Res Function(StoreLocation) then) =
       _$StoreLocationCopyWithImpl<$Res>;
   $Res call(
-      {StoreAddress address, GeoFirePoint geoFirePoint, double distanceAway});
+      {@JsonKey(defaultValue: '') String address,
+      @GeoFirePointConverter() GeoFirePoint geoFirePoint,
+      @JsonKey(ignore: true) double distanceAway});
 }
 
 class _$StoreLocationCopyWithImpl<$Res>
@@ -59,7 +68,7 @@ class _$StoreLocationCopyWithImpl<$Res>
     Object distanceAway = freezed,
   }) {
     return _then(_value.copyWith(
-      address: address == freezed ? _value.address : address as StoreAddress,
+      address: address == freezed ? _value.address : address as String,
       geoFirePoint: geoFirePoint == freezed
           ? _value.geoFirePoint
           : geoFirePoint as GeoFirePoint,
@@ -77,7 +86,9 @@ abstract class _$StoreLocationCopyWith<$Res>
       __$StoreLocationCopyWithImpl<$Res>;
   @override
   $Res call(
-      {StoreAddress address, GeoFirePoint geoFirePoint, double distanceAway});
+      {@JsonKey(defaultValue: '') String address,
+      @GeoFirePointConverter() GeoFirePoint geoFirePoint,
+      @JsonKey(ignore: true) double distanceAway});
 }
 
 class __$StoreLocationCopyWithImpl<$Res>
@@ -97,7 +108,7 @@ class __$StoreLocationCopyWithImpl<$Res>
     Object distanceAway = freezed,
   }) {
     return _then(_StoreLocation(
-      address: address == freezed ? _value.address : address as StoreAddress,
+      address: address == freezed ? _value.address : address as String,
       geoFirePoint: geoFirePoint == freezed
           ? _value.geoFirePoint
           : geoFirePoint as GeoFirePoint,
@@ -108,16 +119,25 @@ class __$StoreLocationCopyWithImpl<$Res>
   }
 }
 
+@JsonSerializable()
 class _$_StoreLocation implements _StoreLocation {
   const _$_StoreLocation(
-      {@required this.address, this.geoFirePoint, this.distanceAway})
+      {@required @JsonKey(defaultValue: '') this.address,
+      @GeoFirePointConverter() this.geoFirePoint,
+      @JsonKey(ignore: true) this.distanceAway})
       : assert(address != null);
 
+  factory _$_StoreLocation.fromJson(Map<String, dynamic> json) =>
+      _$_$_StoreLocationFromJson(json);
+
   @override
-  final StoreAddress address;
+  @JsonKey(defaultValue: '')
+  final String address;
   @override
+  @GeoFirePointConverter()
   final GeoFirePoint geoFirePoint;
   @override
+  @JsonKey(ignore: true)
   final double distanceAway;
 
   @override
@@ -150,19 +170,30 @@ class _$_StoreLocation implements _StoreLocation {
   @override
   _$StoreLocationCopyWith<_StoreLocation> get copyWith =>
       __$StoreLocationCopyWithImpl<_StoreLocation>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$_$_StoreLocationToJson(this);
+  }
 }
 
 abstract class _StoreLocation implements StoreLocation {
   const factory _StoreLocation(
-      {@required StoreAddress address,
-      GeoFirePoint geoFirePoint,
-      double distanceAway}) = _$_StoreLocation;
+      {@required @JsonKey(defaultValue: '') String address,
+      @GeoFirePointConverter() GeoFirePoint geoFirePoint,
+      @JsonKey(ignore: true) double distanceAway}) = _$_StoreLocation;
+
+  factory _StoreLocation.fromJson(Map<String, dynamic> json) =
+      _$_StoreLocation.fromJson;
 
   @override
-  StoreAddress get address;
+  @JsonKey(defaultValue: '')
+  String get address;
   @override
+  @GeoFirePointConverter()
   GeoFirePoint get geoFirePoint;
   @override
+  @JsonKey(ignore: true)
   double get distanceAway;
   @override
   _$StoreLocationCopyWith<_StoreLocation> get copyWith;

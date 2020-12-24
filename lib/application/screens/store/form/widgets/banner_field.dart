@@ -44,7 +44,7 @@ class BannerField extends ViewWidget<StoreFormBloc> {
 
   Widget _buildRxBackground() {
     return GetBuilder<StoreFormBloc>(
-      builder: (bloc) => bloc.store.banner.getOrCrash().fold(
+      builder: (bloc) => bloc.store.banner.fold(
             (file) => Image.file(
               file,
               fit: BoxFit.cover,

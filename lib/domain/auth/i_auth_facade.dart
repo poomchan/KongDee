@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:fluttertaladsod/domain/auth/user/user.dart';
+import 'package:fluttertaladsod/domain/user/user.dart';
 
 import 'auth_failure.dart';
 

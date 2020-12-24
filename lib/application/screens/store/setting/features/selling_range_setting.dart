@@ -19,7 +19,7 @@ class SellingRangePage extends ViewWidget<StoreSettingBloc> {
             children: [
               SettingsTile.switchTile(
                 title: 'Unlimited',
-                switchValue: bloc.sellingRange.isInFinite,
+                switchValue: bloc.sellingRange == double.infinity,
                 onToggle: (val) => bloc.onInfiniteRangeToggled(isInf: val),
               ),
               const Divider(height: 0),
@@ -48,7 +48,7 @@ class SellingRangePage extends ViewWidget<StoreSettingBloc> {
 
   Widget _buildRxRangePicker(BuildContext context) {
     return GetBuilder<StoreSettingBloc>(
-      builder: (_) => !bloc.sellingRange.isInFinite
+      builder: (_) => bloc.sellingRange != double.infinity
           ? Container(
               padding: const EdgeInsets.symmetric(vertical: 10.0),
               color: Colors.white,
@@ -61,12 +61,12 @@ class SellingRangePage extends ViewWidget<StoreSettingBloc> {
                     SizedBox(
                       width: 100.0,
                       child: TextFormField(
-                        initialValue: bloc.sellingRange.getOrCrash().toString(),
+                        initialValue: bloc.sellingRange.toString(),
                         keyboardType:
                             TextInputType.numberWithOptions(decimal: true),
                         textAlign: TextAlign.center,
                         enableSuggestions: false,
-                        enabled: !bloc.sellingRange.isInFinite,
+                        enabled: bloc.sellingRange != double.infinity,
                         validator: (val) {
                           if (val.isEmpty) return 'cannot be empty';
                           try {

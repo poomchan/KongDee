@@ -8,26 +8,29 @@ part of 'message.dart';
 // **************************************************************************
 
 T _$identity<T>(T value) => value;
+MessageDomain _$MessageDomainFromJson(Map<String, dynamic> json) {
+  return _MessageDomain.fromJson(json);
+}
 
 class _$MessageDomainTearOff {
   const _$MessageDomainTearOff();
 
 // ignore: unused_element
   _MessageDomain call(
-      {@required UniqueId id,
-      @required UniqueId senderId,
-      @required SenderName senderName,
-      @required SenderAvatarUrl senderAvatarUrl,
-      @required MessageBody body,
-      @required bool isSender,
-      Timestamp timestamp}) {
+      {@JsonKey(ignore: true) String id,
+      @required String senderId,
+      @JsonKey(ignore: true) bool isSender,
+      @required String senderName,
+      @required String senderAvatarUrl,
+      @required String body,
+      @TimestampConverter() Timestamp timestamp}) {
     return _MessageDomain(
       id: id,
       senderId: senderId,
+      isSender: isSender,
       senderName: senderName,
       senderAvatarUrl: senderAvatarUrl,
       body: body,
-      isSender: isSender,
       timestamp: timestamp,
     );
   }
@@ -37,14 +40,18 @@ class _$MessageDomainTearOff {
 const $MessageDomain = _$MessageDomainTearOff();
 
 mixin _$MessageDomain {
-  UniqueId get id;
-  UniqueId get senderId;
-  SenderName get senderName;
-  SenderAvatarUrl get senderAvatarUrl;
-  MessageBody get body;
+  @JsonKey(ignore: true)
+  String get id;
+  String get senderId;
+  @JsonKey(ignore: true)
   bool get isSender;
+  String get senderName;
+  String get senderAvatarUrl;
+  String get body;
+  @TimestampConverter()
   Timestamp get timestamp;
 
+  Map<String, dynamic> toJson();
   $MessageDomainCopyWith<MessageDomain> get copyWith;
 }
 
@@ -53,13 +60,13 @@ abstract class $MessageDomainCopyWith<$Res> {
           MessageDomain value, $Res Function(MessageDomain) then) =
       _$MessageDomainCopyWithImpl<$Res>;
   $Res call(
-      {UniqueId id,
-      UniqueId senderId,
-      SenderName senderName,
-      SenderAvatarUrl senderAvatarUrl,
-      MessageBody body,
-      bool isSender,
-      Timestamp timestamp});
+      {@JsonKey(ignore: true) String id,
+      String senderId,
+      @JsonKey(ignore: true) bool isSender,
+      String senderName,
+      String senderAvatarUrl,
+      String body,
+      @TimestampConverter() Timestamp timestamp});
 }
 
 class _$MessageDomainCopyWithImpl<$Res>
@@ -74,22 +81,22 @@ class _$MessageDomainCopyWithImpl<$Res>
   $Res call({
     Object id = freezed,
     Object senderId = freezed,
+    Object isSender = freezed,
     Object senderName = freezed,
     Object senderAvatarUrl = freezed,
     Object body = freezed,
-    Object isSender = freezed,
     Object timestamp = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed ? _value.id : id as UniqueId,
-      senderId: senderId == freezed ? _value.senderId : senderId as UniqueId,
+      id: id == freezed ? _value.id : id as String,
+      senderId: senderId == freezed ? _value.senderId : senderId as String,
+      isSender: isSender == freezed ? _value.isSender : isSender as bool,
       senderName:
-          senderName == freezed ? _value.senderName : senderName as SenderName,
+          senderName == freezed ? _value.senderName : senderName as String,
       senderAvatarUrl: senderAvatarUrl == freezed
           ? _value.senderAvatarUrl
-          : senderAvatarUrl as SenderAvatarUrl,
-      body: body == freezed ? _value.body : body as MessageBody,
-      isSender: isSender == freezed ? _value.isSender : isSender as bool,
+          : senderAvatarUrl as String,
+      body: body == freezed ? _value.body : body as String,
       timestamp:
           timestamp == freezed ? _value.timestamp : timestamp as Timestamp,
     ));
@@ -103,13 +110,13 @@ abstract class _$MessageDomainCopyWith<$Res>
       __$MessageDomainCopyWithImpl<$Res>;
   @override
   $Res call(
-      {UniqueId id,
-      UniqueId senderId,
-      SenderName senderName,
-      SenderAvatarUrl senderAvatarUrl,
-      MessageBody body,
-      bool isSender,
-      Timestamp timestamp});
+      {@JsonKey(ignore: true) String id,
+      String senderId,
+      @JsonKey(ignore: true) bool isSender,
+      String senderName,
+      String senderAvatarUrl,
+      String body,
+      @TimestampConverter() Timestamp timestamp});
 }
 
 class __$MessageDomainCopyWithImpl<$Res>
@@ -126,63 +133,68 @@ class __$MessageDomainCopyWithImpl<$Res>
   $Res call({
     Object id = freezed,
     Object senderId = freezed,
+    Object isSender = freezed,
     Object senderName = freezed,
     Object senderAvatarUrl = freezed,
     Object body = freezed,
-    Object isSender = freezed,
     Object timestamp = freezed,
   }) {
     return _then(_MessageDomain(
-      id: id == freezed ? _value.id : id as UniqueId,
-      senderId: senderId == freezed ? _value.senderId : senderId as UniqueId,
+      id: id == freezed ? _value.id : id as String,
+      senderId: senderId == freezed ? _value.senderId : senderId as String,
+      isSender: isSender == freezed ? _value.isSender : isSender as bool,
       senderName:
-          senderName == freezed ? _value.senderName : senderName as SenderName,
+          senderName == freezed ? _value.senderName : senderName as String,
       senderAvatarUrl: senderAvatarUrl == freezed
           ? _value.senderAvatarUrl
-          : senderAvatarUrl as SenderAvatarUrl,
-      body: body == freezed ? _value.body : body as MessageBody,
-      isSender: isSender == freezed ? _value.isSender : isSender as bool,
+          : senderAvatarUrl as String,
+      body: body == freezed ? _value.body : body as String,
       timestamp:
           timestamp == freezed ? _value.timestamp : timestamp as Timestamp,
     ));
   }
 }
 
+@JsonSerializable()
 class _$_MessageDomain extends _MessageDomain {
   const _$_MessageDomain(
-      {@required this.id,
+      {@JsonKey(ignore: true) this.id,
       @required this.senderId,
+      @JsonKey(ignore: true) this.isSender,
       @required this.senderName,
       @required this.senderAvatarUrl,
       @required this.body,
-      @required this.isSender,
-      this.timestamp})
-      : assert(id != null),
-        assert(senderId != null),
+      @TimestampConverter() this.timestamp})
+      : assert(senderId != null),
         assert(senderName != null),
         assert(senderAvatarUrl != null),
         assert(body != null),
-        assert(isSender != null),
         super._();
 
+  factory _$_MessageDomain.fromJson(Map<String, dynamic> json) =>
+      _$_$_MessageDomainFromJson(json);
+
   @override
-  final UniqueId id;
+  @JsonKey(ignore: true)
+  final String id;
   @override
-  final UniqueId senderId;
+  final String senderId;
   @override
-  final SenderName senderName;
-  @override
-  final SenderAvatarUrl senderAvatarUrl;
-  @override
-  final MessageBody body;
-  @override
+  @JsonKey(ignore: true)
   final bool isSender;
   @override
+  final String senderName;
+  @override
+  final String senderAvatarUrl;
+  @override
+  final String body;
+  @override
+  @TimestampConverter()
   final Timestamp timestamp;
 
   @override
   String toString() {
-    return 'MessageDomain(id: $id, senderId: $senderId, senderName: $senderName, senderAvatarUrl: $senderAvatarUrl, body: $body, isSender: $isSender, timestamp: $timestamp)';
+    return 'MessageDomain(id: $id, senderId: $senderId, isSender: $isSender, senderName: $senderName, senderAvatarUrl: $senderAvatarUrl, body: $body, timestamp: $timestamp)';
   }
 
   @override
@@ -194,6 +206,9 @@ class _$_MessageDomain extends _MessageDomain {
             (identical(other.senderId, senderId) ||
                 const DeepCollectionEquality()
                     .equals(other.senderId, senderId)) &&
+            (identical(other.isSender, isSender) ||
+                const DeepCollectionEquality()
+                    .equals(other.isSender, isSender)) &&
             (identical(other.senderName, senderName) ||
                 const DeepCollectionEquality()
                     .equals(other.senderName, senderName)) &&
@@ -202,9 +217,6 @@ class _$_MessageDomain extends _MessageDomain {
                     .equals(other.senderAvatarUrl, senderAvatarUrl)) &&
             (identical(other.body, body) ||
                 const DeepCollectionEquality().equals(other.body, body)) &&
-            (identical(other.isSender, isSender) ||
-                const DeepCollectionEquality()
-                    .equals(other.isSender, isSender)) &&
             (identical(other.timestamp, timestamp) ||
                 const DeepCollectionEquality()
                     .equals(other.timestamp, timestamp)));
@@ -215,41 +227,52 @@ class _$_MessageDomain extends _MessageDomain {
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(id) ^
       const DeepCollectionEquality().hash(senderId) ^
+      const DeepCollectionEquality().hash(isSender) ^
       const DeepCollectionEquality().hash(senderName) ^
       const DeepCollectionEquality().hash(senderAvatarUrl) ^
       const DeepCollectionEquality().hash(body) ^
-      const DeepCollectionEquality().hash(isSender) ^
       const DeepCollectionEquality().hash(timestamp);
 
   @override
   _$MessageDomainCopyWith<_MessageDomain> get copyWith =>
       __$MessageDomainCopyWithImpl<_MessageDomain>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$_$_MessageDomainToJson(this);
+  }
 }
 
 abstract class _MessageDomain extends MessageDomain {
   const _MessageDomain._() : super._();
   const factory _MessageDomain(
-      {@required UniqueId id,
-      @required UniqueId senderId,
-      @required SenderName senderName,
-      @required SenderAvatarUrl senderAvatarUrl,
-      @required MessageBody body,
-      @required bool isSender,
-      Timestamp timestamp}) = _$_MessageDomain;
+      {@JsonKey(ignore: true) String id,
+      @required String senderId,
+      @JsonKey(ignore: true) bool isSender,
+      @required String senderName,
+      @required String senderAvatarUrl,
+      @required String body,
+      @TimestampConverter() Timestamp timestamp}) = _$_MessageDomain;
+
+  factory _MessageDomain.fromJson(Map<String, dynamic> json) =
+      _$_MessageDomain.fromJson;
 
   @override
-  UniqueId get id;
+  @JsonKey(ignore: true)
+  String get id;
   @override
-  UniqueId get senderId;
+  String get senderId;
   @override
-  SenderName get senderName;
-  @override
-  SenderAvatarUrl get senderAvatarUrl;
-  @override
-  MessageBody get body;
-  @override
+  @JsonKey(ignore: true)
   bool get isSender;
   @override
+  String get senderName;
+  @override
+  String get senderAvatarUrl;
+  @override
+  String get body;
+  @override
+  @TimestampConverter()
   Timestamp get timestamp;
   @override
   _$MessageDomainCopyWith<_MessageDomain> get copyWith;

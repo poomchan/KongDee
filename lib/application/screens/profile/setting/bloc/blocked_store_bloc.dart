@@ -4,7 +4,6 @@ import 'package:dartz/dartz.dart';
 import 'package:fluttertaladsod/application/bloc/auth/auth_bloc.dart';
 import 'package:fluttertaladsod/application/bloc/core/simple_progress_setter.dart';
 import 'package:fluttertaladsod/application/bloc/location/location_bloc.dart';
-import 'package:fluttertaladsod/domain/core/value_objects.dart';
 import 'package:fluttertaladsod/domain/store/i_store_repository.dart';
 import 'package:fluttertaladsod/domain/store/store.dart';
 import 'package:fluttertaladsod/domain/store/store_failures.dart';
@@ -26,7 +25,7 @@ class BlockedStoreBloc extends GetxController
       for (final id in map.keys) {
         if (map[id] == true) {
           final fOrStoreStream = _iStoreRepository.watchSingleStore(
-            storeId: UniqueId.fromUniqueString(id),
+            storeId: id,
             location: _locationBloc.location,
             userOption: some(_authBloc.user),
           );

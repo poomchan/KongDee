@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluttertaladsod/domain/auth/i_auth_facade.dart';
-import 'package:fluttertaladsod/domain/auth/user/user.dart';
+import 'package:fluttertaladsod/domain/user/user.dart';
 import 'package:get/get.dart';
 
 /// for easier import
@@ -19,7 +19,7 @@ extension FirestoreX on FirebaseFirestore {
         userOption.fold((f) => throw 'user unauthenticated', (user) => user);
     return FirebaseFirestore.instance
         .collection('users')
-        .doc(user.id.getOrCrash());
+        .doc(user.id);
   }
 
   Future<UserDomain> userDomain() async {

@@ -1,7 +1,9 @@
 import 'dart:io';
 import 'package:dartz/dartz.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/services.dart';
-import 'package:fluttertaladsod/domain/store/i_image_repository.dart';
+import 'package:fluttertaladsod/domain/image/i_image_repository.dart';
+import 'package:fluttertaladsod/domain/image/image_failure.dart';
 import 'package:get/get.dart';
 import 'package:image/image.dart' as im;
 import 'package:image_picker/image_picker.dart';
@@ -11,6 +13,7 @@ import 'package:uuid/uuid.dart';
 
 class ImageRepository implements IImageRepository {
   final _imagePicker = Get.find<ImagePicker>();
+  final _storage = Get.find<StorageReference>();
 
   @override
   Future<Option<File>> getImage() async {
@@ -52,5 +55,25 @@ class ImageRepository implements IImageRepository {
     final compressedImageFile = File('$path/img_$imageId.jpg')
       ..writeAsBytesSync(im.encodeJpg(imageFile, quality: 10));
     return compressedImageFile;
+  }
+
+  @override
+  Future<Either<ImageFailure, String>> uploadFileImage(File img, String path) async {
+    final imageId = Uuid().v4();
+    try {
+      // upload (path in firebase storage)
+      final StorageUploadTask uploadTask =
+          _storage.child("$path/img_$imageId").putFile(img);
+
+      // wait for completion
+      final StorageTaskSnapshot storageSnap = await uploadTask.onComplete;
+
+      //get download Url
+      final String mediaUrl = await storageSnap.ref.getDownloadURL() as String;
+      return right(mediaUrl);
+    } catch (err) {
+      // log error here
+      return left(ImageFailure.unexpected(err));
+    }
   }
 }
