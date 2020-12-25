@@ -29,7 +29,8 @@ class ImageField extends StatelessWidget {
               bloc.store.pics.length,
               (index) => ImageGrid(
                 indexOption: dartz.some(
-                    index), // pass index to bloc builder and to delete function in the grid
+                  index,
+                ), // pass index to bloc builder and to delete function in the grid
               ),
             ),
             ImageGrid(

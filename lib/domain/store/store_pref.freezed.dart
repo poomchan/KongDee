@@ -8,15 +8,18 @@ part of 'store_pref.dart';
 // **************************************************************************
 
 T _$identity<T>(T value) => value;
+StorePrefs _$StorePrefsFromJson(Map<String, dynamic> json) {
+  return _StorePrefs.fromJson(json);
+}
 
 class _$StorePrefsTearOff {
   const _$StorePrefsTearOff();
 
 // ignore: unused_element
   _StorePrefs call(
-      {@required bool isOpen,
-      @required bool isNotificationOn,
-      @required SellingRange sellingRange}) {
+      {@required @JsonKey(defaultValue: true) bool isOpen,
+      @required @JsonKey(defaultValue: true) bool isNotificationOn,
+      @required @JsonKey(defaultValue: 1) double sellingRange}) {
     return _StorePrefs(
       isOpen: isOpen,
       isNotificationOn: isNotificationOn,
@@ -29,10 +32,14 @@ class _$StorePrefsTearOff {
 const $StorePrefs = _$StorePrefsTearOff();
 
 mixin _$StorePrefs {
+  @JsonKey(defaultValue: true)
   bool get isOpen;
+  @JsonKey(defaultValue: true)
   bool get isNotificationOn;
-  SellingRange get sellingRange;
+  @JsonKey(defaultValue: 1)
+  double get sellingRange;
 
+  Map<String, dynamic> toJson();
   $StorePrefsCopyWith<StorePrefs> get copyWith;
 }
 
@@ -40,7 +47,10 @@ abstract class $StorePrefsCopyWith<$Res> {
   factory $StorePrefsCopyWith(
           StorePrefs value, $Res Function(StorePrefs) then) =
       _$StorePrefsCopyWithImpl<$Res>;
-  $Res call({bool isOpen, bool isNotificationOn, SellingRange sellingRange});
+  $Res call(
+      {@JsonKey(defaultValue: true) bool isOpen,
+      @JsonKey(defaultValue: true) bool isNotificationOn,
+      @JsonKey(defaultValue: 1) double sellingRange});
 }
 
 class _$StorePrefsCopyWithImpl<$Res> implements $StorePrefsCopyWith<$Res> {
@@ -63,7 +73,7 @@ class _$StorePrefsCopyWithImpl<$Res> implements $StorePrefsCopyWith<$Res> {
           : isNotificationOn as bool,
       sellingRange: sellingRange == freezed
           ? _value.sellingRange
-          : sellingRange as SellingRange,
+          : sellingRange as double,
     ));
   }
 }
@@ -73,7 +83,10 @@ abstract class _$StorePrefsCopyWith<$Res> implements $StorePrefsCopyWith<$Res> {
           _StorePrefs value, $Res Function(_StorePrefs) then) =
       __$StorePrefsCopyWithImpl<$Res>;
   @override
-  $Res call({bool isOpen, bool isNotificationOn, SellingRange sellingRange});
+  $Res call(
+      {@JsonKey(defaultValue: true) bool isOpen,
+      @JsonKey(defaultValue: true) bool isNotificationOn,
+      @JsonKey(defaultValue: 1) double sellingRange});
 }
 
 class __$StorePrefsCopyWithImpl<$Res> extends _$StorePrefsCopyWithImpl<$Res>
@@ -98,27 +111,34 @@ class __$StorePrefsCopyWithImpl<$Res> extends _$StorePrefsCopyWithImpl<$Res>
           : isNotificationOn as bool,
       sellingRange: sellingRange == freezed
           ? _value.sellingRange
-          : sellingRange as SellingRange,
+          : sellingRange as double,
     ));
   }
 }
 
+@JsonSerializable()
 class _$_StorePrefs extends _StorePrefs {
   const _$_StorePrefs(
-      {@required this.isOpen,
-      @required this.isNotificationOn,
-      @required this.sellingRange})
+      {@required @JsonKey(defaultValue: true) this.isOpen,
+      @required @JsonKey(defaultValue: true) this.isNotificationOn,
+      @required @JsonKey(defaultValue: 1) this.sellingRange})
       : assert(isOpen != null),
         assert(isNotificationOn != null),
         assert(sellingRange != null),
         super._();
 
+  factory _$_StorePrefs.fromJson(Map<String, dynamic> json) =>
+      _$_$_StorePrefsFromJson(json);
+
   @override
+  @JsonKey(defaultValue: true)
   final bool isOpen;
   @override
+  @JsonKey(defaultValue: true)
   final bool isNotificationOn;
   @override
-  final SellingRange sellingRange;
+  @JsonKey(defaultValue: 1)
+  final double sellingRange;
 
   @override
   String toString() {
@@ -149,21 +169,32 @@ class _$_StorePrefs extends _StorePrefs {
   @override
   _$StorePrefsCopyWith<_StorePrefs> get copyWith =>
       __$StorePrefsCopyWithImpl<_StorePrefs>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$_$_StorePrefsToJson(this);
+  }
 }
 
 abstract class _StorePrefs extends StorePrefs {
   const _StorePrefs._() : super._();
   const factory _StorePrefs(
-      {@required bool isOpen,
-      @required bool isNotificationOn,
-      @required SellingRange sellingRange}) = _$_StorePrefs;
+      {@required @JsonKey(defaultValue: true) bool isOpen,
+      @required @JsonKey(defaultValue: true) bool isNotificationOn,
+      @required @JsonKey(defaultValue: 1) double sellingRange}) = _$_StorePrefs;
+
+  factory _StorePrefs.fromJson(Map<String, dynamic> json) =
+      _$_StorePrefs.fromJson;
 
   @override
+  @JsonKey(defaultValue: true)
   bool get isOpen;
   @override
+  @JsonKey(defaultValue: true)
   bool get isNotificationOn;
   @override
-  SellingRange get sellingRange;
+  @JsonKey(defaultValue: 1)
+  double get sellingRange;
   @override
   _$StorePrefsCopyWith<_StorePrefs> get copyWith;
 }

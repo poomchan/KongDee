@@ -1,37 +1,74 @@
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
 
-export const onStoreUpdate = functions.firestore
-  .document(`/stores/{storeId}`)
+const storeCollection = functions.firestore.document(`/stores/{storeId}`);
+const bucket = admin.storage().bucket();
+const bannerStr: string = 'banner';
+const picsStr: string = 'pics';
+
+function getBannerStoragePath(storeId: string, imgId: string) {
+  return `stores/store_${storeId}/banner/img_${imgId}`;
+}
+function getPicStoragePath(storeId: string, imgId: string) {
+  return `stores/store_${storeId}/pics/img_${imgId}`;
+}
+function getIdFromUrl(url: string): string {
+  return url.split(`img_`).pop()!.split(`?`)[0];
+}
+async function delteStorageFile(path: string): Promise<any> {
+  return bucket.file(path).delete();
+}
+
+export const onStoreUpdate = storeCollection
   .onUpdate(async (change, context) => {
     const storeId = context.params.storeId;
-    const bucket = admin.storage().bucket();
     const before = change.before.data();
     const after = change.after.data();
     if (before == after) return;
 
     // clean the banner in storage
-    if (before[`bannerUrl`] != after[`bannerUrl`]) {
-      const imgId = getIdFromUrl(before['bannerUrl']);
-      const path = `stores/store_${storeId}/banner/img_${imgId}`;
-      await bucket.file(path).delete();
+    const banner: string = after[bannerStr];
+    const prevBanner: string = before[picsStr];
+    if (prevBanner != banner) {
+      const imgId = getIdFromUrl(prevBanner);
+      const path = getBannerStoragePath(storeId, imgId);
+      await delteStorageFile(path);
     }
 
     // clean the pics in storage
-    const prevList: Array<string> = before['picUrls'];
-    const newList: Array<string> = after['picUrls'];
+    const prevList: Array<string> = before['pics'];
+    const newList: Array<string> = after['pics'];
     if (newList != prevList) {
       for (let url of prevList) {
         if (!newList.includes(url)) {
           const imgId = getIdFromUrl(url);
-          const path = `stores/store_${storeId}/pics/img_${imgId}`;
-          await bucket.file(path).delete();
+          const path = getPicStoragePath(storeId, imgId);
+          await delteStorageFile(path);
         }
       }
     }
-    
-    function getIdFromUrl(url : string) : string {
-      return url.split(`img_`).pop()!.split(`?`)[0];
-    }
 
   })
+
+export const onStoreDelete = storeCollection.onDelete(
+  async (snap, context) => {
+    const storeId = context.params.storeId;
+
+    // clear banner
+    const banner: string = snap.data()[bannerStr];
+    const bannerId = getIdFromUrl(banner);
+    const bannerPath = getBannerStoragePath(storeId, bannerId);
+    await delteStorageFile(bannerPath);
+
+    // clear pics
+    const pics: Array<string> = snap.data()[picsStr];
+    for (let pic of pics) {
+      const picId = getIdFromUrl(pic);
+      const picPath = getPicStoragePath(storeId, picId);
+      await delteStorageFile(picPath);
+    }
+
+
+
+  }
+);

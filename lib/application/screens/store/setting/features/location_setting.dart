@@ -22,7 +22,7 @@ class LocationSetting extends ViewWidget<StoreSettingBloc> {
                   width: 200,
                   child: GetBuilder<StoreSettingBloc>(
                     builder: (bloc) => Text(
-                      bloc.location.address.getOrCrash(),
+                      bloc.location.address,
                       overflow: TextOverflow.clip,
                     ),
                     dispose: (s) => bloc.resetState(),

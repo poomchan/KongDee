@@ -2,10 +2,9 @@ import 'package:fluttertaladsod/application/bloc/core/simple_progress_setter.dar
 import 'package:fluttertaladsod/application/screens/store/view_page/bloc/store_view_bloc.dart';
 import 'package:fluttertaladsod/domain/location/i_location_repository.dart';
 import 'package:fluttertaladsod/domain/store/i_store_repository.dart';
-import 'package:fluttertaladsod/domain/store/location/store_location.dart';
 import 'package:fluttertaladsod/domain/store/store.dart';
 import 'package:fluttertaladsod/domain/store/store_failures.dart';
-import 'package:fluttertaladsod/domain/store/value_objects.dart';
+import 'package:fluttertaladsod/domain/store/store_location.dart';
 import 'package:get/get.dart';
 
 class StoreSettingBloc extends GetxController
@@ -18,10 +17,10 @@ class StoreSettingBloc extends GetxController
 
   StoreLocation location;
 
-  SellingRange sellingRange = SellingRange.created();
+  double sellingRange = 1;
   bool isInfinite = true;
 
-  Map<String, bool> blockedUsers = {};  
+  Map<String, bool> blockedUsers = {};
 
   Future<void> onLocationUpdated() async {
     updateWithLoading();
@@ -44,11 +43,11 @@ class StoreSettingBloc extends GetxController
 
   void onInfiniteRangeToggled({bool isInf}) {
     if (isInf) {
-      sellingRange = SellingRange.infinite();
+      sellingRange = double.infinity;
     } else {
       final defaultSellingRange = _watcherBloc.store.prefs.sellingRange;
-      if (defaultSellingRange.isInFinite) {
-        sellingRange = SellingRange.created();
+      if (defaultSellingRange == double.infinity) {
+        sellingRange = 1;
       } else {
         sellingRange = defaultSellingRange;
       }
@@ -59,7 +58,7 @@ class StoreSettingBloc extends GetxController
   void onSellingRangeChanged(String val) {
     try {
       final numVal = double.parse(val);
-      sellingRange = SellingRange(numVal);
+      sellingRange = numVal;
       update();
     } catch (e) {}
   }
@@ -103,7 +102,7 @@ class StoreSettingBloc extends GetxController
   void resetState() {
     location = _watcherBloc.store.location;
     sellingRange = _watcherBloc.store.prefs.sellingRange;
-    if (!sellingRange.isInFinite) {
+    if (sellingRange != double.infinity) {
       isInfinite = false;
     } else {
       isInfinite = true;

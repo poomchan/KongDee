@@ -5,12 +5,11 @@ import 'package:fluttertaladsod/application/core/haptic_feedback.dart';
 import 'package:fluttertaladsod/application/screens/store/setting/bloc/store_setting_bloc.dart';
 import 'package:fluttertaladsod/application/screens/store/setting/widgets/dialogs.dart';
 import 'package:fluttertaladsod/application/screens/store/view_page/bloc/store_view_bloc.dart';
-import 'package:fluttertaladsod/domain/auth/user/i_user_repository.dart';
-import 'package:fluttertaladsod/domain/auth/user/user.dart';
-import 'package:fluttertaladsod/domain/auth/user/user_failure.dart';
-import 'package:fluttertaladsod/domain/core/value_objects.dart';
 import 'package:fluttertaladsod/domain/store/i_store_repository.dart';
 import 'package:fluttertaladsod/domain/store/store_failures.dart';
+import 'package:fluttertaladsod/domain/user/i_user_repository.dart';
+import 'package:fluttertaladsod/domain/user/user.dart';
+import 'package:fluttertaladsod/domain/user/user_failure.dart';
 import 'package:get/get.dart';
 
 class BlockedUsersSettingBloc extends GetxController
@@ -23,9 +22,9 @@ class BlockedUsersSettingBloc extends GetxController
   Map<String, bool> get map => _storeSettingBloc.store.blockedUsers;
 
   UserDomain userOnFocus;
-  bool get isBlocked => map[userOnFocus.id.getOrCrash()] == true;
+  bool get isBlocked => map[userOnFocus.id] == true;
 
-  bool isThisUserBlocked(UserDomain u) => map[u.id.getOrCrash()] == true;
+  bool isThisUserBlocked(UserDomain u) => map[u.id] == true;
 
   List<UserDomain> blockedUserList = [];
 
@@ -35,8 +34,7 @@ class BlockedUsersSettingBloc extends GetxController
     for (final uid in map.keys) {
       if (isFailed) break;
       if (map[uid] == true) {
-        final fOrUser =
-            await _iUserRepository.getUser(UniqueId.fromUniqueString(uid));
+        final fOrUser = await _iUserRepository.getUser(uid);
         fOrUser.fold(
           (f) {
             f = f;
@@ -85,7 +83,7 @@ class BlockedUsersSettingBloc extends GetxController
       store.copyWith(
         blockedUsers: store.blockedUsers
           ..addEntries(
-            [MapEntry(userOnFocus.id.getOrCrash(), !isBlocked)],
+            [MapEntry(userOnFocus.id, !isBlocked)],
           ),
       ),
     );

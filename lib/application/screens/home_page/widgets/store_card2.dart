@@ -38,7 +38,7 @@ class StoreCard2 extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            store.name.getOrCrash(),
+            store.name,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
@@ -54,7 +54,7 @@ class StoreCard2 extends StatelessWidget {
               SizedBox(
                 width: 100.0,
                 child: Text(
-                  store.location.address.getOrCrash(),
+                  store.location.address,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
@@ -77,7 +77,7 @@ class StoreCard2 extends StatelessWidget {
         fit: StackFit.expand,
         children: [
           Hero(
-            tag: store.banner.url,
+            tag: store.banner,
             child: ColorFiltered(
               colorFilter: store.prefs.isOpen
                   ? const ColorFilter.mode(
@@ -88,7 +88,7 @@ class StoreCard2 extends StatelessWidget {
                       Colors.grey,
                       BlendMode.saturation,
                     ),
-              child: MyNetworkImage(imageUrl: store.banner.url),
+              child: MyNetworkImage(imageUrl: store.banner),
             ),
           ),
           Positioned(

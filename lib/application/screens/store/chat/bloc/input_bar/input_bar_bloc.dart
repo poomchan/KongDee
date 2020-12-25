@@ -5,10 +5,8 @@ import 'package:fluttertaladsod/domain/auth/i_auth_facade.dart';
 import 'package:fluttertaladsod/domain/message/i_message_repository.dart';
 import 'package:fluttertaladsod/domain/message/message.dart';
 import 'package:fluttertaladsod/domain/message/message_failure.dart';
-import 'package:fluttertaladsod/domain/message/value_objects.dart';
 import 'package:get/get.dart';
 import 'input_bar_state.dart';
-
 
 class InputBarBloc extends GetxController {
   final IMessageRepository _iChatRepository = Get.find<IMessageRepository>();
@@ -28,7 +26,7 @@ class InputBarBloc extends GetxController {
         isUploading: true,
         uploadingChat: some(state.chat),
         uploadSuccessOrFailureOption: none(),
-        chat: MessageDomain.empty(),
+        chat: MessageDomain.created(),
       );
 
       final userOrF = await _iAuthFacade.getSignedInUser();
@@ -42,8 +40,8 @@ class InputBarBloc extends GetxController {
             )
             .copyWith(
               senderId: user.id,
-              senderName: SenderName(user.displayName),
-              senderAvatarUrl: SenderAvatarUrl(user.photoUrl),
+              senderName: user.displayName,
+              senderAvatarUrl: user.photoUrl,
             ),
       );
 
@@ -64,7 +62,7 @@ class InputBarBloc extends GetxController {
   Future<void> bodyChanged(String value) async {
     state = state.copyWith(
       chat: state.chat.copyWith(
-        body: MessageBody(value),
+        body: value,
       ),
       uploadSuccessOrFailureOption: none(),
     );

@@ -1,25 +1,28 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies
 
-part of 'user/user.dart';
+part of 'user.dart';
 
 // **************************************************************************
 // FreezedGenerator
 // **************************************************************************
 
 T _$identity<T>(T value) => value;
+UserDomain _$UserDomainFromJson(Map<String, dynamic> json) {
+  return _User.fromJson(json);
+}
 
 class _$UserDomainTearOff {
   const _$UserDomainTearOff();
 
 // ignore: unused_element
   _User call(
-      {@required UniqueId id,
+      {@required String id,
       @required String displayName,
       @required String email,
       @required String photoUrl,
-      @required Map<String, bool> blockedStores,
-      @required Timestamp lastActive}) {
+      @required @JsonKey(defaultValue: {}) Map<String, bool> blockedStores,
+      @required @TimestampConverter() Timestamp lastActive}) {
     return _User(
       id: id,
       displayName: displayName,
@@ -35,13 +38,16 @@ class _$UserDomainTearOff {
 const $UserDomain = _$UserDomainTearOff();
 
 mixin _$UserDomain {
-  UniqueId get id;
+  String get id;
   String get displayName;
   String get email;
   String get photoUrl;
+  @JsonKey(defaultValue: {})
   Map<String, bool> get blockedStores;
+  @TimestampConverter()
   Timestamp get lastActive;
 
+  Map<String, dynamic> toJson();
   $UserDomainCopyWith<UserDomain> get copyWith;
 }
 
@@ -50,12 +56,12 @@ abstract class $UserDomainCopyWith<$Res> {
           UserDomain value, $Res Function(UserDomain) then) =
       _$UserDomainCopyWithImpl<$Res>;
   $Res call(
-      {UniqueId id,
+      {String id,
       String displayName,
       String email,
       String photoUrl,
-      Map<String, bool> blockedStores,
-      Timestamp lastActive});
+      @JsonKey(defaultValue: {}) Map<String, bool> blockedStores,
+      @TimestampConverter() Timestamp lastActive});
 }
 
 class _$UserDomainCopyWithImpl<$Res> implements $UserDomainCopyWith<$Res> {
@@ -75,7 +81,7 @@ class _$UserDomainCopyWithImpl<$Res> implements $UserDomainCopyWith<$Res> {
     Object lastActive = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed ? _value.id : id as UniqueId,
+      id: id == freezed ? _value.id : id as String,
       displayName:
           displayName == freezed ? _value.displayName : displayName as String,
       email: email == freezed ? _value.email : email as String,
@@ -94,12 +100,12 @@ abstract class _$UserCopyWith<$Res> implements $UserDomainCopyWith<$Res> {
       __$UserCopyWithImpl<$Res>;
   @override
   $Res call(
-      {UniqueId id,
+      {String id,
       String displayName,
       String email,
       String photoUrl,
-      Map<String, bool> blockedStores,
-      Timestamp lastActive});
+      @JsonKey(defaultValue: {}) Map<String, bool> blockedStores,
+      @TimestampConverter() Timestamp lastActive});
 }
 
 class __$UserCopyWithImpl<$Res> extends _$UserDomainCopyWithImpl<$Res>
@@ -120,7 +126,7 @@ class __$UserCopyWithImpl<$Res> extends _$UserDomainCopyWithImpl<$Res>
     Object lastActive = freezed,
   }) {
     return _then(_User(
-      id: id == freezed ? _value.id : id as UniqueId,
+      id: id == freezed ? _value.id : id as String,
       displayName:
           displayName == freezed ? _value.displayName : displayName as String,
       email: email == freezed ? _value.email : email as String,
@@ -134,14 +140,15 @@ class __$UserCopyWithImpl<$Res> extends _$UserDomainCopyWithImpl<$Res>
   }
 }
 
+@JsonSerializable()
 class _$_User implements _User {
   const _$_User(
       {@required this.id,
       @required this.displayName,
       @required this.email,
       @required this.photoUrl,
-      @required this.blockedStores,
-      @required this.lastActive})
+      @required @JsonKey(defaultValue: {}) this.blockedStores,
+      @required @TimestampConverter() this.lastActive})
       : assert(id != null),
         assert(displayName != null),
         assert(email != null),
@@ -149,8 +156,11 @@ class _$_User implements _User {
         assert(blockedStores != null),
         assert(lastActive != null);
 
+  factory _$_User.fromJson(Map<String, dynamic> json) =>
+      _$_$_UserFromJson(json);
+
   @override
-  final UniqueId id;
+  final String id;
   @override
   final String displayName;
   @override
@@ -158,8 +168,10 @@ class _$_User implements _User {
   @override
   final String photoUrl;
   @override
+  @JsonKey(defaultValue: {})
   final Map<String, bool> blockedStores;
   @override
+  @TimestampConverter()
   final Timestamp lastActive;
 
   @override
@@ -202,19 +214,26 @@ class _$_User implements _User {
   @override
   _$UserCopyWith<_User> get copyWith =>
       __$UserCopyWithImpl<_User>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$_$_UserToJson(this);
+  }
 }
 
 abstract class _User implements UserDomain {
   const factory _User(
-      {@required UniqueId id,
+      {@required String id,
       @required String displayName,
       @required String email,
       @required String photoUrl,
-      @required Map<String, bool> blockedStores,
-      @required Timestamp lastActive}) = _$_User;
+      @required @JsonKey(defaultValue: {}) Map<String, bool> blockedStores,
+      @required @TimestampConverter() Timestamp lastActive}) = _$_User;
+
+  factory _User.fromJson(Map<String, dynamic> json) = _$_User.fromJson;
 
   @override
-  UniqueId get id;
+  String get id;
   @override
   String get displayName;
   @override
@@ -222,8 +241,10 @@ abstract class _User implements UserDomain {
   @override
   String get photoUrl;
   @override
+  @JsonKey(defaultValue: {})
   Map<String, bool> get blockedStores;
   @override
+  @TimestampConverter()
   Timestamp get lastActive;
   @override
   _$UserCopyWith<_User> get copyWith;

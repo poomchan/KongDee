@@ -1,33 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertaladsod/application/bloc/core/view_widget.dart';
 import 'package:fluttertaladsod/application/screens/store/form/bloc/store_form_bloc.dart';
 import 'package:fluttertaladsod/application/screens/store/form/widgets/reusable_card.dart';
-import 'package:fluttertaladsod/domain/store/value_objects.dart';
-import 'package:get/get.dart';
+import 'package:fluttertaladsod/domain/store/store.dart';
+import 'package:fluttertaladsod/domain/store/validators.dart';
 
-class NameField extends StatelessWidget {
+class NameField extends ViewWidget<StoreFormBloc>{
   const NameField();
 
   @override
   Widget build(BuildContext context) {
-    final bloc = Get.find<StoreFormBloc>();
     return ReusableCard(
       children: [
         TextFormField(
-          initialValue: bloc.store.name.getOrCrash(),
+          initialValue: bloc.store.name,
           decoration: InputDecoration(labelText: 'store name'),
           style: TextStyle(fontSize: 30.0),
           maxLines: 1,
-          maxLength: StoreName.maxLength,
+          maxLength: Store.nameLength,
           onChanged: (val) => bloc.nameChanged(val),
           autovalidateMode: AutovalidateMode.onUserInteraction,
-          validator: (_) => bloc.store.name.value.fold(
-            (f) => f.maybeMap(
+          validator: (_) => validateStoreName(bloc.store.name).fold(
+            (f) => f.maybeWhen(
               empty: (_) => 'name must not be emty!',
               multiline: (_) => 'name must have only one line',
-              exceedingLength: (_) => 'name is too long',
+              exceedingLength: (_, __) => 'name is too long',
               orElse: () => null,
             ),
-            (r) => null,
+            (_) => null,
           ),
         ),
         Text(

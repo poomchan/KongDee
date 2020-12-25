@@ -1,11 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
-import 'package:fluttertaladsod/domain/core/value_objects.dart';
 import 'package:fluttertaladsod/domain/message/i_message_repository.dart';
 import 'package:fluttertaladsod/domain/message/message.dart';
 import 'package:fluttertaladsod/domain/message/message_failure.dart';
-import 'package:fluttertaladsod/infrastucture/chat/message_dto.dart';
 import 'package:fluttertaladsod/infrastucture/core/firestore_helper.dart';
 import 'package:get/get.dart';
 
@@ -17,11 +15,11 @@ class MessageRepository implements IMessageRepository {
 
   @override
   Stream<Either<MessageFailure, List<MessageDomain>>> watchMessages({
-    @required UniqueId storeId,
-    @required UniqueId viewerId,
+    @required String storeId,
+    @required String viewerId,
   }) async* {
     final _ref = _firestore.storeCollectionRef
-        .doc(storeId.getOrCrash())
+        .doc(storeId)
         .collection(collection);
 
     final snap = await _ref
@@ -54,13 +52,13 @@ class MessageRepository implements IMessageRepository {
 
   @override
   Future<Either<MessageFailure, List<MessageDomain>>> fetchMoreMessages({
-    @required UniqueId storeId,
-    @required UniqueId viewerId,
+    @required String storeId,
+    @required String viewerId,
   }) async {
     if (lastDoc == null) return left(MessageFailure.emptyChatRoom());
     try {
       final _ref = _firestore.storeCollectionRef
-          .doc(storeId.getOrCrash())
+          .doc(storeId)
           .collection(collection);
       final snap = await _ref
           .orderBy(timestamp, descending: true)
@@ -81,15 +79,15 @@ class MessageRepository implements IMessageRepository {
 
   @override
   Future<Either<MessageFailure, Unit>> uploadMessage({
-    UniqueId storeId,
+    String storeId,
     MessageDomain chat,
   }) async {
     try {
-      final jsonData = MessageDto.fromDomain(chat).toJson();
+      final jsonData = chat.toJson();
       await _firestore.storeCollectionRef
-          .doc(storeId.getOrCrash())
+          .doc(storeId)
           .collection(collection)
-          .doc(chat.id.getOrCrash())
+          .doc(chat.id)
           .set(jsonData);
       return right(unit);
     } catch (e) {
@@ -99,20 +97,20 @@ class MessageRepository implements IMessageRepository {
 
   @override
   Future<Either<MessageFailure, Unit>> deleteMessage(
-      {UniqueId storeId, UniqueId chatId}) async {
+      {String storeId, String chatId}) async {
     try {
       final chatDoc = await _firestore.storeCollectionRef
-          .doc(storeId.getOrCrash())
+          .doc(storeId)
           .collection(collection)
-          .doc(chatId.getOrCrash())
+          .doc(chatId)
           .get();
       if (!chatDoc.exists) {
         return left(MessageFailure.noSuchMessage());
       }
       await _firestore.storeCollectionRef
-          .doc(storeId.getOrCrash())
+          .doc(storeId)
           .collection(collection)
-          .doc(chatId.getOrCrash())
+          .doc(chatId)
           .delete();
       return right(unit);
     } catch (e) {
@@ -122,11 +120,11 @@ class MessageRepository implements IMessageRepository {
 
   List<MessageDomain> _mapToDomain(
     List<DocumentSnapshot> docList,
-    UniqueId viewerId,
+    String viewerId,
   ) {
     final List<MessageDomain> chatList = [];
     for (final doc in docList) {
-      final chat = MessageDto.fromFirestore(doc).toDomain(viewerId: viewerId);
+      final chat = MessageDomain.fromFirestore(doc, viewerId: viewerId);
       chatList.add(chat);
     }
     return chatList;

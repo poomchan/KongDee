@@ -1,10 +1,10 @@
 import 'package:flutter/foundation.dart';
 
-class ChatUser {
+class MessageOwner {
   final String name;
   final String id;
 
-  ChatUser({
+  MessageOwner({
     @required this.name,
     @required this.id,
   });

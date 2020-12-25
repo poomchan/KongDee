@@ -9,7 +9,7 @@ import 'package:fluttertaladsod/application/core/haptic_feedback.dart';
 import 'package:fluttertaladsod/application/screens/store/chat/bloc/action/chat_user.dart';
 import 'package:fluttertaladsod/application/screens/store/chat/widgets/dialogs.dart';
 import 'package:fluttertaladsod/application/screens/store/view_page/bloc/store_view_bloc.dart';
-import 'package:fluttertaladsod/domain/core/value_objects.dart';
+import 'package:fluttertaladsod/domain/core/value_generators.dart';
 import 'package:fluttertaladsod/domain/message/message_failure.dart';
 import 'package:fluttertaladsod/domain/report/i_report_repository.dart';
 import 'package:fluttertaladsod/domain/report/report.dart';
@@ -25,7 +25,7 @@ class ChatUserActionSheetBloc extends GetxController
   AuthBloc get _authBloc => Get.find();
 
   bool get isStoreOwner => _storeViewBloc.isStoreOwner;
-  ChatUser user;
+  MessageOwner user;
   String reportReason = '';
 
   bool get isBlocked {
@@ -36,7 +36,7 @@ class ChatUserActionSheetBloc extends GetxController
   void onMessageAvatarTapped(String name, String userId) {
     updateWithLoaded();
     HapticFeedback.mediumImpact();
-    user = ChatUser(name: name, id: userId);
+    user = MessageOwner(name: name, id: userId);
     showCupertinoModalPopup(
       context: Get.context,
       builder: (_) => buildAvatarActionSheet(),
@@ -85,9 +85,11 @@ class ChatUserActionSheetBloc extends GetxController
     final user = _authBloc.user;
     final fOrUnit = await _iReportRepository.sendReport(
       Report.user(
+        id: UniqueId().toString(),
         reporter: user.id,
-        userId: UniqueId.fromUniqueString(this.user.id),
+        userId: this.user.id,
         description: reportReason,
+        recieve: false,
       ),
     );
     fOrUnit.fold(

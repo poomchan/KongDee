@@ -1,20 +1,20 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'store_prefs_dto.dart';
+part of 'store_pref.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_StorePrefsDto _$_$_StorePrefsDtoFromJson(Map<String, dynamic> json) {
-  return _$_StorePrefsDto(
-    isOpen: json['isOpen'] as bool,
-    isNotificationOn: json['isNotificationOn'] as bool,
-    sellingRange: (json['sellingRange'] as num)?.toDouble(),
+_$_StorePrefs _$_$_StorePrefsFromJson(Map<String, dynamic> json) {
+  return _$_StorePrefs(
+    isOpen: json['isOpen'] as bool ?? true,
+    isNotificationOn: json['isNotificationOn'] as bool ?? true,
+    sellingRange: (json['sellingRange'] as num)?.toDouble() ?? 1,
   );
 }
 
-Map<String, dynamic> _$_$_StorePrefsDtoToJson(_$_StorePrefsDto instance) =>
+Map<String, dynamic> _$_$_StorePrefsToJson(_$_StorePrefs instance) =>
     <String, dynamic>{
       'isOpen': instance.isOpen,
       'isNotificationOn': instance.isNotificationOn,

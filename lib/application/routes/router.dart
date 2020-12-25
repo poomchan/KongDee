@@ -12,6 +12,8 @@ import 'package:fluttertaladsod/application/screens/profile/setting/profile_sett
 import 'package:fluttertaladsod/application/screens/splash/sign_in/sign_in_page_binding.dart';
 import 'package:fluttertaladsod/application/screens/splash/sign_in/sign_in_splash.dart';
 import 'package:fluttertaladsod/application/screens/splash/start_up_splash.dart';
+import 'package:fluttertaladsod/application/screens/splash/upgrade/upgrade_splash.dart';
+import 'package:fluttertaladsod/application/screens/splash/upgrade/upgrade_splash_binding.dart';
 import 'package:fluttertaladsod/application/screens/store/chat/bloc/chat_page_binding.dart';
 import 'package:fluttertaladsod/application/screens/store/chat/chat_page.dart';
 import 'package:fluttertaladsod/application/screens/store/form/bloc/store_form_page_binding.dart';
@@ -24,7 +26,6 @@ import 'package:fluttertaladsod/application/screens/store/setting/features/selli
 import 'package:fluttertaladsod/application/screens/store/setting/store_setting_page.dart';
 import 'package:fluttertaladsod/application/screens/store/view_page/bloc/store_view_page_binding.dart';
 import 'package:fluttertaladsod/application/screens/store/view_page/store_view_page2.dart';
-import 'package:fluttertaladsod/domain/core/value_objects.dart';
 import 'package:fluttertaladsod/domain/store/store.dart';
 import 'package:get/route_manager.dart';
 import '../screens/onboarding/onboarding_page.dart';
@@ -53,7 +54,7 @@ class Router {
     GetPage(
       name: Routes.profilePage,
       page: () => ProfilePage(
-        userId: Get.arguments as UniqueId,
+        userId: Get.arguments as String,
       ),
       binding: ProfilePB(),
       transition: Transition.fadeIn,
@@ -63,7 +64,7 @@ class Router {
     GetPage(
       name: Routes.storeViewPage,
       page: () => StoreViewPage2(
-        storeId: Get.arguments as UniqueId,
+        storeId: Get.arguments as String,
       ),
       binding: StoreViewPB(),
       transition: Transition.fadeIn,
@@ -127,6 +128,12 @@ class Router {
       name: Routes.legalPage,
       page: () => LegalPage(),
     ),
+    GetPage(
+      name: Routes.upgradeSplash,
+      page: () => UpgradeSplash(),
+      binding: UpgradeSplashBinding(),
+      fullscreenDialog: true,
+    ),
   ];
 }
 
@@ -147,4 +154,5 @@ class Routes {
   static const blockedStoresSettingPage = '/blocked-stores-setting';
   static const blockedUsersSettingPage = '/blocked-users-setting';
   static const legalPage = '/legal';
+  static const upgradeSplash = '/upgrade-splash';
 }

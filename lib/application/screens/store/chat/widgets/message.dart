@@ -21,10 +21,10 @@ class Message extends StatelessWidget {
         super(key: key);
 
   bool get isSender => m.isSender;
-  String get text => m.body.getOrCrash();
-  String get senderId => m.senderId.getOrCrash();
-  String get avatarUrl => m.senderAvatarUrl.getOrCrash();
-  String get senderName => m.senderName.getOrCrash();
+  String get text => m.body;
+  String get senderId => m.senderId;
+  String get avatarUrl => m.senderAvatarUrl;
+  String get senderName => m.senderName;
   Timestamp get timestamp => m.timestamp;
 
   @override

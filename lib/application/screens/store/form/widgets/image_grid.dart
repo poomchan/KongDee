@@ -1,10 +1,11 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertaladsod/application/bloc/core/view_widget.dart';
 import 'package:fluttertaladsod/application/core/components/my_network_image.dart';
 import 'package:fluttertaladsod/application/screens/store/form/bloc/store_form_bloc.dart';
 import 'package:get/get.dart';
 
-class ImageGrid extends StatelessWidget {
+class ImageGrid extends ViewWidget<StoreFormBloc> {
   // whether it is an empty grid or has an image
   final Option<int> indexOption;
 
@@ -18,7 +19,6 @@ class ImageGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bloc = Get.find<StoreFormBloc>();
     return Stack(
       clipBehavior: Clip.none,
       children: [
@@ -37,8 +37,12 @@ class ImageGrid extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15.0),
                     border: indexOption.fold(
-                        () => Border.all(width: 3, color: Colors.black87),
-                        (a) => null),
+                      () => Border.all(
+                        width: 3,
+                        color: Theme.of(context).accentColor,
+                      ),
+                      (_) => null,
+                    ),
                   ),
                   child: _buildRxImageWidget(),
                 ),
@@ -73,16 +77,18 @@ class ImageGrid extends StatelessWidget {
   Widget _buildRxImageWidget() {
     return indexOption.fold(
       () => Icon(Icons.add),
-      (indx) => GetBuilder<StoreFormBloc>(
-        builder: (bloc) => bloc.store.pics.getOrCrash()[indx].fileOrUrl.fold(
-              (file) => Image.file(
-                file,
-                fit: BoxFit.cover,
-                cacheWidth: 200,
-              ),
-              (url) => MyNetworkImage(imageUrl: url),
+      (indx) {
+        return GetBuilder<StoreFormBloc>(
+          builder: (bloc) => bloc.store.pics[indx].fold(
+            (file) => Image.file(
+              file,
+              fit: BoxFit.cover,
+              cacheWidth: 200,
             ),
-      ),
+            (url) => MyNetworkImage(imageUrl: url),
+          ),
+        );
+      },
     );
   }
 }

@@ -46,7 +46,7 @@ class StoreCard extends StatelessWidget {
                           tag: store.banner,
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(15.0),
-                            child: MyNetworkImage(imageUrl: store.banner.url),
+                            child: MyNetworkImage(imageUrl: store.banner),
                           ),
                         ),
                       ),
@@ -69,7 +69,7 @@ class StoreCard extends StatelessWidget {
                             SizedBox(
                               width: 120.0,
                               child: Text(
-                                store.name.getOrCrash(),
+                                store.name,
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 20.0,
@@ -89,7 +89,7 @@ class StoreCard extends StatelessWidget {
                             SizedBox(
                               width: 100.0,
                               child: Text(
-                                store.location.address.getOrCrash(),
+                                store.location.address,
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ),

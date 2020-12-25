@@ -1,16 +1,18 @@
+import 'dart:io';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertaladsod/application/bloc/core/simple_progress_setter.dart';
 import 'package:fluttertaladsod/application/bloc/location/location_bloc.dart';
 import 'package:fluttertaladsod/application/core/components/dialogs.dart';
+import 'package:fluttertaladsod/application/routes/router.dart';
+import 'package:fluttertaladsod/application/screens/store/form/widgets/store_primitive.dart';
 import 'package:fluttertaladsod/domain/auth/i_auth_facade.dart';
-import 'package:fluttertaladsod/domain/store/i_image_repository.dart';
+import 'package:fluttertaladsod/domain/image/i_image_repository.dart';
+import 'package:fluttertaladsod/domain/image/image_failure.dart';
 import 'package:fluttertaladsod/domain/store/i_store_repository.dart';
-import 'package:fluttertaladsod/domain/store/location/store_location.dart';
 import 'package:fluttertaladsod/domain/store/store.dart';
-import 'package:fluttertaladsod/domain/store/store_failures.dart';
-import 'package:fluttertaladsod/domain/store/value_objects.dart';
+import 'package:fluttertaladsod/domain/store/store_location.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:get/get.dart';
 
@@ -20,10 +22,10 @@ class StoreFormBloc extends GetxController with SimepleProgressSetter {
   IAuthFacade get _iAuthFacade => Get.find();
   LocationBloc get _locationBloc => Get.find();
 
-  Store _store = Store.created();
-  Store get store => _store;
-  void updateStore(Store store) {
-    _store = store;
+  StorePrimitive _storePrim = StorePrimitive.created(ownerId: '');
+  StorePrimitive get store => _storePrim;
+  void updateStore(StorePrimitive store) {
+    _storePrim = store;
     update();
   }
 
@@ -36,46 +38,49 @@ class StoreFormBloc extends GetxController with SimepleProgressSetter {
     final location = _locationBloc.location;
     initialStore.fold(
       () {
-        updateStore(store.copyWith(
-          location: StoreLocation.fromLocationDomain(location),
-        ));
+        _storePrim = store.copyWith(
+            location: StoreLocation.fromLocationDomain(location));
         updateWithLoaded();
       },
       (initStore) async {
-        // await Future.delayed(Duration(milliseconds: 10));
         _isCreating = true;
-        updateStore(initStore);
+        _storePrim = StorePrimitive.fromDomain(initStore);
         updateWithLoaded();
       },
     );
   }
 
   void nameChanged(String newName) {
-    updateStore(store.copyWith(name: StoreName(newName)));
+    updateStore(store.copyWith(name: newName));
   }
 
   void menuChanged(String newMenu) {
-    updateStore(store.copyWith(menu: StoreMenu(newMenu)));
+    updateStore(store.copyWith(menu: newMenu));
   }
 
   Future<void> bannerChangeRequested() async {
     final imageOption = await _iImageRepository.getImage();
     imageOption.fold(
       () => null,
-      (img) => updateStore(store.copyWith(
-        banner: StoreBanner.file(img),
-      )),
+      (img) => updateStore(store.copyWith(banner: left(img))),
     );
   }
 
   Future<void> picsSelectionRequested() async {
+    bool isPremium = false;
+    if (!isPremium) {
+      Get.toNamed(Routes.upgradeSplash);
+      return;
+    }
     final imageOption = await _iImageRepository.getImage();
     imageOption.fold(
       () => null,
       (img) {
-        final List<StorePic> newList = List.from(store.pics.getOrCrash());
-        newList.add(StorePic.file(img));
-        updateStore(store.copyWith(pics: StorePic16(newList)));
+        updateStore(
+          store.copyWith(
+            pics: List.from(store.pics)..add(left(img)),
+          ),
+        );
       },
     );
   }
@@ -86,15 +91,18 @@ class StoreFormBloc extends GetxController with SimepleProgressSetter {
 
   Future<void> picDeleteRequested(int picIndex) async {
     assert(picIndex != null);
-    final List<StorePic> newList = List.from(store.pics.getOrCrash());
-    newList.removeAt(picIndex);
-    updateStore(store.copyWith(pics: StorePic16(newList)));
+    updateStore(
+      store.copyWith(
+        pics: store.pics..removeAt(picIndex),
+      ),
+    );
   }
 
   Future<void> saved() async {
-    Either<StoreFailure, Unit> failureOrSuccess;
+    Either<dynamic, Unit> failureOrSuccess;
     // send the latest store to firestore (either update or create is checked by [isEditting])
-    if (store.failureOption.isNone()) {
+    final uploadingStore = store.toDomain();
+    if (uploadingStore.isValid) {
       savingDialog(Get.context).show();
       final userOption = await _iAuthFacade.getSignedInUser();
       final user = userOption.getOrElse(() => throw 'user not authenticated');
@@ -112,8 +120,8 @@ class StoreFormBloc extends GetxController with SimepleProgressSetter {
         (urls) async {
           print('saving to firestore..');
           failureOrSuccess = _isCreating
-              ? await _iStoreRepository.update(store)
-              : await _iStoreRepository.create(store);
+              ? await _iStoreRepository.update(uploadingStore)
+              : await _iStoreRepository.create(uploadingStore);
         },
       );
 
@@ -130,27 +138,25 @@ class StoreFormBloc extends GetxController with SimepleProgressSetter {
     }
   }
 
-  Future<Either<StoreFailure, Unit>> _uploadStorePics() async {
+  Future<Either<ImageFailure, Unit>> _uploadStorePics() async {
     print('uploading store pics..');
-    final String path = "stores/store_${store.id.getOrCrash()}/pics";
+    final String path = "stores/store_${store.id}/pics";
+    final List<Either<ImageFailure, String>> fOrUrlList = [];
 
-    final List<StorePic> storePics = List.from(store.pics.getOrCrash());
-
-    final List<Either<StoreFailure, String>> fOrUrlList = [];
-    await Future.forEach(
-      storePics,
-      (StorePic pic) => pic.fileOrUrl.fold(
+    await Future.forEach<Either<File, String>>(
+      store.pics,
+      (pic) => pic.fold(
         (file) async {
           final cmpFile = await _iImageRepository.compressImage(file);
           final failureOrUrl =
-              await _iStoreRepository.uploadFileImage(cmpFile, path);
+              await _iImageRepository.uploadFileImage(cmpFile, path);
           fOrUrlList.add(failureOrUrl);
         },
         (url) => fOrUrlList.add(right(url)),
       ),
     );
 
-    Option<StoreFailure> failureOption = none();
+    Option<ImageFailure> failureOption = none();
     final List<String> urlOnlyList = [];
 
     for (final fOrUrl in fOrUrlList) {
@@ -163,10 +169,8 @@ class StoreFormBloc extends GetxController with SimepleProgressSetter {
     }
 
     if (failureOption.isNone()) {
-      _store = store.copyWith(
-        pics: StorePic16(
-          urlOnlyList.map((p) => StorePic.url(p)).toList(),
-        ),
+      _storePrim = store.copyWith(
+        pics: urlOnlyList.map((url) => right<File, String>(url)).toList(),
       );
       return right(unit);
     } else {
@@ -174,17 +178,17 @@ class StoreFormBloc extends GetxController with SimepleProgressSetter {
     }
   }
 
-  Future<Either<StoreFailure, Unit>> _uploadBannerPic() async {
+  Future<Either<ImageFailure, Unit>> _uploadBannerPic() async {
     print('uploading banner..');
-    final path = "stores/store_${store.id.getOrCrash()}/banner";
-    final failureOrUrl = await store.banner.getOrCrash().fold(
-        (file) => _iStoreRepository.uploadFileImage(file, path),
-        (url) => Future(() => right<StoreFailure, String>(url)));
+    final path = "stores/store_${store.id}/banner";
+    final failureOrUrl = await store.banner.fold(
+        (file) => _iImageRepository.uploadFileImage(file, path),
+        (url) => Future(() => right<ImageFailure, String>(url)));
 
     return failureOrUrl.fold(
       (f) => left(f),
       (url) {
-        _store = store.copyWith(banner: StoreBanner.url(url));
+        _storePrim = store.copyWith(banner: right(url));
         return right(unit);
       },
     );
@@ -198,7 +202,7 @@ class StoreFormBloc extends GetxController with SimepleProgressSetter {
 
   @override
   void onClose() {
-    _store = null;
+    _storePrim = null;
     _isCreating = null;
     super.onClose();
   }

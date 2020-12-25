@@ -15,7 +15,7 @@ abstract class InputBarState with _$InputBarState {
   }) = _InputBarState;
 
   factory InputBarState.inital() => InputBarState(
-        chat: MessageDomain.empty(),
+        chat: MessageDomain.created(),
         uploadingChat: none(),
         isUploading: false,
         uploadSuccessOrFailureOption: none(),

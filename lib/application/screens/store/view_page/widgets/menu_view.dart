@@ -17,7 +17,7 @@ class MenuView extends StatelessWidget {
             return bloc.progress.when(
                 inital: () => circularProgress(context),
                 loading: () => circularProgress(context),
-                loaded: () => Text(bloc.store.menu.getOrCrash()),
+                loaded: () => Text(bloc.store.menu),
                 failure: () => Icon(Icons.error));
           }
         )

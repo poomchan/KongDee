@@ -3,13 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:fluttertaladsod/application/bloc/core/view_widget.dart';
 import 'package:fluttertaladsod/application/core/components/progress_indicator.dart';
 import 'package:fluttertaladsod/application/screens/profile/bloc/profile_bloc.dart';
-import 'package:fluttertaladsod/domain/core/value_objects.dart';
 import 'package:get/get.dart';
 import 'package:fluttertaladsod/application/routes/router.dart';
 import 'widgets/owned_store_view.dart';
 
 class ProfilePage extends ViewWidget<ProfileBloc> {
-  final UniqueId userId;
+  final String userId;
 
   const ProfilePage({Key key, @required this.userId})
       : assert(userId != null),

@@ -5,12 +5,12 @@ import 'package:fluttertaladsod/application/bloc/core/simple_progress_setter.dar
 import 'package:fluttertaladsod/application/core/haptic_feedback.dart';
 import 'package:fluttertaladsod/application/screens/store/view_page/bloc/store_view_bloc.dart';
 import 'package:fluttertaladsod/application/screens/store/view_page/widgets/dialogs.dart';
-import 'package:fluttertaladsod/domain/auth/user/i_user_repository.dart';
-import 'package:fluttertaladsod/domain/auth/user/user.dart';
-import 'package:fluttertaladsod/domain/core/value_objects.dart';
+import 'package:fluttertaladsod/domain/core/value_generators.dart';
 import 'package:fluttertaladsod/domain/report/i_report_repository.dart';
 import 'package:fluttertaladsod/domain/report/report.dart';
 import 'package:fluttertaladsod/domain/report/report_failure.dart';
+import 'package:fluttertaladsod/domain/user/i_user_repository.dart';
+import 'package:fluttertaladsod/domain/user/user.dart';
 import 'package:get/get.dart';
 
 class StoreActionSheetBloc extends GetxController
@@ -20,15 +20,15 @@ class StoreActionSheetBloc extends GetxController
   AuthBloc get _authBloc => Get.find();
   StoreViewBloc get _storeBloc => Get.find();
 
-  String get storeName => _storeBloc.store.name.getOrCrash();
+  String get storeName => _storeBloc.store.name;
   bool get isStoreOwner => _storeBloc.isStoreOwner;
   bool get isBlocked {
-    final id = _storeBloc.store.id.getOrCrash();
+    final id = _storeBloc.store.id;
     final map = _authBloc.user.blockedStores;
     return map[id] == true;
   }
 
-  UniqueId get _storeId => _storeBloc.store.id;
+  String get _storeId => _storeBloc.store.id;
   String reportReason = '';
 
   UserDomain get _user => _authBloc.user;
@@ -53,7 +53,7 @@ class StoreActionSheetBloc extends GetxController
       _user.copyWith(
         blockedStores: _user.blockedStores
           ..addEntries(
-            [MapEntry(_storeBloc.store.id.getOrCrash(), block)],
+            [MapEntry(_storeBloc.store.id, block)],
           ),
       ),
     );
@@ -79,9 +79,11 @@ class StoreActionSheetBloc extends GetxController
     updateWithLoading();
     final fOrUnit = await _iReportRepo.sendReport(
       Report.store(
+        id: UniqueId().toString(),
         reporter: _user.id,
         storeId: _storeId,
         description: reportReason,
+        recieve: false,
       ),
     );
     fOrUnit.fold(

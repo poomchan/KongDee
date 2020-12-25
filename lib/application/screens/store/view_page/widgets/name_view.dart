@@ -29,13 +29,13 @@ class NameView extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            bloc.store.name.getOrCrash(),
+            bloc.store.name,
             style: TextStyle(fontSize: 30.0, fontWeight: FontWeight.w400),
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
           ),
           Text(
-            bloc.store.location.address.getOrCrash(),
+            bloc.store.location.address,
             style: TextStyle(
               fontSize: 18.0,
               color: Colors.black87,

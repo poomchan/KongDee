@@ -79,7 +79,16 @@ class NearStoreFeed extends ViewWidget<NearStoreBloc> {
     if (store.failureOption.isSome()) {
       return Card(
         color: Colors.white10,
-        child: Icon(Icons.error),
+        child: Column(
+          children: [
+            Icon(Icons.error),
+            Text(
+              store.failureOption.fold(() => null, (a) => a.toString()),
+              overflow: TextOverflow.ellipsis,
+              maxLines: 5,
+            ),
+          ],
+        ),
       );
     }
     return Padding(
