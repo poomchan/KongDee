@@ -17,20 +17,20 @@ class _$MessageDtoTearOff {
 
 // ignore: unused_element
   _MessageDto call(
-      {@required String id,
-      @required String senderId,
-      @required String senderAvatarUrl,
-      @required String senderName,
-      @required String body,
+      {@JsonKey(ignore: true) String id,
       @JsonKey(ignore: true) bool isSender,
+      @required @nullable String senderId,
+      @required @nullable String senderAvatarUrl,
+      @required @nullable String senderName,
+      @required @nullable String body,
       @required @TimestampConverter() Timestamp timestamp}) {
     return _MessageDto(
       id: id,
+      isSender: isSender,
       senderId: senderId,
       senderAvatarUrl: senderAvatarUrl,
       senderName: senderName,
       body: body,
-      isSender: isSender,
       timestamp: timestamp,
     );
   }
@@ -40,13 +40,18 @@ class _$MessageDtoTearOff {
 const $MessageDto = _$MessageDtoTearOff();
 
 mixin _$MessageDto {
+  @JsonKey(ignore: true)
   String get id;
-  String get senderId;
-  String get senderAvatarUrl;
-  String get senderName;
-  String get body;
   @JsonKey(ignore: true)
   bool get isSender;
+  @nullable
+  String get senderId;
+  @nullable
+  String get senderAvatarUrl;
+  @nullable
+  String get senderName;
+  @nullable
+  String get body;
   @TimestampConverter()
   Timestamp get timestamp;
 
@@ -59,12 +64,12 @@ abstract class $MessageDtoCopyWith<$Res> {
           MessageDto value, $Res Function(MessageDto) then) =
       _$MessageDtoCopyWithImpl<$Res>;
   $Res call(
-      {String id,
-      String senderId,
-      String senderAvatarUrl,
-      String senderName,
-      String body,
+      {@JsonKey(ignore: true) String id,
       @JsonKey(ignore: true) bool isSender,
+      @nullable String senderId,
+      @nullable String senderAvatarUrl,
+      @nullable String senderName,
+      @nullable String body,
       @TimestampConverter() Timestamp timestamp});
 }
 
@@ -78,15 +83,16 @@ class _$MessageDtoCopyWithImpl<$Res> implements $MessageDtoCopyWith<$Res> {
   @override
   $Res call({
     Object id = freezed,
+    Object isSender = freezed,
     Object senderId = freezed,
     Object senderAvatarUrl = freezed,
     Object senderName = freezed,
     Object body = freezed,
-    Object isSender = freezed,
     Object timestamp = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed ? _value.id : id as String,
+      isSender: isSender == freezed ? _value.isSender : isSender as bool,
       senderId: senderId == freezed ? _value.senderId : senderId as String,
       senderAvatarUrl: senderAvatarUrl == freezed
           ? _value.senderAvatarUrl
@@ -94,7 +100,6 @@ class _$MessageDtoCopyWithImpl<$Res> implements $MessageDtoCopyWith<$Res> {
       senderName:
           senderName == freezed ? _value.senderName : senderName as String,
       body: body == freezed ? _value.body : body as String,
-      isSender: isSender == freezed ? _value.isSender : isSender as bool,
       timestamp:
           timestamp == freezed ? _value.timestamp : timestamp as Timestamp,
     ));
@@ -107,12 +112,12 @@ abstract class _$MessageDtoCopyWith<$Res> implements $MessageDtoCopyWith<$Res> {
       __$MessageDtoCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String id,
-      String senderId,
-      String senderAvatarUrl,
-      String senderName,
-      String body,
+      {@JsonKey(ignore: true) String id,
       @JsonKey(ignore: true) bool isSender,
+      @nullable String senderId,
+      @nullable String senderAvatarUrl,
+      @nullable String senderName,
+      @nullable String body,
       @TimestampConverter() Timestamp timestamp});
 }
 
@@ -128,15 +133,16 @@ class __$MessageDtoCopyWithImpl<$Res> extends _$MessageDtoCopyWithImpl<$Res>
   @override
   $Res call({
     Object id = freezed,
+    Object isSender = freezed,
     Object senderId = freezed,
     Object senderAvatarUrl = freezed,
     Object senderName = freezed,
     Object body = freezed,
-    Object isSender = freezed,
     Object timestamp = freezed,
   }) {
     return _then(_MessageDto(
       id: id == freezed ? _value.id : id as String,
+      isSender: isSender == freezed ? _value.isSender : isSender as bool,
       senderId: senderId == freezed ? _value.senderId : senderId as String,
       senderAvatarUrl: senderAvatarUrl == freezed
           ? _value.senderAvatarUrl
@@ -144,7 +150,6 @@ class __$MessageDtoCopyWithImpl<$Res> extends _$MessageDtoCopyWithImpl<$Res>
       senderName:
           senderName == freezed ? _value.senderName : senderName as String,
       body: body == freezed ? _value.body : body as String,
-      isSender: isSender == freezed ? _value.isSender : isSender as bool,
       timestamp:
           timestamp == freezed ? _value.timestamp : timestamp as Timestamp,
     ));
@@ -154,44 +159,44 @@ class __$MessageDtoCopyWithImpl<$Res> extends _$MessageDtoCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_MessageDto extends _MessageDto with DiagnosticableTreeMixin {
   const _$_MessageDto(
-      {@required this.id,
-      @required this.senderId,
-      @required this.senderAvatarUrl,
-      @required this.senderName,
-      @required this.body,
+      {@JsonKey(ignore: true) this.id,
       @JsonKey(ignore: true) this.isSender,
+      @required @nullable this.senderId,
+      @required @nullable this.senderAvatarUrl,
+      @required @nullable this.senderName,
+      @required @nullable this.body,
       @required @TimestampConverter() this.timestamp})
-      : assert(id != null),
-        assert(senderId != null),
-        assert(senderAvatarUrl != null),
-        assert(senderName != null),
-        assert(body != null),
-        assert(timestamp != null),
+      : assert(timestamp != null),
         super._();
 
   factory _$_MessageDto.fromJson(Map<String, dynamic> json) =>
       _$_$_MessageDtoFromJson(json);
 
   @override
+  @JsonKey(ignore: true)
   final String id;
-  @override
-  final String senderId;
-  @override
-  final String senderAvatarUrl;
-  @override
-  final String senderName;
-  @override
-  final String body;
   @override
   @JsonKey(ignore: true)
   final bool isSender;
+  @override
+  @nullable
+  final String senderId;
+  @override
+  @nullable
+  final String senderAvatarUrl;
+  @override
+  @nullable
+  final String senderName;
+  @override
+  @nullable
+  final String body;
   @override
   @TimestampConverter()
   final Timestamp timestamp;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'MessageDto(id: $id, senderId: $senderId, senderAvatarUrl: $senderAvatarUrl, senderName: $senderName, body: $body, isSender: $isSender, timestamp: $timestamp)';
+    return 'MessageDto(id: $id, isSender: $isSender, senderId: $senderId, senderAvatarUrl: $senderAvatarUrl, senderName: $senderName, body: $body, timestamp: $timestamp)';
   }
 
   @override
@@ -200,11 +205,11 @@ class _$_MessageDto extends _MessageDto with DiagnosticableTreeMixin {
     properties
       ..add(DiagnosticsProperty('type', 'MessageDto'))
       ..add(DiagnosticsProperty('id', id))
+      ..add(DiagnosticsProperty('isSender', isSender))
       ..add(DiagnosticsProperty('senderId', senderId))
       ..add(DiagnosticsProperty('senderAvatarUrl', senderAvatarUrl))
       ..add(DiagnosticsProperty('senderName', senderName))
       ..add(DiagnosticsProperty('body', body))
-      ..add(DiagnosticsProperty('isSender', isSender))
       ..add(DiagnosticsProperty('timestamp', timestamp));
   }
 
@@ -214,6 +219,9 @@ class _$_MessageDto extends _MessageDto with DiagnosticableTreeMixin {
         (other is _MessageDto &&
             (identical(other.id, id) ||
                 const DeepCollectionEquality().equals(other.id, id)) &&
+            (identical(other.isSender, isSender) ||
+                const DeepCollectionEquality()
+                    .equals(other.isSender, isSender)) &&
             (identical(other.senderId, senderId) ||
                 const DeepCollectionEquality()
                     .equals(other.senderId, senderId)) &&
@@ -225,9 +233,6 @@ class _$_MessageDto extends _MessageDto with DiagnosticableTreeMixin {
                     .equals(other.senderName, senderName)) &&
             (identical(other.body, body) ||
                 const DeepCollectionEquality().equals(other.body, body)) &&
-            (identical(other.isSender, isSender) ||
-                const DeepCollectionEquality()
-                    .equals(other.isSender, isSender)) &&
             (identical(other.timestamp, timestamp) ||
                 const DeepCollectionEquality()
                     .equals(other.timestamp, timestamp)));
@@ -237,11 +242,11 @@ class _$_MessageDto extends _MessageDto with DiagnosticableTreeMixin {
   int get hashCode =>
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(id) ^
+      const DeepCollectionEquality().hash(isSender) ^
       const DeepCollectionEquality().hash(senderId) ^
       const DeepCollectionEquality().hash(senderAvatarUrl) ^
       const DeepCollectionEquality().hash(senderName) ^
       const DeepCollectionEquality().hash(body) ^
-      const DeepCollectionEquality().hash(isSender) ^
       const DeepCollectionEquality().hash(timestamp);
 
   @override
@@ -257,30 +262,35 @@ class _$_MessageDto extends _MessageDto with DiagnosticableTreeMixin {
 abstract class _MessageDto extends MessageDto {
   const _MessageDto._() : super._();
   const factory _MessageDto(
-      {@required String id,
-      @required String senderId,
-      @required String senderAvatarUrl,
-      @required String senderName,
-      @required String body,
+      {@JsonKey(ignore: true) String id,
       @JsonKey(ignore: true) bool isSender,
+      @required @nullable String senderId,
+      @required @nullable String senderAvatarUrl,
+      @required @nullable String senderName,
+      @required @nullable String body,
       @required @TimestampConverter() Timestamp timestamp}) = _$_MessageDto;
 
   factory _MessageDto.fromJson(Map<String, dynamic> json) =
       _$_MessageDto.fromJson;
 
   @override
+  @JsonKey(ignore: true)
   String get id;
-  @override
-  String get senderId;
-  @override
-  String get senderAvatarUrl;
-  @override
-  String get senderName;
-  @override
-  String get body;
   @override
   @JsonKey(ignore: true)
   bool get isSender;
+  @override
+  @nullable
+  String get senderId;
+  @override
+  @nullable
+  String get senderAvatarUrl;
+  @override
+  @nullable
+  String get senderName;
+  @override
+  @nullable
+  String get body;
   @override
   @TimestampConverter()
   Timestamp get timestamp;

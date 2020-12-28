@@ -15,45 +15,48 @@ import 'package:get/get.dart';
 
 class MessageViewBloc extends GetxController
     with MyStateSetter<MessageViewState, ChatFailure> {
-  final IChatRepository _iMessageRepository = Get.find();
+  final IChatRepository _iChatRepository = Get.find();
   final AuthBloc _authBloc = Get.find();
   final StoreViewBloc _storeViewBloc = Get.find();
   UserDomain get user => _authBloc.user;
   UniqueId get storeId => _storeViewBloc.store.id;
 
-  @override
-  MessageViewState state = MessageViewState.initial();
   final scrollController = ScrollController();
+  StreamSubscription messageSub;
 
   Future<void> watchStarted() async {
-    setLoading();
-    _iMessageRepository
-        .watchStoreMessages(
-      storeId: storeId,
-      viewerId: user.id,
-      amount: Chat.itemPerPage,
-    )
-        .listen(
-      (failreOrChats) {
-        failreOrChats.fold(
-          (f) => setFailure(f),
-          (mList) async {
-            setLoaded(state.copyWith(
-              messageList: mList
-                ..reversed
-                ..addAll(state.messageList),
-            ));
-          },
-        );
-      },
-    );
+    try {
+      setLoading();
+      messageSub = _iChatRepository
+          .watchStoreMessages(
+        storeId: storeId,
+        viewerId: user.id,
+        amount: Chat.itemPerPage,
+      )
+          .listen(
+        (failreOrChats) {
+          failreOrChats.fold(
+            (f) => setFailure(f),
+            (mList) async {
+              setLoaded(state.copyWith(
+                messageList: mList
+                  ..reversed
+                  ..addAll(state.messageList),
+              ));
+            },
+          );
+        },
+      );
+    } catch (err) {
+      print(err);
+    }
   }
 
   Future<void> fetchMoreChat() async {
     // no need to paginate if the total messages in the room is below 20
     if (state.messageList.length % Chat.itemPerPage != 0) return;
 
-    final fOrMessageList = await _iMessageRepository.fetchMoreStoreMessages(
+    final fOrMessageList = await _iChatRepository.fetchMoreStoreMessages(
       storeId: storeId,
       viewerId: user.id,
       lastMessage: state.messageList.last,
@@ -74,6 +77,12 @@ class MessageViewBloc extends GetxController
   }
 
   @override
+  void onInit() {
+    initState(MessageViewState.initial());
+    super.onInit();
+  }
+
+  @override
   Future<void> onReady() async {
     await watchStarted();
     super.onReady();
@@ -82,6 +91,7 @@ class MessageViewBloc extends GetxController
   @override
   void onClose() {
     scrollController.dispose();
+    messageSub.cancel();
     super.onClose();
   }
 }

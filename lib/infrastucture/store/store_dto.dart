@@ -17,15 +17,15 @@ part 'store_dto.g.dart';
 abstract class StoreDto implements _$StoreDto {
   const factory StoreDto({
     @JsonKey(ignore: true) String id,
-    @required @JsonKey(defaultValue: '') String name,
-    @required @JsonKey(defaultValue: '') String menu,
-    @required @JsonKey(defaultValue: '') String banner,
-    @required @JsonKey(defaultValue: []) List<String> pics,
-    @required @JsonKey(defaultValue: '') String ownerId,
+    @required @nullable String name,
+    @required @nullable String menu,
+    @required @nullable String banner,
+    @required @nullable List<String> pics,
+    @required @nullable String ownerId,
     @required StoreLocationDto location,
     @required StorePrefsDto prefs,
     @required @ServerTimestampConverter() FieldValue serverTimeStamp,
-    @required @JsonKey(defaultValue: {}) Map<String, bool> blockedUsers,
+    @required @nullable Map<String, bool> blockedUsers,
   }) = _StoreDto;
 
   factory StoreDto.fromDomain(Store s) {
@@ -54,15 +54,7 @@ abstract class StoreDto implements _$StoreDto {
       name: StoreName(name),
       menu: StoreMenu(menu),
       banner: StoreBanner(banner),
-      pics: StorePic16(
-        List.from(
-          pics
-              .map(
-                (url) => StorePic(url),
-              )
-              .toList(),
-        ),
-      ),
+      pics: StorePic16(pics?.map((url) => StorePic(url))?.toList()),
       ownerId: UniqueId.fromUniqueString(ownerId),
       location: location.toDomain(l),
       prefs: prefs.toDomain(),

@@ -10,8 +10,8 @@ class StoreName extends ValueObject<String> {
   static const maxLength = 30;
 
   factory StoreName(String input) {
-    assert(input != null);
-    return StoreName._(validateMaxStringLength(input, maxLength)
+    return StoreName._(validateInputNotNull(input)
+        .flatMap((_) => validateMaxStringLength(input, maxLength))
         .flatMap(validateStringNotEmpty)
         .flatMap(validateSingleLine));
   }
@@ -25,7 +25,8 @@ class StoreMenu extends ValueObject<String> {
 
   factory StoreMenu(String input) {
     assert(input != null);
-    return StoreMenu._(validateMaxStringLength(input, maxLength));
+    return StoreMenu._(validateInputNotNull(input)
+        .flatMap((_) => validateMaxStringLength(input, maxLength)));
   }
 
   const StoreMenu._(this.value);
@@ -37,7 +38,7 @@ class StoreBanner extends ValueObject<String> {
 
   factory StoreBanner(String input) {
     assert(input != null);
-    return StoreBanner._(right(input));
+    return StoreBanner._(validateInputNotNull(input));
   }
   factory StoreBanner.created() {
     return StoreBanner._(right(
@@ -53,7 +54,7 @@ class StorePic extends ValueObject<String> {
 
   factory StorePic(String input) {
     assert(input != null);
-    return StorePic._(right(input));
+    return StorePic._(validateInputNotNull(input));
   }
 
   const StorePic._(this.value);
@@ -66,7 +67,8 @@ class StorePic16 extends ValueObject<List<StorePic>> {
   static const maxLength = 16;
 
   factory StorePic16(List<StorePic> input) {
-    return StorePic16._(validateMaxListLength(input, maxLength));
+    return StorePic16._(validateInputNotNull(input)
+        .flatMap((_) => validateMaxListLength(input, maxLength)));
   }
 
   const StorePic16._(this.value);
@@ -85,7 +87,7 @@ class SellingRange extends ValueObject<double> {
       value.fold((f) => throw 'value failure', (val) => val == double.infinity);
 
   factory SellingRange(double input) {
-    return SellingRange._(right(input));
+    return SellingRange._(validateInputNotNull(input));
   }
 
   factory SellingRange.infinite() {
@@ -112,7 +114,7 @@ class StoreAddress extends ValueObject<String> {
   final Either<ValueFailure<String>, String> value;
 
   factory StoreAddress(String input) {
-    return StoreAddress._(right(input));
+    return StoreAddress._(validateInputNotNull(input));
   }
 
   const StoreAddress._(this.value);

@@ -8,9 +8,9 @@ part of 'store_prefs_dto.dart';
 
 _$_StorePrefsDto _$_$_StorePrefsDtoFromJson(Map<String, dynamic> json) {
   return _$_StorePrefsDto(
-    isOpen: json['isOpen'] as bool ?? true,
-    isNotificationOn: json['isNotificationOn'] as bool ?? true,
-    sellingRange: (json['sellingRange'] as num)?.toDouble() ?? 1,
+    isOpen: json['isOpen'] as bool,
+    isNotificationOn: json['isNotificationOn'] as bool,
+    sellingRange: (json['sellingRange'] as num)?.toDouble(),
   );
 }
 

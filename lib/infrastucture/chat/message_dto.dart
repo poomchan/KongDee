@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:fluttertaladsod/domain/chat/message.dart';
 import 'package:fluttertaladsod/domain/chat/value_objects.dart';
 import 'package:fluttertaladsod/domain/core/value_objects.dart';
+import 'package:fluttertaladsod/domain/store/value_objects.dart';
 import 'package:fluttertaladsod/infrastucture/core/json_converters.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -13,12 +14,12 @@ part 'message_dto.g.dart';
 @freezed
 abstract class MessageDto implements _$MessageDto {
   const factory MessageDto({
-    @required String id,
-    @required String senderId,
-    @required String senderAvatarUrl,
-    @required String senderName,
-    @required String body,
+    @JsonKey(ignore: true) String id,
     @JsonKey(ignore: true) bool isSender,
+    @required @nullable String senderId,
+    @required @nullable String senderAvatarUrl,
+    @required @nullable String senderName,
+    @required @nullable String body,
     @required @TimestampConverter() Timestamp timestamp,
   }) = _MessageDto;
 
@@ -26,7 +27,7 @@ abstract class MessageDto implements _$MessageDto {
       _$MessageDtoFromJson(json);
 
   factory MessageDto.fromFirestore(DocumentSnapshot doc) {
-    return MessageDto.fromJson(doc.data());
+    return MessageDto.fromJson(doc.data()).copyWith(id: doc.id);
   }
 
   factory MessageDto.fromDomain(MessageDomain m) {

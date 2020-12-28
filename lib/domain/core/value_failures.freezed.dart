@@ -13,55 +13,59 @@ class _$ValueFailureTearOff {
   const _$ValueFailureTearOff();
 
 // ignore: unused_element
-  ExceedingLength<T> exceedingLength<T>(
-      {@required T failedValue, @required int max}) {
+  ExceedingLength<T> exceedingLength<T>(T failedValue, int max) {
     return ExceedingLength<T>(
-      failedValue: failedValue,
-      max: max,
+      failedValue,
+      max,
     );
   }
 
 // ignore: unused_element
-  Empty<T> empty<T>({@required T failedValue}) {
+  Empty<T> empty<T>(T failedValue) {
     return Empty<T>(
-      failedValue: failedValue,
+      failedValue,
     );
   }
 
 // ignore: unused_element
-  Multiline<T> multiline<T>({@required T failedValue}) {
+  Multiline<T> multiline<T>(T failedValue) {
     return Multiline<T>(
-      failedValue: failedValue,
+      failedValue,
     );
   }
 
 // ignore: unused_element
-  ListTooLong<T> listTooLong<T>({@required T failedValue, @required int max}) {
+  ListTooLong<T> listTooLong<T>(T failedValue, int max) {
     return ListTooLong<T>(
-      failedValue: failedValue,
-      max: max,
+      failedValue,
+      max,
     );
   }
 
 // ignore: unused_element
-  InvalidEmail<T> invalidEmail<T>({@required T failedValue}) {
+  InvalidEmail<T> invalidEmail<T>(T failedValue) {
     return InvalidEmail<T>(
-      failedValue: failedValue,
+      failedValue,
     );
   }
 
 // ignore: unused_element
-  ShortPassword<T> shortPassword<T>({@required T failedValue}) {
+  ShortPassword<T> shortPassword<T>(T failedValue) {
     return ShortPassword<T>(
-      failedValue: failedValue,
+      failedValue,
     );
   }
 
 // ignore: unused_element
-  NumberNotPositive<T> numberNotPositive<T>({@required T failedValue}) {
+  NumberNotPositive<T> numberNotPositive<T>(T failedValue) {
     return NumberNotPositive<T>(
-      failedValue: failedValue,
+      failedValue,
     );
+  }
+
+// ignore: unused_element
+  NullValue<T> nullValue<T>() {
+    return NullValue<T>();
   }
 }
 
@@ -69,8 +73,6 @@ class _$ValueFailureTearOff {
 const $ValueFailure = _$ValueFailureTearOff();
 
 mixin _$ValueFailure<T> {
-  T get failedValue;
-
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result exceedingLength(T failedValue, int max),
@@ -80,6 +82,7 @@ mixin _$ValueFailure<T> {
     @required Result invalidEmail(T failedValue),
     @required Result shortPassword(T failedValue),
     @required Result numberNotPositive(T failedValue),
+    @required Result nullValue(),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
@@ -90,6 +93,7 @@ mixin _$ValueFailure<T> {
     Result invalidEmail(T failedValue),
     Result shortPassword(T failedValue),
     Result numberNotPositive(T failedValue),
+    Result nullValue(),
     @required Result orElse(),
   });
   @optionalTypeArgs
@@ -101,6 +105,7 @@ mixin _$ValueFailure<T> {
     @required Result invalidEmail(InvalidEmail<T> value),
     @required Result shortPassword(ShortPassword<T> value),
     @required Result numberNotPositive(NumberNotPositive<T> value),
+    @required Result nullValue(NullValue<T> value),
   });
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
@@ -111,17 +116,15 @@ mixin _$ValueFailure<T> {
     Result invalidEmail(InvalidEmail<T> value),
     Result shortPassword(ShortPassword<T> value),
     Result numberNotPositive(NumberNotPositive<T> value),
+    Result nullValue(NullValue<T> value),
     @required Result orElse(),
   });
-
-  $ValueFailureCopyWith<T, ValueFailure<T>> get copyWith;
 }
 
 abstract class $ValueFailureCopyWith<T, $Res> {
   factory $ValueFailureCopyWith(
           ValueFailure<T> value, $Res Function(ValueFailure<T>) then) =
       _$ValueFailureCopyWithImpl<T, $Res>;
-  $Res call({T failedValue});
 }
 
 class _$ValueFailureCopyWithImpl<T, $Res>
@@ -131,24 +134,12 @@ class _$ValueFailureCopyWithImpl<T, $Res>
   final ValueFailure<T> _value;
   // ignore: unused_field
   final $Res Function(ValueFailure<T>) _then;
-
-  @override
-  $Res call({
-    Object failedValue = freezed,
-  }) {
-    return _then(_value.copyWith(
-      failedValue:
-          failedValue == freezed ? _value.failedValue : failedValue as T,
-    ));
-  }
 }
 
-abstract class $ExceedingLengthCopyWith<T, $Res>
-    implements $ValueFailureCopyWith<T, $Res> {
+abstract class $ExceedingLengthCopyWith<T, $Res> {
   factory $ExceedingLengthCopyWith(
           ExceedingLength<T> value, $Res Function(ExceedingLength<T>) then) =
       _$ExceedingLengthCopyWithImpl<T, $Res>;
-  @override
   $Res call({T failedValue, int max});
 }
 
@@ -168,15 +159,14 @@ class _$ExceedingLengthCopyWithImpl<T, $Res>
     Object max = freezed,
   }) {
     return _then(ExceedingLength<T>(
-      failedValue:
-          failedValue == freezed ? _value.failedValue : failedValue as T,
-      max: max == freezed ? _value.max : max as int,
+      failedValue == freezed ? _value.failedValue : failedValue as T,
+      max == freezed ? _value.max : max as int,
     ));
   }
 }
 
 class _$ExceedingLength<T> implements ExceedingLength<T> {
-  const _$ExceedingLength({@required this.failedValue, @required this.max})
+  const _$ExceedingLength(this.failedValue, this.max)
       : assert(failedValue != null),
         assert(max != null);
 
@@ -221,6 +211,7 @@ class _$ExceedingLength<T> implements ExceedingLength<T> {
     @required Result invalidEmail(T failedValue),
     @required Result shortPassword(T failedValue),
     @required Result numberNotPositive(T failedValue),
+    @required Result nullValue(),
   }) {
     assert(exceedingLength != null);
     assert(empty != null);
@@ -229,6 +220,7 @@ class _$ExceedingLength<T> implements ExceedingLength<T> {
     assert(invalidEmail != null);
     assert(shortPassword != null);
     assert(numberNotPositive != null);
+    assert(nullValue != null);
     return exceedingLength(failedValue, max);
   }
 
@@ -242,6 +234,7 @@ class _$ExceedingLength<T> implements ExceedingLength<T> {
     Result invalidEmail(T failedValue),
     Result shortPassword(T failedValue),
     Result numberNotPositive(T failedValue),
+    Result nullValue(),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -261,6 +254,7 @@ class _$ExceedingLength<T> implements ExceedingLength<T> {
     @required Result invalidEmail(InvalidEmail<T> value),
     @required Result shortPassword(ShortPassword<T> value),
     @required Result numberNotPositive(NumberNotPositive<T> value),
+    @required Result nullValue(NullValue<T> value),
   }) {
     assert(exceedingLength != null);
     assert(empty != null);
@@ -269,6 +263,7 @@ class _$ExceedingLength<T> implements ExceedingLength<T> {
     assert(invalidEmail != null);
     assert(shortPassword != null);
     assert(numberNotPositive != null);
+    assert(nullValue != null);
     return exceedingLength(this);
   }
 
@@ -282,6 +277,7 @@ class _$ExceedingLength<T> implements ExceedingLength<T> {
     Result invalidEmail(InvalidEmail<T> value),
     Result shortPassword(ShortPassword<T> value),
     Result numberNotPositive(NumberNotPositive<T> value),
+    Result nullValue(NullValue<T> value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -293,21 +289,16 @@ class _$ExceedingLength<T> implements ExceedingLength<T> {
 }
 
 abstract class ExceedingLength<T> implements ValueFailure<T> {
-  const factory ExceedingLength({@required T failedValue, @required int max}) =
-      _$ExceedingLength<T>;
+  const factory ExceedingLength(T failedValue, int max) = _$ExceedingLength<T>;
 
-  @override
   T get failedValue;
   int get max;
-  @override
   $ExceedingLengthCopyWith<T, ExceedingLength<T>> get copyWith;
 }
 
-abstract class $EmptyCopyWith<T, $Res>
-    implements $ValueFailureCopyWith<T, $Res> {
+abstract class $EmptyCopyWith<T, $Res> {
   factory $EmptyCopyWith(Empty<T> value, $Res Function(Empty<T>) then) =
       _$EmptyCopyWithImpl<T, $Res>;
-  @override
   $Res call({T failedValue});
 }
 
@@ -324,14 +315,13 @@ class _$EmptyCopyWithImpl<T, $Res> extends _$ValueFailureCopyWithImpl<T, $Res>
     Object failedValue = freezed,
   }) {
     return _then(Empty<T>(
-      failedValue:
-          failedValue == freezed ? _value.failedValue : failedValue as T,
+      failedValue == freezed ? _value.failedValue : failedValue as T,
     ));
   }
 }
 
 class _$Empty<T> implements Empty<T> {
-  const _$Empty({@required this.failedValue}) : assert(failedValue != null);
+  const _$Empty(this.failedValue) : assert(failedValue != null);
 
   @override
   final T failedValue;
@@ -368,6 +358,7 @@ class _$Empty<T> implements Empty<T> {
     @required Result invalidEmail(T failedValue),
     @required Result shortPassword(T failedValue),
     @required Result numberNotPositive(T failedValue),
+    @required Result nullValue(),
   }) {
     assert(exceedingLength != null);
     assert(empty != null);
@@ -376,6 +367,7 @@ class _$Empty<T> implements Empty<T> {
     assert(invalidEmail != null);
     assert(shortPassword != null);
     assert(numberNotPositive != null);
+    assert(nullValue != null);
     return empty(failedValue);
   }
 
@@ -389,6 +381,7 @@ class _$Empty<T> implements Empty<T> {
     Result invalidEmail(T failedValue),
     Result shortPassword(T failedValue),
     Result numberNotPositive(T failedValue),
+    Result nullValue(),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -408,6 +401,7 @@ class _$Empty<T> implements Empty<T> {
     @required Result invalidEmail(InvalidEmail<T> value),
     @required Result shortPassword(ShortPassword<T> value),
     @required Result numberNotPositive(NumberNotPositive<T> value),
+    @required Result nullValue(NullValue<T> value),
   }) {
     assert(exceedingLength != null);
     assert(empty != null);
@@ -416,6 +410,7 @@ class _$Empty<T> implements Empty<T> {
     assert(invalidEmail != null);
     assert(shortPassword != null);
     assert(numberNotPositive != null);
+    assert(nullValue != null);
     return empty(this);
   }
 
@@ -429,6 +424,7 @@ class _$Empty<T> implements Empty<T> {
     Result invalidEmail(InvalidEmail<T> value),
     Result shortPassword(ShortPassword<T> value),
     Result numberNotPositive(NumberNotPositive<T> value),
+    Result nullValue(NullValue<T> value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -440,20 +436,16 @@ class _$Empty<T> implements Empty<T> {
 }
 
 abstract class Empty<T> implements ValueFailure<T> {
-  const factory Empty({@required T failedValue}) = _$Empty<T>;
+  const factory Empty(T failedValue) = _$Empty<T>;
 
-  @override
   T get failedValue;
-  @override
   $EmptyCopyWith<T, Empty<T>> get copyWith;
 }
 
-abstract class $MultilineCopyWith<T, $Res>
-    implements $ValueFailureCopyWith<T, $Res> {
+abstract class $MultilineCopyWith<T, $Res> {
   factory $MultilineCopyWith(
           Multiline<T> value, $Res Function(Multiline<T>) then) =
       _$MultilineCopyWithImpl<T, $Res>;
-  @override
   $Res call({T failedValue});
 }
 
@@ -472,14 +464,13 @@ class _$MultilineCopyWithImpl<T, $Res>
     Object failedValue = freezed,
   }) {
     return _then(Multiline<T>(
-      failedValue:
-          failedValue == freezed ? _value.failedValue : failedValue as T,
+      failedValue == freezed ? _value.failedValue : failedValue as T,
     ));
   }
 }
 
 class _$Multiline<T> implements Multiline<T> {
-  const _$Multiline({@required this.failedValue}) : assert(failedValue != null);
+  const _$Multiline(this.failedValue) : assert(failedValue != null);
 
   @override
   final T failedValue;
@@ -516,6 +507,7 @@ class _$Multiline<T> implements Multiline<T> {
     @required Result invalidEmail(T failedValue),
     @required Result shortPassword(T failedValue),
     @required Result numberNotPositive(T failedValue),
+    @required Result nullValue(),
   }) {
     assert(exceedingLength != null);
     assert(empty != null);
@@ -524,6 +516,7 @@ class _$Multiline<T> implements Multiline<T> {
     assert(invalidEmail != null);
     assert(shortPassword != null);
     assert(numberNotPositive != null);
+    assert(nullValue != null);
     return multiline(failedValue);
   }
 
@@ -537,6 +530,7 @@ class _$Multiline<T> implements Multiline<T> {
     Result invalidEmail(T failedValue),
     Result shortPassword(T failedValue),
     Result numberNotPositive(T failedValue),
+    Result nullValue(),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -556,6 +550,7 @@ class _$Multiline<T> implements Multiline<T> {
     @required Result invalidEmail(InvalidEmail<T> value),
     @required Result shortPassword(ShortPassword<T> value),
     @required Result numberNotPositive(NumberNotPositive<T> value),
+    @required Result nullValue(NullValue<T> value),
   }) {
     assert(exceedingLength != null);
     assert(empty != null);
@@ -564,6 +559,7 @@ class _$Multiline<T> implements Multiline<T> {
     assert(invalidEmail != null);
     assert(shortPassword != null);
     assert(numberNotPositive != null);
+    assert(nullValue != null);
     return multiline(this);
   }
 
@@ -577,6 +573,7 @@ class _$Multiline<T> implements Multiline<T> {
     Result invalidEmail(InvalidEmail<T> value),
     Result shortPassword(ShortPassword<T> value),
     Result numberNotPositive(NumberNotPositive<T> value),
+    Result nullValue(NullValue<T> value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -588,20 +585,16 @@ class _$Multiline<T> implements Multiline<T> {
 }
 
 abstract class Multiline<T> implements ValueFailure<T> {
-  const factory Multiline({@required T failedValue}) = _$Multiline<T>;
+  const factory Multiline(T failedValue) = _$Multiline<T>;
 
-  @override
   T get failedValue;
-  @override
   $MultilineCopyWith<T, Multiline<T>> get copyWith;
 }
 
-abstract class $ListTooLongCopyWith<T, $Res>
-    implements $ValueFailureCopyWith<T, $Res> {
+abstract class $ListTooLongCopyWith<T, $Res> {
   factory $ListTooLongCopyWith(
           ListTooLong<T> value, $Res Function(ListTooLong<T>) then) =
       _$ListTooLongCopyWithImpl<T, $Res>;
-  @override
   $Res call({T failedValue, int max});
 }
 
@@ -621,15 +614,14 @@ class _$ListTooLongCopyWithImpl<T, $Res>
     Object max = freezed,
   }) {
     return _then(ListTooLong<T>(
-      failedValue:
-          failedValue == freezed ? _value.failedValue : failedValue as T,
-      max: max == freezed ? _value.max : max as int,
+      failedValue == freezed ? _value.failedValue : failedValue as T,
+      max == freezed ? _value.max : max as int,
     ));
   }
 }
 
 class _$ListTooLong<T> implements ListTooLong<T> {
-  const _$ListTooLong({@required this.failedValue, @required this.max})
+  const _$ListTooLong(this.failedValue, this.max)
       : assert(failedValue != null),
         assert(max != null);
 
@@ -674,6 +666,7 @@ class _$ListTooLong<T> implements ListTooLong<T> {
     @required Result invalidEmail(T failedValue),
     @required Result shortPassword(T failedValue),
     @required Result numberNotPositive(T failedValue),
+    @required Result nullValue(),
   }) {
     assert(exceedingLength != null);
     assert(empty != null);
@@ -682,6 +675,7 @@ class _$ListTooLong<T> implements ListTooLong<T> {
     assert(invalidEmail != null);
     assert(shortPassword != null);
     assert(numberNotPositive != null);
+    assert(nullValue != null);
     return listTooLong(failedValue, max);
   }
 
@@ -695,6 +689,7 @@ class _$ListTooLong<T> implements ListTooLong<T> {
     Result invalidEmail(T failedValue),
     Result shortPassword(T failedValue),
     Result numberNotPositive(T failedValue),
+    Result nullValue(),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -714,6 +709,7 @@ class _$ListTooLong<T> implements ListTooLong<T> {
     @required Result invalidEmail(InvalidEmail<T> value),
     @required Result shortPassword(ShortPassword<T> value),
     @required Result numberNotPositive(NumberNotPositive<T> value),
+    @required Result nullValue(NullValue<T> value),
   }) {
     assert(exceedingLength != null);
     assert(empty != null);
@@ -722,6 +718,7 @@ class _$ListTooLong<T> implements ListTooLong<T> {
     assert(invalidEmail != null);
     assert(shortPassword != null);
     assert(numberNotPositive != null);
+    assert(nullValue != null);
     return listTooLong(this);
   }
 
@@ -735,6 +732,7 @@ class _$ListTooLong<T> implements ListTooLong<T> {
     Result invalidEmail(InvalidEmail<T> value),
     Result shortPassword(ShortPassword<T> value),
     Result numberNotPositive(NumberNotPositive<T> value),
+    Result nullValue(NullValue<T> value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -746,22 +744,17 @@ class _$ListTooLong<T> implements ListTooLong<T> {
 }
 
 abstract class ListTooLong<T> implements ValueFailure<T> {
-  const factory ListTooLong({@required T failedValue, @required int max}) =
-      _$ListTooLong<T>;
+  const factory ListTooLong(T failedValue, int max) = _$ListTooLong<T>;
 
-  @override
   T get failedValue;
   int get max;
-  @override
   $ListTooLongCopyWith<T, ListTooLong<T>> get copyWith;
 }
 
-abstract class $InvalidEmailCopyWith<T, $Res>
-    implements $ValueFailureCopyWith<T, $Res> {
+abstract class $InvalidEmailCopyWith<T, $Res> {
   factory $InvalidEmailCopyWith(
           InvalidEmail<T> value, $Res Function(InvalidEmail<T>) then) =
       _$InvalidEmailCopyWithImpl<T, $Res>;
-  @override
   $Res call({T failedValue});
 }
 
@@ -780,15 +773,13 @@ class _$InvalidEmailCopyWithImpl<T, $Res>
     Object failedValue = freezed,
   }) {
     return _then(InvalidEmail<T>(
-      failedValue:
-          failedValue == freezed ? _value.failedValue : failedValue as T,
+      failedValue == freezed ? _value.failedValue : failedValue as T,
     ));
   }
 }
 
 class _$InvalidEmail<T> implements InvalidEmail<T> {
-  const _$InvalidEmail({@required this.failedValue})
-      : assert(failedValue != null);
+  const _$InvalidEmail(this.failedValue) : assert(failedValue != null);
 
   @override
   final T failedValue;
@@ -825,6 +816,7 @@ class _$InvalidEmail<T> implements InvalidEmail<T> {
     @required Result invalidEmail(T failedValue),
     @required Result shortPassword(T failedValue),
     @required Result numberNotPositive(T failedValue),
+    @required Result nullValue(),
   }) {
     assert(exceedingLength != null);
     assert(empty != null);
@@ -833,6 +825,7 @@ class _$InvalidEmail<T> implements InvalidEmail<T> {
     assert(invalidEmail != null);
     assert(shortPassword != null);
     assert(numberNotPositive != null);
+    assert(nullValue != null);
     return invalidEmail(failedValue);
   }
 
@@ -846,6 +839,7 @@ class _$InvalidEmail<T> implements InvalidEmail<T> {
     Result invalidEmail(T failedValue),
     Result shortPassword(T failedValue),
     Result numberNotPositive(T failedValue),
+    Result nullValue(),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -865,6 +859,7 @@ class _$InvalidEmail<T> implements InvalidEmail<T> {
     @required Result invalidEmail(InvalidEmail<T> value),
     @required Result shortPassword(ShortPassword<T> value),
     @required Result numberNotPositive(NumberNotPositive<T> value),
+    @required Result nullValue(NullValue<T> value),
   }) {
     assert(exceedingLength != null);
     assert(empty != null);
@@ -873,6 +868,7 @@ class _$InvalidEmail<T> implements InvalidEmail<T> {
     assert(invalidEmail != null);
     assert(shortPassword != null);
     assert(numberNotPositive != null);
+    assert(nullValue != null);
     return invalidEmail(this);
   }
 
@@ -886,6 +882,7 @@ class _$InvalidEmail<T> implements InvalidEmail<T> {
     Result invalidEmail(InvalidEmail<T> value),
     Result shortPassword(ShortPassword<T> value),
     Result numberNotPositive(NumberNotPositive<T> value),
+    Result nullValue(NullValue<T> value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -897,20 +894,16 @@ class _$InvalidEmail<T> implements InvalidEmail<T> {
 }
 
 abstract class InvalidEmail<T> implements ValueFailure<T> {
-  const factory InvalidEmail({@required T failedValue}) = _$InvalidEmail<T>;
+  const factory InvalidEmail(T failedValue) = _$InvalidEmail<T>;
 
-  @override
   T get failedValue;
-  @override
   $InvalidEmailCopyWith<T, InvalidEmail<T>> get copyWith;
 }
 
-abstract class $ShortPasswordCopyWith<T, $Res>
-    implements $ValueFailureCopyWith<T, $Res> {
+abstract class $ShortPasswordCopyWith<T, $Res> {
   factory $ShortPasswordCopyWith(
           ShortPassword<T> value, $Res Function(ShortPassword<T>) then) =
       _$ShortPasswordCopyWithImpl<T, $Res>;
-  @override
   $Res call({T failedValue});
 }
 
@@ -929,15 +922,13 @@ class _$ShortPasswordCopyWithImpl<T, $Res>
     Object failedValue = freezed,
   }) {
     return _then(ShortPassword<T>(
-      failedValue:
-          failedValue == freezed ? _value.failedValue : failedValue as T,
+      failedValue == freezed ? _value.failedValue : failedValue as T,
     ));
   }
 }
 
 class _$ShortPassword<T> implements ShortPassword<T> {
-  const _$ShortPassword({@required this.failedValue})
-      : assert(failedValue != null);
+  const _$ShortPassword(this.failedValue) : assert(failedValue != null);
 
   @override
   final T failedValue;
@@ -974,6 +965,7 @@ class _$ShortPassword<T> implements ShortPassword<T> {
     @required Result invalidEmail(T failedValue),
     @required Result shortPassword(T failedValue),
     @required Result numberNotPositive(T failedValue),
+    @required Result nullValue(),
   }) {
     assert(exceedingLength != null);
     assert(empty != null);
@@ -982,6 +974,7 @@ class _$ShortPassword<T> implements ShortPassword<T> {
     assert(invalidEmail != null);
     assert(shortPassword != null);
     assert(numberNotPositive != null);
+    assert(nullValue != null);
     return shortPassword(failedValue);
   }
 
@@ -995,6 +988,7 @@ class _$ShortPassword<T> implements ShortPassword<T> {
     Result invalidEmail(T failedValue),
     Result shortPassword(T failedValue),
     Result numberNotPositive(T failedValue),
+    Result nullValue(),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -1014,6 +1008,7 @@ class _$ShortPassword<T> implements ShortPassword<T> {
     @required Result invalidEmail(InvalidEmail<T> value),
     @required Result shortPassword(ShortPassword<T> value),
     @required Result numberNotPositive(NumberNotPositive<T> value),
+    @required Result nullValue(NullValue<T> value),
   }) {
     assert(exceedingLength != null);
     assert(empty != null);
@@ -1022,6 +1017,7 @@ class _$ShortPassword<T> implements ShortPassword<T> {
     assert(invalidEmail != null);
     assert(shortPassword != null);
     assert(numberNotPositive != null);
+    assert(nullValue != null);
     return shortPassword(this);
   }
 
@@ -1035,6 +1031,7 @@ class _$ShortPassword<T> implements ShortPassword<T> {
     Result invalidEmail(InvalidEmail<T> value),
     Result shortPassword(ShortPassword<T> value),
     Result numberNotPositive(NumberNotPositive<T> value),
+    Result nullValue(NullValue<T> value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -1046,20 +1043,16 @@ class _$ShortPassword<T> implements ShortPassword<T> {
 }
 
 abstract class ShortPassword<T> implements ValueFailure<T> {
-  const factory ShortPassword({@required T failedValue}) = _$ShortPassword<T>;
+  const factory ShortPassword(T failedValue) = _$ShortPassword<T>;
 
-  @override
   T get failedValue;
-  @override
   $ShortPasswordCopyWith<T, ShortPassword<T>> get copyWith;
 }
 
-abstract class $NumberNotPositiveCopyWith<T, $Res>
-    implements $ValueFailureCopyWith<T, $Res> {
+abstract class $NumberNotPositiveCopyWith<T, $Res> {
   factory $NumberNotPositiveCopyWith(NumberNotPositive<T> value,
           $Res Function(NumberNotPositive<T>) then) =
       _$NumberNotPositiveCopyWithImpl<T, $Res>;
-  @override
   $Res call({T failedValue});
 }
 
@@ -1078,15 +1071,13 @@ class _$NumberNotPositiveCopyWithImpl<T, $Res>
     Object failedValue = freezed,
   }) {
     return _then(NumberNotPositive<T>(
-      failedValue:
-          failedValue == freezed ? _value.failedValue : failedValue as T,
+      failedValue == freezed ? _value.failedValue : failedValue as T,
     ));
   }
 }
 
 class _$NumberNotPositive<T> implements NumberNotPositive<T> {
-  const _$NumberNotPositive({@required this.failedValue})
-      : assert(failedValue != null);
+  const _$NumberNotPositive(this.failedValue) : assert(failedValue != null);
 
   @override
   final T failedValue;
@@ -1124,6 +1115,7 @@ class _$NumberNotPositive<T> implements NumberNotPositive<T> {
     @required Result invalidEmail(T failedValue),
     @required Result shortPassword(T failedValue),
     @required Result numberNotPositive(T failedValue),
+    @required Result nullValue(),
   }) {
     assert(exceedingLength != null);
     assert(empty != null);
@@ -1132,6 +1124,7 @@ class _$NumberNotPositive<T> implements NumberNotPositive<T> {
     assert(invalidEmail != null);
     assert(shortPassword != null);
     assert(numberNotPositive != null);
+    assert(nullValue != null);
     return numberNotPositive(failedValue);
   }
 
@@ -1145,6 +1138,7 @@ class _$NumberNotPositive<T> implements NumberNotPositive<T> {
     Result invalidEmail(T failedValue),
     Result shortPassword(T failedValue),
     Result numberNotPositive(T failedValue),
+    Result nullValue(),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -1164,6 +1158,7 @@ class _$NumberNotPositive<T> implements NumberNotPositive<T> {
     @required Result invalidEmail(InvalidEmail<T> value),
     @required Result shortPassword(ShortPassword<T> value),
     @required Result numberNotPositive(NumberNotPositive<T> value),
+    @required Result nullValue(NullValue<T> value),
   }) {
     assert(exceedingLength != null);
     assert(empty != null);
@@ -1172,6 +1167,7 @@ class _$NumberNotPositive<T> implements NumberNotPositive<T> {
     assert(invalidEmail != null);
     assert(shortPassword != null);
     assert(numberNotPositive != null);
+    assert(nullValue != null);
     return numberNotPositive(this);
   }
 
@@ -1185,6 +1181,7 @@ class _$NumberNotPositive<T> implements NumberNotPositive<T> {
     Result invalidEmail(InvalidEmail<T> value),
     Result shortPassword(ShortPassword<T> value),
     Result numberNotPositive(NumberNotPositive<T> value),
+    Result nullValue(NullValue<T> value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -1196,11 +1193,132 @@ class _$NumberNotPositive<T> implements NumberNotPositive<T> {
 }
 
 abstract class NumberNotPositive<T> implements ValueFailure<T> {
-  const factory NumberNotPositive({@required T failedValue}) =
-      _$NumberNotPositive<T>;
+  const factory NumberNotPositive(T failedValue) = _$NumberNotPositive<T>;
+
+  T get failedValue;
+  $NumberNotPositiveCopyWith<T, NumberNotPositive<T>> get copyWith;
+}
+
+abstract class $NullValueCopyWith<T, $Res> {
+  factory $NullValueCopyWith(
+          NullValue<T> value, $Res Function(NullValue<T>) then) =
+      _$NullValueCopyWithImpl<T, $Res>;
+}
+
+class _$NullValueCopyWithImpl<T, $Res>
+    extends _$ValueFailureCopyWithImpl<T, $Res>
+    implements $NullValueCopyWith<T, $Res> {
+  _$NullValueCopyWithImpl(
+      NullValue<T> _value, $Res Function(NullValue<T>) _then)
+      : super(_value, (v) => _then(v as NullValue<T>));
 
   @override
-  T get failedValue;
+  NullValue<T> get _value => super._value as NullValue<T>;
+}
+
+class _$NullValue<T> implements NullValue<T> {
+  const _$NullValue();
+
   @override
-  $NumberNotPositiveCopyWith<T, NumberNotPositive<T>> get copyWith;
+  String toString() {
+    return 'ValueFailure<$T>.nullValue()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is NullValue<T>);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result exceedingLength(T failedValue, int max),
+    @required Result empty(T failedValue),
+    @required Result multiline(T failedValue),
+    @required Result listTooLong(T failedValue, int max),
+    @required Result invalidEmail(T failedValue),
+    @required Result shortPassword(T failedValue),
+    @required Result numberNotPositive(T failedValue),
+    @required Result nullValue(),
+  }) {
+    assert(exceedingLength != null);
+    assert(empty != null);
+    assert(multiline != null);
+    assert(listTooLong != null);
+    assert(invalidEmail != null);
+    assert(shortPassword != null);
+    assert(numberNotPositive != null);
+    assert(nullValue != null);
+    return nullValue();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result exceedingLength(T failedValue, int max),
+    Result empty(T failedValue),
+    Result multiline(T failedValue),
+    Result listTooLong(T failedValue, int max),
+    Result invalidEmail(T failedValue),
+    Result shortPassword(T failedValue),
+    Result numberNotPositive(T failedValue),
+    Result nullValue(),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (nullValue != null) {
+      return nullValue();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result exceedingLength(ExceedingLength<T> value),
+    @required Result empty(Empty<T> value),
+    @required Result multiline(Multiline<T> value),
+    @required Result listTooLong(ListTooLong<T> value),
+    @required Result invalidEmail(InvalidEmail<T> value),
+    @required Result shortPassword(ShortPassword<T> value),
+    @required Result numberNotPositive(NumberNotPositive<T> value),
+    @required Result nullValue(NullValue<T> value),
+  }) {
+    assert(exceedingLength != null);
+    assert(empty != null);
+    assert(multiline != null);
+    assert(listTooLong != null);
+    assert(invalidEmail != null);
+    assert(shortPassword != null);
+    assert(numberNotPositive != null);
+    assert(nullValue != null);
+    return nullValue(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result exceedingLength(ExceedingLength<T> value),
+    Result empty(Empty<T> value),
+    Result multiline(Multiline<T> value),
+    Result listTooLong(ListTooLong<T> value),
+    Result invalidEmail(InvalidEmail<T> value),
+    Result shortPassword(ShortPassword<T> value),
+    Result numberNotPositive(NumberNotPositive<T> value),
+    Result nullValue(NullValue<T> value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (nullValue != null) {
+      return nullValue(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class NullValue<T> implements ValueFailure<T> {
+  const factory NullValue() = _$NullValue<T>;
 }

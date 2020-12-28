@@ -15,7 +15,9 @@ class ChatRepository implements IChatRepository {
   static const String collection = 'chats';
   static const String timestamp = 'timestamp';
   final _firestore = Get.find<FirebaseFirestore>();
-  // DocumentSnapshot lastDoc;
+  CollectionReference _getRef(UniqueId storeId) => _firestore.storeCollectionRef
+      .doc(storeId.getOrCrash())
+      .collection(collection);
 
   @override
   Stream<Either<ChatFailure, List<MessageDomain>>> watchStoreMessages({
@@ -24,36 +26,23 @@ class ChatRepository implements IChatRepository {
     @required int amount,
   }) async* {
     try {
-      final _ref = _firestore.storeCollectionRef
-          .doc(storeId.getOrCrash())
-          .collection(collection);
-
+      final _ref = _getRef(storeId);
       final snap =
           await _ref.orderBy(timestamp, descending: true).limit(amount).get();
 
       if (snap.docs.isEmpty) {
         // no prevoius messages, wait and watch for the first message
-        yield* _ref.orderBy(timestamp).snapshots().map(
-          (snap) {
-            if (snap.docs.isEmpty) {
-              return left(ChatFailure.emptyChatRoom());
-            }
-            final messageList = _mapDocListToMessageList(snap.docs, viewerId);
-            return right(messageList);
-          },
-        );
+        yield* _ref
+            .orderBy(timestamp)
+            .snapshots()
+            .map((snap) => _mapChatListToDomain(snap, viewerId));
       } else {
         // watch messages by having a starting doc, no way it is empty
         yield* _ref
             .orderBy(timestamp)
             .startAtDocument(snap.docs.last)
             .snapshots()
-            .map(
-          (snap) {
-            final messageList = _mapDocListToMessageList(snap.docs, viewerId);
-            return right(messageList);
-          },
-        );
+            .map((snap) => _mapChatListToDomain(snap, viewerId));
       }
     } catch (err) {
       yield left(ChatFailure.unexpected(err));
@@ -67,20 +56,13 @@ class ChatRepository implements IChatRepository {
     @required MessageDomain lastMessage,
   }) async {
     try {
-      final _ref = _firestore.storeCollectionRef
-          .doc(storeId.getOrCrash())
-          .collection(collection);
+      final _ref = _getRef(storeId);
       final snap = await _ref
           .orderBy(timestamp, descending: true)
           .startAfter([lastMessage.id.getOrCrash()])
           .limit(Chat.itemPerPage)
           .get();
-      if (snap.docs.isEmpty) {
-        return left(ChatFailure.emptyChatRoom());
-      } else {
-        final chatList = _mapDocListToMessageList(snap.docs, viewerId);
-        return right(chatList);
-      }
+      return _mapChatListToDomain(snap, viewerId);
     } catch (e) {
       return left(ChatFailure.unexpected(e));
     }
@@ -93,11 +75,7 @@ class ChatRepository implements IChatRepository {
   }) async {
     try {
       final jsonData = MessageDto.fromDomain(message).toJson();
-      await _firestore.storeCollectionRef
-          .doc(storeId.getOrCrash())
-          .collection(collection)
-          .doc(message.id.getOrCrash())
-          .set(jsonData);
+      await _getRef(storeId).doc(message.id.getOrCrash()).set(jsonData);
       return right(unit);
     } catch (e) {
       return left(ChatFailure.unexpected(e));
@@ -110,31 +88,29 @@ class ChatRepository implements IChatRepository {
     UniqueId messageId,
   }) async {
     try {
-      final chatDoc = await _firestore.storeCollectionRef
-          .doc(storeId.getOrCrash())
-          .collection(collection)
-          .doc(messageId.getOrCrash())
-          .get();
+      final chatDoc = await _getRef(storeId).doc(messageId.getOrCrash()).get();
       if (!chatDoc.exists) {
         return left(ChatFailure.noSuchMessage());
       }
-      await _firestore.storeCollectionRef
-          .doc(storeId.getOrCrash())
-          .collection(collection)
-          .doc(messageId.getOrCrash())
-          .delete();
+      await _getRef(storeId).doc(messageId.getOrCrash()).delete();
       return right(unit);
     } catch (err) {
       return left(ChatFailure.unexpected(err));
     }
   }
 
-  List<MessageDomain> _mapDocListToMessageList(
-    List<DocumentSnapshot> docList,
+  Either<ChatFailure, List<MessageDomain>> _mapChatListToDomain(
+    QuerySnapshot snap,
     UniqueId viewerId,
-  ) =>
-      docList
+  ) {
+    try {
+      if (snap.docs.isEmpty) return left(ChatFailure.emptyChatRoom());
+      return right(snap.docs
           .map((doc) =>
               MessageDto.fromFirestore(doc).toDomain(viewerId: viewerId))
-          .toList();
+          .toList());
+    } catch (err) {
+      return left(ChatFailure.unexpected(err));
+    }
+  }
 }

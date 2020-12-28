@@ -12,7 +12,7 @@ part 'store_location_dto.g.dart';
 @freezed
 abstract class StoreLocationDto implements _$StoreLocationDto {
   const factory StoreLocationDto({
-    @required @JsonKey(defaultValue: '')String address,
+    @required @nullable String address,
     @GeoFirePointConverter() GeoFirePoint geoFirePoint,
   }) = _StoreLocationDto;
 

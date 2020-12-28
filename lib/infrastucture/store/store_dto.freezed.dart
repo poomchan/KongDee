@@ -18,15 +18,15 @@ class _$StoreDtoTearOff {
 // ignore: unused_element
   _StoreDto call(
       {@JsonKey(ignore: true) String id,
-      @required @JsonKey(defaultValue: '') String name,
-      @required @JsonKey(defaultValue: '') String menu,
-      @required @JsonKey(defaultValue: '') String banner,
-      @required @JsonKey(defaultValue: []) List<String> pics,
-      @required @JsonKey(defaultValue: '') String ownerId,
+      @required @nullable String name,
+      @required @nullable String menu,
+      @required @nullable String banner,
+      @required @nullable List<String> pics,
+      @required @nullable String ownerId,
       @required StoreLocationDto location,
       @required StorePrefsDto prefs,
       @required @ServerTimestampConverter() FieldValue serverTimeStamp,
-      @required @JsonKey(defaultValue: {}) Map<String, bool> blockedUsers}) {
+      @required @nullable Map<String, bool> blockedUsers}) {
     return _StoreDto(
       id: id,
       name: name,
@@ -48,21 +48,21 @@ const $StoreDto = _$StoreDtoTearOff();
 mixin _$StoreDto {
   @JsonKey(ignore: true)
   String get id;
-  @JsonKey(defaultValue: '')
+  @nullable
   String get name;
-  @JsonKey(defaultValue: '')
+  @nullable
   String get menu;
-  @JsonKey(defaultValue: '')
+  @nullable
   String get banner;
-  @JsonKey(defaultValue: [])
+  @nullable
   List<String> get pics;
-  @JsonKey(defaultValue: '')
+  @nullable
   String get ownerId;
   StoreLocationDto get location;
   StorePrefsDto get prefs;
   @ServerTimestampConverter()
   FieldValue get serverTimeStamp;
-  @JsonKey(defaultValue: {})
+  @nullable
   Map<String, bool> get blockedUsers;
 
   Map<String, dynamic> toJson();
@@ -74,15 +74,15 @@ abstract class $StoreDtoCopyWith<$Res> {
       _$StoreDtoCopyWithImpl<$Res>;
   $Res call(
       {@JsonKey(ignore: true) String id,
-      @JsonKey(defaultValue: '') String name,
-      @JsonKey(defaultValue: '') String menu,
-      @JsonKey(defaultValue: '') String banner,
-      @JsonKey(defaultValue: []) List<String> pics,
-      @JsonKey(defaultValue: '') String ownerId,
+      @nullable String name,
+      @nullable String menu,
+      @nullable String banner,
+      @nullable List<String> pics,
+      @nullable String ownerId,
       StoreLocationDto location,
       StorePrefsDto prefs,
       @ServerTimestampConverter() FieldValue serverTimeStamp,
-      @JsonKey(defaultValue: {}) Map<String, bool> blockedUsers});
+      @nullable Map<String, bool> blockedUsers});
 
   $StoreLocationDtoCopyWith<$Res> get location;
   $StorePrefsDtoCopyWith<$Res> get prefs;
@@ -154,15 +154,15 @@ abstract class _$StoreDtoCopyWith<$Res> implements $StoreDtoCopyWith<$Res> {
   @override
   $Res call(
       {@JsonKey(ignore: true) String id,
-      @JsonKey(defaultValue: '') String name,
-      @JsonKey(defaultValue: '') String menu,
-      @JsonKey(defaultValue: '') String banner,
-      @JsonKey(defaultValue: []) List<String> pics,
-      @JsonKey(defaultValue: '') String ownerId,
+      @nullable String name,
+      @nullable String menu,
+      @nullable String banner,
+      @nullable List<String> pics,
+      @nullable String ownerId,
       StoreLocationDto location,
       StorePrefsDto prefs,
       @ServerTimestampConverter() FieldValue serverTimeStamp,
-      @JsonKey(defaultValue: {}) Map<String, bool> blockedUsers});
+      @nullable Map<String, bool> blockedUsers});
 
   @override
   $StoreLocationDtoCopyWith<$Res> get location;
@@ -215,24 +215,18 @@ class __$StoreDtoCopyWithImpl<$Res> extends _$StoreDtoCopyWithImpl<$Res>
 class _$_StoreDto extends _StoreDto {
   const _$_StoreDto(
       {@JsonKey(ignore: true) this.id,
-      @required @JsonKey(defaultValue: '') this.name,
-      @required @JsonKey(defaultValue: '') this.menu,
-      @required @JsonKey(defaultValue: '') this.banner,
-      @required @JsonKey(defaultValue: []) this.pics,
-      @required @JsonKey(defaultValue: '') this.ownerId,
+      @required @nullable this.name,
+      @required @nullable this.menu,
+      @required @nullable this.banner,
+      @required @nullable this.pics,
+      @required @nullable this.ownerId,
       @required this.location,
       @required this.prefs,
       @required @ServerTimestampConverter() this.serverTimeStamp,
-      @required @JsonKey(defaultValue: {}) this.blockedUsers})
-      : assert(name != null),
-        assert(menu != null),
-        assert(banner != null),
-        assert(pics != null),
-        assert(ownerId != null),
-        assert(location != null),
+      @required @nullable this.blockedUsers})
+      : assert(location != null),
         assert(prefs != null),
         assert(serverTimeStamp != null),
-        assert(blockedUsers != null),
         super._();
 
   factory _$_StoreDto.fromJson(Map<String, dynamic> json) =>
@@ -242,19 +236,19 @@ class _$_StoreDto extends _StoreDto {
   @JsonKey(ignore: true)
   final String id;
   @override
-  @JsonKey(defaultValue: '')
+  @nullable
   final String name;
   @override
-  @JsonKey(defaultValue: '')
+  @nullable
   final String menu;
   @override
-  @JsonKey(defaultValue: '')
+  @nullable
   final String banner;
   @override
-  @JsonKey(defaultValue: [])
+  @nullable
   final List<String> pics;
   @override
-  @JsonKey(defaultValue: '')
+  @nullable
   final String ownerId;
   @override
   final StoreLocationDto location;
@@ -264,7 +258,7 @@ class _$_StoreDto extends _StoreDto {
   @ServerTimestampConverter()
   final FieldValue serverTimeStamp;
   @override
-  @JsonKey(defaultValue: {})
+  @nullable
   final Map<String, bool> blockedUsers;
 
   @override
@@ -329,33 +323,16 @@ class _$_StoreDto extends _StoreDto {
 abstract class _StoreDto extends StoreDto {
   const _StoreDto._() : super._();
   const factory _StoreDto(
-      {@JsonKey(ignore: true)
-          String id,
-      @required
-      @JsonKey(defaultValue: '')
-          String name,
-      @required
-      @JsonKey(defaultValue: '')
-          String menu,
-      @required
-      @JsonKey(defaultValue: '')
-          String banner,
-      @required
-      @JsonKey(defaultValue: [])
-          List<String> pics,
-      @required
-      @JsonKey(defaultValue: '')
-          String ownerId,
-      @required
-          StoreLocationDto location,
-      @required
-          StorePrefsDto prefs,
-      @required
-      @ServerTimestampConverter()
-          FieldValue serverTimeStamp,
-      @required
-      @JsonKey(defaultValue: {})
-          Map<String, bool> blockedUsers}) = _$_StoreDto;
+      {@JsonKey(ignore: true) String id,
+      @required @nullable String name,
+      @required @nullable String menu,
+      @required @nullable String banner,
+      @required @nullable List<String> pics,
+      @required @nullable String ownerId,
+      @required StoreLocationDto location,
+      @required StorePrefsDto prefs,
+      @required @ServerTimestampConverter() FieldValue serverTimeStamp,
+      @required @nullable Map<String, bool> blockedUsers}) = _$_StoreDto;
 
   factory _StoreDto.fromJson(Map<String, dynamic> json) = _$_StoreDto.fromJson;
 
@@ -363,19 +340,19 @@ abstract class _StoreDto extends StoreDto {
   @JsonKey(ignore: true)
   String get id;
   @override
-  @JsonKey(defaultValue: '')
+  @nullable
   String get name;
   @override
-  @JsonKey(defaultValue: '')
+  @nullable
   String get menu;
   @override
-  @JsonKey(defaultValue: '')
+  @nullable
   String get banner;
   @override
-  @JsonKey(defaultValue: [])
+  @nullable
   List<String> get pics;
   @override
-  @JsonKey(defaultValue: '')
+  @nullable
   String get ownerId;
   @override
   StoreLocationDto get location;
@@ -385,7 +362,7 @@ abstract class _StoreDto extends StoreDto {
   @ServerTimestampConverter()
   FieldValue get serverTimeStamp;
   @override
-  @JsonKey(defaultValue: {})
+  @nullable
   Map<String, bool> get blockedUsers;
   @override
   _$StoreDtoCopyWith<_StoreDto> get copyWith;

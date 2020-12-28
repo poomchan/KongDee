@@ -16,9 +16,9 @@ import 'package:get/get.dart';
 
 class StoreViewBloc extends GetxController
     with SimepleProgressSetter<StoreFailure> {
-  IStoreRepository get _iStoreRepository => Get.find();
-  ILocationRepository get _iLocationRepository => Get.find();
-  AuthBloc get _authBloc => Get.find();
+  final IStoreRepository _iStoreRepository = Get.find();
+  final ILocationRepository _iLocationRepository = Get.find();
+  final AuthBloc _authBloc = Get.find();
 
   StreamSubscription _storeSubscription;
 
@@ -67,7 +67,7 @@ class StoreViewBloc extends GetxController
   }
 
   void onMoreTapped() {
-    
+    print('more!');
   }
 
   @override

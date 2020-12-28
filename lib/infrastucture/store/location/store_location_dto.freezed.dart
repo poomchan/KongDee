@@ -17,7 +17,7 @@ class _$StoreLocationDtoTearOff {
 
 // ignore: unused_element
   _StoreLocationDto call(
-      {@required @JsonKey(defaultValue: '') String address,
+      {@required @nullable String address,
       @GeoFirePointConverter() GeoFirePoint geoFirePoint}) {
     return _StoreLocationDto(
       address: address,
@@ -30,7 +30,7 @@ class _$StoreLocationDtoTearOff {
 const $StoreLocationDto = _$StoreLocationDtoTearOff();
 
 mixin _$StoreLocationDto {
-  @JsonKey(defaultValue: '')
+  @nullable
   String get address;
   @GeoFirePointConverter()
   GeoFirePoint get geoFirePoint;
@@ -44,7 +44,7 @@ abstract class $StoreLocationDtoCopyWith<$Res> {
           StoreLocationDto value, $Res Function(StoreLocationDto) then) =
       _$StoreLocationDtoCopyWithImpl<$Res>;
   $Res call(
-      {@JsonKey(defaultValue: '') String address,
+      {@nullable String address,
       @GeoFirePointConverter() GeoFirePoint geoFirePoint});
 }
 
@@ -77,7 +77,7 @@ abstract class _$StoreLocationDtoCopyWith<$Res>
       __$StoreLocationDtoCopyWithImpl<$Res>;
   @override
   $Res call(
-      {@JsonKey(defaultValue: '') String address,
+      {@nullable String address,
       @GeoFirePointConverter() GeoFirePoint geoFirePoint});
 }
 
@@ -108,16 +108,15 @@ class __$StoreLocationDtoCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_StoreLocationDto extends _StoreLocationDto {
   const _$_StoreLocationDto(
-      {@required @JsonKey(defaultValue: '') this.address,
+      {@required @nullable this.address,
       @GeoFirePointConverter() this.geoFirePoint})
-      : assert(address != null),
-        super._();
+      : super._();
 
   factory _$_StoreLocationDto.fromJson(Map<String, dynamic> json) =>
       _$_$_StoreLocationDtoFromJson(json);
 
   @override
-  @JsonKey(defaultValue: '')
+  @nullable
   final String address;
   @override
   @GeoFirePointConverter()
@@ -159,7 +158,7 @@ class _$_StoreLocationDto extends _StoreLocationDto {
 abstract class _StoreLocationDto extends StoreLocationDto {
   const _StoreLocationDto._() : super._();
   const factory _StoreLocationDto(
-          {@required @JsonKey(defaultValue: '') String address,
+          {@required @nullable String address,
           @GeoFirePointConverter() GeoFirePoint geoFirePoint}) =
       _$_StoreLocationDto;
 
@@ -167,7 +166,7 @@ abstract class _StoreLocationDto extends StoreLocationDto {
       _$_StoreLocationDto.fromJson;
 
   @override
-  @JsonKey(defaultValue: '')
+  @nullable
   String get address;
   @override
   @GeoFirePointConverter()

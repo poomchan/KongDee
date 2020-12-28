@@ -8,7 +8,6 @@ part of 'message_dto.dart';
 
 _$_MessageDto _$_$_MessageDtoFromJson(Map<String, dynamic> json) {
   return _$_MessageDto(
-    id: json['id'] as String,
     senderId: json['senderId'] as String,
     senderAvatarUrl: json['senderAvatarUrl'] as String,
     senderName: json['senderName'] as String,
@@ -19,7 +18,6 @@ _$_MessageDto _$_$_MessageDtoFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$_$_MessageDtoToJson(_$_MessageDto instance) =>
     <String, dynamic>{
-      'id': instance.id,
       'senderId': instance.senderId,
       'senderAvatarUrl': instance.senderAvatarUrl,
       'senderName': instance.senderName,

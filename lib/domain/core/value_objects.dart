@@ -59,7 +59,7 @@ class UniqueId extends ValueObject<String> {
 
   factory UniqueId.empty() {
     return UniqueId._(
-      left(ValueFailure.empty(failedValue: '')),
+      left(ValueFailure.empty('')),
     );
   }
 

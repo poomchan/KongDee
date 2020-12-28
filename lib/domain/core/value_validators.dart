@@ -9,7 +9,7 @@ Either<ValueFailure<String>, String> validateMaxStringLength(
     return right(input);
   } else {
     return left(
-      ValueFailure.exceedingLength(failedValue: input, max: maxLength),
+      ValueFailure.exceedingLength(input, maxLength),
     );
   }
 }
@@ -19,13 +19,13 @@ Either<ValueFailure<String>, String> validateStringNotEmpty(String input) {
   if (filtered.isNotEmpty) {
     return right(input);
   } else {
-    return left(ValueFailure.empty(failedValue: input));
+    return left(ValueFailure.empty(input));
   }
 }
 
 Either<ValueFailure<String>, String> validateSingleLine(String input) {
   if (input.contains('\n')) {
-    return left(ValueFailure.multiline(failedValue: input));
+    return left(ValueFailure.multiline(input));
   } else {
     return right(input);
   }
@@ -33,7 +33,7 @@ Either<ValueFailure<String>, String> validateSingleLine(String input) {
 
 Either<ValueFailure<String>, String> validateUrlString(String input) {
   if (input.contains('\n')) {
-    return left(ValueFailure.multiline(failedValue: input));
+    return left(ValueFailure.multiline(input));
   } else {
     return right(input);
   }
@@ -46,10 +46,7 @@ Either<ValueFailure<List<T>>, List<T>> validateMaxListLength<T>(
   if (input.length <= maxLength) {
     return right(input);
   } else {
-    return left(ValueFailure.listTooLong(
-      failedValue: input,
-      max: maxLength,
-    ));
+    return left(ValueFailure.listTooLong(input, maxLength));
   }
 }
 
@@ -59,7 +56,7 @@ Either<ValueFailure<String>, String> validateEmailAddress(String input) {
   if (RegExp(emailRegex).hasMatch(input)) {
     return right(input);
   } else {
-    return left(ValueFailure.invalidEmail(failedValue: input));
+    return left(ValueFailure.invalidEmail(input));
   }
 }
 
@@ -67,14 +64,23 @@ Either<ValueFailure<String>, String> validatePassword(String input) {
   if (input.length >= 6) {
     return right(input);
   } else {
-    return left(ValueFailure.shortPassword(failedValue: input));
+    return left(ValueFailure.shortPassword(input));
   }
 }
 
-Either<ValueFailure<double>, double> validateIntegerIsPositive(double input) {
+Either<ValueFailure<double>, double> validateNumberIsPositive(double input) {
   if (input > 0) {
     return right(input);
   } else {
-    return left(ValueFailure.numberNotPositive(failedValue: input));
+    return left(ValueFailure.numberNotPositive(input));
   }
 }
+
+Either<ValueFailure<T>, T> validateInputNotNull<T>(T input) {
+    if (input == null) {
+      return left(ValueFailure.nullValue());
+    } else {
+      return right(input);
+    }
+  }
+

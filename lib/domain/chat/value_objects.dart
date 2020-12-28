@@ -10,13 +10,9 @@ class MessageBody extends ValueObject<String> {
   static const int maxLength = 500;
 
   factory MessageBody(String value) {
-    return MessageBody._(
-      validateStringNotEmpty(value).flatMap(
-        (val) => validateMaxStringLength(val, maxLength),
-      ),
-    );
+    return MessageBody._(validateInputNotNull(value));
   }
-  
+
   factory MessageBody.empty() => MessageBody('');
 
   const MessageBody._(this.value);
@@ -27,7 +23,7 @@ class SenderAvatarUrl extends ValueObject<String> {
   final Either<ValueFailure<String>, String> value;
 
   factory SenderAvatarUrl(String value) {
-    return SenderAvatarUrl._(right(value));
+    return SenderAvatarUrl._(validateInputNotNull(value));
   }
 
   const SenderAvatarUrl._(this.value);
@@ -38,7 +34,7 @@ class SenderName extends ValueObject<String> {
   final Either<ValueFailure<String>, String> value;
 
   factory SenderName(String value) {
-    return SenderName._(right(value));
+    return SenderName._(validateInputNotNull(value));
   }
 
   const SenderName._(this.value);
