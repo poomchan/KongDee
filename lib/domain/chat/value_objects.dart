@@ -10,7 +10,8 @@ class MessageBody extends ValueObject<String> {
   static const int maxLength = 500;
 
   factory MessageBody(String value) {
-    return MessageBody._(validateInputNotNull(value));
+    return MessageBody._(
+        validateInputNotNull(value).flatMap(validateStringNotEmpty));
   }
 
   factory MessageBody.empty() => MessageBody('');

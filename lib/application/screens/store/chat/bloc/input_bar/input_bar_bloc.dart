@@ -20,12 +20,13 @@ class InputBarBloc extends GetxController
 
   final inputController = TextEditingController();
 
-  Future<void> uploadChat() async {
+  Future<void> onSendButtonTapped() async {
     final message = MessageDomain.created(
       user: _user,
       body: inputController.text,
     );
     if (message.isValid) {
+      inputController.text = '';
       setLoading(state.copyWith(
         isUploading: true,
         showErrorMessage: false,

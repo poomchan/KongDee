@@ -38,7 +38,7 @@ class InputBar extends StatelessWidget {
             IconButton(
               icon: const Icon(Icons.send),
               iconSize: 25.0,
-              onPressed: () => bloc.uploadChat(),
+              onPressed: () => bloc.onSendButtonTapped(),
             ),
             const SizedBox(width: 10.0)
           ],

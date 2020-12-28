@@ -25,31 +25,25 @@ class MessageViewBloc extends GetxController
   StreamSubscription messageSub;
 
   Future<void> watchStarted() async {
-    try {
-      setLoading();
-      messageSub = _iChatRepository
-          .watchStoreMessages(
-        storeId: storeId,
-        viewerId: user.id,
-        amount: Chat.itemPerPage,
-      )
-          .listen(
-        (failreOrChats) {
-          failreOrChats.fold(
-            (f) => setFailure(f),
-            (mList) async {
-              setLoaded(state.copyWith(
-                messageList: mList
-                  ..reversed
-                  ..addAll(state.messageList),
-              ));
-            },
-          );
-        },
-      );
-    } catch (err) {
-      print(err);
-    }
+    setLoading();
+    messageSub = _iChatRepository
+        .watchStoreMessages(
+      storeId: storeId,
+      viewerId: user.id,
+      amount: Chat.itemPerPage,
+    )
+        .listen(
+      (failreOrChats) {
+        failreOrChats.fold(
+          (f) => setFailure(f),
+          (mList) async {
+            setLoaded(state.copyWith(
+              messageList: mList.reversed.toList()..addAll(state.messageList),
+            ));
+          },
+        );
+      },
+    );
   }
 
   Future<void> fetchMoreChat() async {

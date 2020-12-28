@@ -48,6 +48,7 @@ class MessageView extends ViewWidget<MessageViewBloc> {
 
   Widget _buildMessage(List<MessageDomain> messages, int index) {
     final m = messages[index];
+    if (!m.isValid) return const SizedBox(height: 0);
     return Column(
       children: [
         if (index == messages.length - 1)
