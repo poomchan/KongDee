@@ -10,9 +10,9 @@ part 'store_prefs_dto.g.dart';
 @freezed
 abstract class StorePrefsDto implements _$StorePrefsDto {
   const factory StorePrefsDto({
-    @required bool isOpen,
-    @required bool isNotificationOn,
-    @required double sellingRange,
+    @required @JsonKey(defaultValue: true) bool isOpen,
+    @required @JsonKey(defaultValue: true) bool isNotificationOn,
+    @required @JsonKey(defaultValue: 1) double sellingRange,
   }) = _StorePrefsDto;
 
   factory StorePrefsDto.fromDomain(StorePrefs p) {

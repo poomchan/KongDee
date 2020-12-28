@@ -13,23 +13,22 @@ class NameField extends StatelessWidget {
     return ReusableCard(
       children: [
         TextFormField(
-          initialValue: bloc.store.name.getOrCrash(),
-          decoration: InputDecoration(labelText: 'store name'),
-          style: TextStyle(fontSize: 30.0),
-          maxLines: 1,
-          maxLength: StoreName.maxLength,
-          onChanged: (val) => bloc.nameChanged(val),
-          autovalidateMode: AutovalidateMode.onUserInteraction,
-          validator: (_) => bloc.store.name.value.fold(
-            (f) => f.maybeMap(
-              empty: (_) => 'name must not be emty!',
-              multiline: (_) => 'name must have only one line',
-              exceedingLength: (_) => 'name is too long',
-              orElse: () => null,
-            ),
-            (r) => null,
-          ),
-        ),
+            initialValue: bloc.store.name,
+            decoration: InputDecoration(labelText: 'store name'),
+            style: TextStyle(fontSize: 30.0),
+            maxLines: 1,
+            maxLength: StoreName.maxLength,
+            onChanged: (val) => bloc.nameChanged(val),
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+            validator: (_) => StoreName(bloc.store.name).value.fold(
+                  (f) => f.maybeWhen(
+                    exceedingLength: (val, length) => 'name is too long',
+                    empty: (val) => 'name cannot be empty',
+                    multiline: (val) => 'name must have one line',
+                    orElse: () => null,
+                  ),
+                  (ok) => null,
+                )),
         Text(
           'Location',
           style: TextStyle(fontSize: 20.0),

@@ -6,14 +6,15 @@ import 'package:fluttertaladsod/application/bloc/auth/auth_bloc.dart';
 import 'package:fluttertaladsod/application/bloc/core/simple_progress_setter.dart';
 import 'package:fluttertaladsod/application/screens/store/chat/bloc/message_view/message_view_state.dart';
 import 'package:fluttertaladsod/application/screens/store/view_page/bloc/store_view_bloc.dart';
-import 'package:fluttertaladsod/domain/message/i_message_repository.dart';
-import 'package:fluttertaladsod/domain/message/message.dart';
-import 'package:fluttertaladsod/domain/message/message_failure.dart';
+import 'package:fluttertaladsod/domain/chat/chat.dart';
+import 'package:fluttertaladsod/domain/chat/chat_failure.dart';
+import 'package:fluttertaladsod/domain/chat/i_chat_repository.dart';
+import 'package:fluttertaladsod/domain/chat/message.dart';
 import 'package:get/get.dart';
 
 class MessageViewBloc extends GetxController
-    with SimepleProgressSetter<MessageFailure> {
-  IMessageRepository get _iMessageRepository => Get.find();
+    with SimepleProgressSetter<ChatFailure> {
+  IChatRepository get _iMessageRepository => Get.find();
   AuthBloc get _authBloc => Get.find();
   StoreViewBloc get _storeViewBloc => Get.find();
 
@@ -30,7 +31,11 @@ class MessageViewBloc extends GetxController
     final storeId = _storeViewBloc.store.id;
     final user = _authBloc.user;
     _iMessageRepository
-        .watchMessages(storeId: storeId, viewerId: user.id)
+        .watchStoreMessages(
+      storeId: storeId,
+      viewerId: user.id,
+      amount: Chat.itemPerPage,
+    )
         .listen(
       (failreOrChats) {
         failreOrChats.fold(
@@ -53,13 +58,16 @@ class MessageViewBloc extends GetxController
     final storeId = _storeViewBloc.store.id;
 
     // no need to paginate if the total messages in the room is below 20
-    if (_moreMessageList.length % IMessageRepository.itemPerPage != 0) return;
+    if (_moreMessageList.length % Chat.itemPerPage != 0) return;
 
-    final fOrMessageList = await _iMessageRepository.fetchMoreMessages(
-        storeId: storeId, viewerId: user.id);
+    final fOrMessageList = await _iMessageRepository.fetchMoreStoreMessages(
+      storeId: storeId,
+      viewerId: user.id,
+      lastMessage: state.messageList.last,
+    );
 
     fOrMessageList.fold((f) {
-      if (f == MessageFailure.emptyChatRoom()) {
+      if (f == ChatFailure.emptyChatRoom()) {
         return;
       } else {
         updateWithFailure(f);
@@ -82,7 +90,6 @@ class MessageViewBloc extends GetxController
   @override
   void onClose() {
     state = null;
-    _iMessageRepository.clearState();
     _scrollController.dispose();
     _recentMessageList = null;
     _moreMessageList = null;

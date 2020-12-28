@@ -23,6 +23,11 @@ class _$AuthFailureTearOff {
   }
 
 // ignore: unused_element
+  _CancleByUser cancleByUser() {
+    return const _CancleByUser();
+  }
+
+// ignore: unused_element
   _Unexpected unexpected(dynamic f) {
     return _Unexpected(
       f,
@@ -38,12 +43,14 @@ mixin _$AuthFailure {
   Result when<Result extends Object>({
     @required Result unauthenticated(),
     @required Result serverError(),
+    @required Result cancleByUser(),
     @required Result unexpected(dynamic f),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result unauthenticated(),
     Result serverError(),
+    Result cancleByUser(),
     Result unexpected(dynamic f),
     @required Result orElse(),
   });
@@ -51,12 +58,14 @@ mixin _$AuthFailure {
   Result map<Result extends Object>({
     @required Result unauthenticated(_Unauthenticated value),
     @required Result serverError(_SeverError value),
+    @required Result cancleByUser(_CancleByUser value),
     @required Result unexpected(_Unexpected value),
   });
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
     Result unauthenticated(_Unauthenticated value),
     Result serverError(_SeverError value),
+    Result cancleByUser(_CancleByUser value),
     Result unexpected(_Unexpected value),
     @required Result orElse(),
   });
@@ -122,10 +131,12 @@ class _$_Unauthenticated
   Result when<Result extends Object>({
     @required Result unauthenticated(),
     @required Result serverError(),
+    @required Result cancleByUser(),
     @required Result unexpected(dynamic f),
   }) {
     assert(unauthenticated != null);
     assert(serverError != null);
+    assert(cancleByUser != null);
     assert(unexpected != null);
     return unauthenticated();
   }
@@ -135,6 +146,7 @@ class _$_Unauthenticated
   Result maybeWhen<Result extends Object>({
     Result unauthenticated(),
     Result serverError(),
+    Result cancleByUser(),
     Result unexpected(dynamic f),
     @required Result orElse(),
   }) {
@@ -150,10 +162,12 @@ class _$_Unauthenticated
   Result map<Result extends Object>({
     @required Result unauthenticated(_Unauthenticated value),
     @required Result serverError(_SeverError value),
+    @required Result cancleByUser(_CancleByUser value),
     @required Result unexpected(_Unexpected value),
   }) {
     assert(unauthenticated != null);
     assert(serverError != null);
+    assert(cancleByUser != null);
     assert(unexpected != null);
     return unauthenticated(this);
   }
@@ -163,6 +177,7 @@ class _$_Unauthenticated
   Result maybeMap<Result extends Object>({
     Result unauthenticated(_Unauthenticated value),
     Result serverError(_SeverError value),
+    Result cancleByUser(_CancleByUser value),
     Result unexpected(_Unexpected value),
     @required Result orElse(),
   }) {
@@ -221,10 +236,12 @@ class _$_SeverError with DiagnosticableTreeMixin implements _SeverError {
   Result when<Result extends Object>({
     @required Result unauthenticated(),
     @required Result serverError(),
+    @required Result cancleByUser(),
     @required Result unexpected(dynamic f),
   }) {
     assert(unauthenticated != null);
     assert(serverError != null);
+    assert(cancleByUser != null);
     assert(unexpected != null);
     return serverError();
   }
@@ -234,6 +251,7 @@ class _$_SeverError with DiagnosticableTreeMixin implements _SeverError {
   Result maybeWhen<Result extends Object>({
     Result unauthenticated(),
     Result serverError(),
+    Result cancleByUser(),
     Result unexpected(dynamic f),
     @required Result orElse(),
   }) {
@@ -249,10 +267,12 @@ class _$_SeverError with DiagnosticableTreeMixin implements _SeverError {
   Result map<Result extends Object>({
     @required Result unauthenticated(_Unauthenticated value),
     @required Result serverError(_SeverError value),
+    @required Result cancleByUser(_CancleByUser value),
     @required Result unexpected(_Unexpected value),
   }) {
     assert(unauthenticated != null);
     assert(serverError != null);
+    assert(cancleByUser != null);
     assert(unexpected != null);
     return serverError(this);
   }
@@ -262,6 +282,7 @@ class _$_SeverError with DiagnosticableTreeMixin implements _SeverError {
   Result maybeMap<Result extends Object>({
     Result unauthenticated(_Unauthenticated value),
     Result serverError(_SeverError value),
+    Result cancleByUser(_CancleByUser value),
     Result unexpected(_Unexpected value),
     @required Result orElse(),
   }) {
@@ -275,6 +296,111 @@ class _$_SeverError with DiagnosticableTreeMixin implements _SeverError {
 
 abstract class _SeverError implements AuthFailure {
   const factory _SeverError() = _$_SeverError;
+}
+
+abstract class _$CancleByUserCopyWith<$Res> {
+  factory _$CancleByUserCopyWith(
+          _CancleByUser value, $Res Function(_CancleByUser) then) =
+      __$CancleByUserCopyWithImpl<$Res>;
+}
+
+class __$CancleByUserCopyWithImpl<$Res> extends _$AuthFailureCopyWithImpl<$Res>
+    implements _$CancleByUserCopyWith<$Res> {
+  __$CancleByUserCopyWithImpl(
+      _CancleByUser _value, $Res Function(_CancleByUser) _then)
+      : super(_value, (v) => _then(v as _CancleByUser));
+
+  @override
+  _CancleByUser get _value => super._value as _CancleByUser;
+}
+
+class _$_CancleByUser with DiagnosticableTreeMixin implements _CancleByUser {
+  const _$_CancleByUser();
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'AuthFailure.cancleByUser()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties..add(DiagnosticsProperty('type', 'AuthFailure.cancleByUser'));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is _CancleByUser);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result unauthenticated(),
+    @required Result serverError(),
+    @required Result cancleByUser(),
+    @required Result unexpected(dynamic f),
+  }) {
+    assert(unauthenticated != null);
+    assert(serverError != null);
+    assert(cancleByUser != null);
+    assert(unexpected != null);
+    return cancleByUser();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result unauthenticated(),
+    Result serverError(),
+    Result cancleByUser(),
+    Result unexpected(dynamic f),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (cancleByUser != null) {
+      return cancleByUser();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result unauthenticated(_Unauthenticated value),
+    @required Result serverError(_SeverError value),
+    @required Result cancleByUser(_CancleByUser value),
+    @required Result unexpected(_Unexpected value),
+  }) {
+    assert(unauthenticated != null);
+    assert(serverError != null);
+    assert(cancleByUser != null);
+    assert(unexpected != null);
+    return cancleByUser(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result unauthenticated(_Unauthenticated value),
+    Result serverError(_SeverError value),
+    Result cancleByUser(_CancleByUser value),
+    Result unexpected(_Unexpected value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (cancleByUser != null) {
+      return cancleByUser(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _CancleByUser implements AuthFailure {
+  const factory _CancleByUser() = _$_CancleByUser;
 }
 
 abstract class _$UnexpectedCopyWith<$Res> {
@@ -343,10 +469,12 @@ class _$_Unexpected with DiagnosticableTreeMixin implements _Unexpected {
   Result when<Result extends Object>({
     @required Result unauthenticated(),
     @required Result serverError(),
+    @required Result cancleByUser(),
     @required Result unexpected(dynamic f),
   }) {
     assert(unauthenticated != null);
     assert(serverError != null);
+    assert(cancleByUser != null);
     assert(unexpected != null);
     return unexpected(f);
   }
@@ -356,6 +484,7 @@ class _$_Unexpected with DiagnosticableTreeMixin implements _Unexpected {
   Result maybeWhen<Result extends Object>({
     Result unauthenticated(),
     Result serverError(),
+    Result cancleByUser(),
     Result unexpected(dynamic f),
     @required Result orElse(),
   }) {
@@ -371,10 +500,12 @@ class _$_Unexpected with DiagnosticableTreeMixin implements _Unexpected {
   Result map<Result extends Object>({
     @required Result unauthenticated(_Unauthenticated value),
     @required Result serverError(_SeverError value),
+    @required Result cancleByUser(_CancleByUser value),
     @required Result unexpected(_Unexpected value),
   }) {
     assert(unauthenticated != null);
     assert(serverError != null);
+    assert(cancleByUser != null);
     assert(unexpected != null);
     return unexpected(this);
   }
@@ -384,6 +515,7 @@ class _$_Unexpected with DiagnosticableTreeMixin implements _Unexpected {
   Result maybeMap<Result extends Object>({
     Result unauthenticated(_Unauthenticated value),
     Result serverError(_SeverError value),
+    Result cancleByUser(_CancleByUser value),
     Result unexpected(_Unexpected value),
     @required Result orElse(),
   }) {

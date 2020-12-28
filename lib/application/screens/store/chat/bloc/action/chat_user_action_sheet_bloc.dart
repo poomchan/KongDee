@@ -9,8 +9,8 @@ import 'package:fluttertaladsod/application/core/haptic_feedback.dart';
 import 'package:fluttertaladsod/application/screens/store/chat/bloc/action/chat_user.dart';
 import 'package:fluttertaladsod/application/screens/store/chat/widgets/dialogs.dart';
 import 'package:fluttertaladsod/application/screens/store/view_page/bloc/store_view_bloc.dart';
+import 'package:fluttertaladsod/domain/chat/chat_failure.dart';
 import 'package:fluttertaladsod/domain/core/value_objects.dart';
-import 'package:fluttertaladsod/domain/message/message_failure.dart';
 import 'package:fluttertaladsod/domain/report/i_report_repository.dart';
 import 'package:fluttertaladsod/domain/report/report.dart';
 import 'package:fluttertaladsod/domain/store/i_store_repository.dart';
@@ -52,7 +52,7 @@ class ChatUserActionSheetBloc extends GetxController
     );
     final fOrUnit = await _blockUser(block);
     fOrUnit.fold(
-      (f) => updateWithFailure(MessageFailure.unexpected(f)),
+      (f) => updateWithFailure(ChatFailure.unexpected(f)),
       (unit) async {
         Get.back();
         await doubleHapticFeedback();

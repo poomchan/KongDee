@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
-import 'package:fluttertaladsod/domain/message/message.dart';
-import 'package:fluttertaladsod/domain/message/message_failure.dart';
+import 'package:fluttertaladsod/domain/chat/chat_failure.dart';
+import 'package:fluttertaladsod/domain/chat/message.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'input_bar_state.freezed.dart';
@@ -11,7 +11,7 @@ abstract class InputBarState with _$InputBarState {
     @required Option<MessageDomain> uploadingChat,
     @required MessageDomain chat,
     @required bool isUploading,
-    @required Option<Either<MessageFailure, Unit>> uploadSuccessOrFailureOption,
+    @required Option<Either<ChatFailure, Unit>> uploadSuccessOrFailureOption,
   }) = _InputBarState;
 
   factory InputBarState.inital() => InputBarState(

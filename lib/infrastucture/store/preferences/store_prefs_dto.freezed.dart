@@ -17,9 +17,9 @@ class _$StorePrefsDtoTearOff {
 
 // ignore: unused_element
   _StorePrefsDto call(
-      {@required bool isOpen,
-      @required bool isNotificationOn,
-      @required double sellingRange}) {
+      {@required @JsonKey(defaultValue: true) bool isOpen,
+      @required @JsonKey(defaultValue: true) bool isNotificationOn,
+      @required @JsonKey(defaultValue: 1) double sellingRange}) {
     return _StorePrefsDto(
       isOpen: isOpen,
       isNotificationOn: isNotificationOn,
@@ -32,8 +32,11 @@ class _$StorePrefsDtoTearOff {
 const $StorePrefsDto = _$StorePrefsDtoTearOff();
 
 mixin _$StorePrefsDto {
+  @JsonKey(defaultValue: true)
   bool get isOpen;
+  @JsonKey(defaultValue: true)
   bool get isNotificationOn;
+  @JsonKey(defaultValue: 1)
   double get sellingRange;
 
   Map<String, dynamic> toJson();
@@ -44,7 +47,10 @@ abstract class $StorePrefsDtoCopyWith<$Res> {
   factory $StorePrefsDtoCopyWith(
           StorePrefsDto value, $Res Function(StorePrefsDto) then) =
       _$StorePrefsDtoCopyWithImpl<$Res>;
-  $Res call({bool isOpen, bool isNotificationOn, double sellingRange});
+  $Res call(
+      {@JsonKey(defaultValue: true) bool isOpen,
+      @JsonKey(defaultValue: true) bool isNotificationOn,
+      @JsonKey(defaultValue: 1) double sellingRange});
 }
 
 class _$StorePrefsDtoCopyWithImpl<$Res>
@@ -79,7 +85,10 @@ abstract class _$StorePrefsDtoCopyWith<$Res>
           _StorePrefsDto value, $Res Function(_StorePrefsDto) then) =
       __$StorePrefsDtoCopyWithImpl<$Res>;
   @override
-  $Res call({bool isOpen, bool isNotificationOn, double sellingRange});
+  $Res call(
+      {@JsonKey(defaultValue: true) bool isOpen,
+      @JsonKey(defaultValue: true) bool isNotificationOn,
+      @JsonKey(defaultValue: 1) double sellingRange});
 }
 
 class __$StorePrefsDtoCopyWithImpl<$Res>
@@ -113,9 +122,9 @@ class __$StorePrefsDtoCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_StorePrefsDto extends _StorePrefsDto {
   const _$_StorePrefsDto(
-      {@required this.isOpen,
-      @required this.isNotificationOn,
-      @required this.sellingRange})
+      {@required @JsonKey(defaultValue: true) this.isOpen,
+      @required @JsonKey(defaultValue: true) this.isNotificationOn,
+      @required @JsonKey(defaultValue: 1) this.sellingRange})
       : assert(isOpen != null),
         assert(isNotificationOn != null),
         assert(sellingRange != null),
@@ -125,10 +134,13 @@ class _$_StorePrefsDto extends _StorePrefsDto {
       _$_$_StorePrefsDtoFromJson(json);
 
   @override
+  @JsonKey(defaultValue: true)
   final bool isOpen;
   @override
+  @JsonKey(defaultValue: true)
   final bool isNotificationOn;
   @override
+  @JsonKey(defaultValue: 1)
   final double sellingRange;
 
   @override
@@ -170,18 +182,22 @@ class _$_StorePrefsDto extends _StorePrefsDto {
 abstract class _StorePrefsDto extends StorePrefsDto {
   const _StorePrefsDto._() : super._();
   const factory _StorePrefsDto(
-      {@required bool isOpen,
-      @required bool isNotificationOn,
-      @required double sellingRange}) = _$_StorePrefsDto;
+          {@required @JsonKey(defaultValue: true) bool isOpen,
+          @required @JsonKey(defaultValue: true) bool isNotificationOn,
+          @required @JsonKey(defaultValue: 1) double sellingRange}) =
+      _$_StorePrefsDto;
 
   factory _StorePrefsDto.fromJson(Map<String, dynamic> json) =
       _$_StorePrefsDto.fromJson;
 
   @override
+  @JsonKey(defaultValue: true)
   bool get isOpen;
   @override
+  @JsonKey(defaultValue: true)
   bool get isNotificationOn;
   @override
+  @JsonKey(defaultValue: 1)
   double get sellingRange;
   @override
   _$StorePrefsDtoCopyWith<_StorePrefsDto> get copyWith;

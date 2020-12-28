@@ -8,7 +8,7 @@ import 'package:fluttertaladsod/application/routes/router.dart';
 
 class ProfileAvatar extends ViewWidget<AuthBloc> {
   const ProfileAvatar();
-  
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<AuthBloc>(
@@ -47,6 +47,7 @@ class ProfileAvatar extends ViewWidget<AuthBloc> {
       unauthenticated: () => _buildProfileAvatar(context),
       serverError: () => Icon(Icons.error),
       unexpected: (f) => Icon(Icons.error),
+      cancleByUser: () => _buildProfileAvatar(context),
     );
   }
 }

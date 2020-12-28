@@ -4,7 +4,7 @@ import 'package:fluttertaladsod/application/core/components/progress_indicator.d
 import 'package:fluttertaladsod/application/screens/store/chat/bloc/message_view/message_view_bloc.dart';
 import 'package:fluttertaladsod/application/screens/store/chat/widgets/date_card.dart';
 import 'package:fluttertaladsod/application/screens/store/chat/widgets/message.dart';
-import 'package:fluttertaladsod/domain/message/message.dart';
+import 'package:fluttertaladsod/domain/chat/message.dart';
 import 'package:get/get.dart';
 
 class MessageView extends ViewWidget<MessageViewBloc> {

@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fluttertaladsod/domain/auth/user/user.dart';
 import 'package:dartz/dartz.dart';
-import 'package:fluttertaladsod/domain/auth/user/i_user_repository.dart';
-import 'package:fluttertaladsod/domain/auth/user/user_failure.dart';
 import 'package:fluttertaladsod/domain/core/value_objects.dart';
+import 'package:fluttertaladsod/domain/user/i_user_repository.dart';
+import 'package:fluttertaladsod/domain/user/user.dart';
+import 'package:fluttertaladsod/domain/user/user_failure.dart';
 import 'package:fluttertaladsod/infrastucture/auth/user_dto.dart';
 import 'package:fluttertaladsod/infrastucture/core/firestore_helper.dart';
 import 'package:get/get.dart';

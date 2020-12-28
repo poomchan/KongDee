@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:fluttertaladsod/domain/auth/user/user.dart';
 import 'package:fluttertaladsod/domain/core/value_objects.dart';
+import 'package:fluttertaladsod/domain/user/user.dart';
 import 'package:fluttertaladsod/infrastucture/core/json_converters.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 

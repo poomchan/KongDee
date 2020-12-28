@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertaladsod/domain/chat/value_objects.dart';
 import 'package:fluttertaladsod/domain/core/value_failures.dart';
 import 'package:fluttertaladsod/domain/core/value_objects.dart';
-import 'package:fluttertaladsod/domain/message/value_objects.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'message.freezed.dart';

@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertaladsod/domain/message/message.dart';
+import 'package:fluttertaladsod/domain/chat/message.dart';
 import 'message_avatar.dart';
 import 'message_bubble.dart';
 

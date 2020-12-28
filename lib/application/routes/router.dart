@@ -12,6 +12,8 @@ import 'package:fluttertaladsod/application/screens/profile/setting/profile_sett
 import 'package:fluttertaladsod/application/screens/splash/sign_in/sign_in_page_binding.dart';
 import 'package:fluttertaladsod/application/screens/splash/sign_in/sign_in_splash.dart';
 import 'package:fluttertaladsod/application/screens/splash/start_up_splash.dart';
+import 'package:fluttertaladsod/application/screens/splash/upgrade/upgrade_page_binding.dart';
+import 'package:fluttertaladsod/application/screens/splash/upgrade/upgrade_splash.dart';
 import 'package:fluttertaladsod/application/screens/store/chat/bloc/chat_page_binding.dart';
 import 'package:fluttertaladsod/application/screens/store/chat/chat_page.dart';
 import 'package:fluttertaladsod/application/screens/store/form/bloc/store_form_page_binding.dart';
@@ -127,11 +129,17 @@ class Router {
       name: Routes.legalPage,
       page: () => LegalPage(),
     ),
+    GetPage(
+      name: Routes.upgradeSplash,
+      page: () => UpgradeSplash(),
+      binding: UpgradePB(),
+    ),
   ];
 }
 
 class Routes {
   static const startUpSplash = '/start-splash';
+  static const upgradeSplash = '/upgrade-splash';
   static const homePage = '/home';
   static const onboardingPage = '/onboarding';
   static const signInSplash = '/sign-in';

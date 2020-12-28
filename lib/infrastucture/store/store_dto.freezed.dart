@@ -17,42 +17,22 @@ class _$StoreDtoTearOff {
 
 // ignore: unused_element
   _StoreDto call(
-      {@JsonKey(ignore: true)
-          String id,
-      @required
-      @nullable
-          String name,
-      @required
-      @nullable
-          String menu,
-      @required
-      @nullable
-          String bannerUrl,
-      @required
-      @nullable
-          List<String> picUrls,
-      @required
-      @nullable
-          String ownerId,
-      @required
-      @nullable
-          StoreLocationDto location,
-      @required
-      @nullable
-          StorePrefsDto prefs,
-      @required
-      @nullable
-      @ServerTimestampConverter()
-          FieldValue serverTimeStamp,
-      @required
-      @nullable
-          Map<String, bool> blockedUsers}) {
+      {@JsonKey(ignore: true) String id,
+      @required @JsonKey(defaultValue: '') String name,
+      @required @JsonKey(defaultValue: '') String menu,
+      @required @JsonKey(defaultValue: '') String banner,
+      @required @JsonKey(defaultValue: []) List<String> pics,
+      @required @JsonKey(defaultValue: '') String ownerId,
+      @required StoreLocationDto location,
+      @required StorePrefsDto prefs,
+      @required @ServerTimestampConverter() FieldValue serverTimeStamp,
+      @required @JsonKey(defaultValue: {}) Map<String, bool> blockedUsers}) {
     return _StoreDto(
       id: id,
       name: name,
       menu: menu,
-      bannerUrl: bannerUrl,
-      picUrls: picUrls,
+      banner: banner,
+      pics: pics,
       ownerId: ownerId,
       location: location,
       prefs: prefs,
@@ -68,24 +48,21 @@ const $StoreDto = _$StoreDtoTearOff();
 mixin _$StoreDto {
   @JsonKey(ignore: true)
   String get id;
-  @nullable
+  @JsonKey(defaultValue: '')
   String get name;
-  @nullable
+  @JsonKey(defaultValue: '')
   String get menu;
-  @nullable
-  String get bannerUrl;
-  @nullable
-  List<String> get picUrls;
-  @nullable
+  @JsonKey(defaultValue: '')
+  String get banner;
+  @JsonKey(defaultValue: [])
+  List<String> get pics;
+  @JsonKey(defaultValue: '')
   String get ownerId;
-  @nullable
   StoreLocationDto get location;
-  @nullable
   StorePrefsDto get prefs;
-  @nullable
   @ServerTimestampConverter()
   FieldValue get serverTimeStamp;
-  @nullable
+  @JsonKey(defaultValue: {})
   Map<String, bool> get blockedUsers;
 
   Map<String, dynamic> toJson();
@@ -97,15 +74,15 @@ abstract class $StoreDtoCopyWith<$Res> {
       _$StoreDtoCopyWithImpl<$Res>;
   $Res call(
       {@JsonKey(ignore: true) String id,
-      @nullable String name,
-      @nullable String menu,
-      @nullable String bannerUrl,
-      @nullable List<String> picUrls,
-      @nullable String ownerId,
-      @nullable StoreLocationDto location,
-      @nullable StorePrefsDto prefs,
-      @nullable @ServerTimestampConverter() FieldValue serverTimeStamp,
-      @nullable Map<String, bool> blockedUsers});
+      @JsonKey(defaultValue: '') String name,
+      @JsonKey(defaultValue: '') String menu,
+      @JsonKey(defaultValue: '') String banner,
+      @JsonKey(defaultValue: []) List<String> pics,
+      @JsonKey(defaultValue: '') String ownerId,
+      StoreLocationDto location,
+      StorePrefsDto prefs,
+      @ServerTimestampConverter() FieldValue serverTimeStamp,
+      @JsonKey(defaultValue: {}) Map<String, bool> blockedUsers});
 
   $StoreLocationDtoCopyWith<$Res> get location;
   $StorePrefsDtoCopyWith<$Res> get prefs;
@@ -123,8 +100,8 @@ class _$StoreDtoCopyWithImpl<$Res> implements $StoreDtoCopyWith<$Res> {
     Object id = freezed,
     Object name = freezed,
     Object menu = freezed,
-    Object bannerUrl = freezed,
-    Object picUrls = freezed,
+    Object banner = freezed,
+    Object pics = freezed,
     Object ownerId = freezed,
     Object location = freezed,
     Object prefs = freezed,
@@ -135,8 +112,8 @@ class _$StoreDtoCopyWithImpl<$Res> implements $StoreDtoCopyWith<$Res> {
       id: id == freezed ? _value.id : id as String,
       name: name == freezed ? _value.name : name as String,
       menu: menu == freezed ? _value.menu : menu as String,
-      bannerUrl: bannerUrl == freezed ? _value.bannerUrl : bannerUrl as String,
-      picUrls: picUrls == freezed ? _value.picUrls : picUrls as List<String>,
+      banner: banner == freezed ? _value.banner : banner as String,
+      pics: pics == freezed ? _value.pics : pics as List<String>,
       ownerId: ownerId == freezed ? _value.ownerId : ownerId as String,
       location:
           location == freezed ? _value.location : location as StoreLocationDto,
@@ -177,15 +154,15 @@ abstract class _$StoreDtoCopyWith<$Res> implements $StoreDtoCopyWith<$Res> {
   @override
   $Res call(
       {@JsonKey(ignore: true) String id,
-      @nullable String name,
-      @nullable String menu,
-      @nullable String bannerUrl,
-      @nullable List<String> picUrls,
-      @nullable String ownerId,
-      @nullable StoreLocationDto location,
-      @nullable StorePrefsDto prefs,
-      @nullable @ServerTimestampConverter() FieldValue serverTimeStamp,
-      @nullable Map<String, bool> blockedUsers});
+      @JsonKey(defaultValue: '') String name,
+      @JsonKey(defaultValue: '') String menu,
+      @JsonKey(defaultValue: '') String banner,
+      @JsonKey(defaultValue: []) List<String> pics,
+      @JsonKey(defaultValue: '') String ownerId,
+      StoreLocationDto location,
+      StorePrefsDto prefs,
+      @ServerTimestampConverter() FieldValue serverTimeStamp,
+      @JsonKey(defaultValue: {}) Map<String, bool> blockedUsers});
 
   @override
   $StoreLocationDtoCopyWith<$Res> get location;
@@ -206,8 +183,8 @@ class __$StoreDtoCopyWithImpl<$Res> extends _$StoreDtoCopyWithImpl<$Res>
     Object id = freezed,
     Object name = freezed,
     Object menu = freezed,
-    Object bannerUrl = freezed,
-    Object picUrls = freezed,
+    Object banner = freezed,
+    Object pics = freezed,
     Object ownerId = freezed,
     Object location = freezed,
     Object prefs = freezed,
@@ -218,8 +195,8 @@ class __$StoreDtoCopyWithImpl<$Res> extends _$StoreDtoCopyWithImpl<$Res>
       id: id == freezed ? _value.id : id as String,
       name: name == freezed ? _value.name : name as String,
       menu: menu == freezed ? _value.menu : menu as String,
-      bannerUrl: bannerUrl == freezed ? _value.bannerUrl : bannerUrl as String,
-      picUrls: picUrls == freezed ? _value.picUrls : picUrls as List<String>,
+      banner: banner == freezed ? _value.banner : banner as String,
+      pics: pics == freezed ? _value.pics : pics as List<String>,
       ownerId: ownerId == freezed ? _value.ownerId : ownerId as String,
       location:
           location == freezed ? _value.location : location as StoreLocationDto,
@@ -238,16 +215,25 @@ class __$StoreDtoCopyWithImpl<$Res> extends _$StoreDtoCopyWithImpl<$Res>
 class _$_StoreDto extends _StoreDto {
   const _$_StoreDto(
       {@JsonKey(ignore: true) this.id,
-      @required @nullable this.name,
-      @required @nullable this.menu,
-      @required @nullable this.bannerUrl,
-      @required @nullable this.picUrls,
-      @required @nullable this.ownerId,
-      @required @nullable this.location,
-      @required @nullable this.prefs,
-      @required @nullable @ServerTimestampConverter() this.serverTimeStamp,
-      @required @nullable this.blockedUsers})
-      : super._();
+      @required @JsonKey(defaultValue: '') this.name,
+      @required @JsonKey(defaultValue: '') this.menu,
+      @required @JsonKey(defaultValue: '') this.banner,
+      @required @JsonKey(defaultValue: []) this.pics,
+      @required @JsonKey(defaultValue: '') this.ownerId,
+      @required this.location,
+      @required this.prefs,
+      @required @ServerTimestampConverter() this.serverTimeStamp,
+      @required @JsonKey(defaultValue: {}) this.blockedUsers})
+      : assert(name != null),
+        assert(menu != null),
+        assert(banner != null),
+        assert(pics != null),
+        assert(ownerId != null),
+        assert(location != null),
+        assert(prefs != null),
+        assert(serverTimeStamp != null),
+        assert(blockedUsers != null),
+        super._();
 
   factory _$_StoreDto.fromJson(Map<String, dynamic> json) =>
       _$_$_StoreDtoFromJson(json);
@@ -256,37 +242,34 @@ class _$_StoreDto extends _StoreDto {
   @JsonKey(ignore: true)
   final String id;
   @override
-  @nullable
+  @JsonKey(defaultValue: '')
   final String name;
   @override
-  @nullable
+  @JsonKey(defaultValue: '')
   final String menu;
   @override
-  @nullable
-  final String bannerUrl;
+  @JsonKey(defaultValue: '')
+  final String banner;
   @override
-  @nullable
-  final List<String> picUrls;
+  @JsonKey(defaultValue: [])
+  final List<String> pics;
   @override
-  @nullable
+  @JsonKey(defaultValue: '')
   final String ownerId;
   @override
-  @nullable
   final StoreLocationDto location;
   @override
-  @nullable
   final StorePrefsDto prefs;
   @override
-  @nullable
   @ServerTimestampConverter()
   final FieldValue serverTimeStamp;
   @override
-  @nullable
+  @JsonKey(defaultValue: {})
   final Map<String, bool> blockedUsers;
 
   @override
   String toString() {
-    return 'StoreDto(id: $id, name: $name, menu: $menu, bannerUrl: $bannerUrl, picUrls: $picUrls, ownerId: $ownerId, location: $location, prefs: $prefs, serverTimeStamp: $serverTimeStamp, blockedUsers: $blockedUsers)';
+    return 'StoreDto(id: $id, name: $name, menu: $menu, banner: $banner, pics: $pics, ownerId: $ownerId, location: $location, prefs: $prefs, serverTimeStamp: $serverTimeStamp, blockedUsers: $blockedUsers)';
   }
 
   @override
@@ -299,12 +282,10 @@ class _$_StoreDto extends _StoreDto {
                 const DeepCollectionEquality().equals(other.name, name)) &&
             (identical(other.menu, menu) ||
                 const DeepCollectionEquality().equals(other.menu, menu)) &&
-            (identical(other.bannerUrl, bannerUrl) ||
-                const DeepCollectionEquality()
-                    .equals(other.bannerUrl, bannerUrl)) &&
-            (identical(other.picUrls, picUrls) ||
-                const DeepCollectionEquality()
-                    .equals(other.picUrls, picUrls)) &&
+            (identical(other.banner, banner) ||
+                const DeepCollectionEquality().equals(other.banner, banner)) &&
+            (identical(other.pics, pics) ||
+                const DeepCollectionEquality().equals(other.pics, pics)) &&
             (identical(other.ownerId, ownerId) ||
                 const DeepCollectionEquality()
                     .equals(other.ownerId, ownerId)) &&
@@ -327,8 +308,8 @@ class _$_StoreDto extends _StoreDto {
       const DeepCollectionEquality().hash(id) ^
       const DeepCollectionEquality().hash(name) ^
       const DeepCollectionEquality().hash(menu) ^
-      const DeepCollectionEquality().hash(bannerUrl) ^
-      const DeepCollectionEquality().hash(picUrls) ^
+      const DeepCollectionEquality().hash(banner) ^
+      const DeepCollectionEquality().hash(pics) ^
       const DeepCollectionEquality().hash(ownerId) ^
       const DeepCollectionEquality().hash(location) ^
       const DeepCollectionEquality().hash(prefs) ^
@@ -351,32 +332,29 @@ abstract class _StoreDto extends StoreDto {
       {@JsonKey(ignore: true)
           String id,
       @required
-      @nullable
+      @JsonKey(defaultValue: '')
           String name,
       @required
-      @nullable
+      @JsonKey(defaultValue: '')
           String menu,
       @required
-      @nullable
-          String bannerUrl,
+      @JsonKey(defaultValue: '')
+          String banner,
       @required
-      @nullable
-          List<String> picUrls,
+      @JsonKey(defaultValue: [])
+          List<String> pics,
       @required
-      @nullable
+      @JsonKey(defaultValue: '')
           String ownerId,
       @required
-      @nullable
           StoreLocationDto location,
       @required
-      @nullable
           StorePrefsDto prefs,
       @required
-      @nullable
       @ServerTimestampConverter()
           FieldValue serverTimeStamp,
       @required
-      @nullable
+      @JsonKey(defaultValue: {})
           Map<String, bool> blockedUsers}) = _$_StoreDto;
 
   factory _StoreDto.fromJson(Map<String, dynamic> json) = _$_StoreDto.fromJson;
@@ -385,32 +363,29 @@ abstract class _StoreDto extends StoreDto {
   @JsonKey(ignore: true)
   String get id;
   @override
-  @nullable
+  @JsonKey(defaultValue: '')
   String get name;
   @override
-  @nullable
+  @JsonKey(defaultValue: '')
   String get menu;
   @override
-  @nullable
-  String get bannerUrl;
+  @JsonKey(defaultValue: '')
+  String get banner;
   @override
-  @nullable
-  List<String> get picUrls;
+  @JsonKey(defaultValue: [])
+  List<String> get pics;
   @override
-  @nullable
+  @JsonKey(defaultValue: '')
   String get ownerId;
   @override
-  @nullable
   StoreLocationDto get location;
   @override
-  @nullable
   StorePrefsDto get prefs;
   @override
-  @nullable
   @ServerTimestampConverter()
   FieldValue get serverTimeStamp;
   @override
-  @nullable
+  @JsonKey(defaultValue: {})
   Map<String, bool> get blockedUsers;
   @override
   _$StoreDtoCopyWith<_StoreDto> get copyWith;

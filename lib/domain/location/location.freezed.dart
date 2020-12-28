@@ -14,8 +14,13 @@ class _$LocationDomainTearOff {
 
 // ignore: unused_element
   _LocationDomain call(
-      {@required GeoFirePoint geoFirePoint, @required Placemark placemark}) {
+      {@required UniqueId id,
+      @required LocationData locationData,
+      @required GeoFirePoint geoFirePoint,
+      @required Placemark placemark}) {
     return _LocationDomain(
+      id: id,
+      locationData: locationData,
       geoFirePoint: geoFirePoint,
       placemark: placemark,
     );
@@ -26,6 +31,8 @@ class _$LocationDomainTearOff {
 const $LocationDomain = _$LocationDomainTearOff();
 
 mixin _$LocationDomain {
+  UniqueId get id;
+  LocationData get locationData;
   GeoFirePoint get geoFirePoint;
   Placemark get placemark;
 
@@ -36,7 +43,11 @@ abstract class $LocationDomainCopyWith<$Res> {
   factory $LocationDomainCopyWith(
           LocationDomain value, $Res Function(LocationDomain) then) =
       _$LocationDomainCopyWithImpl<$Res>;
-  $Res call({GeoFirePoint geoFirePoint, Placemark placemark});
+  $Res call(
+      {UniqueId id,
+      LocationData locationData,
+      GeoFirePoint geoFirePoint,
+      Placemark placemark});
 }
 
 class _$LocationDomainCopyWithImpl<$Res>
@@ -49,10 +60,16 @@ class _$LocationDomainCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object id = freezed,
+    Object locationData = freezed,
     Object geoFirePoint = freezed,
     Object placemark = freezed,
   }) {
     return _then(_value.copyWith(
+      id: id == freezed ? _value.id : id as UniqueId,
+      locationData: locationData == freezed
+          ? _value.locationData
+          : locationData as LocationData,
       geoFirePoint: geoFirePoint == freezed
           ? _value.geoFirePoint
           : geoFirePoint as GeoFirePoint,
@@ -68,7 +85,11 @@ abstract class _$LocationDomainCopyWith<$Res>
           _LocationDomain value, $Res Function(_LocationDomain) then) =
       __$LocationDomainCopyWithImpl<$Res>;
   @override
-  $Res call({GeoFirePoint geoFirePoint, Placemark placemark});
+  $Res call(
+      {UniqueId id,
+      LocationData locationData,
+      GeoFirePoint geoFirePoint,
+      Placemark placemark});
 }
 
 class __$LocationDomainCopyWithImpl<$Res>
@@ -83,10 +104,16 @@ class __$LocationDomainCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object id = freezed,
+    Object locationData = freezed,
     Object geoFirePoint = freezed,
     Object placemark = freezed,
   }) {
     return _then(_LocationDomain(
+      id: id == freezed ? _value.id : id as UniqueId,
+      locationData: locationData == freezed
+          ? _value.locationData
+          : locationData as LocationData,
       geoFirePoint: geoFirePoint == freezed
           ? _value.geoFirePoint
           : geoFirePoint as GeoFirePoint,
@@ -96,12 +123,23 @@ class __$LocationDomainCopyWithImpl<$Res>
   }
 }
 
-class _$_LocationDomain implements _LocationDomain {
+@Implements(IEntity)
+class _$_LocationDomain extends _LocationDomain {
   const _$_LocationDomain(
-      {@required this.geoFirePoint, @required this.placemark})
-      : assert(geoFirePoint != null),
-        assert(placemark != null);
+      {@required this.id,
+      @required this.locationData,
+      @required this.geoFirePoint,
+      @required this.placemark})
+      : assert(id != null),
+        assert(locationData != null),
+        assert(geoFirePoint != null),
+        assert(placemark != null),
+        super._();
 
+  @override
+  final UniqueId id;
+  @override
+  final LocationData locationData;
   @override
   final GeoFirePoint geoFirePoint;
   @override
@@ -109,13 +147,18 @@ class _$_LocationDomain implements _LocationDomain {
 
   @override
   String toString() {
-    return 'LocationDomain(geoFirePoint: $geoFirePoint, placemark: $placemark)';
+    return 'LocationDomain(id: $id, locationData: $locationData, geoFirePoint: $geoFirePoint, placemark: $placemark)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _LocationDomain &&
+            (identical(other.id, id) ||
+                const DeepCollectionEquality().equals(other.id, id)) &&
+            (identical(other.locationData, locationData) ||
+                const DeepCollectionEquality()
+                    .equals(other.locationData, locationData)) &&
             (identical(other.geoFirePoint, geoFirePoint) ||
                 const DeepCollectionEquality()
                     .equals(other.geoFirePoint, geoFirePoint)) &&
@@ -127,6 +170,8 @@ class _$_LocationDomain implements _LocationDomain {
   @override
   int get hashCode =>
       runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(id) ^
+      const DeepCollectionEquality().hash(locationData) ^
       const DeepCollectionEquality().hash(geoFirePoint) ^
       const DeepCollectionEquality().hash(placemark);
 
@@ -135,11 +180,18 @@ class _$_LocationDomain implements _LocationDomain {
       __$LocationDomainCopyWithImpl<_LocationDomain>(this, _$identity);
 }
 
-abstract class _LocationDomain implements LocationDomain {
+abstract class _LocationDomain extends LocationDomain implements IEntity {
+  const _LocationDomain._() : super._();
   const factory _LocationDomain(
-      {@required GeoFirePoint geoFirePoint,
+      {@required UniqueId id,
+      @required LocationData locationData,
+      @required GeoFirePoint geoFirePoint,
       @required Placemark placemark}) = _$_LocationDomain;
 
+  @override
+  UniqueId get id;
+  @override
+  LocationData get locationData;
   @override
   GeoFirePoint get geoFirePoint;
   @override

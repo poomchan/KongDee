@@ -1,24 +1,20 @@
-import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/widgets.dart';
-import 'package:fluttertaladsod/domain/auth/user/user.dart';
 import 'package:fluttertaladsod/domain/core/value_objects.dart';
 import 'package:fluttertaladsod/domain/location/location.dart';
 import 'package:fluttertaladsod/domain/store/i_store_repository.dart';
 import 'package:fluttertaladsod/domain/store/store.dart';
 import 'package:fluttertaladsod/domain/store/store_failures.dart';
+import 'package:fluttertaladsod/domain/user/user.dart';
 import 'package:fluttertaladsod/infrastucture/store/store_dto.dart';
 import 'package:geoflutterfire/geoflutterfire.dart';
 import 'package:get/get.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:uuid/uuid.dart';
 import 'package:fluttertaladsod/infrastucture/core/firestore_helper.dart';
 
 class StoreRepository implements IStoreRepository {
   final _firestore = Get.find<FirebaseFirestore>();
-  final _storage = Get.find<StorageReference>();
   final _geo = Get.find<Geoflutterfire>();
 
   @override
@@ -144,27 +140,6 @@ class StoreRepository implements IStoreRepository {
       await _firestore.storeCollectionRef.doc(storeId.getOrCrash()).delete();
       return right(unit);
     } catch (err) {
-      return left(StoreFailure.unexpected(err));
-    }
-  }
-
-  @override
-  Future<Either<StoreFailure, String>> uploadFileImage(
-      File img, String path) async {
-    final imageId = Uuid().v4();
-    try {
-      // upload (path in firebase storage)
-      final StorageUploadTask uploadTask =
-          _storage.child("$path/img_$imageId").putFile(img);
-
-      // wait for completion
-      final StorageTaskSnapshot storageSnap = await uploadTask.onComplete;
-
-      //get download Url
-      final String mediaUrl = await storageSnap.ref.getDownloadURL() as String;
-      return right(mediaUrl);
-    } catch (err) {
-      // log error here
       return left(StoreFailure.unexpected(err));
     }
   }

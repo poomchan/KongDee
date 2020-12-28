@@ -43,9 +43,9 @@ class BannerAppbar2 extends ViewWidget<StoreViewBloc> {
         loading: () => circularProgress(context),
         failure: () => const Icon(Icons.error),
         loaded: () => Hero(
-          tag: bloc.store.banner.url,
+          tag: bloc.store.banner.getOrCrash(),
           child: MyNetworkImage(
-            imageUrl: bloc.store.banner.url,
+            imageUrl: bloc.store.banner.getOrCrash(),
             memCacheWidth: 600,
           ),
         ),

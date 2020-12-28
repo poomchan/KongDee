@@ -5,7 +5,7 @@ import 'location_failure.dart';
 
 abstract class ILocationRepository {
   Future<Either<LocationFailure, Unit>> requestLocationPermission();
-  Future<bool> isPermissionGranted();
   Future<Either<LocationFailure, LocationDomain>> getLocation();
+  Future<bool> isPermissionGranted();
   Future<void> openAppSetting();
 }

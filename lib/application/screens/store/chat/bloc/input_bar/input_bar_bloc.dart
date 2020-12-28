@@ -2,24 +2,24 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter/widgets.dart';
 import 'package:fluttertaladsod/application/screens/store/view_page/bloc/store_view_bloc.dart';
 import 'package:fluttertaladsod/domain/auth/i_auth_facade.dart';
-import 'package:fluttertaladsod/domain/message/i_message_repository.dart';
-import 'package:fluttertaladsod/domain/message/message.dart';
-import 'package:fluttertaladsod/domain/message/message_failure.dart';
-import 'package:fluttertaladsod/domain/message/value_objects.dart';
+import 'package:fluttertaladsod/domain/chat/chat_failure.dart';
+import 'package:fluttertaladsod/domain/chat/i_chat_repository.dart';
+import 'package:fluttertaladsod/domain/chat/message.dart';
+import 'package:fluttertaladsod/domain/chat/value_objects.dart';
 import 'package:get/get.dart';
 import 'input_bar_state.dart';
 
 
 class InputBarBloc extends GetxController {
-  final IMessageRepository _iChatRepository = Get.find<IMessageRepository>();
-  final IAuthFacade _iAuthFacade = Get.find<IAuthFacade>();
-  final StoreViewBloc _storeViewBloc = Get.find<StoreViewBloc>();
+  final IChatRepository _iChatRepository = Get.find();
+  final IAuthFacade _iAuthFacade = Get.find();
+  final StoreViewBloc _storeViewBloc = Get.find();
 
   final textController = TextEditingController();
   InputBarState state = InputBarState.inital();
 
   Future<void> uploadChat() async {
-    Either<MessageFailure, Unit> failureOrSuccess;
+    Either<ChatFailure, Unit> failureOrSuccess;
     final storeId = _storeViewBloc.store.id;
 
     if (state.chat.failureOption.isNone()) {
@@ -34,9 +34,9 @@ class InputBarBloc extends GetxController {
       final userOrF = await _iAuthFacade.getSignedInUser();
       final user = userOrF.getOrElse(() => throw 'User unauthenticated');
 
-      failureOrSuccess = await _iChatRepository.uploadMessage(
+      failureOrSuccess = await _iChatRepository.uploadStoreMessage(
         storeId: storeId,
-        chat: state.uploadingChat
+        message: state.uploadingChat
             .getOrElse(
               () => null,
             )
@@ -76,4 +76,7 @@ class InputBarBloc extends GetxController {
     state = null;
     super.onClose();
   }
+}
+
+class IMessageRepository {
 }

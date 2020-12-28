@@ -3,45 +3,42 @@ import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertaladsod/domain/auth/auth_failure.dart';
 import 'package:fluttertaladsod/domain/auth/i_auth_facade.dart';
-import 'package:fluttertaladsod/domain/auth/user/user.dart';
+import 'package:fluttertaladsod/domain/user/user.dart';
 import 'package:fluttertaladsod/infrastucture/auth/user_dto.dart';
 import 'package:fluttertaladsod/infrastucture/core/firestore_helper.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class FirebaseAuthFacade implements IAuthFacade {
-  final _googleSignIn = Get.find<GoogleSignIn>();
-  final FirebaseAuth _firebaseAuth = Get.find<FirebaseAuth>();
-  final FirebaseFirestore _firestore = Get.find<FirebaseFirestore>();
+  final GoogleSignIn _googleSignIn = Get.find();
+  final FirebaseAuth _firebaseAuth = Get.find();
+  final FirebaseFirestore _firestore = Get.find();
 
   @override
-  Future<bool> signInWithGoogle() async {
+  Future<Either<AuthFailure, Unit>> signInWithGoogle() async {
     try {
       final googleUser = await _googleSignIn.signIn();
-
-      // cancle by user
-      if (googleUser == null) return false;
+      if (googleUser == null) return left(AuthFailure.cancleByUser());
       final authentication = await googleUser.authentication;
       final authCredential = GoogleAuthProvider.credential(
           idToken: authentication.idToken,
           accessToken: authentication.accessToken);
 
       await _firebaseAuth.signInWithCredential(authCredential);
-      return true;
-    } catch (e) {
-      print(e);
-      return false;
+      return right(unit);
+    } catch (err) {
+      return left(AuthFailure.unexpected(err));
     }
   }
 
   @override
-  Future<void> signInWithApple() {
+  Future<Either<AuthFailure, Unit>> signInWithApple() {
     // TODO: implement signInWithApple
     throw UnimplementedError();
   }
 
   @override
-  Future<void> signInWithFacebook() {
+  Future<Either<AuthFailure, Unit>> signInWithFacebook() {
     // TODO: implement signInWithFacebook
     throw UnimplementedError();
   }
@@ -116,5 +113,4 @@ class FirebaseAuthFacade implements IAuthFacade {
       return left(AuthFailure.unexpected(err));
     }
   }
-
 }

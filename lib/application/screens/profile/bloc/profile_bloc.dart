@@ -1,8 +1,8 @@
 import 'package:fluttertaladsod/application/bloc/auth/auth_bloc.dart';
 import 'package:fluttertaladsod/application/bloc/core/simple_progress_setter.dart';
-import 'package:fluttertaladsod/domain/auth/user/user.dart';
-import 'package:fluttertaladsod/domain/auth/user/i_user_repository.dart';
 import 'package:fluttertaladsod/domain/core/value_objects.dart';
+import 'package:fluttertaladsod/domain/user/i_user_repository.dart';
+import 'package:fluttertaladsod/domain/user/user.dart';
 import 'package:get/get.dart';
 
 class ProfileBloc extends GetxController with SimepleProgressSetter {

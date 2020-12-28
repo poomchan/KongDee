@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:fluttertaladsod/domain/core/value_objects.dart';
 import 'package:fluttertaladsod/domain/location/i_location_repository.dart';
 import 'package:fluttertaladsod/domain/location/location.dart';
 import 'package:fluttertaladsod/domain/location/location_failure.dart';
@@ -45,21 +46,23 @@ class LocationRepository implements ILocationRepository {
   }
 
   /// completeAddress = [placemark.subThoroughfare]/[placemark.thoroughfare]}/[placemark.subLocality]/[placemark.locality]/[placemark.subAdministrativeArea]/[placemark.administrativeArea]/[placemark.postalCode]/[placemark.country]
-  ///
   /// formattedAddress = [placemark.subLocality]/[placemark.locality]
   @override
   Future<Either<LocationFailure, LocationDomain>> getLocation() async {
     try {
-      final LocationData position =
-          await _location.getLocation();
+      final LocationData position = await _location.getLocation();
       final List<_code.Placemark> placemarks = await _geocode
           .placemarkFromCoordinates(position.latitude, position.longitude);
       final _code.Placemark placemark = placemarks[0];
 
       final GeoFirePoint myGeoPoint = _geofire.point(
           latitude: position.latitude, longitude: position.longitude);
-      return right(
-          LocationDomain(placemark: placemark, geoFirePoint: myGeoPoint));
+      return right(LocationDomain(
+        locationData: position,
+        placemark: placemark,
+        geoFirePoint: myGeoPoint,
+        id: UniqueId(),
+      ));
     } catch (err) {
       return left(LocationFailure.unexpected(err));
     }

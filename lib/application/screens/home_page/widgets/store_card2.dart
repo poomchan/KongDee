@@ -77,7 +77,7 @@ class StoreCard2 extends StatelessWidget {
         fit: StackFit.expand,
         children: [
           Hero(
-            tag: store.banner.url,
+            tag: store.banner.getOrCrash(),
             child: ColorFiltered(
               colorFilter: store.prefs.isOpen
                   ? const ColorFilter.mode(
@@ -88,7 +88,7 @@ class StoreCard2 extends StatelessWidget {
                       Colors.grey,
                       BlendMode.saturation,
                     ),
-              child: MyNetworkImage(imageUrl: store.banner.url),
+              child: MyNetworkImage(imageUrl: store.banner.getOrCrash()),
             ),
           ),
           Positioned(

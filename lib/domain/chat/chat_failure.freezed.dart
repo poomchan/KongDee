@@ -1,7 +1,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies
 
-part of 'message_failure.dart';
+part of 'chat_failure.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -9,8 +9,8 @@ part of 'message_failure.dart';
 
 T _$identity<T>(T value) => value;
 
-class _$MessageFailureTearOff {
-  const _$MessageFailureTearOff();
+class _$ChatFailureTearOff {
+  const _$ChatFailureTearOff();
 
 // ignore: unused_element
   _Unexpected unexpected(dynamic err) {
@@ -36,9 +36,9 @@ class _$MessageFailureTearOff {
 }
 
 // ignore: unused_element
-const $MessageFailure = _$MessageFailureTearOff();
+const $ChatFailure = _$ChatFailureTearOff();
 
-mixin _$MessageFailure {
+mixin _$ChatFailure {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result unexpected(dynamic err),
@@ -71,19 +71,18 @@ mixin _$MessageFailure {
   });
 }
 
-abstract class $MessageFailureCopyWith<$Res> {
-  factory $MessageFailureCopyWith(
-          MessageFailure value, $Res Function(MessageFailure) then) =
-      _$MessageFailureCopyWithImpl<$Res>;
+abstract class $ChatFailureCopyWith<$Res> {
+  factory $ChatFailureCopyWith(
+          ChatFailure value, $Res Function(ChatFailure) then) =
+      _$ChatFailureCopyWithImpl<$Res>;
 }
 
-class _$MessageFailureCopyWithImpl<$Res>
-    implements $MessageFailureCopyWith<$Res> {
-  _$MessageFailureCopyWithImpl(this._value, this._then);
+class _$ChatFailureCopyWithImpl<$Res> implements $ChatFailureCopyWith<$Res> {
+  _$ChatFailureCopyWithImpl(this._value, this._then);
 
-  final MessageFailure _value;
+  final ChatFailure _value;
   // ignore: unused_field
-  final $Res Function(MessageFailure) _then;
+  final $Res Function(ChatFailure) _then;
 }
 
 abstract class _$UnexpectedCopyWith<$Res> {
@@ -93,7 +92,7 @@ abstract class _$UnexpectedCopyWith<$Res> {
   $Res call({dynamic err});
 }
 
-class __$UnexpectedCopyWithImpl<$Res> extends _$MessageFailureCopyWithImpl<$Res>
+class __$UnexpectedCopyWithImpl<$Res> extends _$ChatFailureCopyWithImpl<$Res>
     implements _$UnexpectedCopyWith<$Res> {
   __$UnexpectedCopyWithImpl(
       _Unexpected _value, $Res Function(_Unexpected) _then)
@@ -120,7 +119,7 @@ class _$_Unexpected implements _Unexpected {
 
   @override
   String toString() {
-    return 'MessageFailure.unexpected(err: $err)';
+    return 'ChatFailure.unexpected(err: $err)';
   }
 
   @override
@@ -202,7 +201,7 @@ class _$_Unexpected implements _Unexpected {
   }
 }
 
-abstract class _Unexpected implements MessageFailure {
+abstract class _Unexpected implements ChatFailure {
   const factory _Unexpected(dynamic err) = _$_Unexpected;
 
   dynamic get err;
@@ -215,8 +214,7 @@ abstract class _$SeverFailureCopyWith<$Res> {
       __$SeverFailureCopyWithImpl<$Res>;
 }
 
-class __$SeverFailureCopyWithImpl<$Res>
-    extends _$MessageFailureCopyWithImpl<$Res>
+class __$SeverFailureCopyWithImpl<$Res> extends _$ChatFailureCopyWithImpl<$Res>
     implements _$SeverFailureCopyWith<$Res> {
   __$SeverFailureCopyWithImpl(
       _SeverFailure _value, $Res Function(_SeverFailure) _then)
@@ -231,7 +229,7 @@ class _$_SeverFailure implements _SeverFailure {
 
   @override
   String toString() {
-    return 'MessageFailure.severFailure()';
+    return 'ChatFailure.severFailure()';
   }
 
   @override
@@ -305,7 +303,7 @@ class _$_SeverFailure implements _SeverFailure {
   }
 }
 
-abstract class _SeverFailure implements MessageFailure {
+abstract class _SeverFailure implements ChatFailure {
   const factory _SeverFailure() = _$_SeverFailure;
 }
 
@@ -315,8 +313,7 @@ abstract class _$NoSuchMessageCopyWith<$Res> {
       __$NoSuchMessageCopyWithImpl<$Res>;
 }
 
-class __$NoSuchMessageCopyWithImpl<$Res>
-    extends _$MessageFailureCopyWithImpl<$Res>
+class __$NoSuchMessageCopyWithImpl<$Res> extends _$ChatFailureCopyWithImpl<$Res>
     implements _$NoSuchMessageCopyWith<$Res> {
   __$NoSuchMessageCopyWithImpl(
       _NoSuchMessage _value, $Res Function(_NoSuchMessage) _then)
@@ -331,7 +328,7 @@ class _$_NoSuchMessage implements _NoSuchMessage {
 
   @override
   String toString() {
-    return 'MessageFailure.noSuchMessage()';
+    return 'ChatFailure.noSuchMessage()';
   }
 
   @override
@@ -405,7 +402,7 @@ class _$_NoSuchMessage implements _NoSuchMessage {
   }
 }
 
-abstract class _NoSuchMessage implements MessageFailure {
+abstract class _NoSuchMessage implements ChatFailure {
   const factory _NoSuchMessage() = _$_NoSuchMessage;
 }
 
@@ -415,8 +412,7 @@ abstract class _$EmptyChatRoomCopyWith<$Res> {
       __$EmptyChatRoomCopyWithImpl<$Res>;
 }
 
-class __$EmptyChatRoomCopyWithImpl<$Res>
-    extends _$MessageFailureCopyWithImpl<$Res>
+class __$EmptyChatRoomCopyWithImpl<$Res> extends _$ChatFailureCopyWithImpl<$Res>
     implements _$EmptyChatRoomCopyWith<$Res> {
   __$EmptyChatRoomCopyWithImpl(
       _EmptyChatRoom _value, $Res Function(_EmptyChatRoom) _then)
@@ -431,7 +427,7 @@ class _$_EmptyChatRoom implements _EmptyChatRoom {
 
   @override
   String toString() {
-    return 'MessageFailure.emptyChatRoom()';
+    return 'ChatFailure.emptyChatRoom()';
   }
 
   @override
@@ -505,6 +501,6 @@ class _$_EmptyChatRoom implements _EmptyChatRoom {
   }
 }
 
-abstract class _EmptyChatRoom implements MessageFailure {
+abstract class _EmptyChatRoom implements ChatFailure {
   const factory _EmptyChatRoom() = _$_EmptyChatRoom;
 }

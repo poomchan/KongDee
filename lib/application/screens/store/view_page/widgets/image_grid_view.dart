@@ -31,11 +31,9 @@ class ImageGridView extends StatelessWidget {
               builder: (bloc) => bloc.progress.when(
                 inital: () => circularProgress(context),
                 loading: () => circularProgress(context),
-                loaded: () => bloc.store.pics
-                    .getOrCrash()[index]
-                    .fileOrUrl
-                    .fold((file) => throw 'network image cannot be File',
-                        (url) => MyNetworkImage(imageUrl: url)),
+                loaded: () => MyNetworkImage(
+                  imageUrl: bloc.store.pics.getOrCrash()[index].getOrCrash(),
+                ),
                 failure: () => Icon(Icons.error),
               ),
             ),

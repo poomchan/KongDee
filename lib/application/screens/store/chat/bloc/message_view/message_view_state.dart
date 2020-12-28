@@ -1,4 +1,4 @@
-import 'package:fluttertaladsod/domain/message/message.dart';
+import 'package:fluttertaladsod/domain/chat/message.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'message_view_state.freezed.dart';

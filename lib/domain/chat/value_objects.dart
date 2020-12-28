@@ -10,13 +10,15 @@ class MessageBody extends ValueObject<String> {
   static const int maxLength = 500;
 
   factory MessageBody(String value) {
-    return MessageBody._(validateStringNotEmpty(value)
-        .flatMap((val) => validateMaxStringLength(val, maxLength)));
+    return MessageBody._(
+      validateStringNotEmpty(value).flatMap(
+        (val) => validateMaxStringLength(val, maxLength),
+      ),
+    );
   }
 
   const MessageBody._(this.value);
 }
-
 
 class SenderAvatarUrl extends ValueObject<String> {
   @override

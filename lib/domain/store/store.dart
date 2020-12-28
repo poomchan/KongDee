@@ -36,9 +36,7 @@ abstract class Store implements _$Store {
         id: UniqueId(),
         ownerId: UniqueId(),
         name: StoreName(''),
-        banner: StoreBanner.url(
-          'https://via.placeholder.com/700x650.png?text=Click+here+to+add+an+image',
-        ),
+        banner: StoreBanner.created(),
         menu: StoreMenu(''),
         pics: StorePic16(List.empty()),
         location: StoreLocation.created(),
@@ -53,6 +51,8 @@ abstract class Store implements _$Store {
         .andThen(pics.failureOrUnit)
         .fold((f) => some(f), (r) => none());
   }
+
+  bool get isValid => failureOption.isNone();
 
   const Store._();
 }

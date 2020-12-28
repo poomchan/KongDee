@@ -8,11 +8,11 @@ part of 'store_dto.dart';
 
 _$_StoreDto _$_$_StoreDtoFromJson(Map<String, dynamic> json) {
   return _$_StoreDto(
-    name: json['name'] as String,
-    menu: json['menu'] as String,
-    bannerUrl: json['bannerUrl'] as String,
-    picUrls: (json['picUrls'] as List)?.map((e) => e as String)?.toList(),
-    ownerId: json['ownerId'] as String,
+    name: json['name'] as String ?? '',
+    menu: json['menu'] as String ?? '',
+    banner: json['banner'] as String ?? '',
+    pics: (json['pics'] as List)?.map((e) => e as String)?.toList() ?? [],
+    ownerId: json['ownerId'] as String ?? '',
     location: json['location'] == null
         ? null
         : StoreLocationDto.fromJson(json['location'] as Map<String, dynamic>),
@@ -22,8 +22,9 @@ _$_StoreDto _$_$_StoreDtoFromJson(Map<String, dynamic> json) {
     serverTimeStamp:
         const ServerTimestampConverter().fromJson(json['serverTimeStamp']),
     blockedUsers: (json['blockedUsers'] as Map<String, dynamic>)?.map(
-      (k, e) => MapEntry(k, e as bool),
-    ),
+          (k, e) => MapEntry(k, e as bool),
+        ) ??
+        {},
   );
 }
 
@@ -31,8 +32,8 @@ Map<String, dynamic> _$_$_StoreDtoToJson(_$_StoreDto instance) =>
     <String, dynamic>{
       'name': instance.name,
       'menu': instance.menu,
-      'bannerUrl': instance.bannerUrl,
-      'picUrls': instance.picUrls,
+      'banner': instance.banner,
+      'pics': instance.pics,
       'ownerId': instance.ownerId,
       'location': instance.location?.toJson(),
       'prefs': instance.prefs?.toJson(),

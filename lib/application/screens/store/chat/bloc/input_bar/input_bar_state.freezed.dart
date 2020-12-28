@@ -21,7 +21,7 @@ class _$InputBarStateTearOff {
       @required
           bool isUploading,
       @required
-          Option<Either<MessageFailure, Unit>> uploadSuccessOrFailureOption}) {
+          Option<Either<ChatFailure, Unit>> uploadSuccessOrFailureOption}) {
     return _InputBarState(
       uploadingChat: uploadingChat,
       chat: chat,
@@ -38,7 +38,7 @@ mixin _$InputBarState {
   Option<MessageDomain> get uploadingChat;
   MessageDomain get chat;
   bool get isUploading;
-  Option<Either<MessageFailure, Unit>> get uploadSuccessOrFailureOption;
+  Option<Either<ChatFailure, Unit>> get uploadSuccessOrFailureOption;
 
   $InputBarStateCopyWith<InputBarState> get copyWith;
 }
@@ -51,7 +51,7 @@ abstract class $InputBarStateCopyWith<$Res> {
       {Option<MessageDomain> uploadingChat,
       MessageDomain chat,
       bool isUploading,
-      Option<Either<MessageFailure, Unit>> uploadSuccessOrFailureOption});
+      Option<Either<ChatFailure, Unit>> uploadSuccessOrFailureOption});
 
   $MessageDomainCopyWith<$Res> get chat;
 }
@@ -80,8 +80,7 @@ class _$InputBarStateCopyWithImpl<$Res>
           isUploading == freezed ? _value.isUploading : isUploading as bool,
       uploadSuccessOrFailureOption: uploadSuccessOrFailureOption == freezed
           ? _value.uploadSuccessOrFailureOption
-          : uploadSuccessOrFailureOption
-              as Option<Either<MessageFailure, Unit>>,
+          : uploadSuccessOrFailureOption as Option<Either<ChatFailure, Unit>>,
     ));
   }
 
@@ -106,7 +105,7 @@ abstract class _$InputBarStateCopyWith<$Res>
       {Option<MessageDomain> uploadingChat,
       MessageDomain chat,
       bool isUploading,
-      Option<Either<MessageFailure, Unit>> uploadSuccessOrFailureOption});
+      Option<Either<ChatFailure, Unit>> uploadSuccessOrFailureOption});
 
   @override
   $MessageDomainCopyWith<$Res> get chat;
@@ -138,8 +137,7 @@ class __$InputBarStateCopyWithImpl<$Res>
           isUploading == freezed ? _value.isUploading : isUploading as bool,
       uploadSuccessOrFailureOption: uploadSuccessOrFailureOption == freezed
           ? _value.uploadSuccessOrFailureOption
-          : uploadSuccessOrFailureOption
-              as Option<Either<MessageFailure, Unit>>,
+          : uploadSuccessOrFailureOption as Option<Either<ChatFailure, Unit>>,
     ));
   }
 }
@@ -162,7 +160,7 @@ class _$_InputBarState implements _InputBarState {
   @override
   final bool isUploading;
   @override
-  final Option<Either<MessageFailure, Unit>> uploadSuccessOrFailureOption;
+  final Option<Either<ChatFailure, Unit>> uploadSuccessOrFailureOption;
 
   @override
   String toString() {
@@ -203,15 +201,15 @@ class _$_InputBarState implements _InputBarState {
 
 abstract class _InputBarState implements InputBarState {
   const factory _InputBarState(
-      {@required
-          Option<MessageDomain> uploadingChat,
-      @required
-          MessageDomain chat,
-      @required
-          bool isUploading,
-      @required
-          Option<Either<MessageFailure, Unit>>
-              uploadSuccessOrFailureOption}) = _$_InputBarState;
+          {@required
+              Option<MessageDomain> uploadingChat,
+          @required
+              MessageDomain chat,
+          @required
+              bool isUploading,
+          @required
+              Option<Either<ChatFailure, Unit>> uploadSuccessOrFailureOption}) =
+      _$_InputBarState;
 
   @override
   Option<MessageDomain> get uploadingChat;
@@ -220,7 +218,7 @@ abstract class _InputBarState implements InputBarState {
   @override
   bool get isUploading;
   @override
-  Option<Either<MessageFailure, Unit>> get uploadSuccessOrFailureOption;
+  Option<Either<ChatFailure, Unit>> get uploadSuccessOrFailureOption;
   @override
   _$InputBarStateCopyWith<_InputBarState> get copyWith;
 }

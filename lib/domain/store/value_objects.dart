@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:dartz/dartz.dart';
 import 'package:fluttertaladsod/domain/core/value_failures.dart';
 import 'package:fluttertaladsod/domain/core/value_objects.dart';
@@ -32,42 +31,32 @@ class StoreMenu extends ValueObject<String> {
   const StoreMenu._(this.value);
 }
 
-class StoreBanner extends ValueObject<Either<File, String>> {
+class StoreBanner extends ValueObject<String> {
   @override
-  final Either<ValueFailure<Either<File, String>>, Either<File, String>> value;
+  final Either<ValueFailure<String>, String> value;
 
-  factory StoreBanner.url(String input) {
+  factory StoreBanner(String input) {
     assert(input != null);
-    return StoreBanner._(right(right(input)));
+    return StoreBanner._(right(input));
   }
-
-  factory StoreBanner.file(File input) {
-    assert(input != null);
-    return StoreBanner._(right(left(input)));
+  factory StoreBanner.created() {
+    return StoreBanner._(right(
+        'https://via.placeholder.com/700x650.png?text=Click+here+to+add+an+image'));
   }
-
-  String get url => value.fold(
-        (f) => null,
-        (v) => v.fold((file) => null, (url) => url),
-      );
 
   const StoreBanner._(this.value);
 }
 
-class StorePic {
-  final Either<File, String> fileOrUrl;
+class StorePic extends ValueObject<String> {
+  @override
+  final Either<ValueFailure<String>, String> value;
 
-  factory StorePic.url(String input) {
+  factory StorePic(String input) {
     assert(input != null);
     return StorePic._(right(input));
   }
 
-  factory StorePic.file(File input) {
-    assert(input != null);
-    return StorePic._(left(input));
-  }
-
-  const StorePic._(this.fileOrUrl);
+  const StorePic._(this.value);
 }
 
 class StorePic16 extends ValueObject<List<StorePic>> {
@@ -92,17 +81,18 @@ class SellingRange extends ValueObject<double> {
   @override
   final Either<ValueFailure<double>, double> value;
   static const maxRange = 16;
-  bool get isInFinite => value.fold((f) => throw 'value failure', (val) => val == double.infinity);
+  bool get isInFinite =>
+      value.fold((f) => throw 'value failure', (val) => val == double.infinity);
 
   factory SellingRange(double input) {
     return SellingRange._(right(input));
   }
 
-  factory SellingRange.infinite(){
+  factory SellingRange.infinite() {
     return SellingRange._(right(double.infinity));
   }
 
-  factory SellingRange.created(){
+  factory SellingRange.created() {
     return SellingRange._(right(1));
   }
 
