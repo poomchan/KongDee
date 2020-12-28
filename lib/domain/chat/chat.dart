@@ -15,7 +15,5 @@ abstract class Chat with _$Chat{
     @required List<MessageDomain> messages,
     @required DocumentSnapshot lastDoc,
   }) = _Chat;
-
   static const int itemPerPage = 20;
-
 }

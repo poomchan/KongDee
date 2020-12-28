@@ -23,9 +23,9 @@ class _$UserFailureTearOff {
   }
 
 // ignore: unused_element
-  _Unexpected unexpected(dynamic f) {
+  _Unexpected unexpected(dynamic err) {
     return _Unexpected(
-      f,
+      err,
     );
   }
 }
@@ -38,13 +38,13 @@ mixin _$UserFailure {
   Result when<Result extends Object>({
     @required Result noSuchUser(),
     @required Result serveFailure(),
-    @required Result unexpected(dynamic f),
+    @required Result unexpected(dynamic err),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result noSuchUser(),
     Result serveFailure(),
-    Result unexpected(dynamic f),
+    Result unexpected(dynamic err),
     @required Result orElse(),
   });
   @optionalTypeArgs
@@ -113,7 +113,7 @@ class _$_NoSuchUser implements _NoSuchUser {
   Result when<Result extends Object>({
     @required Result noSuchUser(),
     @required Result serveFailure(),
-    @required Result unexpected(dynamic f),
+    @required Result unexpected(dynamic err),
   }) {
     assert(noSuchUser != null);
     assert(serveFailure != null);
@@ -126,7 +126,7 @@ class _$_NoSuchUser implements _NoSuchUser {
   Result maybeWhen<Result extends Object>({
     Result noSuchUser(),
     Result serveFailure(),
-    Result unexpected(dynamic f),
+    Result unexpected(dynamic err),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -206,7 +206,7 @@ class _$_ServerFailure implements _ServerFailure {
   Result when<Result extends Object>({
     @required Result noSuchUser(),
     @required Result serveFailure(),
-    @required Result unexpected(dynamic f),
+    @required Result unexpected(dynamic err),
   }) {
     assert(noSuchUser != null);
     assert(serveFailure != null);
@@ -219,7 +219,7 @@ class _$_ServerFailure implements _ServerFailure {
   Result maybeWhen<Result extends Object>({
     Result noSuchUser(),
     Result serveFailure(),
-    Result unexpected(dynamic f),
+    Result unexpected(dynamic err),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -266,7 +266,7 @@ abstract class _$UnexpectedCopyWith<$Res> {
   factory _$UnexpectedCopyWith(
           _Unexpected value, $Res Function(_Unexpected) then) =
       __$UnexpectedCopyWithImpl<$Res>;
-  $Res call({dynamic f});
+  $Res call({dynamic err});
 }
 
 class __$UnexpectedCopyWithImpl<$Res> extends _$UserFailureCopyWithImpl<$Res>
@@ -280,36 +280,36 @@ class __$UnexpectedCopyWithImpl<$Res> extends _$UserFailureCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object f = freezed,
+    Object err = freezed,
   }) {
     return _then(_Unexpected(
-      f == freezed ? _value.f : f,
+      err == freezed ? _value.err : err as dynamic,
     ));
   }
 }
 
 class _$_Unexpected implements _Unexpected {
-  const _$_Unexpected(this.f) : assert(f != null);
+  const _$_Unexpected(this.err) : assert(err != null);
 
   @override
-  final dynamic f;
+  final dynamic err;
 
   @override
   String toString() {
-    return 'UserFailure.unexpected(f: $f)';
+    return 'UserFailure.unexpected(err: $err)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _Unexpected &&
-            (identical(other.f, f) ||
-                const DeepCollectionEquality().equals(other.f, f)));
+            (identical(other.err, err) ||
+                const DeepCollectionEquality().equals(other.err, err)));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(f);
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(err);
 
   @override
   _$UnexpectedCopyWith<_Unexpected> get copyWith =>
@@ -320,12 +320,12 @@ class _$_Unexpected implements _Unexpected {
   Result when<Result extends Object>({
     @required Result noSuchUser(),
     @required Result serveFailure(),
-    @required Result unexpected(dynamic f),
+    @required Result unexpected(dynamic err),
   }) {
     assert(noSuchUser != null);
     assert(serveFailure != null);
     assert(unexpected != null);
-    return unexpected(f);
+    return unexpected(err);
   }
 
   @override
@@ -333,12 +333,12 @@ class _$_Unexpected implements _Unexpected {
   Result maybeWhen<Result extends Object>({
     Result noSuchUser(),
     Result serveFailure(),
-    Result unexpected(dynamic f),
+    Result unexpected(dynamic err),
     @required Result orElse(),
   }) {
     assert(orElse != null);
     if (unexpected != null) {
-      return unexpected(f);
+      return unexpected(err);
     }
     return orElse();
   }
@@ -373,8 +373,8 @@ class _$_Unexpected implements _Unexpected {
 }
 
 abstract class _Unexpected implements UserFailure {
-  const factory _Unexpected(dynamic f) = _$_Unexpected;
+  const factory _Unexpected(dynamic err) = _$_Unexpected;
 
-  dynamic get f;
+  dynamic get err;
   _$UnexpectedCopyWith<_Unexpected> get copyWith;
 }

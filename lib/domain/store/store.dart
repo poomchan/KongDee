@@ -33,8 +33,8 @@ abstract class Store implements _$Store {
   }
 
   factory Store.created() => Store(
-        id: UniqueId(),
-        ownerId: UniqueId(),
+        id: UniqueId.generated(),
+        ownerId: UniqueId.generated(),
         name: StoreName(''),
         banner: StoreBanner.created(),
         menu: StoreMenu(''),

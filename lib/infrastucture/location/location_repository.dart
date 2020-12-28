@@ -61,7 +61,7 @@ class LocationRepository implements ILocationRepository {
         locationData: position,
         placemark: placemark,
         geoFirePoint: myGeoPoint,
-        id: UniqueId(),
+        id: UniqueId.generated(),
       ));
     } catch (err) {
       return left(LocationFailure.unexpected(err));

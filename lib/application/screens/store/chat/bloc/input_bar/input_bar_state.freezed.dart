@@ -14,19 +14,10 @@ class _$InputBarStateTearOff {
 
 // ignore: unused_element
   _InputBarState call(
-      {@required
-          Option<MessageDomain> uploadingChat,
-      @required
-          MessageDomain chat,
-      @required
-          bool isUploading,
-      @required
-          Option<Either<ChatFailure, Unit>> uploadSuccessOrFailureOption}) {
+      {@required bool isUploading, @required bool showErrorMessage}) {
     return _InputBarState(
-      uploadingChat: uploadingChat,
-      chat: chat,
       isUploading: isUploading,
-      uploadSuccessOrFailureOption: uploadSuccessOrFailureOption,
+      showErrorMessage: showErrorMessage,
     );
   }
 }
@@ -35,10 +26,8 @@ class _$InputBarStateTearOff {
 const $InputBarState = _$InputBarStateTearOff();
 
 mixin _$InputBarState {
-  Option<MessageDomain> get uploadingChat;
-  MessageDomain get chat;
   bool get isUploading;
-  Option<Either<ChatFailure, Unit>> get uploadSuccessOrFailureOption;
+  bool get showErrorMessage;
 
   $InputBarStateCopyWith<InputBarState> get copyWith;
 }
@@ -47,13 +36,7 @@ abstract class $InputBarStateCopyWith<$Res> {
   factory $InputBarStateCopyWith(
           InputBarState value, $Res Function(InputBarState) then) =
       _$InputBarStateCopyWithImpl<$Res>;
-  $Res call(
-      {Option<MessageDomain> uploadingChat,
-      MessageDomain chat,
-      bool isUploading,
-      Option<Either<ChatFailure, Unit>> uploadSuccessOrFailureOption});
-
-  $MessageDomainCopyWith<$Res> get chat;
+  $Res call({bool isUploading, bool showErrorMessage});
 }
 
 class _$InputBarStateCopyWithImpl<$Res>
@@ -66,32 +49,16 @@ class _$InputBarStateCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object uploadingChat = freezed,
-    Object chat = freezed,
     Object isUploading = freezed,
-    Object uploadSuccessOrFailureOption = freezed,
+    Object showErrorMessage = freezed,
   }) {
     return _then(_value.copyWith(
-      uploadingChat: uploadingChat == freezed
-          ? _value.uploadingChat
-          : uploadingChat as Option<MessageDomain>,
-      chat: chat == freezed ? _value.chat : chat as MessageDomain,
       isUploading:
           isUploading == freezed ? _value.isUploading : isUploading as bool,
-      uploadSuccessOrFailureOption: uploadSuccessOrFailureOption == freezed
-          ? _value.uploadSuccessOrFailureOption
-          : uploadSuccessOrFailureOption as Option<Either<ChatFailure, Unit>>,
+      showErrorMessage: showErrorMessage == freezed
+          ? _value.showErrorMessage
+          : showErrorMessage as bool,
     ));
-  }
-
-  @override
-  $MessageDomainCopyWith<$Res> get chat {
-    if (_value.chat == null) {
-      return null;
-    }
-    return $MessageDomainCopyWith<$Res>(_value.chat, (value) {
-      return _then(_value.copyWith(chat: value));
-    });
   }
 }
 
@@ -101,14 +68,7 @@ abstract class _$InputBarStateCopyWith<$Res>
           _InputBarState value, $Res Function(_InputBarState) then) =
       __$InputBarStateCopyWithImpl<$Res>;
   @override
-  $Res call(
-      {Option<MessageDomain> uploadingChat,
-      MessageDomain chat,
-      bool isUploading,
-      Option<Either<ChatFailure, Unit>> uploadSuccessOrFailureOption});
-
-  @override
-  $MessageDomainCopyWith<$Res> get chat;
+  $Res call({bool isUploading, bool showErrorMessage});
 }
 
 class __$InputBarStateCopyWithImpl<$Res>
@@ -123,76 +83,52 @@ class __$InputBarStateCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object uploadingChat = freezed,
-    Object chat = freezed,
     Object isUploading = freezed,
-    Object uploadSuccessOrFailureOption = freezed,
+    Object showErrorMessage = freezed,
   }) {
     return _then(_InputBarState(
-      uploadingChat: uploadingChat == freezed
-          ? _value.uploadingChat
-          : uploadingChat as Option<MessageDomain>,
-      chat: chat == freezed ? _value.chat : chat as MessageDomain,
       isUploading:
           isUploading == freezed ? _value.isUploading : isUploading as bool,
-      uploadSuccessOrFailureOption: uploadSuccessOrFailureOption == freezed
-          ? _value.uploadSuccessOrFailureOption
-          : uploadSuccessOrFailureOption as Option<Either<ChatFailure, Unit>>,
+      showErrorMessage: showErrorMessage == freezed
+          ? _value.showErrorMessage
+          : showErrorMessage as bool,
     ));
   }
 }
 
 class _$_InputBarState implements _InputBarState {
   const _$_InputBarState(
-      {@required this.uploadingChat,
-      @required this.chat,
-      @required this.isUploading,
-      @required this.uploadSuccessOrFailureOption})
-      : assert(uploadingChat != null),
-        assert(chat != null),
-        assert(isUploading != null),
-        assert(uploadSuccessOrFailureOption != null);
+      {@required this.isUploading, @required this.showErrorMessage})
+      : assert(isUploading != null),
+        assert(showErrorMessage != null);
 
-  @override
-  final Option<MessageDomain> uploadingChat;
-  @override
-  final MessageDomain chat;
   @override
   final bool isUploading;
   @override
-  final Option<Either<ChatFailure, Unit>> uploadSuccessOrFailureOption;
+  final bool showErrorMessage;
 
   @override
   String toString() {
-    return 'InputBarState(uploadingChat: $uploadingChat, chat: $chat, isUploading: $isUploading, uploadSuccessOrFailureOption: $uploadSuccessOrFailureOption)';
+    return 'InputBarState(isUploading: $isUploading, showErrorMessage: $showErrorMessage)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _InputBarState &&
-            (identical(other.uploadingChat, uploadingChat) ||
-                const DeepCollectionEquality()
-                    .equals(other.uploadingChat, uploadingChat)) &&
-            (identical(other.chat, chat) ||
-                const DeepCollectionEquality().equals(other.chat, chat)) &&
             (identical(other.isUploading, isUploading) ||
                 const DeepCollectionEquality()
                     .equals(other.isUploading, isUploading)) &&
-            (identical(other.uploadSuccessOrFailureOption,
-                    uploadSuccessOrFailureOption) ||
-                const DeepCollectionEquality().equals(
-                    other.uploadSuccessOrFailureOption,
-                    uploadSuccessOrFailureOption)));
+            (identical(other.showErrorMessage, showErrorMessage) ||
+                const DeepCollectionEquality()
+                    .equals(other.showErrorMessage, showErrorMessage)));
   }
 
   @override
   int get hashCode =>
       runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(uploadingChat) ^
-      const DeepCollectionEquality().hash(chat) ^
       const DeepCollectionEquality().hash(isUploading) ^
-      const DeepCollectionEquality().hash(uploadSuccessOrFailureOption);
+      const DeepCollectionEquality().hash(showErrorMessage);
 
   @override
   _$InputBarStateCopyWith<_InputBarState> get copyWith =>
@@ -201,24 +137,13 @@ class _$_InputBarState implements _InputBarState {
 
 abstract class _InputBarState implements InputBarState {
   const factory _InputBarState(
-          {@required
-              Option<MessageDomain> uploadingChat,
-          @required
-              MessageDomain chat,
-          @required
-              bool isUploading,
-          @required
-              Option<Either<ChatFailure, Unit>> uploadSuccessOrFailureOption}) =
-      _$_InputBarState;
+      {@required bool isUploading,
+      @required bool showErrorMessage}) = _$_InputBarState;
 
-  @override
-  Option<MessageDomain> get uploadingChat;
-  @override
-  MessageDomain get chat;
   @override
   bool get isUploading;
   @override
-  Option<Either<ChatFailure, Unit>> get uploadSuccessOrFailureOption;
+  bool get showErrorMessage;
   @override
   _$InputBarStateCopyWith<_InputBarState> get copyWith;
 }

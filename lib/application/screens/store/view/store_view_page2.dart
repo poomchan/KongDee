@@ -1,15 +1,16 @@
+
 import 'package:flutter/material.dart';
 import 'package:fluttertaladsod/application/bloc/core/view_widget.dart';
 import 'package:fluttertaladsod/application/core/components/progress_indicator.dart';
 import 'package:fluttertaladsod/application/routes/router.dart';
-import 'package:fluttertaladsod/application/screens/store/view_page/widgets/banner_appbar2.dart';
-import 'package:fluttertaladsod/application/screens/store/view_page/widgets/console.dart';
-import 'package:fluttertaladsod/application/screens/store/view_page/widgets/image_view.dart';
-import 'package:fluttertaladsod/application/screens/store/view_page/widgets/menu_view.dart';
-import 'package:fluttertaladsod/application/screens/store/view_page/widgets/name_view.dart';
+import 'package:fluttertaladsod/application/screens/store/view/widgets/banner_appbar2.dart';
+import 'package:fluttertaladsod/application/screens/store/view/widgets/image_view.dart';
+import 'package:fluttertaladsod/application/screens/store/view/widgets/menu_view.dart';
+import 'package:fluttertaladsod/application/screens/store/view/widgets/name_view.dart';
 import 'package:fluttertaladsod/domain/core/value_objects.dart';
 import 'package:get/get.dart';
 import 'bloc/store_view_bloc.dart';
+import 'widgets/console.dart';
 
 class StoreViewPage2 extends ViewWidget<StoreViewBloc> {
   final UniqueId storeId;

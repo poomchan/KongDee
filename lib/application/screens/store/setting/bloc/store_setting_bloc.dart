@@ -1,5 +1,5 @@
 import 'package:fluttertaladsod/application/bloc/core/simple_progress_setter.dart';
-import 'package:fluttertaladsod/application/screens/store/view_page/bloc/store_view_bloc.dart';
+import 'package:fluttertaladsod/application/screens/store/view/bloc/store_view_bloc.dart';
 import 'package:fluttertaladsod/domain/location/i_location_repository.dart';
 import 'package:fluttertaladsod/domain/store/i_store_repository.dart';
 import 'package:fluttertaladsod/domain/store/location/store_location.dart';

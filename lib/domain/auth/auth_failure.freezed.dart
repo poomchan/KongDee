@@ -28,9 +28,9 @@ class _$AuthFailureTearOff {
   }
 
 // ignore: unused_element
-  _Unexpected unexpected(dynamic f) {
+  _Unexpected unexpected(dynamic err) {
     return _Unexpected(
-      f,
+      err,
     );
   }
 }
@@ -44,14 +44,14 @@ mixin _$AuthFailure {
     @required Result unauthenticated(),
     @required Result serverError(),
     @required Result cancleByUser(),
-    @required Result unexpected(dynamic f),
+    @required Result unexpected(dynamic err),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result unauthenticated(),
     Result serverError(),
     Result cancleByUser(),
-    Result unexpected(dynamic f),
+    Result unexpected(dynamic err),
     @required Result orElse(),
   });
   @optionalTypeArgs
@@ -132,7 +132,7 @@ class _$_Unauthenticated
     @required Result unauthenticated(),
     @required Result serverError(),
     @required Result cancleByUser(),
-    @required Result unexpected(dynamic f),
+    @required Result unexpected(dynamic err),
   }) {
     assert(unauthenticated != null);
     assert(serverError != null);
@@ -147,7 +147,7 @@ class _$_Unauthenticated
     Result unauthenticated(),
     Result serverError(),
     Result cancleByUser(),
-    Result unexpected(dynamic f),
+    Result unexpected(dynamic err),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -237,7 +237,7 @@ class _$_SeverError with DiagnosticableTreeMixin implements _SeverError {
     @required Result unauthenticated(),
     @required Result serverError(),
     @required Result cancleByUser(),
-    @required Result unexpected(dynamic f),
+    @required Result unexpected(dynamic err),
   }) {
     assert(unauthenticated != null);
     assert(serverError != null);
@@ -252,7 +252,7 @@ class _$_SeverError with DiagnosticableTreeMixin implements _SeverError {
     Result unauthenticated(),
     Result serverError(),
     Result cancleByUser(),
-    Result unexpected(dynamic f),
+    Result unexpected(dynamic err),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -342,7 +342,7 @@ class _$_CancleByUser with DiagnosticableTreeMixin implements _CancleByUser {
     @required Result unauthenticated(),
     @required Result serverError(),
     @required Result cancleByUser(),
-    @required Result unexpected(dynamic f),
+    @required Result unexpected(dynamic err),
   }) {
     assert(unauthenticated != null);
     assert(serverError != null);
@@ -357,7 +357,7 @@ class _$_CancleByUser with DiagnosticableTreeMixin implements _CancleByUser {
     Result unauthenticated(),
     Result serverError(),
     Result cancleByUser(),
-    Result unexpected(dynamic f),
+    Result unexpected(dynamic err),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -407,7 +407,7 @@ abstract class _$UnexpectedCopyWith<$Res> {
   factory _$UnexpectedCopyWith(
           _Unexpected value, $Res Function(_Unexpected) then) =
       __$UnexpectedCopyWithImpl<$Res>;
-  $Res call({dynamic f});
+  $Res call({dynamic err});
 }
 
 class __$UnexpectedCopyWithImpl<$Res> extends _$AuthFailureCopyWithImpl<$Res>
@@ -421,23 +421,23 @@ class __$UnexpectedCopyWithImpl<$Res> extends _$AuthFailureCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object f = freezed,
+    Object err = freezed,
   }) {
     return _then(_Unexpected(
-      f == freezed ? _value.f : f as dynamic,
+      err == freezed ? _value.err : err as dynamic,
     ));
   }
 }
 
 class _$_Unexpected with DiagnosticableTreeMixin implements _Unexpected {
-  const _$_Unexpected(this.f) : assert(f != null);
+  const _$_Unexpected(this.err) : assert(err != null);
 
   @override
-  final dynamic f;
+  final dynamic err;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'AuthFailure.unexpected(f: $f)';
+    return 'AuthFailure.unexpected(err: $err)';
   }
 
   @override
@@ -445,20 +445,20 @@ class _$_Unexpected with DiagnosticableTreeMixin implements _Unexpected {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'AuthFailure.unexpected'))
-      ..add(DiagnosticsProperty('f', f));
+      ..add(DiagnosticsProperty('err', err));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _Unexpected &&
-            (identical(other.f, f) ||
-                const DeepCollectionEquality().equals(other.f, f)));
+            (identical(other.err, err) ||
+                const DeepCollectionEquality().equals(other.err, err)));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(f);
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(err);
 
   @override
   _$UnexpectedCopyWith<_Unexpected> get copyWith =>
@@ -470,13 +470,13 @@ class _$_Unexpected with DiagnosticableTreeMixin implements _Unexpected {
     @required Result unauthenticated(),
     @required Result serverError(),
     @required Result cancleByUser(),
-    @required Result unexpected(dynamic f),
+    @required Result unexpected(dynamic err),
   }) {
     assert(unauthenticated != null);
     assert(serverError != null);
     assert(cancleByUser != null);
     assert(unexpected != null);
-    return unexpected(f);
+    return unexpected(err);
   }
 
   @override
@@ -485,12 +485,12 @@ class _$_Unexpected with DiagnosticableTreeMixin implements _Unexpected {
     Result unauthenticated(),
     Result serverError(),
     Result cancleByUser(),
-    Result unexpected(dynamic f),
+    Result unexpected(dynamic err),
     @required Result orElse(),
   }) {
     assert(orElse != null);
     if (unexpected != null) {
-      return unexpected(f);
+      return unexpected(err);
     }
     return orElse();
   }
@@ -528,8 +528,8 @@ class _$_Unexpected with DiagnosticableTreeMixin implements _Unexpected {
 }
 
 abstract class _Unexpected implements AuthFailure {
-  const factory _Unexpected(dynamic f) = _$_Unexpected;
+  const factory _Unexpected(dynamic err) = _$_Unexpected;
 
-  dynamic get f;
+  dynamic get err;
   _$UnexpectedCopyWith<_Unexpected> get copyWith;
 }

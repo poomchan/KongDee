@@ -9,6 +9,5 @@ abstract class AuthFailure with _$AuthFailure {
   const factory AuthFailure.unauthenticated() = _Unauthenticated;
   const factory AuthFailure.serverError() = _SeverError;
   const factory AuthFailure.cancleByUser() = _CancleByUser;
-  const factory AuthFailure.unexpected(dynamic f) = _Unexpected;
-
+  const factory AuthFailure.unexpected(dynamic err) = _Unexpected;
 }

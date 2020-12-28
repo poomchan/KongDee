@@ -7,6 +7,6 @@ part 'user_failure.freezed.dart';
 abstract class UserFailure with _$UserFailure{
   const factory UserFailure.noSuchUser() = _NoSuchUser;
   const factory UserFailure.serveFailure() = _ServerFailure;
-  const factory UserFailure.unexpected(f) = _Unexpected;
+  const factory UserFailure.unexpected(dynamic err) = _Unexpected;
 
 }

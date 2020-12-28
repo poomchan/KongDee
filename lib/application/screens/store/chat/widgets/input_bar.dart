@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertaladsod/application/screens/store/chat/bloc/input_bar/input_bar_bloc.dart';
+import 'package:fluttertaladsod/domain/chat/value_objects.dart';
 import 'package:get/get.dart';
 
 class InputBar extends StatelessWidget {
@@ -14,14 +15,24 @@ class InputBar extends StatelessWidget {
         child: Row(
           children: [
             Expanded(
-              child: TextField(
-                controller: bloc.textController,
+              child: TextFormField(
+                controller: bloc.inputController,
                 textCapitalization: TextCapitalization.sentences,
                 minLines: 1,
                 maxLines: 5,
                 decoration:
                     InputDecoration.collapsed(hintText: 'send a message...'),
-                onChanged: (val) => bloc.bodyChanged(val),
+                validator: (val) => bloc.state.showErrorMessage
+                    ? MessageBody(val).failureOrUnit.fold(
+                          (f) => f.maybeWhen(
+                            exceedingLength: (_, len) =>
+                                'message is too long: $len/${MessageBody.maxLength}',
+                            empty: (_) => 'message cannot be empty',
+                            orElse: () => null,
+                          ),
+                          (ok) => null,
+                        )
+                    : null,
               ),
             ),
             IconButton(

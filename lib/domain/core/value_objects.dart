@@ -44,7 +44,7 @@ class UniqueId extends ValueObject<String> {
   @override
   final Either<ValueFailure<String>, String> value;
 
-  factory UniqueId() {
+  factory UniqueId.generated() {
     return UniqueId._(
       right(Uuid().v1()),
     );
@@ -54,6 +54,12 @@ class UniqueId extends ValueObject<String> {
     assert(uniqueId != null);
     return UniqueId._(
       right(uniqueId),
+    );
+  }
+
+  factory UniqueId.empty() {
+    return UniqueId._(
+      left(ValueFailure.empty(failedValue: '')),
     );
   }
 

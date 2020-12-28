@@ -16,6 +16,8 @@ class MessageBody extends ValueObject<String> {
       ),
     );
   }
+  
+  factory MessageBody.empty() => MessageBody('');
 
   const MessageBody._(this.value);
 }

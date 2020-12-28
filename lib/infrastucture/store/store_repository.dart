@@ -115,7 +115,7 @@ class StoreRepository implements IStoreRepository {
   Future<Either<StoreFailure, Unit>> create(Store store) async {
     final jsonData = StoreDto.fromDomain(store).toJson();
     try {
-      _firestore.storeCollectionRef.doc(UniqueId().getOrCrash()).set(jsonData);
+      _firestore.storeCollectionRef.doc(UniqueId.generated().getOrCrash()).set(jsonData);
     } catch (err) {
       return left(StoreFailure.unexpected(err));
     }

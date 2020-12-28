@@ -13,13 +13,6 @@ class _$ReportFailureTearOff {
   const _$ReportFailureTearOff();
 
 // ignore: unused_element
-  _Unexpected unexpected(dynamic err) {
-    return _Unexpected(
-      err,
-    );
-  }
-
-// ignore: unused_element
   _ServerError serverError() {
     return const _ServerError();
   }
@@ -27,6 +20,13 @@ class _$ReportFailureTearOff {
 // ignore: unused_element
   _Timeout timeout() {
     return const _Timeout();
+  }
+
+// ignore: unused_element
+  _Unexpected unexpected(dynamic err) {
+    return _Unexpected(
+      err,
+    );
   }
 }
 
@@ -36,28 +36,28 @@ const $ReportFailure = _$ReportFailureTearOff();
 mixin _$ReportFailure {
   @optionalTypeArgs
   Result when<Result extends Object>({
-    @required Result unexpected(dynamic err),
     @required Result serverError(),
     @required Result timeout(),
+    @required Result unexpected(dynamic err),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
-    Result unexpected(dynamic err),
     Result serverError(),
     Result timeout(),
+    Result unexpected(dynamic err),
     @required Result orElse(),
   });
   @optionalTypeArgs
   Result map<Result extends Object>({
-    @required Result unexpected(_Unexpected value),
     @required Result serverError(_ServerError value),
     @required Result timeout(_Timeout value),
+    @required Result unexpected(_Unexpected value),
   });
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
-    Result unexpected(_Unexpected value),
     Result serverError(_ServerError value),
     Result timeout(_Timeout value),
+    Result unexpected(_Unexpected value),
     @required Result orElse(),
   });
 }
@@ -75,123 +75,6 @@ class _$ReportFailureCopyWithImpl<$Res>
   final ReportFailure _value;
   // ignore: unused_field
   final $Res Function(ReportFailure) _then;
-}
-
-abstract class _$UnexpectedCopyWith<$Res> {
-  factory _$UnexpectedCopyWith(
-          _Unexpected value, $Res Function(_Unexpected) then) =
-      __$UnexpectedCopyWithImpl<$Res>;
-  $Res call({dynamic err});
-}
-
-class __$UnexpectedCopyWithImpl<$Res> extends _$ReportFailureCopyWithImpl<$Res>
-    implements _$UnexpectedCopyWith<$Res> {
-  __$UnexpectedCopyWithImpl(
-      _Unexpected _value, $Res Function(_Unexpected) _then)
-      : super(_value, (v) => _then(v as _Unexpected));
-
-  @override
-  _Unexpected get _value => super._value as _Unexpected;
-
-  @override
-  $Res call({
-    Object err = freezed,
-  }) {
-    return _then(_Unexpected(
-      err == freezed ? _value.err : err,
-    ));
-  }
-}
-
-class _$_Unexpected implements _Unexpected {
-  const _$_Unexpected(this.err) : assert(err != null);
-
-  @override
-  final dynamic err;
-
-  @override
-  String toString() {
-    return 'ReportFailure.unexpected(err: $err)';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other is _Unexpected &&
-            (identical(other.err, err) ||
-                const DeepCollectionEquality().equals(other.err, err)));
-  }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(err);
-
-  @override
-  _$UnexpectedCopyWith<_Unexpected> get copyWith =>
-      __$UnexpectedCopyWithImpl<_Unexpected>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result unexpected(dynamic err),
-    @required Result serverError(),
-    @required Result timeout(),
-  }) {
-    assert(unexpected != null);
-    assert(serverError != null);
-    assert(timeout != null);
-    return unexpected(err);
-  }
-
-  @override
-  @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result unexpected(dynamic err),
-    Result serverError(),
-    Result timeout(),
-    @required Result orElse(),
-  }) {
-    assert(orElse != null);
-    if (unexpected != null) {
-      return unexpected(err);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result unexpected(_Unexpected value),
-    @required Result serverError(_ServerError value),
-    @required Result timeout(_Timeout value),
-  }) {
-    assert(unexpected != null);
-    assert(serverError != null);
-    assert(timeout != null);
-    return unexpected(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result unexpected(_Unexpected value),
-    Result serverError(_ServerError value),
-    Result timeout(_Timeout value),
-    @required Result orElse(),
-  }) {
-    assert(orElse != null);
-    if (unexpected != null) {
-      return unexpected(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Unexpected implements ReportFailure {
-  const factory _Unexpected(dynamic err) = _$_Unexpected;
-
-  dynamic get err;
-  _$UnexpectedCopyWith<_Unexpected> get copyWith;
 }
 
 abstract class _$ServerErrorCopyWith<$Res> {
@@ -229,22 +112,22 @@ class _$_ServerError implements _ServerError {
   @override
   @optionalTypeArgs
   Result when<Result extends Object>({
-    @required Result unexpected(dynamic err),
     @required Result serverError(),
     @required Result timeout(),
+    @required Result unexpected(dynamic err),
   }) {
-    assert(unexpected != null);
     assert(serverError != null);
     assert(timeout != null);
+    assert(unexpected != null);
     return serverError();
   }
 
   @override
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
-    Result unexpected(dynamic err),
     Result serverError(),
     Result timeout(),
+    Result unexpected(dynamic err),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -257,22 +140,22 @@ class _$_ServerError implements _ServerError {
   @override
   @optionalTypeArgs
   Result map<Result extends Object>({
-    @required Result unexpected(_Unexpected value),
     @required Result serverError(_ServerError value),
     @required Result timeout(_Timeout value),
+    @required Result unexpected(_Unexpected value),
   }) {
-    assert(unexpected != null);
     assert(serverError != null);
     assert(timeout != null);
+    assert(unexpected != null);
     return serverError(this);
   }
 
   @override
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
-    Result unexpected(_Unexpected value),
     Result serverError(_ServerError value),
     Result timeout(_Timeout value),
+    Result unexpected(_Unexpected value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -320,22 +203,22 @@ class _$_Timeout implements _Timeout {
   @override
   @optionalTypeArgs
   Result when<Result extends Object>({
-    @required Result unexpected(dynamic err),
     @required Result serverError(),
     @required Result timeout(),
+    @required Result unexpected(dynamic err),
   }) {
-    assert(unexpected != null);
     assert(serverError != null);
     assert(timeout != null);
+    assert(unexpected != null);
     return timeout();
   }
 
   @override
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
-    Result unexpected(dynamic err),
     Result serverError(),
     Result timeout(),
+    Result unexpected(dynamic err),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -348,22 +231,22 @@ class _$_Timeout implements _Timeout {
   @override
   @optionalTypeArgs
   Result map<Result extends Object>({
-    @required Result unexpected(_Unexpected value),
     @required Result serverError(_ServerError value),
     @required Result timeout(_Timeout value),
+    @required Result unexpected(_Unexpected value),
   }) {
-    assert(unexpected != null);
     assert(serverError != null);
     assert(timeout != null);
+    assert(unexpected != null);
     return timeout(this);
   }
 
   @override
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
-    Result unexpected(_Unexpected value),
     Result serverError(_ServerError value),
     Result timeout(_Timeout value),
+    Result unexpected(_Unexpected value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -376,4 +259,121 @@ class _$_Timeout implements _Timeout {
 
 abstract class _Timeout implements ReportFailure {
   const factory _Timeout() = _$_Timeout;
+}
+
+abstract class _$UnexpectedCopyWith<$Res> {
+  factory _$UnexpectedCopyWith(
+          _Unexpected value, $Res Function(_Unexpected) then) =
+      __$UnexpectedCopyWithImpl<$Res>;
+  $Res call({dynamic err});
+}
+
+class __$UnexpectedCopyWithImpl<$Res> extends _$ReportFailureCopyWithImpl<$Res>
+    implements _$UnexpectedCopyWith<$Res> {
+  __$UnexpectedCopyWithImpl(
+      _Unexpected _value, $Res Function(_Unexpected) _then)
+      : super(_value, (v) => _then(v as _Unexpected));
+
+  @override
+  _Unexpected get _value => super._value as _Unexpected;
+
+  @override
+  $Res call({
+    Object err = freezed,
+  }) {
+    return _then(_Unexpected(
+      err == freezed ? _value.err : err as dynamic,
+    ));
+  }
+}
+
+class _$_Unexpected implements _Unexpected {
+  const _$_Unexpected(this.err) : assert(err != null);
+
+  @override
+  final dynamic err;
+
+  @override
+  String toString() {
+    return 'ReportFailure.unexpected(err: $err)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _Unexpected &&
+            (identical(other.err, err) ||
+                const DeepCollectionEquality().equals(other.err, err)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(err);
+
+  @override
+  _$UnexpectedCopyWith<_Unexpected> get copyWith =>
+      __$UnexpectedCopyWithImpl<_Unexpected>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result serverError(),
+    @required Result timeout(),
+    @required Result unexpected(dynamic err),
+  }) {
+    assert(serverError != null);
+    assert(timeout != null);
+    assert(unexpected != null);
+    return unexpected(err);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result serverError(),
+    Result timeout(),
+    Result unexpected(dynamic err),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (unexpected != null) {
+      return unexpected(err);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result serverError(_ServerError value),
+    @required Result timeout(_Timeout value),
+    @required Result unexpected(_Unexpected value),
+  }) {
+    assert(serverError != null);
+    assert(timeout != null);
+    assert(unexpected != null);
+    return unexpected(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result serverError(_ServerError value),
+    Result timeout(_Timeout value),
+    Result unexpected(_Unexpected value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (unexpected != null) {
+      return unexpected(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Unexpected implements ReportFailure {
+  const factory _Unexpected(dynamic err) = _$_Unexpected;
+
+  dynamic get err;
+  _$UnexpectedCopyWith<_Unexpected> get copyWith;
 }

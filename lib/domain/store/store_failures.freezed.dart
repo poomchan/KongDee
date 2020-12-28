@@ -13,25 +13,25 @@ class _$StoreFailureTearOff {
   const _$StoreFailureTearOff();
 
 // ignore: unused_element
-  _NoStoreOwned noStore() {
-    return const _NoStoreOwned();
-  }
-
-// ignore: unused_element
-  _Unexpected unexpected(dynamic detail) {
-    return _Unexpected(
-      detail,
-    );
-  }
-
-// ignore: unused_element
   _LocationNotGranted locationNotGranted() {
     return const _LocationNotGranted();
   }
 
 // ignore: unused_element
+  _NoStore noStore() {
+    return const _NoStore();
+  }
+
+// ignore: unused_element
   _Timeout timeout() {
     return const _Timeout();
+  }
+
+// ignore: unused_element
+  _Unexpected unexpected(dynamic err) {
+    return _Unexpected(
+      err,
+    );
   }
 }
 
@@ -41,32 +41,32 @@ const $StoreFailure = _$StoreFailureTearOff();
 mixin _$StoreFailure {
   @optionalTypeArgs
   Result when<Result extends Object>({
-    @required Result noStore(),
-    @required Result unexpected(dynamic detail),
     @required Result locationNotGranted(),
+    @required Result noStore(),
     @required Result timeout(),
+    @required Result unexpected(dynamic err),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
-    Result noStore(),
-    Result unexpected(dynamic detail),
     Result locationNotGranted(),
+    Result noStore(),
     Result timeout(),
+    Result unexpected(dynamic err),
     @required Result orElse(),
   });
   @optionalTypeArgs
   Result map<Result extends Object>({
-    @required Result noStore(_NoStoreOwned value),
-    @required Result unexpected(_Unexpected value),
     @required Result locationNotGranted(_LocationNotGranted value),
+    @required Result noStore(_NoStore value),
     @required Result timeout(_Timeout value),
+    @required Result unexpected(_Unexpected value),
   });
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
-    Result noStore(_NoStoreOwned value),
-    Result unexpected(_Unexpected value),
     Result locationNotGranted(_LocationNotGranted value),
+    Result noStore(_NoStore value),
     Result timeout(_Timeout value),
+    Result unexpected(_Unexpected value),
     @required Result orElse(),
   });
 }
@@ -83,228 +83,6 @@ class _$StoreFailureCopyWithImpl<$Res> implements $StoreFailureCopyWith<$Res> {
   final StoreFailure _value;
   // ignore: unused_field
   final $Res Function(StoreFailure) _then;
-}
-
-abstract class _$NoStoreOwnedCopyWith<$Res> {
-  factory _$NoStoreOwnedCopyWith(
-          _NoStoreOwned value, $Res Function(_NoStoreOwned) then) =
-      __$NoStoreOwnedCopyWithImpl<$Res>;
-}
-
-class __$NoStoreOwnedCopyWithImpl<$Res> extends _$StoreFailureCopyWithImpl<$Res>
-    implements _$NoStoreOwnedCopyWith<$Res> {
-  __$NoStoreOwnedCopyWithImpl(
-      _NoStoreOwned _value, $Res Function(_NoStoreOwned) _then)
-      : super(_value, (v) => _then(v as _NoStoreOwned));
-
-  @override
-  _NoStoreOwned get _value => super._value as _NoStoreOwned;
-}
-
-class _$_NoStoreOwned implements _NoStoreOwned {
-  const _$_NoStoreOwned();
-
-  @override
-  String toString() {
-    return 'StoreFailure.noStore()';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) || (other is _NoStoreOwned);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result noStore(),
-    @required Result unexpected(dynamic detail),
-    @required Result locationNotGranted(),
-    @required Result timeout(),
-  }) {
-    assert(noStore != null);
-    assert(unexpected != null);
-    assert(locationNotGranted != null);
-    assert(timeout != null);
-    return noStore();
-  }
-
-  @override
-  @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result noStore(),
-    Result unexpected(dynamic detail),
-    Result locationNotGranted(),
-    Result timeout(),
-    @required Result orElse(),
-  }) {
-    assert(orElse != null);
-    if (noStore != null) {
-      return noStore();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result noStore(_NoStoreOwned value),
-    @required Result unexpected(_Unexpected value),
-    @required Result locationNotGranted(_LocationNotGranted value),
-    @required Result timeout(_Timeout value),
-  }) {
-    assert(noStore != null);
-    assert(unexpected != null);
-    assert(locationNotGranted != null);
-    assert(timeout != null);
-    return noStore(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result noStore(_NoStoreOwned value),
-    Result unexpected(_Unexpected value),
-    Result locationNotGranted(_LocationNotGranted value),
-    Result timeout(_Timeout value),
-    @required Result orElse(),
-  }) {
-    assert(orElse != null);
-    if (noStore != null) {
-      return noStore(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _NoStoreOwned implements StoreFailure {
-  const factory _NoStoreOwned() = _$_NoStoreOwned;
-}
-
-abstract class _$UnexpectedCopyWith<$Res> {
-  factory _$UnexpectedCopyWith(
-          _Unexpected value, $Res Function(_Unexpected) then) =
-      __$UnexpectedCopyWithImpl<$Res>;
-  $Res call({dynamic detail});
-}
-
-class __$UnexpectedCopyWithImpl<$Res> extends _$StoreFailureCopyWithImpl<$Res>
-    implements _$UnexpectedCopyWith<$Res> {
-  __$UnexpectedCopyWithImpl(
-      _Unexpected _value, $Res Function(_Unexpected) _then)
-      : super(_value, (v) => _then(v as _Unexpected));
-
-  @override
-  _Unexpected get _value => super._value as _Unexpected;
-
-  @override
-  $Res call({
-    Object detail = freezed,
-  }) {
-    return _then(_Unexpected(
-      detail == freezed ? _value.detail : detail,
-    ));
-  }
-}
-
-class _$_Unexpected implements _Unexpected {
-  const _$_Unexpected(this.detail) : assert(detail != null);
-
-  @override
-  final dynamic detail;
-
-  @override
-  String toString() {
-    return 'StoreFailure.unexpected(detail: $detail)';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other is _Unexpected &&
-            (identical(other.detail, detail) ||
-                const DeepCollectionEquality().equals(other.detail, detail)));
-  }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(detail);
-
-  @override
-  _$UnexpectedCopyWith<_Unexpected> get copyWith =>
-      __$UnexpectedCopyWithImpl<_Unexpected>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result noStore(),
-    @required Result unexpected(dynamic detail),
-    @required Result locationNotGranted(),
-    @required Result timeout(),
-  }) {
-    assert(noStore != null);
-    assert(unexpected != null);
-    assert(locationNotGranted != null);
-    assert(timeout != null);
-    return unexpected(detail);
-  }
-
-  @override
-  @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result noStore(),
-    Result unexpected(dynamic detail),
-    Result locationNotGranted(),
-    Result timeout(),
-    @required Result orElse(),
-  }) {
-    assert(orElse != null);
-    if (unexpected != null) {
-      return unexpected(detail);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result noStore(_NoStoreOwned value),
-    @required Result unexpected(_Unexpected value),
-    @required Result locationNotGranted(_LocationNotGranted value),
-    @required Result timeout(_Timeout value),
-  }) {
-    assert(noStore != null);
-    assert(unexpected != null);
-    assert(locationNotGranted != null);
-    assert(timeout != null);
-    return unexpected(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result noStore(_NoStoreOwned value),
-    Result unexpected(_Unexpected value),
-    Result locationNotGranted(_LocationNotGranted value),
-    Result timeout(_Timeout value),
-    @required Result orElse(),
-  }) {
-    assert(orElse != null);
-    if (unexpected != null) {
-      return unexpected(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Unexpected implements StoreFailure {
-  const factory _Unexpected(dynamic detail) = _$_Unexpected;
-
-  dynamic get detail;
-  _$UnexpectedCopyWith<_Unexpected> get copyWith;
 }
 
 abstract class _$LocationNotGrantedCopyWith<$Res> {
@@ -343,25 +121,25 @@ class _$_LocationNotGranted implements _LocationNotGranted {
   @override
   @optionalTypeArgs
   Result when<Result extends Object>({
-    @required Result noStore(),
-    @required Result unexpected(dynamic detail),
     @required Result locationNotGranted(),
+    @required Result noStore(),
     @required Result timeout(),
+    @required Result unexpected(dynamic err),
   }) {
-    assert(noStore != null);
-    assert(unexpected != null);
     assert(locationNotGranted != null);
+    assert(noStore != null);
     assert(timeout != null);
+    assert(unexpected != null);
     return locationNotGranted();
   }
 
   @override
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
-    Result noStore(),
-    Result unexpected(dynamic detail),
     Result locationNotGranted(),
+    Result noStore(),
     Result timeout(),
+    Result unexpected(dynamic err),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -374,25 +152,25 @@ class _$_LocationNotGranted implements _LocationNotGranted {
   @override
   @optionalTypeArgs
   Result map<Result extends Object>({
-    @required Result noStore(_NoStoreOwned value),
-    @required Result unexpected(_Unexpected value),
     @required Result locationNotGranted(_LocationNotGranted value),
+    @required Result noStore(_NoStore value),
     @required Result timeout(_Timeout value),
+    @required Result unexpected(_Unexpected value),
   }) {
-    assert(noStore != null);
-    assert(unexpected != null);
     assert(locationNotGranted != null);
+    assert(noStore != null);
     assert(timeout != null);
+    assert(unexpected != null);
     return locationNotGranted(this);
   }
 
   @override
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
-    Result noStore(_NoStoreOwned value),
-    Result unexpected(_Unexpected value),
     Result locationNotGranted(_LocationNotGranted value),
+    Result noStore(_NoStore value),
     Result timeout(_Timeout value),
+    Result unexpected(_Unexpected value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -405,6 +183,103 @@ class _$_LocationNotGranted implements _LocationNotGranted {
 
 abstract class _LocationNotGranted implements StoreFailure {
   const factory _LocationNotGranted() = _$_LocationNotGranted;
+}
+
+abstract class _$NoStoreCopyWith<$Res> {
+  factory _$NoStoreCopyWith(_NoStore value, $Res Function(_NoStore) then) =
+      __$NoStoreCopyWithImpl<$Res>;
+}
+
+class __$NoStoreCopyWithImpl<$Res> extends _$StoreFailureCopyWithImpl<$Res>
+    implements _$NoStoreCopyWith<$Res> {
+  __$NoStoreCopyWithImpl(_NoStore _value, $Res Function(_NoStore) _then)
+      : super(_value, (v) => _then(v as _NoStore));
+
+  @override
+  _NoStore get _value => super._value as _NoStore;
+}
+
+class _$_NoStore implements _NoStore {
+  const _$_NoStore();
+
+  @override
+  String toString() {
+    return 'StoreFailure.noStore()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is _NoStore);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result locationNotGranted(),
+    @required Result noStore(),
+    @required Result timeout(),
+    @required Result unexpected(dynamic err),
+  }) {
+    assert(locationNotGranted != null);
+    assert(noStore != null);
+    assert(timeout != null);
+    assert(unexpected != null);
+    return noStore();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result locationNotGranted(),
+    Result noStore(),
+    Result timeout(),
+    Result unexpected(dynamic err),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (noStore != null) {
+      return noStore();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result locationNotGranted(_LocationNotGranted value),
+    @required Result noStore(_NoStore value),
+    @required Result timeout(_Timeout value),
+    @required Result unexpected(_Unexpected value),
+  }) {
+    assert(locationNotGranted != null);
+    assert(noStore != null);
+    assert(timeout != null);
+    assert(unexpected != null);
+    return noStore(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result locationNotGranted(_LocationNotGranted value),
+    Result noStore(_NoStore value),
+    Result timeout(_Timeout value),
+    Result unexpected(_Unexpected value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (noStore != null) {
+      return noStore(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _NoStore implements StoreFailure {
+  const factory _NoStore() = _$_NoStore;
 }
 
 abstract class _$TimeoutCopyWith<$Res> {
@@ -440,25 +315,25 @@ class _$_Timeout implements _Timeout {
   @override
   @optionalTypeArgs
   Result when<Result extends Object>({
-    @required Result noStore(),
-    @required Result unexpected(dynamic detail),
     @required Result locationNotGranted(),
+    @required Result noStore(),
     @required Result timeout(),
+    @required Result unexpected(dynamic err),
   }) {
-    assert(noStore != null);
-    assert(unexpected != null);
     assert(locationNotGranted != null);
+    assert(noStore != null);
     assert(timeout != null);
+    assert(unexpected != null);
     return timeout();
   }
 
   @override
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
-    Result noStore(),
-    Result unexpected(dynamic detail),
     Result locationNotGranted(),
+    Result noStore(),
     Result timeout(),
+    Result unexpected(dynamic err),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -471,25 +346,25 @@ class _$_Timeout implements _Timeout {
   @override
   @optionalTypeArgs
   Result map<Result extends Object>({
-    @required Result noStore(_NoStoreOwned value),
-    @required Result unexpected(_Unexpected value),
     @required Result locationNotGranted(_LocationNotGranted value),
+    @required Result noStore(_NoStore value),
     @required Result timeout(_Timeout value),
+    @required Result unexpected(_Unexpected value),
   }) {
-    assert(noStore != null);
-    assert(unexpected != null);
     assert(locationNotGranted != null);
+    assert(noStore != null);
     assert(timeout != null);
+    assert(unexpected != null);
     return timeout(this);
   }
 
   @override
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
-    Result noStore(_NoStoreOwned value),
-    Result unexpected(_Unexpected value),
     Result locationNotGranted(_LocationNotGranted value),
+    Result noStore(_NoStore value),
     Result timeout(_Timeout value),
+    Result unexpected(_Unexpected value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -502,4 +377,127 @@ class _$_Timeout implements _Timeout {
 
 abstract class _Timeout implements StoreFailure {
   const factory _Timeout() = _$_Timeout;
+}
+
+abstract class _$UnexpectedCopyWith<$Res> {
+  factory _$UnexpectedCopyWith(
+          _Unexpected value, $Res Function(_Unexpected) then) =
+      __$UnexpectedCopyWithImpl<$Res>;
+  $Res call({dynamic err});
+}
+
+class __$UnexpectedCopyWithImpl<$Res> extends _$StoreFailureCopyWithImpl<$Res>
+    implements _$UnexpectedCopyWith<$Res> {
+  __$UnexpectedCopyWithImpl(
+      _Unexpected _value, $Res Function(_Unexpected) _then)
+      : super(_value, (v) => _then(v as _Unexpected));
+
+  @override
+  _Unexpected get _value => super._value as _Unexpected;
+
+  @override
+  $Res call({
+    Object err = freezed,
+  }) {
+    return _then(_Unexpected(
+      err == freezed ? _value.err : err as dynamic,
+    ));
+  }
+}
+
+class _$_Unexpected implements _Unexpected {
+  const _$_Unexpected(this.err) : assert(err != null);
+
+  @override
+  final dynamic err;
+
+  @override
+  String toString() {
+    return 'StoreFailure.unexpected(err: $err)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _Unexpected &&
+            (identical(other.err, err) ||
+                const DeepCollectionEquality().equals(other.err, err)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(err);
+
+  @override
+  _$UnexpectedCopyWith<_Unexpected> get copyWith =>
+      __$UnexpectedCopyWithImpl<_Unexpected>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result locationNotGranted(),
+    @required Result noStore(),
+    @required Result timeout(),
+    @required Result unexpected(dynamic err),
+  }) {
+    assert(locationNotGranted != null);
+    assert(noStore != null);
+    assert(timeout != null);
+    assert(unexpected != null);
+    return unexpected(err);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result locationNotGranted(),
+    Result noStore(),
+    Result timeout(),
+    Result unexpected(dynamic err),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (unexpected != null) {
+      return unexpected(err);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result locationNotGranted(_LocationNotGranted value),
+    @required Result noStore(_NoStore value),
+    @required Result timeout(_Timeout value),
+    @required Result unexpected(_Unexpected value),
+  }) {
+    assert(locationNotGranted != null);
+    assert(noStore != null);
+    assert(timeout != null);
+    assert(unexpected != null);
+    return unexpected(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result locationNotGranted(_LocationNotGranted value),
+    Result noStore(_NoStore value),
+    Result timeout(_Timeout value),
+    Result unexpected(_Unexpected value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (unexpected != null) {
+      return unexpected(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Unexpected implements StoreFailure {
+  const factory _Unexpected(dynamic err) = _$_Unexpected;
+
+  dynamic get err;
+  _$UnexpectedCopyWith<_Unexpected> get copyWith;
 }

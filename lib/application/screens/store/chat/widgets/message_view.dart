@@ -18,9 +18,9 @@ class MessageView extends ViewWidget<MessageViewBloc> {
         child: GetBuilder<MessageViewBloc>(
           builder: (bloc) => bloc.progress.when(
             inital: () => const Text('Cubit not initialized'),
-            failure: () => _buildErrorWidget(context),
             loading: () => circularProgress(context),
             loaded: () => _buildMessageView(context),
+            failure: () => _buildErrorWidget(context),
           ),
         ),
       ),

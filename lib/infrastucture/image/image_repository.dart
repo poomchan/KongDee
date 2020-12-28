@@ -62,7 +62,7 @@ class ImageRepository implements IImageRepository {
   Future<Either<ImageFailure, String>> uploadFileImage(
       File img, String path) async {
     try {
-      final imageId = UniqueId().getOrCrash();
+      final imageId = UniqueId.generated().getOrCrash();
       // upload (path in firebase storage)
       final StorageUploadTask uploadTask =
           _storage.child("$path/img_$imageId").putFile(img);

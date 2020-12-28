@@ -26,7 +26,7 @@ abstract class StorePrimitive implements _$StorePrimitive {
   }) = _StorePrimitive;
 
   factory StorePrimitive.created({@required String ownerId}) => StorePrimitive(
-        id: UniqueId().toString(),
+        id: UniqueId.generated().toString(),
         ownerId: ownerId,
         name: '',
         menu: '',

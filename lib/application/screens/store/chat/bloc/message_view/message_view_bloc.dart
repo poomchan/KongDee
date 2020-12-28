@@ -3,33 +3,30 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:fluttertaladsod/application/bloc/auth/auth_bloc.dart';
-import 'package:fluttertaladsod/application/bloc/core/simple_progress_setter.dart';
+import 'package:fluttertaladsod/application/bloc/core/state_setter.dart';
 import 'package:fluttertaladsod/application/screens/store/chat/bloc/message_view/message_view_state.dart';
-import 'package:fluttertaladsod/application/screens/store/view_page/bloc/store_view_bloc.dart';
+import 'package:fluttertaladsod/application/screens/store/view/bloc/store_view_bloc.dart';
 import 'package:fluttertaladsod/domain/chat/chat.dart';
 import 'package:fluttertaladsod/domain/chat/chat_failure.dart';
 import 'package:fluttertaladsod/domain/chat/i_chat_repository.dart';
-import 'package:fluttertaladsod/domain/chat/message.dart';
+import 'package:fluttertaladsod/domain/core/value_objects.dart';
+import 'package:fluttertaladsod/domain/user/user.dart';
 import 'package:get/get.dart';
 
 class MessageViewBloc extends GetxController
-    with SimepleProgressSetter<ChatFailure> {
-  IChatRepository get _iMessageRepository => Get.find();
-  AuthBloc get _authBloc => Get.find();
-  StoreViewBloc get _storeViewBloc => Get.find();
+    with MyStateSetter<MessageViewState, ChatFailure> {
+  final IChatRepository _iMessageRepository = Get.find();
+  final AuthBloc _authBloc = Get.find();
+  final StoreViewBloc _storeViewBloc = Get.find();
+  UserDomain get user => _authBloc.user;
+  UniqueId get storeId => _storeViewBloc.store.id;
 
-  final _scrollController = ScrollController();
-  ScrollController get scrollController => _scrollController;
-
-  List<MessageDomain> _recentMessageList = [];
-  List<MessageDomain> _moreMessageList = [];
-
+  @override
   MessageViewState state = MessageViewState.initial();
+  final scrollController = ScrollController();
 
   Future<void> watchStarted() async {
-    updateWithLoading();
-    final storeId = _storeViewBloc.store.id;
-    final user = _authBloc.user;
+    setLoading();
     _iMessageRepository
         .watchStoreMessages(
       storeId: storeId,
@@ -39,14 +36,13 @@ class MessageViewBloc extends GetxController
         .listen(
       (failreOrChats) {
         failreOrChats.fold(
-          (f) => updateWithFailure(f),
+          (f) => setFailure(f),
           (mList) async {
-            _recentMessageList = List.from(mList.reversed);
-            state = state.copyWith(
-              messageList: List.from(_recentMessageList)
-                ..addAll(_moreMessageList),
-            );
-            updateWithLoaded();
+            setLoaded(state.copyWith(
+              messageList: mList
+                ..reversed
+                ..addAll(state.messageList),
+            ));
           },
         );
       },
@@ -54,11 +50,8 @@ class MessageViewBloc extends GetxController
   }
 
   Future<void> fetchMoreChat() async {
-    final user = _authBloc.user;
-    final storeId = _storeViewBloc.store.id;
-
     // no need to paginate if the total messages in the room is below 20
-    if (_moreMessageList.length % Chat.itemPerPage != 0) return;
+    if (state.messageList.length % Chat.itemPerPage != 0) return;
 
     final fOrMessageList = await _iMessageRepository.fetchMoreStoreMessages(
       storeId: storeId,
@@ -68,16 +61,15 @@ class MessageViewBloc extends GetxController
 
     fOrMessageList.fold((f) {
       if (f == ChatFailure.emptyChatRoom()) {
+        setLoaded();
         return;
       } else {
-        updateWithFailure(f);
+        setFailure(f);
       }
     }, (mList) {
-      _moreMessageList.addAll(mList);
-      state = state.copyWith(
-        messageList: state.messageList..addAll(_moreMessageList),
-      );
-      updateWithLoaded();
+      setLoaded(state.copyWith(
+        messageList: state.messageList..addAll(mList),
+      ));
     });
   }
 
@@ -89,10 +81,7 @@ class MessageViewBloc extends GetxController
 
   @override
   void onClose() {
-    state = null;
-    _scrollController.dispose();
-    _recentMessageList = null;
-    _moreMessageList = null;
+    scrollController.dispose();
     super.onClose();
   }
 }

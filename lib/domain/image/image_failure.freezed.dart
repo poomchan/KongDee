@@ -18,9 +18,9 @@ class _$ImageFailureTearOff {
   }
 
 // ignore: unused_element
-  _Unexpected unexpected(dynamic detail) {
+  _Unexpected unexpected(dynamic err) {
     return _Unexpected(
-      detail,
+      err,
     );
   }
 }
@@ -32,12 +32,12 @@ mixin _$ImageFailure {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result serverError(),
-    @required Result unexpected(dynamic detail),
+    @required Result unexpected(dynamic err),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result serverError(),
-    Result unexpected(dynamic detail),
+    Result unexpected(dynamic err),
     @required Result orElse(),
   });
   @optionalTypeArgs
@@ -103,7 +103,7 @@ class _$_ServerError implements _ServerError {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result serverError(),
-    @required Result unexpected(dynamic detail),
+    @required Result unexpected(dynamic err),
   }) {
     assert(serverError != null);
     assert(unexpected != null);
@@ -114,7 +114,7 @@ class _$_ServerError implements _ServerError {
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result serverError(),
-    Result unexpected(dynamic detail),
+    Result unexpected(dynamic err),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -158,7 +158,7 @@ abstract class _$UnexpectedCopyWith<$Res> {
   factory _$UnexpectedCopyWith(
           _Unexpected value, $Res Function(_Unexpected) then) =
       __$UnexpectedCopyWithImpl<$Res>;
-  $Res call({dynamic detail});
+  $Res call({dynamic err});
 }
 
 class __$UnexpectedCopyWithImpl<$Res> extends _$ImageFailureCopyWithImpl<$Res>
@@ -172,36 +172,36 @@ class __$UnexpectedCopyWithImpl<$Res> extends _$ImageFailureCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object detail = freezed,
+    Object err = freezed,
   }) {
     return _then(_Unexpected(
-      detail == freezed ? _value.detail : detail as dynamic,
+      err == freezed ? _value.err : err as dynamic,
     ));
   }
 }
 
 class _$_Unexpected implements _Unexpected {
-  const _$_Unexpected(this.detail) : assert(detail != null);
+  const _$_Unexpected(this.err) : assert(err != null);
 
   @override
-  final dynamic detail;
+  final dynamic err;
 
   @override
   String toString() {
-    return 'ImageFailure.unexpected(detail: $detail)';
+    return 'ImageFailure.unexpected(err: $err)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _Unexpected &&
-            (identical(other.detail, detail) ||
-                const DeepCollectionEquality().equals(other.detail, detail)));
+            (identical(other.err, err) ||
+                const DeepCollectionEquality().equals(other.err, err)));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(detail);
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(err);
 
   @override
   _$UnexpectedCopyWith<_Unexpected> get copyWith =>
@@ -211,23 +211,23 @@ class _$_Unexpected implements _Unexpected {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result serverError(),
-    @required Result unexpected(dynamic detail),
+    @required Result unexpected(dynamic err),
   }) {
     assert(serverError != null);
     assert(unexpected != null);
-    return unexpected(detail);
+    return unexpected(err);
   }
 
   @override
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result serverError(),
-    Result unexpected(dynamic detail),
+    Result unexpected(dynamic err),
     @required Result orElse(),
   }) {
     assert(orElse != null);
     if (unexpected != null) {
-      return unexpected(detail);
+      return unexpected(err);
     }
     return orElse();
   }
@@ -259,8 +259,8 @@ class _$_Unexpected implements _Unexpected {
 }
 
 abstract class _Unexpected implements ImageFailure {
-  const factory _Unexpected(dynamic detail) = _$_Unexpected;
+  const factory _Unexpected(dynamic err) = _$_Unexpected;
 
-  dynamic get detail;
+  dynamic get err;
   _$UnexpectedCopyWith<_Unexpected> get copyWith;
 }

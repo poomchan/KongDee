@@ -24,8 +24,8 @@ import 'package:fluttertaladsod/application/screens/store/setting/features/block
 import 'package:fluttertaladsod/application/screens/store/setting/features/location_setting.dart';
 import 'package:fluttertaladsod/application/screens/store/setting/features/selling_range_setting.dart';
 import 'package:fluttertaladsod/application/screens/store/setting/store_setting_page.dart';
-import 'package:fluttertaladsod/application/screens/store/view_page/bloc/store_view_page_binding.dart';
-import 'package:fluttertaladsod/application/screens/store/view_page/store_view_page2.dart';
+import 'package:fluttertaladsod/application/screens/store/view/bloc/store_view_page_binding.dart';
+import 'package:fluttertaladsod/application/screens/store/view/store_view_page2.dart';
 import 'package:fluttertaladsod/domain/core/value_objects.dart';
 import 'package:fluttertaladsod/domain/store/store.dart';
 import 'package:get/route_manager.dart';

@@ -3,7 +3,7 @@ import 'package:fluttertaladsod/application/bloc/core/view_widget.dart';
 import 'package:fluttertaladsod/application/core/components/progress_indicator.dart';
 import 'package:fluttertaladsod/application/routes/router.dart';
 import 'package:fluttertaladsod/application/screens/store/setting/bloc/store_setting_bloc.dart';
-import 'package:fluttertaladsod/application/screens/store/view_page/bloc/store_view_bloc.dart';
+import 'package:fluttertaladsod/application/screens/store/view/bloc/store_view_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:settings_ui/settings_ui.dart';

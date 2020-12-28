@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertaladsod/application/routes/router.dart';
-import 'package:fluttertaladsod/application/screens/store/view_page/bloc/store_view_bloc.dart';
+import 'package:fluttertaladsod/application/screens/store/view/bloc/store_view_bloc.dart';
 import 'package:get/get.dart';
 
 class EditStoreButton extends StatelessWidget {

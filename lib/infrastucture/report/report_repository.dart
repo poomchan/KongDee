@@ -16,7 +16,7 @@ class ReportRepository implements IReportRepository {
       final data = ReportDto.fromDomain(r).toJson();
       await _firestore
           .collection('reports')
-          .doc(UniqueId().getOrCrash())
+          .doc(UniqueId.generated().getOrCrash())
           .set(data)
           .timeout(
             Duration(seconds: 5),

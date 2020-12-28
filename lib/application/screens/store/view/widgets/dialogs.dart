@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertaladsod/application/core/components/progress_indicator.dart';
-import 'package:fluttertaladsod/application/screens/store/view_page/bloc/store_action_sheet_bloc.dart';
+import 'package:fluttertaladsod/application/screens/store/view/bloc/store_action_sheet_bloc.dart';
 import 'package:get/get.dart';
 
 Widget buildStoreActionSheet() {

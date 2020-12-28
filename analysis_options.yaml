@@ -14,3 +14,4 @@ analyzer:
     must_be_immutable: warning
     prefer_const_constructors: ignore
     avoid_bool_literals_in_conditional_expressions: ignore
+    avoid_setters_without_getters : ignore

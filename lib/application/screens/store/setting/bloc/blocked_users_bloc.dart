@@ -4,7 +4,7 @@ import 'package:fluttertaladsod/application/bloc/core/simple_progress_setter.dar
 import 'package:fluttertaladsod/application/core/haptic_feedback.dart';
 import 'package:fluttertaladsod/application/screens/store/setting/bloc/store_setting_bloc.dart';
 import 'package:fluttertaladsod/application/screens/store/setting/widgets/dialogs.dart';
-import 'package:fluttertaladsod/application/screens/store/view_page/bloc/store_view_bloc.dart';
+import 'package:fluttertaladsod/application/screens/store/view/bloc/store_view_bloc.dart';
 import 'package:fluttertaladsod/domain/core/value_objects.dart';
 import 'package:fluttertaladsod/domain/store/i_store_repository.dart';
 import 'package:fluttertaladsod/domain/store/store_failures.dart';

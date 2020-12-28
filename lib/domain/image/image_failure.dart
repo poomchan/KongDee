@@ -6,5 +6,5 @@ part 'image_failure.freezed.dart';
 @freezed
 abstract class ImageFailure with _$ImageFailure{
   const factory ImageFailure.serverError() = _ServerError;
-  const factory ImageFailure.unexpected(dynamic detail) = _Unexpected;
+  const factory ImageFailure.unexpected(dynamic err) = _Unexpected;
 }
