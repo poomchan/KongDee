@@ -22,14 +22,14 @@ class AppBinding extends Bindings {
   @override
   void dependencies() {
     ///  third party dependencies
-    Get.lazyPut(() => m.firebaseAuth);
-    Get.lazyPut(() => m.firebaseFirestore);
-    Get.lazyPut(() => m.firebaseStorage);
-    Get.lazyPut(() => m.googleSignIn);
-    Get.lazyPut(() => m.geoFlutterFire);
-    Get.lazyPut(() => m.geocoding);
-    Get.lazyPut(() => m.location);
-    Get.lazyPut(() => m.imagePicker);
+    Get.lazyPut(() => m.firebaseAuth, fenix: true);
+    Get.lazyPut(() => m.firebaseFirestore, fenix: true);
+    Get.lazyPut(() => m.firebaseStorage, fenix: true);
+    Get.lazyPut(() => m.googleSignIn, fenix: true);
+    Get.lazyPut(() => m.geoFlutterFire, fenix: true);
+    Get.lazyPut(() => m.geocoding, fenix: true);
+    Get.lazyPut(() => m.location, fenix: true);
+    Get.lazyPut(() => m.imagePicker, fenix: true);
 
     /// App Interfaces
     Get.lazyPut<ILocationRepository>(() => LocationRepository(), fenix: true);

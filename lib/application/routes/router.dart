@@ -15,6 +15,7 @@ import 'package:fluttertaladsod/application/screens/splash/start_up_splash.dart'
 import 'package:fluttertaladsod/application/screens/splash/upgrade/upgrade_page_binding.dart';
 import 'package:fluttertaladsod/application/screens/splash/upgrade/upgrade_splash.dart';
 import 'package:fluttertaladsod/application/screens/store/chat/bloc/chat_page_binding.dart';
+import 'package:fluttertaladsod/application/screens/store/chat/bloc/chat_page_middleware.dart';
 import 'package:fluttertaladsod/application/screens/store/chat/chat_page.dart';
 import 'package:fluttertaladsod/application/screens/store/form/bloc/store_form_page_binding.dart';
 import 'package:fluttertaladsod/application/screens/store/form/store_form.dart';
@@ -91,6 +92,8 @@ class Router {
       page: () => ChatPage(),
       binding: ChatPB(),
       transitionDuration: Duration(milliseconds: 500),
+      middlewares: [ChatPageMiddleware()],
+      
     ),
     GetPage(
       name: Routes.profileSettingPage,
