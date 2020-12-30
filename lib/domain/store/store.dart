@@ -48,7 +48,7 @@ abstract class Store implements _$Store {
         blockedUsers: {},
       );
 
-  Option<ValueFailure<dynamic>> get failureOption {
+  Option<ValueFailure> get failureOption {
     return name.failureOrUnit
         .andThen(menu.failureOrUnit)
         .andThen(pics.failureOrUnit)

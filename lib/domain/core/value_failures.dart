@@ -4,29 +4,29 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'value_failures.freezed.dart';
 
 @freezed
-abstract class ValueFailure<T> with _$ValueFailure<T> {
+abstract class ValueFailure with _$ValueFailure {
   const factory ValueFailure.exceedingLength(
-    T failedValue,
+    dynamic failedValue,
     int max,
-  ) = ExceedingLength<T>;
+  ) = ExceedingLength;
   const factory ValueFailure.empty(
-    T failedValue,
-  ) = Empty<T>;
+    dynamic failedValue,
+  ) = Empty;
   const factory ValueFailure.multiline(
-    T failedValue,
-  ) = Multiline<T>;
+    dynamic failedValue,
+  ) = Multiline;
   const factory ValueFailure.listTooLong(
-    T failedValue,
+    dynamic failedValue,
     int max,
-  ) = ListTooLong<T>;
+  ) = ListTooLong;
   const factory ValueFailure.invalidEmail(
-    T failedValue,
-  ) = InvalidEmail<T>;
+    dynamic failedValue,
+  ) = InvalidEmail;
   const factory ValueFailure.shortPassword(
-    T failedValue,
-  ) = ShortPassword<T>;
+    dynamic failedValue,
+  ) = ShortPassword;
   const factory ValueFailure.numberNotPositive(
-    T failedValue,
-  ) = NumberNotPositive<T>;
+    dynamic failedValue,
+  ) = NumberNotPositive;
   const factory ValueFailure.nullValue() = NullValue;
 }

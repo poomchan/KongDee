@@ -8,7 +8,7 @@ import 'package:fluttertaladsod/domain/core/value_validators.dart';
 
 class MessageBody extends ValueObject<String> {
   @override
-  final Either<ValueFailure<String>, String> value;
+  final Either<ValueFailure, String> value;
 
   static const int maxLength = 500;
 
@@ -24,7 +24,7 @@ class MessageBody extends ValueObject<String> {
 
 class SenderAvatarUrl extends ValueObject<String> {
   @override
-  final Either<ValueFailure<String>, String> value;
+  final Either<ValueFailure, String> value;
 
   factory SenderAvatarUrl(String value) {
     return SenderAvatarUrl._(validateInputNotNull(value));
@@ -35,7 +35,7 @@ class SenderAvatarUrl extends ValueObject<String> {
 
 class SenderName extends ValueObject<String> {
   @override
-  final Either<ValueFailure<String>, String> value;
+  final Either<ValueFailure, String> value;
 
   factory SenderName(String value) {
     return SenderName._(validateInputNotNull(value));

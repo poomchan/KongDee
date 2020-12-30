@@ -49,7 +49,7 @@ abstract class MessageDomain implements _$MessageDomain {
         isSender: true,
       );
 
-  Option<ValueFailure<dynamic>> get failureOption {
+  Option<ValueFailure> get failureOption {
     return body.failureOrUnit
         .andThen(senderId.failureOrUnit)
         .andThen(senderName.failureOrUnit)

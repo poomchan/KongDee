@@ -25,7 +25,7 @@ abstract class StorePrefs implements _$StorePrefs {
     );
   }
 
-  Option<ValueFailure<dynamic>> get failureOption {
+  Option<ValueFailure> get failureOption {
     return sellingRange.failureOrUnit.fold((f) => some(f), (r) => none());
   }
 

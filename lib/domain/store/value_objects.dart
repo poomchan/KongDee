@@ -8,7 +8,7 @@ import 'package:fluttertaladsod/domain/core/value_validators.dart';
 
 class StoreName extends ValueObject<String> {
   @override
-  final Either<ValueFailure<String>, String> value;
+  final Either<ValueFailure, String> value;
 
   static const maxLength = 30;
 
@@ -23,7 +23,7 @@ class StoreName extends ValueObject<String> {
 
 class StoreMenu extends ValueObject<String> {
   @override
-  final Either<ValueFailure<String>, String> value;
+  final Either<ValueFailure, String> value;
   static const maxLength = 500;
 
   factory StoreMenu(String input) {
@@ -37,7 +37,7 @@ class StoreMenu extends ValueObject<String> {
 
 class StoreBanner extends ValueObject<String> {
   @override
-  final Either<ValueFailure<String>, String> value;
+  final Either<ValueFailure, String> value;
 
   factory StoreBanner(String input) {
     assert(input != null);
@@ -53,7 +53,7 @@ class StoreBanner extends ValueObject<String> {
 
 class StorePic extends ValueObject<String> {
   @override
-  final Either<ValueFailure<String>, String> value;
+  final Either<ValueFailure, String> value;
 
   factory StorePic(String input) {
     assert(input != null);
@@ -65,7 +65,7 @@ class StorePic extends ValueObject<String> {
 
 class StorePic16 extends ValueObject<List<StorePic>> {
   @override
-  final Either<ValueFailure<List<StorePic>>, List<StorePic>> value;
+  final Either<ValueFailure, List<StorePic>> value;
   // return ValueFailure if the list is over sized -> time to buy premium
   static const maxLength = 16;
 
@@ -84,7 +84,7 @@ class StorePic16 extends ValueObject<List<StorePic>> {
 // range in meter
 class SellingRange extends ValueObject<double> {
   @override
-  final Either<ValueFailure<double>, double> value;
+  final Either<ValueFailure, double> value;
   static const maxRange = 16;
   bool get isInFinite =>
       value.fold((f) => throw 'value failure', (val) => val == double.infinity);
@@ -114,7 +114,7 @@ class SellingRange extends ValueObject<double> {
 
 class StoreAddress extends ValueObject<String> {
   @override
-  final Either<ValueFailure<String>, String> value;
+  final Either<ValueFailure, String> value;
 
   factory StoreAddress(String input) {
     return StoreAddress._(validateInputNotNull(input));

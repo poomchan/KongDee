@@ -13,7 +13,7 @@ import 'package:fluttertaladsod/domain/core/value_failures.dart';
 @immutable
 abstract class ValueObject<T> {
   const ValueObject();
-  Either<ValueFailure<T>, T> get value;
+  Either<ValueFailure, T> get value;
 
   /// Throws [UnexpectedValueError] containing the [ValueFailure]
   T getOrCrash() {
@@ -21,7 +21,7 @@ abstract class ValueObject<T> {
     return value.fold((f) => throw UnexpectedValueError(f), id);
   }
 
-  Either<ValueFailure<dynamic>, Unit> get failureOrUnit {
+  Either<ValueFailure, Unit> get failureOrUnit {
     return value.fold(
       (l) => left(l),
       (r) => right(unit),
@@ -46,7 +46,7 @@ abstract class ValueObject<T> {
 
 class UniqueId extends ValueObject<String> {
   @override
-  final Either<ValueFailure<String>, String> value;
+  final Either<ValueFailure, String> value;
 
   factory UniqueId.generated() {
     return UniqueId._(

@@ -68,13 +68,11 @@ class StoreFormBloc extends GetxController with SimepleProgressSetter {
   Future<void> bannerChangeRequested() async {
     final imageOption = await _iImageRepository.getImage();
     imageOption.fold(
-      () => null,
-      (img) => updateStore(store.copyWith(banner: left(img))),
-    );
+        () => null, (img) => updateStore(store.copyWith(banner: left(img))));
   }
 
   Future<void> picsSelectionRequested() async {
-    bool isPremium = false;
+    const bool isPremium = true;
     if (!isPremium) {
       Get.toNamed(Routes.upgradeSplash);
       return;
@@ -84,10 +82,7 @@ class StoreFormBloc extends GetxController with SimepleProgressSetter {
       () => null,
       (img) {
         updateStore(
-          store.copyWith(
-            pics: List.from(store.pics)..add(left(img)),
-          ),
-        );
+            store.copyWith(pics: List.from(store.pics)..add(left(img))));
       },
     );
   }
@@ -97,12 +92,7 @@ class StoreFormBloc extends GetxController with SimepleProgressSetter {
   }
 
   Future<void> picDeleteRequested(int picIndex) async {
-    assert(picIndex != null);
-    updateStore(
-      store.copyWith(
-        pics: store.pics..removeAt(picIndex),
-      ),
-    );
+    updateStore(store.copyWith(pics: store.pics..removeAt(picIndex)));
   }
 
   Future<void> saved() async {

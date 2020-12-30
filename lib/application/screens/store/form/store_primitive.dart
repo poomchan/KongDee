@@ -3,6 +3,7 @@ import 'dart:io';
 
 // Package imports:
 import 'package:dartz/dartz.dart';
+import 'package:fluttertaladsod/domain/core/value_failures.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 // Project imports:
@@ -76,6 +77,21 @@ abstract class StorePrimitive implements _$StorePrimitive {
         blockedUsers: const {},
         isOwner: true,
       );
+
+  bool get isValid {
+    return _isPicsValid()
+        .andThen(StoreName(name).value)
+        .andThen(StoreMenu(menu).value)
+        .fold((f) => false, (ok) => true);
+  }
+
+  Either<ValueFailure, Unit> _isPicsValid() {
+    if (StorePic16.maxLength <= pics.length) {
+      return right(unit);
+    } else {
+      return left(ValueFailure.listTooLong(pics, StorePic16.maxLength));
+    }
+  }
 
   const StorePrimitive._();
 }
