@@ -4,12 +4,15 @@ import 'package:fluttertaladsod/application/routes/router.dart';
 import 'package:get/get.dart';
 
 
-class ChatPageMiddleware extends GetMiddleware {
+class AuthGuardMiddleware extends GetMiddleware {
   @override
   RouteSettings redirect(String route) {
     final AuthBloc _authBloc = Get.find();
-    if (!_authBloc.isAuth) return RouteSettings(name: Routes.signInSplash);
-    return RouteSettings(name: Routes.chatPage);
+    if (!_authBloc.isAuth) {
+      return RouteSettings(name: Routes.signInSplash);
+    } else {
+      return RouteSettings(name: route);
+    }
   }
 
   

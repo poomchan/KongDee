@@ -92,7 +92,7 @@ class Router {
       page: () => ChatPage(),
       binding: ChatPB(),
       transitionDuration: Duration(milliseconds: 500),
-      middlewares: [ChatPageMiddleware()],
+      middlewares: [AuthGuardMiddleware()],
       
     ),
     GetPage(
@@ -100,6 +100,7 @@ class Router {
       page: () => ProfileSettingPage(),
       binding: ProfileSettingPB(),
       transitionDuration: Duration(milliseconds: 500),
+      middlewares: [AuthGuardMiddleware()],
     ),
     GetPage(
       name: Routes.languageSettingPage,
