@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertaladsod/application/core/components/progress_indicator.dart';
@@ -36,6 +35,7 @@ class MyNetworkImage extends StatelessWidget {
     if (err is HttpException) {
       final code = err.message.split(':').last.trimLeft();
       if (code == '404') return 'Image not found';
+      if (code == '403') return 'Insufficient Permission';
       return 'Http Error : $code';
     }
     return 'Unknown error';
