@@ -27,17 +27,19 @@ export const onStoreUpdate = storeCollection
     if (before == after) return;
 
     // clean the banner in storage
-    const banner: string = after[bannerStr];
     const prevBanner: string = before[picsStr];
+    const banner: string = after[bannerStr];
+    if (banner == null) return;
     if (prevBanner != banner) {
       const imgId = getIdFromUrl(prevBanner);
       const path = getBannerStoragePath(storeId, imgId);
       await delteStorageFile(path);
     }
 
-    // clean the pics in storage
+    // clean the pics in storagee
     const prevList: Array<string> = before['pics'];
     const newList: Array<string> = after['pics'];
+    if (newList == null) return;
     if (newList != prevList) {
       for (let url of prevList) {
         if (!newList.includes(url)) {

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertaladsod/application/bloc/auth/auth_bloc.dart';
 import 'package:fluttertaladsod/application/bloc/core/view_widget.dart';
 import 'package:fluttertaladsod/application/core/components/progress_indicator.dart';
+import 'package:fluttertaladsod/domain/user/user.dart';
 import 'package:get/get.dart';
 import 'package:fluttertaladsod/application/routes/router.dart';
 
@@ -34,12 +35,19 @@ class ProfileAvatar extends ViewWidget<AuthBloc> {
           backgroundColor:
               isAuth ? Colors.transparent : Theme.of(context).accentColor,
           radius: 30.0,
-          backgroundImage:
-              isAuth ? CachedNetworkImageProvider(user.photoUrl) : null,
+          backgroundImage: imageProvider(isAuth: isAuth, user: user),
           child: isAuth ? null : Icon(Icons.supervised_user_circle),
         ),
       ),
     );
+  }
+
+  ImageProvider<Object> imageProvider({bool isAuth, UserDomain user}) {
+    try {
+      return isAuth ? CachedNetworkImageProvider(user.photoUrl) : null;
+    } catch (err) {
+      return NetworkImage('url');
+    }
   }
 
   Widget _buildFailureWidget(BuildContext context) {

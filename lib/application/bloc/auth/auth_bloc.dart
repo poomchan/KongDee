@@ -12,10 +12,19 @@ class AuthBloc extends GetxController with SimepleProgressSetter<AuthFailure> {
   final _user = Rx<UserDomain>();
   Rx<UserDomain> get rxUser => _user;
   UserDomain get user => _user.value;
-  bool get isAuth => _user.value != null;
+  bool get isAuth => _iAuthFacade.isAuthenticated();
   RxBool get rxIsAuth => RxBool(false)..bindStream(_user.map((user) => user != null));
 
   StreamSubscription _userSub;
+
+  void checkAuthStatus() {
+    if (isAuth) {
+      print(isAuth);
+      watchUser();
+    } else {
+      _user.value = null;
+    }
+  }
 
   Future<void> watchUser() async {
     updateWithLoading();
@@ -23,10 +32,12 @@ class AuthBloc extends GetxController with SimepleProgressSetter<AuthFailure> {
     _userSub = userOrFailureStream.listen((userOrFailure) {
       return userOrFailure.fold(
         (f) {
+          print('not auth');
           _user.value = null;
           updateWithFailure(f);
         },
         (user) {
+          print('auth');
           _user.value = user;
           updateWithLoaded();
         },
@@ -41,7 +52,7 @@ class AuthBloc extends GetxController with SimepleProgressSetter<AuthFailure> {
 
   @override
   Future<void> onReady() async {
-    await watchUser();
+    checkAuthStatus();
     super.onReady();
   }
 
