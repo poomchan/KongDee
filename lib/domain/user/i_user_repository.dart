@@ -1,5 +1,7 @@
+// Package imports:
 import 'package:dartz/dartz.dart';
 
+// Project imports:
 import 'package:fluttertaladsod/domain/core/value_objects.dart';
 import 'package:fluttertaladsod/domain/user/user.dart';
 import 'package:fluttertaladsod/domain/user/user_failure.dart';

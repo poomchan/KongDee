@@ -1,9 +1,14 @@
-import 'package:cached_network_image/cached_network_image.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:get/get.dart';
+
+// Project imports:
 import 'package:fluttertaladsod/application/bloc/core/view_widget.dart';
 import 'package:fluttertaladsod/application/screens/store/chat/bloc/action/chat_user_action_sheet_bloc.dart';
 import 'package:fluttertaladsod/application/screens/store/chat/bloc/message_view/message_view_bloc.dart';
-import 'package:get/get.dart';
 
 class MessageAvatar extends ViewWidget<MessageViewBloc> {
   final String senderId;

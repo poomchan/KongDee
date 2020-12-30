@@ -1,12 +1,17 @@
+// Flutter imports:
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:get/get.dart';
+import 'package:settings_ui/settings_ui.dart';
+
+// Project imports:
 import 'package:fluttertaladsod/application/bloc/core/view_widget.dart';
 import 'package:fluttertaladsod/application/screens/store/form/widgets/reusable_card.dart';
 import 'package:fluttertaladsod/application/screens/store/setting/bloc/store_setting_bloc.dart';
 import 'package:fluttertaladsod/application/screens/store/view/bloc/store_view_bloc.dart';
 import 'package:fluttertaladsod/application/screens/store/view/widgets/store_setting_button.dart';
-import 'package:get/get.dart';
-import 'package:settings_ui/settings_ui.dart';
 import 'edit_store_button.dart';
 
 class Console extends ViewWidget<StoreViewBloc> {

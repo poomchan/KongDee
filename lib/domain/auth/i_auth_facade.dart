@@ -1,6 +1,8 @@
+// Package imports:
 import 'package:dartz/dartz.dart';
-import 'package:fluttertaladsod/domain/user/user.dart';
 
+// Project imports:
+import 'package:fluttertaladsod/domain/user/user.dart';
 import 'auth_failure.dart';
 
 abstract class IAuthFacade {

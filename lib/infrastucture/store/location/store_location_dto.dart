@@ -1,9 +1,12 @@
+// Package imports:
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:geoflutterfire/geoflutterfire.dart';
+
+// Project imports:
 import 'package:fluttertaladsod/domain/location/location.dart';
 import 'package:fluttertaladsod/domain/store/location/store_location.dart';
 import 'package:fluttertaladsod/domain/store/value_objects.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:geoflutterfire/geoflutterfire.dart';
 
 part 'store_location_dto.freezed.dart';
 part 'store_location_dto.g.dart';

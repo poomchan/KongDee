@@ -1,6 +1,12 @@
+// Flutter imports:
+import 'package:flutter/foundation.dart';
+
+// Package imports:
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
-import 'package:flutter/foundation.dart';
+import 'package:get/get.dart';
+
+// Project imports:
 import 'package:fluttertaladsod/domain/chat/chat.dart';
 import 'package:fluttertaladsod/domain/chat/chat_failure.dart';
 import 'package:fluttertaladsod/domain/chat/i_chat_repository.dart';
@@ -8,7 +14,6 @@ import 'package:fluttertaladsod/domain/chat/message.dart';
 import 'package:fluttertaladsod/domain/core/value_objects.dart';
 import 'package:fluttertaladsod/infrastucture/chat/message_dto.dart';
 import 'package:fluttertaladsod/infrastucture/core/firestore_helper.dart';
-import 'package:get/get.dart';
 
 @immutable
 class ChatRepository implements IChatRepository {

@@ -1,4 +1,7 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Project imports:
 import 'package:fluttertaladsod/application/core/components/progress_indicator.dart';
 
 class StartUpSplash extends StatelessWidget {

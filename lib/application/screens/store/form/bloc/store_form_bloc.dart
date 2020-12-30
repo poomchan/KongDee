@@ -1,7 +1,16 @@
+// Dart imports:
 import 'dart:io';
-import 'package:dartz/dartz.dart';
+
+// Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:dartz/dartz.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:get/get.dart';
+
+// Project imports:
 import 'package:fluttertaladsod/application/bloc/core/simple_progress_setter.dart';
 import 'package:fluttertaladsod/application/bloc/location/location_bloc.dart';
 import 'package:fluttertaladsod/application/core/components/dialogs.dart';
@@ -12,9 +21,6 @@ import 'package:fluttertaladsod/domain/image/image_failure.dart';
 import 'package:fluttertaladsod/domain/store/i_store_repository.dart';
 import 'package:fluttertaladsod/domain/store/location/store_location.dart';
 import 'package:fluttertaladsod/domain/store/store.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:get/get.dart';
-
 import '../store_primitive.dart';
 
 class StoreFormBloc extends GetxController with SimepleProgressSetter {

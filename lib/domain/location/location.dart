@@ -1,9 +1,12 @@
-import 'package:fluttertaladsod/domain/core/entity.dart';
-import 'package:fluttertaladsod/domain/core/value_objects.dart';
+// Package imports:
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:geocoding/geocoding.dart' hide Location;
 import 'package:geoflutterfire/geoflutterfire.dart';
 import 'package:location/location.dart';
+
+// Project imports:
+import 'package:fluttertaladsod/domain/core/entity.dart';
+import 'package:fluttertaladsod/domain/core/value_objects.dart';
 
 part 'location.freezed.dart';
 

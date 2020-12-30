@@ -1,8 +1,13 @@
-import 'package:dartz/dartz.dart' as dartz;
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:dartz/dartz.dart' as dartz;
+import 'package:get/get.dart';
+
+// Project imports:
 import 'package:fluttertaladsod/application/screens/store/form/bloc/store_form_bloc.dart';
 import 'package:fluttertaladsod/application/screens/store/form/widgets/reusable_card.dart';
-import 'package:get/get.dart';
 import 'image_grid.dart';
 
 class ImageField extends StatelessWidget {

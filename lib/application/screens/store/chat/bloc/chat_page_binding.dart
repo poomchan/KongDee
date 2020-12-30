@@ -1,11 +1,12 @@
 
 
+// Package imports:
 import 'package:get/get.dart';
 
+// Project imports:
 import 'action/chat_user_action_sheet_bloc.dart';
 import 'input_bar/input_bar_bloc.dart';
 import 'message_view/message_view_bloc.dart';
-
 
 class ChatPB extends Bindings {
   @override

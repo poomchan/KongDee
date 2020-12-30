@@ -1,10 +1,13 @@
+// Package imports:
+import 'package:get/get.dart';
+import 'package:get/get_state_manager/src/simple/get_state.dart';
+
+// Project imports:
 import 'package:fluttertaladsod/application/bloc/core/simple_progress_setter.dart';
 import 'package:fluttertaladsod/application/routes/router.dart';
 import 'package:fluttertaladsod/domain/location/i_location_repository.dart';
 import 'package:fluttertaladsod/domain/location/location.dart';
 import 'package:fluttertaladsod/domain/location/location_failure.dart';
-import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/simple/get_state.dart';
 
 class LocationBloc extends GetxController with SimepleProgressSetter<LocationFailure> {
   ILocationRepository get _iLocationRepository => Get.find();

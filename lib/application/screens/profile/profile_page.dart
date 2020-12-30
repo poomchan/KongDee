@@ -1,11 +1,16 @@
-import 'package:cached_network_image/cached_network_image.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:get/get.dart';
+
+// Project imports:
 import 'package:fluttertaladsod/application/bloc/core/view_widget.dart';
 import 'package:fluttertaladsod/application/core/components/progress_indicator.dart';
+import 'package:fluttertaladsod/application/routes/router.dart';
 import 'package:fluttertaladsod/application/screens/profile/bloc/profile_bloc.dart';
 import 'package:fluttertaladsod/domain/core/value_objects.dart';
-import 'package:get/get.dart';
-import 'package:fluttertaladsod/application/routes/router.dart';
 import 'widgets/owned_store_view.dart';
 
 class ProfilePage extends ViewWidget<ProfileBloc> {

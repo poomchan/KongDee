@@ -1,7 +1,12 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:get/get.dart';
+
+// Project imports:
 import 'package:fluttertaladsod/application/screens/store/chat/bloc/input_bar/input_bar_bloc.dart';
 import 'package:fluttertaladsod/domain/chat/value_objects.dart';
-import 'package:get/get.dart';
 
 class InputBar extends StatelessWidget {
   const InputBar({Key key}) : super(key: key);

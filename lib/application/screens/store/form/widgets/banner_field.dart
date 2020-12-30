@@ -1,8 +1,13 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:get/get.dart';
+
+// Project imports:
 import 'package:fluttertaladsod/application/bloc/core/view_widget.dart';
 import 'package:fluttertaladsod/application/core/components/my_network_image.dart';
 import 'package:fluttertaladsod/application/screens/store/form/bloc/store_form_bloc.dart';
-import 'package:get/get.dart';
 import '../../constant.dart';
 
 class BannerField extends ViewWidget<StoreFormBloc> {

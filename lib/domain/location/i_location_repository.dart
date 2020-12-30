@@ -1,6 +1,8 @@
+// Package imports:
 import 'package:dartz/dartz.dart';
-import 'package:fluttertaladsod/domain/location/location.dart';
 
+// Project imports:
+import 'package:fluttertaladsod/domain/location/location.dart';
 import 'location_failure.dart';
 
 abstract class ILocationRepository {

@@ -1,11 +1,16 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:get/get.dart';
+
+// Project imports:
 import 'package:fluttertaladsod/application/bloc/core/view_widget.dart';
 import 'package:fluttertaladsod/application/core/components/progress_indicator.dart';
 import 'package:fluttertaladsod/application/screens/store/chat/bloc/message_view/message_view_bloc.dart';
 import 'package:fluttertaladsod/application/screens/store/chat/widgets/date_card.dart';
 import 'package:fluttertaladsod/application/screens/store/chat/widgets/message.dart';
 import 'package:fluttertaladsod/domain/chat/message.dart';
-import 'package:get/get.dart';
 
 class MessageView extends ViewWidget<MessageViewBloc> {
   const MessageView({Key key}) : super(key: key);

@@ -1,9 +1,12 @@
+// Package imports:
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+// Project imports:
 import 'package:fluttertaladsod/domain/core/value_objects.dart';
 import 'package:fluttertaladsod/domain/user/user.dart';
 import 'package:fluttertaladsod/infrastucture/core/json_converters.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'user_dto.freezed.dart';
 part 'user_dto.g.dart';

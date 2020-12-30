@@ -1,8 +1,13 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:fluttertaladsod/application/bloc/core/view_widget.dart';
-import 'package:fluttertaladsod/application/screens/store/setting/bloc/store_setting_bloc.dart';
+
+// Package imports:
 import 'package:get/get.dart';
 import 'package:settings_ui/settings_ui.dart';
+
+// Project imports:
+import 'package:fluttertaladsod/application/bloc/core/view_widget.dart';
+import 'package:fluttertaladsod/application/screens/store/setting/bloc/store_setting_bloc.dart';
 
 class SellingRangePage extends ViewWidget<StoreSettingBloc> {
   const SellingRangePage({Key key}) : super(key: key);

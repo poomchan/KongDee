@@ -1,11 +1,15 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:get/get.dart';
+
+// Project imports:
 import 'package:fluttertaladsod/application/bloc/core/view_widget.dart';
 import 'package:fluttertaladsod/application/core/components/my_network_image.dart';
 import 'package:fluttertaladsod/application/core/components/progress_indicator.dart';
 import 'package:fluttertaladsod/application/screens/store/view/bloc/store_action_sheet_bloc.dart';
 import 'package:fluttertaladsod/application/screens/store/view/bloc/store_view_bloc.dart';
-import 'package:get/get.dart';
-
 import '../../constant.dart';
 
 class BannerAppbar2 extends ViewWidget<StoreViewBloc> {

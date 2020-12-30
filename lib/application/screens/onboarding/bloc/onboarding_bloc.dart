@@ -1,10 +1,15 @@
-import 'package:dartz/dartz.dart';
+// Flutter imports:
 import 'package:flutter/widgets.dart';
+
+// Package imports:
+import 'package:dartz/dartz.dart';
+import 'package:get/get.dart';
+
+// Project imports:
 import 'package:fluttertaladsod/application/bloc/core/simple_progress_setter.dart';
 import 'package:fluttertaladsod/application/routes/router.dart';
 import 'package:fluttertaladsod/domain/location/i_location_repository.dart';
 import 'package:fluttertaladsod/domain/location/location_failure.dart';
-import 'package:get/get.dart';
 
 class OnboardingBloc extends GetxController with SimepleProgressSetter {
   final ILocationRepository _locationRepository =

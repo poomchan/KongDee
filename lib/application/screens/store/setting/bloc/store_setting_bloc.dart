@@ -1,3 +1,7 @@
+// Package imports:
+import 'package:get/get.dart';
+
+// Project imports:
 import 'package:fluttertaladsod/application/bloc/core/simple_progress_setter.dart';
 import 'package:fluttertaladsod/application/screens/store/view/bloc/store_view_bloc.dart';
 import 'package:fluttertaladsod/domain/location/i_location_repository.dart';
@@ -6,7 +10,6 @@ import 'package:fluttertaladsod/domain/store/location/store_location.dart';
 import 'package:fluttertaladsod/domain/store/store.dart';
 import 'package:fluttertaladsod/domain/store/store_failures.dart';
 import 'package:fluttertaladsod/domain/store/value_objects.dart';
-import 'package:get/get.dart';
 
 class StoreSettingBloc extends GetxController
     with SimepleProgressSetter<StoreFailure> {

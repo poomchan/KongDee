@@ -1,11 +1,16 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+// Flutter imports:
 import 'package:flutter/foundation.dart';
+
+// Package imports:
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+// Project imports:
 import 'package:fluttertaladsod/domain/chat/message.dart';
 import 'package:fluttertaladsod/domain/chat/value_objects.dart';
 import 'package:fluttertaladsod/domain/core/value_objects.dart';
 import 'package:fluttertaladsod/domain/store/value_objects.dart';
 import 'package:fluttertaladsod/infrastucture/core/json_converters.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'message_dto.freezed.dart';
 part 'message_dto.g.dart';

@@ -1,10 +1,15 @@
+// Dart imports:
 import 'dart:async';
+
+// Package imports:
+import 'package:get/get.dart';
+
+// Project imports:
 import 'package:fluttertaladsod/application/bloc/core/simple_progress_setter.dart';
 import 'package:fluttertaladsod/application/routes/router.dart';
 import 'package:fluttertaladsod/domain/auth/auth_failure.dart';
 import 'package:fluttertaladsod/domain/auth/i_auth_facade.dart';
 import 'package:fluttertaladsod/domain/user/user.dart';
-import 'package:get/get.dart';
 
 class AuthBloc extends GetxController with SimepleProgressSetter<AuthFailure> {
   IAuthFacade get _iAuthFacade => Get.find<IAuthFacade>();

@@ -1,4 +1,7 @@
+// Package imports:
 import 'package:get/get.dart';
+
+// Project imports:
 import 'action_state.dart';
 
 /// Mixin contains basic [ActioinState] i.e. initial, loading, loaded, failure.

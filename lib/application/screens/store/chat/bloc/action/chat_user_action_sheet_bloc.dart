@@ -1,8 +1,15 @@
+// Dart imports:
 import 'dart:async';
 
-import 'package:dartz/dartz.dart';
+// Flutter imports:
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
+
+// Package imports:
+import 'package:dartz/dartz.dart';
+import 'package:get/get.dart';
+
+// Project imports:
 import 'package:fluttertaladsod/application/bloc/auth/auth_bloc.dart';
 import 'package:fluttertaladsod/application/bloc/core/simple_progress_setter.dart';
 import 'package:fluttertaladsod/application/core/haptic_feedback.dart';
@@ -15,7 +22,6 @@ import 'package:fluttertaladsod/domain/report/i_report_repository.dart';
 import 'package:fluttertaladsod/domain/report/report.dart';
 import 'package:fluttertaladsod/domain/store/i_store_repository.dart';
 import 'package:fluttertaladsod/domain/store/store_failures.dart';
-import 'package:get/get.dart';
 
 class ChatUserActionSheetBloc extends GetxController
     with SimepleProgressSetter<dynamic> {

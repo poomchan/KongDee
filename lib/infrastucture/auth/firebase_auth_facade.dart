@@ -1,13 +1,16 @@
+// Package imports:
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:get/get.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+
+// Project imports:
 import 'package:fluttertaladsod/domain/auth/auth_failure.dart';
 import 'package:fluttertaladsod/domain/auth/i_auth_facade.dart';
 import 'package:fluttertaladsod/domain/user/user.dart';
 import 'package:fluttertaladsod/infrastucture/auth/user_dto.dart';
 import 'package:fluttertaladsod/infrastucture/core/firestore_helper.dart';
-import 'package:get/get.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 class FirebaseAuthFacade implements IAuthFacade {
   final GoogleSignIn _googleSignIn = Get.find();

@@ -1,7 +1,15 @@
+// Dart imports:
 import 'dart:async';
+
+// Flutter imports:
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+
+// Package imports:
+import 'package:get/get.dart';
+
+// Project imports:
 import 'package:fluttertaladsod/application/bloc/auth/auth_bloc.dart';
 import 'package:fluttertaladsod/application/bloc/core/state_setter.dart';
 import 'package:fluttertaladsod/application/screens/store/chat/bloc/message_view/message_view_state.dart';
@@ -11,7 +19,6 @@ import 'package:fluttertaladsod/domain/chat/chat_failure.dart';
 import 'package:fluttertaladsod/domain/chat/i_chat_repository.dart';
 import 'package:fluttertaladsod/domain/core/value_objects.dart';
 import 'package:fluttertaladsod/domain/user/user.dart';
-import 'package:get/get.dart';
 
 class MessageViewBloc extends GetxController
     with MyStateSetter<MessageViewState, ChatFailure> {

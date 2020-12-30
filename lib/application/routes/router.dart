@@ -1,5 +1,11 @@
-import 'package:dartz/dartz.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:dartz/dartz.dart';
+import 'package:get/route_manager.dart';
+
+// Project imports:
 import 'package:fluttertaladsod/application/screens/home_page/bloc/home_page_binding.dart';
 import 'package:fluttertaladsod/application/screens/home_page/home_page.dart';
 import 'package:fluttertaladsod/application/screens/profile/bloc/profile_page_binding.dart';
@@ -29,7 +35,6 @@ import 'package:fluttertaladsod/application/screens/store/view/bloc/store_view_p
 import 'package:fluttertaladsod/application/screens/store/view/store_view_page2.dart';
 import 'package:fluttertaladsod/domain/core/value_objects.dart';
 import 'package:fluttertaladsod/domain/store/store.dart';
-import 'package:get/route_manager.dart';
 import '../screens/onboarding/onboarding_page.dart';
 
 // ignore: avoid_classes_with_only_static_members

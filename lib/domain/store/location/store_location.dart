@@ -1,7 +1,10 @@
-import 'package:fluttertaladsod/domain/location/location.dart';
-import 'package:fluttertaladsod/domain/store/value_objects.dart';
+// Package imports:
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:geoflutterfire/geoflutterfire.dart';
+
+// Project imports:
+import 'package:fluttertaladsod/domain/location/location.dart';
+import 'package:fluttertaladsod/domain/store/value_objects.dart';
 
 part 'store_location.freezed.dart';
 

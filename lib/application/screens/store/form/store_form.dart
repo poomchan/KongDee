@@ -1,12 +1,17 @@
-import 'package:dartz/dartz.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:dartz/dartz.dart';
+import 'package:get/get.dart';
+
+// Project imports:
 import 'package:fluttertaladsod/application/bloc/core/view_widget.dart';
 import 'package:fluttertaladsod/application/screens/store/form/widgets/banner_field.dart';
 import 'package:fluttertaladsod/application/screens/store/form/widgets/image_field.dart';
 import 'package:fluttertaladsod/application/screens/store/form/widgets/menu_field.dart';
 import 'package:fluttertaladsod/application/screens/store/form/widgets/name_field.dart';
 import 'package:fluttertaladsod/domain/store/store.dart';
-import 'package:get/get.dart';
 import 'bloc/store_form_bloc.dart';
 
 class StoreForm extends ViewWidget<StoreFormBloc> {

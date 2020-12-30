@@ -1,9 +1,14 @@
+// Dart imports:
 import 'dart:async';
+
+// Package imports:
+import 'package:get/get.dart';
+
+// Project imports:
 import 'package:fluttertaladsod/application/bloc/auth/auth_bloc.dart';
 import 'package:fluttertaladsod/application/bloc/core/simple_progress_setter.dart';
 import 'package:fluttertaladsod/domain/auth/auth_failure.dart';
 import 'package:fluttertaladsod/domain/auth/i_auth_facade.dart';
-import 'package:get/get.dart';
 
 class SignInBloc extends GetxController
     with SimepleProgressSetter<AuthFailure> {

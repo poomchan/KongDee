@@ -1,8 +1,11 @@
+// Package imports:
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+// Project imports:
 import 'package:fluttertaladsod/domain/core/value_objects.dart';
 import 'package:fluttertaladsod/domain/report/report.dart';
 import 'package:fluttertaladsod/infrastucture/core/json_converters.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'report_dto.freezed.dart';
 part 'report_dto.g.dart';

@@ -1,5 +1,9 @@
+// Package imports:
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart' as _dz;
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+// Project imports:
 import 'package:fluttertaladsod/domain/core/value_objects.dart';
 import 'package:fluttertaladsod/domain/location/location.dart';
 import 'package:fluttertaladsod/domain/store/store.dart';
@@ -8,7 +12,6 @@ import 'package:fluttertaladsod/domain/user/user.dart';
 import 'package:fluttertaladsod/infrastucture/core/json_converters.dart';
 import 'package:fluttertaladsod/infrastucture/store/location/store_location_dto.dart';
 import 'package:fluttertaladsod/infrastucture/store/preferences/store_prefs_dto.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'store_dto.freezed.dart';
 part 'store_dto.g.dart';

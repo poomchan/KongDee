@@ -1,8 +1,11 @@
+// Package imports:
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+// Project imports:
 import 'package:fluttertaladsod/domain/chat/message.dart';
 import 'package:fluttertaladsod/domain/core/entity.dart';
 import 'package:fluttertaladsod/domain/core/value_objects.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'chat.freezed.dart';
 

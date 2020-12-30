@@ -1,7 +1,12 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:get/get.dart';
+
+// Project imports:
 import 'package:fluttertaladsod/application/bloc/core/view_widget.dart';
 import 'package:fluttertaladsod/application/screens/store/setting/bloc/store_setting_bloc.dart';
-import 'package:get/get.dart';
 
 class LocationSetting extends ViewWidget<StoreSettingBloc> {
   const LocationSetting({Key key}) : super(key: key);

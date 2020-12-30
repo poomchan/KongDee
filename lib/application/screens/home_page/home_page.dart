@@ -1,4 +1,7 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Project imports:
 import 'package:fluttertaladsod/application/screens/home_page/widgets/near_store_feed.dart';
 import 'package:fluttertaladsod/application/screens/home_page/widgets/profile_avatar.dart';
 

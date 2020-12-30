@@ -1,5 +1,10 @@
-
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:get/get.dart';
+
+// Project imports:
 import 'package:fluttertaladsod/application/bloc/core/view_widget.dart';
 import 'package:fluttertaladsod/application/core/components/progress_indicator.dart';
 import 'package:fluttertaladsod/application/routes/router.dart';
@@ -8,7 +13,6 @@ import 'package:fluttertaladsod/application/screens/store/view/widgets/image_vie
 import 'package:fluttertaladsod/application/screens/store/view/widgets/menu_view.dart';
 import 'package:fluttertaladsod/application/screens/store/view/widgets/name_view.dart';
 import 'package:fluttertaladsod/domain/core/value_objects.dart';
-import 'package:get/get.dart';
 import 'bloc/store_view_bloc.dart';
 import 'widgets/console.dart';
 

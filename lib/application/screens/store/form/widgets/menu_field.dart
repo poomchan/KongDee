@@ -1,9 +1,14 @@
+// Flutter imports:
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:get/get.dart';
+
+// Project imports:
 import 'package:fluttertaladsod/application/screens/store/form/bloc/store_form_bloc.dart';
 import 'package:fluttertaladsod/application/screens/store/form/widgets/reusable_card.dart';
 import 'package:fluttertaladsod/domain/store/value_objects.dart';
-import 'package:get/get.dart';
 
 class Menufield extends StatelessWidget {
   const Menufield();

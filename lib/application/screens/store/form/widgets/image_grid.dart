@@ -1,8 +1,13 @@
-import 'package:dartz/dartz.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:dartz/dartz.dart';
+import 'package:get/get.dart';
+
+// Project imports:
 import 'package:fluttertaladsod/application/core/components/my_network_image.dart';
 import 'package:fluttertaladsod/application/screens/store/form/bloc/store_form_bloc.dart';
-import 'package:get/get.dart';
 
 class ImageGrid extends StatelessWidget {
   // whether it is an empty grid or has an image

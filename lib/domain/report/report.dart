@@ -1,6 +1,11 @@
+// Flutter imports:
 import 'package:flutter/foundation.dart';
-import 'package:fluttertaladsod/domain/core/value_objects.dart';
+
+// Package imports:
 import 'package:freezed_annotation/freezed_annotation.dart';
+
+// Project imports:
+import 'package:fluttertaladsod/domain/core/value_objects.dart';
 
 part 'report.freezed.dart';
 

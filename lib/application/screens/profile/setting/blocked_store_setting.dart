@@ -1,10 +1,15 @@
+// Flutter imports:
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:get/get.dart';
+
+// Project imports:
 import 'package:fluttertaladsod/application/bloc/core/view_widget.dart';
 import 'package:fluttertaladsod/application/core/components/progress_indicator.dart';
 import 'package:fluttertaladsod/application/screens/profile/setting/bloc/blocked_store_bloc.dart';
 import 'package:fluttertaladsod/application/screens/profile/widgets/store_card.dart';
-import 'package:get/get.dart';
 
 class BlockedStoreSetting extends ViewWidget<BlockedStoreBloc> {
   @override

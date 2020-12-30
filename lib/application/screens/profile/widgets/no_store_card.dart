@@ -1,8 +1,13 @@
+// Flutter imports:
+import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:dartz/dartz.dart';
 import 'package:dotted_border/dotted_border.dart';
-import 'package:flutter/material.dart';
-import 'package:fluttertaladsod/application/routes/router.dart';
 import 'package:get/get.dart';
+
+// Project imports:
+import 'package:fluttertaladsod/application/routes/router.dart';
 
 class NoStoreCard extends StatelessWidget {
   const NoStoreCard();

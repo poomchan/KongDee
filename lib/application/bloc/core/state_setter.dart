@@ -1,6 +1,10 @@
+// Flutter imports:
 import 'package:flutter/foundation.dart';
+
+// Package imports:
 import 'package:get/get_state_manager/get_state_manager.dart';
 
+// Project imports:
 import 'action_state.dart';
 
 mixin MyStateSetter<T, F> on GetxController {

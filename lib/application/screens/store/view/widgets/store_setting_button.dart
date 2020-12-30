@@ -1,6 +1,11 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:fluttertaladsod/application/routes/router.dart';
+
+// Package imports:
 import 'package:get/get.dart';
+
+// Project imports:
+import 'package:fluttertaladsod/application/routes/router.dart';
 
 class StoreSettingButton extends StatelessWidget {
   const StoreSettingButton({

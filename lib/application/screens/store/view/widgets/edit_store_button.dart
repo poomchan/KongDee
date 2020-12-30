@@ -1,8 +1,13 @@
-import 'package:dartz/dartz.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:dartz/dartz.dart';
+import 'package:get/get.dart';
+
+// Project imports:
 import 'package:fluttertaladsod/application/routes/router.dart';
 import 'package:fluttertaladsod/application/screens/store/view/bloc/store_view_bloc.dart';
-import 'package:get/get.dart';
 
 class EditStoreButton extends StatelessWidget {
   const EditStoreButton({

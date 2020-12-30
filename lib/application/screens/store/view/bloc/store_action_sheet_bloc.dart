@@ -1,5 +1,11 @@
+// Flutter imports:
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
+
+// Package imports:
+import 'package:get/get.dart';
+
+// Project imports:
 import 'package:fluttertaladsod/application/bloc/auth/auth_bloc.dart';
 import 'package:fluttertaladsod/application/bloc/core/simple_progress_setter.dart';
 import 'package:fluttertaladsod/application/core/haptic_feedback.dart';
@@ -11,7 +17,6 @@ import 'package:fluttertaladsod/domain/report/report.dart';
 import 'package:fluttertaladsod/domain/report/report_failure.dart';
 import 'package:fluttertaladsod/domain/user/i_user_repository.dart';
 import 'package:fluttertaladsod/domain/user/user.dart';
-import 'package:get/get.dart';
 
 class StoreActionSheetBloc extends GetxController
     with SimepleProgressSetter<ReportFailure> {

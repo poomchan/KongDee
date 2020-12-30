@@ -1,4 +1,7 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Project imports:
 import 'package:fluttertaladsod/application/screens/store/chat/widgets/input_bar.dart';
 import 'package:fluttertaladsod/application/screens/store/chat/widgets/message_view.dart';
 

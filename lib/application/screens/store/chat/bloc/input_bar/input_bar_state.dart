@@ -1,6 +1,9 @@
+// Package imports:
 import 'package:dartz/dartz.dart';
-import 'package:fluttertaladsod/domain/chat/chat_failure.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+
+// Project imports:
+import 'package:fluttertaladsod/domain/chat/chat_failure.dart';
 
 part 'input_bar_state.freezed.dart';
 

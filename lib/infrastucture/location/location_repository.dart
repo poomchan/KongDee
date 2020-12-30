@@ -1,13 +1,16 @@
+// Package imports:
 import 'package:dartz/dartz.dart';
-import 'package:fluttertaladsod/domain/core/value_objects.dart';
-import 'package:fluttertaladsod/domain/location/i_location_repository.dart';
-import 'package:fluttertaladsod/domain/location/location.dart';
-import 'package:fluttertaladsod/domain/location/location_failure.dart';
 import 'package:geocoding/geocoding.dart' as _code;
 import 'package:geoflutterfire/geoflutterfire.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:location/location.dart';
+
+// Project imports:
+import 'package:fluttertaladsod/domain/core/value_objects.dart';
+import 'package:fluttertaladsod/domain/location/i_location_repository.dart';
+import 'package:fluttertaladsod/domain/location/location.dart';
+import 'package:fluttertaladsod/domain/location/location_failure.dart';
 
 class LocationRepository implements ILocationRepository {
   final _location = Get.find<Location>();

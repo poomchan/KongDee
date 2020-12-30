@@ -1,11 +1,16 @@
-import 'package:dartz/dartz.dart';
+// Flutter imports:
 import 'package:flutter/widgets.dart';
+
+// Package imports:
+import 'package:dartz/dartz.dart';
+import 'package:rxdart/subjects.dart';
+
+// Project imports:
 import 'package:fluttertaladsod/domain/core/value_objects.dart';
 import 'package:fluttertaladsod/domain/location/location.dart';
 import 'package:fluttertaladsod/domain/store/store.dart';
 import 'package:fluttertaladsod/domain/store/store_failures.dart';
 import 'package:fluttertaladsod/domain/user/user.dart';
-import 'package:rxdart/subjects.dart';
 
 abstract class IStoreRepository {
   Stream<Either<StoreFailure, Store>> watchOwnedStore({

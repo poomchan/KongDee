@@ -1,6 +1,11 @@
+// Dart imports:
 import 'dart:async';
 
+// Package imports:
 import 'package:dartz/dartz.dart';
+import 'package:get/get.dart';
+
+// Project imports:
 import 'package:fluttertaladsod/application/bloc/auth/auth_bloc.dart';
 import 'package:fluttertaladsod/application/bloc/core/simple_progress_setter.dart';
 import 'package:fluttertaladsod/application/bloc/location/location_bloc.dart';
@@ -8,7 +13,6 @@ import 'package:fluttertaladsod/domain/core/value_objects.dart';
 import 'package:fluttertaladsod/domain/store/i_store_repository.dart';
 import 'package:fluttertaladsod/domain/store/store.dart';
 import 'package:fluttertaladsod/domain/store/store_failures.dart';
-import 'package:get/get.dart';
 
 class BlockedStoreBloc extends GetxController
     with SimepleProgressSetter<StoreFailure> {

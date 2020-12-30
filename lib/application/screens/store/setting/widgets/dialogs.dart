@@ -1,8 +1,13 @@
+// Flutter imports:
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:get/get.dart';
+
+// Project imports:
 import 'package:fluttertaladsod/application/core/components/progress_indicator.dart';
 import 'package:fluttertaladsod/application/screens/store/setting/bloc/blocked_users_bloc.dart';
-import 'package:get/get.dart';
 
 Widget buildAvatarActionSheet() {
   return GetBuilder<BlockedUsersSettingBloc>(

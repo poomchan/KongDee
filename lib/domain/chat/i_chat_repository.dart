@@ -1,9 +1,13 @@
-import 'package:dartz/dartz.dart';
+// Flutter imports:
 import 'package:flutter/foundation.dart';
+
+// Package imports:
+import 'package:dartz/dartz.dart';
+
+// Project imports:
 import 'package:fluttertaladsod/domain/core/value_objects.dart';
 import 'chat_failure.dart';
 import 'message.dart';
-
 
 abstract class IChatRepository {
   Stream<Either<ChatFailure, List<MessageDomain>>> watchStoreMessages({

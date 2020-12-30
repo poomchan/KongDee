@@ -1,8 +1,13 @@
+// Flutter imports:
 import 'package:flutter/material.dart' hide Router;
+
+// Package imports:
+import 'package:get/get.dart';
+
+// Project imports:
 import 'package:fluttertaladsod/application/bloc/app_binding.dart';
 import 'package:fluttertaladsod/application/core/theme.dart';
 import 'package:fluttertaladsod/application/routes/router.dart';
-import 'package:get/get.dart';
 
 class AppWidget extends StatelessWidget {
   static const ColorScheme colorScheme = tLightThemeColorScheme;

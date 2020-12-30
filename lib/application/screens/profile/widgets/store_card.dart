@@ -1,10 +1,14 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:get/get.dart';
+
+// Project imports:
 import 'package:fluttertaladsod/application/core/components/my_network_image.dart';
 import 'package:fluttertaladsod/application/core/theme.dart';
 import 'package:fluttertaladsod/application/routes/router.dart';
 import 'package:fluttertaladsod/domain/store/store.dart';
-import 'package:get/get.dart';
-
 import 'layout_helpers.dart';
 
 class StoreCard extends StatelessWidget {

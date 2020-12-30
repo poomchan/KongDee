@@ -1,3 +1,4 @@
+// Project imports:
 import 'package:fluttertaladsod/domain/core/value_failures.dart';
 
 class NotAuthenticatedError extends Error {}

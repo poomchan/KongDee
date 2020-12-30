@@ -1,17 +1,22 @@
+// Flutter imports:
+import 'package:flutter/widgets.dart';
+
+// Package imports:
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
-import 'package:flutter/widgets.dart';
+import 'package:geoflutterfire/geoflutterfire.dart';
+import 'package:get/get.dart';
+import 'package:rxdart/rxdart.dart';
+
+// Project imports:
 import 'package:fluttertaladsod/domain/core/value_objects.dart';
 import 'package:fluttertaladsod/domain/location/location.dart';
 import 'package:fluttertaladsod/domain/store/i_store_repository.dart';
 import 'package:fluttertaladsod/domain/store/store.dart';
 import 'package:fluttertaladsod/domain/store/store_failures.dart';
 import 'package:fluttertaladsod/domain/user/user.dart';
-import 'package:fluttertaladsod/infrastucture/store/store_dto.dart';
-import 'package:geoflutterfire/geoflutterfire.dart';
-import 'package:get/get.dart';
-import 'package:rxdart/rxdart.dart';
 import 'package:fluttertaladsod/infrastucture/core/firestore_helper.dart';
+import 'package:fluttertaladsod/infrastucture/store/store_dto.dart';
 
 class StoreRepository implements IStoreRepository {
   final _firestore = Get.find<FirebaseFirestore>();

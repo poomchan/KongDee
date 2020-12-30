@@ -84,6 +84,7 @@ dev_dependencies:
   build_runner: ^1.7.0
   freezed: ^0.11.5
   json_serializable: ^3.3.3
+  import_sorter: ^4.4.1
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

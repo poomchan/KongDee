@@ -1,7 +1,11 @@
-import 'package:awesome_dialog/awesome_dialog.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
+// Package imports:
+import 'package:awesome_dialog/awesome_dialog.dart';
+
+// Project imports:
 import 'progress_indicator.dart';
 
 AwesomeDialog savingDialog(BuildContext context) {

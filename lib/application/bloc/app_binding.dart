@@ -1,3 +1,7 @@
+// Package imports:
+import 'package:get/get.dart';
+
+// Project imports:
 import 'package:fluttertaladsod/application/bloc/auth/auth_bloc.dart';
 import 'package:fluttertaladsod/application/bloc/location/location_bloc.dart';
 import 'package:fluttertaladsod/domain/auth/i_auth_facade.dart';
@@ -10,12 +14,11 @@ import 'package:fluttertaladsod/domain/user/i_user_repository.dart';
 import 'package:fluttertaladsod/infrastucture/auth/firebase_auth_facade.dart';
 import 'package:fluttertaladsod/infrastucture/chat/chat_repository.dart';
 import 'package:fluttertaladsod/infrastucture/core/injectable_modules.dart';
-import 'package:fluttertaladsod/infrastucture/location/location_repository.dart';
 import 'package:fluttertaladsod/infrastucture/image/image_repository.dart';
+import 'package:fluttertaladsod/infrastucture/location/location_repository.dart';
 import 'package:fluttertaladsod/infrastucture/report/report_repository.dart';
 import 'package:fluttertaladsod/infrastucture/store/store_repository.dart';
 import 'package:fluttertaladsod/infrastucture/user/user_repository.dart';
-import 'package:get/get.dart';
 
 class AppBinding extends Bindings {
   final m = InjectMod();

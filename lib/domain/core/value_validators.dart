@@ -1,4 +1,7 @@
+// Package imports:
 import 'package:dartz/dartz.dart';
+
+// Project imports:
 import 'package:fluttertaladsod/domain/core/value_failures.dart';
 
 Either<ValueFailure<String>, String> validateMaxStringLength(
