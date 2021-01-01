@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:fluttertaladsod/domain/chat/chat_failure.dart';
 
 // Package imports:
 import 'package:get/get.dart';
@@ -8,7 +9,6 @@ import 'package:get/get.dart';
 import 'package:fluttertaladsod/application/bloc/auth/auth_bloc.dart';
 import 'package:fluttertaladsod/application/bloc/core/state_setter.dart';
 import 'package:fluttertaladsod/application/screens/store/view/bloc/store_view_bloc.dart';
-import 'package:fluttertaladsod/domain/chat/chat_failure.dart';
 import 'package:fluttertaladsod/domain/chat/i_chat_repository.dart';
 import 'package:fluttertaladsod/domain/chat/message.dart';
 import 'package:fluttertaladsod/domain/core/value_objects.dart';

@@ -18,14 +18,13 @@ class NameField extends StatelessWidget {
     return ReusableCard(
       children: [
         TextFormField(
-            initialValue: bloc.store.name,
+            controller: bloc.state.nameController,
             decoration: InputDecoration(labelText: 'store name'),
             style: TextStyle(fontSize: 30.0),
             maxLines: 1,
             maxLength: StoreName.maxLength,
-            onChanged: (val) => bloc.nameChanged(val),
             autovalidateMode: AutovalidateMode.onUserInteraction,
-            validator: (_) => StoreName(bloc.store.name).value.fold(
+            validator: (_) => bloc.state.nameDomain.value.fold(
                   (f) => f.maybeWhen(
                     exceedingLength: (val, length) => 'name is too long',
                     empty: (val) => 'name cannot be empty',

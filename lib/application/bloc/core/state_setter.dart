@@ -20,7 +20,7 @@ mixin MyStateSetter<T, F> on GetxController {
   @mustCallSuper
   void initState(T s) => _state = s;
 
-  void _setState(T newState, ActionState newAction) {
+  void setState(T newState, [ActionState newAction]) {
     if (observe) {
       print(
           '$T: ${_getProgressString(newAction)} with ${newState ?? 'no state changed.'}');
@@ -31,18 +31,22 @@ mixin MyStateSetter<T, F> on GetxController {
     if (progress != newAction) {
       progress = newAction;
     }
+  }
+
+  void setLoading([T newState]) {
+    setState(newState, const ActionState.loading());
     update();
   }
 
-  void setLoading([T newState]) =>
-      _setState(newState, const ActionState.loading());
-
-  void setLoaded([T newState]) =>
-      _setState(newState, const ActionState.loaded());
+  void setLoaded([T newState]) {
+    setState(newState, const ActionState.loaded());
+    update();
+  }
 
   void setFailure(F f) {
     failure = f;
-    _setState(null, ActionState.failure());
+    setState(null, ActionState.failure());
+    update();
   }
 
   String _getProgressString(ActionState prog) {

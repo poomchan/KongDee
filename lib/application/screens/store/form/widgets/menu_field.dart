@@ -1,6 +1,7 @@
 // Flutter imports:
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertaladsod/application/bloc/core/view_widget.dart';
 
 // Package imports:
 import 'package:get/get.dart';
@@ -10,23 +11,21 @@ import 'package:fluttertaladsod/application/screens/store/form/bloc/store_form_b
 import 'package:fluttertaladsod/application/screens/store/form/widgets/reusable_card.dart';
 import 'package:fluttertaladsod/domain/store/value_objects.dart';
 
-class Menufield extends StatelessWidget {
+class Menufield extends ViewWidget<StoreFormBloc> {
   const Menufield();
 
   @override
   Widget build(BuildContext context) {
-    final bloc = Get.find<StoreFormBloc>();
     return ReusableCard(
       title: 'Menu',
       children: [
         TextFormField(
-          initialValue: bloc.store.menu,
+          controller: bloc.state.menuController,
           minLines: 5,
           maxLines: null,
           textInputAction: TextInputAction.newline,
-          onChanged: (val) => bloc.menuChanged(val),
           autovalidateMode: AutovalidateMode.always,
-          validator: (_) => StoreMenu(bloc.store.menu).value.fold(
+          validator: (_) => bloc.state.nameDomain.value.fold(
                 (f) => f.maybeWhen(
                   exceedingLength: (val, length) => 'menu is too long',
                   orElse: () => null,

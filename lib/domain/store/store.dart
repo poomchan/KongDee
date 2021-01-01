@@ -42,7 +42,7 @@ abstract class Store implements _$Store {
         banner: StoreBanner.created(),
         menu: StoreMenu(''),
         pics: StorePic16(List.empty()),
-        location: StoreLocation.created(),
+        location: StoreLocation.empty(),
         prefs: StorePrefs.created(),
         isOwner: true,
         blockedUsers: {},

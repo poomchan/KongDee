@@ -21,7 +21,7 @@ import 'package:fluttertaladsod/domain/core/value_objects.dart';
 import 'package:fluttertaladsod/domain/user/user.dart';
 
 class MessageViewBloc extends GetxController
-    with MyStateSetter<MessageViewState, ChatFailure> {
+    with MyStateSetter<MessageViewState, ChatFailure>{
   final IChatRepository _iChatRepository = Get.find();
   final AuthBloc _authBloc = Get.find();
   final StoreViewBloc _storeViewBloc = Get.find();

@@ -17,7 +17,7 @@ abstract class StoreLocation with _$StoreLocation {
     double distanceAway,
   }) = _StoreLocation;
 
-  factory StoreLocation.created() {
+  factory StoreLocation.empty() {
     return StoreLocation(
       address: StoreAddress(''),
     );

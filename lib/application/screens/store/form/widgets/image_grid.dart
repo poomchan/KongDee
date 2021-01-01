@@ -79,7 +79,7 @@ class ImageGrid extends StatelessWidget {
     return indexOption.fold(
       () => Icon(Icons.add),
       (indx) => GetBuilder<StoreFormBloc>(
-        builder: (bloc) => bloc.store.pics[indx].fold(
+        builder: (bloc) => bloc.state.pics[indx].fold(
               (file) => Image.file(
                 file,
                 fit: BoxFit.cover,

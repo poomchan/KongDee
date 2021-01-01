@@ -31,7 +31,7 @@ class ImageField extends StatelessWidget {
           childAspectRatio: 0.95,
           children: [
             ...List.generate(
-              bloc.store.pics.length,
+              bloc.state.pics.length,
               (index) => ImageGrid(
                 indexOption: dartz.some(
                     index), // pass index to bloc builder and to delete function in the grid
