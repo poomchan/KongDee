@@ -24,7 +24,6 @@ class AuthBloc extends GetxController with SimepleProgressSetter<AuthFailure> {
 
   void checkAuthStatus() {
     if (isAuth) {
-      print(isAuth);
       watchUser();
     } else {
       _user.value = null;
@@ -37,12 +36,12 @@ class AuthBloc extends GetxController with SimepleProgressSetter<AuthFailure> {
     _userSub = userOrFailureStream.listen((userOrFailure) {
       return userOrFailure.fold(
         (f) {
-          print('not auth');
+          print('AuthBloc: not auth');
           _user.value = null;
           updateWithFailure(f);
         },
         (user) {
-          print('auth');
+          print('AuthBloc : auth');
           _user.value = user;
           updateWithLoaded();
         },

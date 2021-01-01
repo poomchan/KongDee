@@ -56,7 +56,6 @@ class MessageViewBloc extends GetxController
   Future<void> fetchMoreChat() async {
     // no need to paginate if the total messages in the room is below 20
     if (state.messageList.length % Chat.itemPerPage != 0) return;
-
     final fOrMessageList = await _iChatRepository.fetchMoreStoreMessages(
       storeId: storeId,
       viewerId: user.id,
@@ -80,13 +79,8 @@ class MessageViewBloc extends GetxController
   @override
   void onInit() {
     initState(MessageViewState.initial());
+    watchStarted();
     super.onInit();
-  }
-
-  @override
-  Future<void> onReady() async {
-    await watchStarted();
-    super.onReady();
   }
 
   @override

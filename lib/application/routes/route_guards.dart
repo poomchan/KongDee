@@ -13,13 +13,10 @@ class AuthGuardMiddleware extends GetMiddleware {
   RouteSettings redirect(String route) {
     final AuthBloc _authBloc = Get.find();
     if (!_authBloc.isAuth) {
-      print('not auth =(');
       return RouteSettings(name: Routes.signInSplash);
     } else {
-      print('auth!');
-      return RouteSettings(name: route);
+      return null;
     }
   }
-
   
 }

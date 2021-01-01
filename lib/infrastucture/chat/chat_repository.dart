@@ -64,7 +64,7 @@ class ChatRepository implements IChatRepository {
       final _ref = _getRef(storeId);
       final snap = await _ref
           .orderBy(timestamp, descending: true)
-          .startAfter([lastMessage.id.getOrCrash()])
+          .startAfter([lastMessage.timestamp])
           .limit(Chat.itemPerPage)
           .get();
       return _mapChatListToDomain(snap, viewerId);

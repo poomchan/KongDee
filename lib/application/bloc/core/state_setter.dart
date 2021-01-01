@@ -8,7 +8,7 @@ import 'package:get/get_state_manager/get_state_manager.dart';
 import 'action_state.dart';
 
 mixin MyStateSetter<T, F> on GetxController {
-  static const observe = true;
+  static const observe = false;
 
   @mustCallSuper
   T _state;
