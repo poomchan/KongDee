@@ -70,7 +70,8 @@ class StorePic16 extends ValueObject<List<StorePic>> {
   static const maxLength = 16;
 
   factory StorePic16(List<StorePic> input) {
-    return StorePic16._(validateMaxListLength(input, maxLength));
+    return StorePic16._(validateInputNotNull(input)
+        .flatMap((_) => validateMaxListLength(input, maxLength)));
   }
 
   const StorePic16._(this.value);

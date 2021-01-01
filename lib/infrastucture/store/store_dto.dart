@@ -23,12 +23,12 @@ abstract class StoreDto implements _$StoreDto {
     @required @nullable String name,
     @required @nullable String menu,
     @required @nullable String banner,
-    @required @nullable List<String> pics,
+    @required @JsonKey(defaultValue: []) List<String> pics,
     @required @nullable String ownerId,
     @required StoreLocationDto location,
     @required StorePrefsDto prefs,
     @required @ServerTimestampConverter() FieldValue serverTimeStamp,
-    @required @nullable Map<String, bool> blockedUsers,
+    @required @JsonKey(defaultValue: {}) Map<String, bool> blockedUsers,
   }) = _StoreDto;
 
   factory StoreDto.fromDomain(Store s) {
@@ -62,7 +62,7 @@ abstract class StoreDto implements _$StoreDto {
       location: location.toDomain(l),
       prefs: prefs.toDomain(),
       isOwner: u.fold(() => false, (u) => u.id.getOrCrash() == ownerId),
-      blockedUsers: blockedUsers ?? {},
+      blockedUsers: blockedUsers,
     );
   }
 
