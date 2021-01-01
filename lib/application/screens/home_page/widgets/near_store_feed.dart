@@ -82,6 +82,7 @@ class NearStoreFeed extends ViewWidget<NearStoreBloc> {
 
   Widget _buildStoreCard(Store store) {
     if (store.failureOption.isSome()) {
+      print(store.failureOption.getOrElse(() => null).failedValue);
       return Card(
         color: Colors.white10,
         child: Icon(Icons.error),

@@ -81,7 +81,7 @@ Either<ValueFailure, double> validateNumberIsPositive(double input) {
 
 Either<ValueFailure, T> validateInputNotNull<T>(T input) {
     if (input == null) {
-      return left(ValueFailure.nullValue());
+      return left(ValueFailure.nullValue(T));
     } else {
       return right(input);
     }

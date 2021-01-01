@@ -28,5 +28,7 @@ abstract class ValueFailure with _$ValueFailure {
   const factory ValueFailure.numberNotPositive(
     dynamic failedValue,
   ) = NumberNotPositive;
-  const factory ValueFailure.nullValue() = NullValue;
+  const factory ValueFailure.nullValue(
+    dynamic failedValue,
+  ) = NullValue;
 }

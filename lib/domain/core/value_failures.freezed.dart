@@ -64,8 +64,10 @@ class _$ValueFailureTearOff {
   }
 
 // ignore: unused_element
-  NullValue nullValue() {
-    return const NullValue();
+  NullValue nullValue(dynamic failedValue) {
+    return NullValue(
+      failedValue,
+    );
   }
 }
 
@@ -73,6 +75,8 @@ class _$ValueFailureTearOff {
 const $ValueFailure = _$ValueFailureTearOff();
 
 mixin _$ValueFailure {
+  dynamic get failedValue;
+
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result exceedingLength(dynamic failedValue, int max),
@@ -82,7 +86,7 @@ mixin _$ValueFailure {
     @required Result invalidEmail(dynamic failedValue),
     @required Result shortPassword(dynamic failedValue),
     @required Result numberNotPositive(dynamic failedValue),
-    @required Result nullValue(),
+    @required Result nullValue(dynamic failedValue),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
@@ -93,7 +97,7 @@ mixin _$ValueFailure {
     Result invalidEmail(dynamic failedValue),
     Result shortPassword(dynamic failedValue),
     Result numberNotPositive(dynamic failedValue),
-    Result nullValue(),
+    Result nullValue(dynamic failedValue),
     @required Result orElse(),
   });
   @optionalTypeArgs
@@ -119,12 +123,15 @@ mixin _$ValueFailure {
     Result nullValue(NullValue value),
     @required Result orElse(),
   });
+
+  $ValueFailureCopyWith<ValueFailure> get copyWith;
 }
 
 abstract class $ValueFailureCopyWith<$Res> {
   factory $ValueFailureCopyWith(
           ValueFailure value, $Res Function(ValueFailure) then) =
       _$ValueFailureCopyWithImpl<$Res>;
+  $Res call({dynamic failedValue});
 }
 
 class _$ValueFailureCopyWithImpl<$Res> implements $ValueFailureCopyWith<$Res> {
@@ -133,12 +140,24 @@ class _$ValueFailureCopyWithImpl<$Res> implements $ValueFailureCopyWith<$Res> {
   final ValueFailure _value;
   // ignore: unused_field
   final $Res Function(ValueFailure) _then;
+
+  @override
+  $Res call({
+    Object failedValue = freezed,
+  }) {
+    return _then(_value.copyWith(
+      failedValue:
+          failedValue == freezed ? _value.failedValue : failedValue as dynamic,
+    ));
+  }
 }
 
-abstract class $ExceedingLengthCopyWith<$Res> {
+abstract class $ExceedingLengthCopyWith<$Res>
+    implements $ValueFailureCopyWith<$Res> {
   factory $ExceedingLengthCopyWith(
           ExceedingLength value, $Res Function(ExceedingLength) then) =
       _$ExceedingLengthCopyWithImpl<$Res>;
+  @override
   $Res call({dynamic failedValue, int max});
 }
 
@@ -210,7 +229,7 @@ class _$ExceedingLength implements ExceedingLength {
     @required Result invalidEmail(dynamic failedValue),
     @required Result shortPassword(dynamic failedValue),
     @required Result numberNotPositive(dynamic failedValue),
-    @required Result nullValue(),
+    @required Result nullValue(dynamic failedValue),
   }) {
     assert(exceedingLength != null);
     assert(empty != null);
@@ -233,7 +252,7 @@ class _$ExceedingLength implements ExceedingLength {
     Result invalidEmail(dynamic failedValue),
     Result shortPassword(dynamic failedValue),
     Result numberNotPositive(dynamic failedValue),
-    Result nullValue(),
+    Result nullValue(dynamic failedValue),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -291,14 +310,17 @@ abstract class ExceedingLength implements ValueFailure {
   const factory ExceedingLength(dynamic failedValue, int max) =
       _$ExceedingLength;
 
+  @override
   dynamic get failedValue;
   int get max;
+  @override
   $ExceedingLengthCopyWith<ExceedingLength> get copyWith;
 }
 
-abstract class $EmptyCopyWith<$Res> {
+abstract class $EmptyCopyWith<$Res> implements $ValueFailureCopyWith<$Res> {
   factory $EmptyCopyWith(Empty value, $Res Function(Empty) then) =
       _$EmptyCopyWithImpl<$Res>;
+  @override
   $Res call({dynamic failedValue});
 }
 
@@ -358,7 +380,7 @@ class _$Empty implements Empty {
     @required Result invalidEmail(dynamic failedValue),
     @required Result shortPassword(dynamic failedValue),
     @required Result numberNotPositive(dynamic failedValue),
-    @required Result nullValue(),
+    @required Result nullValue(dynamic failedValue),
   }) {
     assert(exceedingLength != null);
     assert(empty != null);
@@ -381,7 +403,7 @@ class _$Empty implements Empty {
     Result invalidEmail(dynamic failedValue),
     Result shortPassword(dynamic failedValue),
     Result numberNotPositive(dynamic failedValue),
-    Result nullValue(),
+    Result nullValue(dynamic failedValue),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -438,13 +460,16 @@ class _$Empty implements Empty {
 abstract class Empty implements ValueFailure {
   const factory Empty(dynamic failedValue) = _$Empty;
 
+  @override
   dynamic get failedValue;
+  @override
   $EmptyCopyWith<Empty> get copyWith;
 }
 
-abstract class $MultilineCopyWith<$Res> {
+abstract class $MultilineCopyWith<$Res> implements $ValueFailureCopyWith<$Res> {
   factory $MultilineCopyWith(Multiline value, $Res Function(Multiline) then) =
       _$MultilineCopyWithImpl<$Res>;
+  @override
   $Res call({dynamic failedValue});
 }
 
@@ -504,7 +529,7 @@ class _$Multiline implements Multiline {
     @required Result invalidEmail(dynamic failedValue),
     @required Result shortPassword(dynamic failedValue),
     @required Result numberNotPositive(dynamic failedValue),
-    @required Result nullValue(),
+    @required Result nullValue(dynamic failedValue),
   }) {
     assert(exceedingLength != null);
     assert(empty != null);
@@ -527,7 +552,7 @@ class _$Multiline implements Multiline {
     Result invalidEmail(dynamic failedValue),
     Result shortPassword(dynamic failedValue),
     Result numberNotPositive(dynamic failedValue),
-    Result nullValue(),
+    Result nullValue(dynamic failedValue),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -584,14 +609,18 @@ class _$Multiline implements Multiline {
 abstract class Multiline implements ValueFailure {
   const factory Multiline(dynamic failedValue) = _$Multiline;
 
+  @override
   dynamic get failedValue;
+  @override
   $MultilineCopyWith<Multiline> get copyWith;
 }
 
-abstract class $ListTooLongCopyWith<$Res> {
+abstract class $ListTooLongCopyWith<$Res>
+    implements $ValueFailureCopyWith<$Res> {
   factory $ListTooLongCopyWith(
           ListTooLong value, $Res Function(ListTooLong) then) =
       _$ListTooLongCopyWithImpl<$Res>;
+  @override
   $Res call({dynamic failedValue, int max});
 }
 
@@ -662,7 +691,7 @@ class _$ListTooLong implements ListTooLong {
     @required Result invalidEmail(dynamic failedValue),
     @required Result shortPassword(dynamic failedValue),
     @required Result numberNotPositive(dynamic failedValue),
-    @required Result nullValue(),
+    @required Result nullValue(dynamic failedValue),
   }) {
     assert(exceedingLength != null);
     assert(empty != null);
@@ -685,7 +714,7 @@ class _$ListTooLong implements ListTooLong {
     Result invalidEmail(dynamic failedValue),
     Result shortPassword(dynamic failedValue),
     Result numberNotPositive(dynamic failedValue),
-    Result nullValue(),
+    Result nullValue(dynamic failedValue),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -742,15 +771,19 @@ class _$ListTooLong implements ListTooLong {
 abstract class ListTooLong implements ValueFailure {
   const factory ListTooLong(dynamic failedValue, int max) = _$ListTooLong;
 
+  @override
   dynamic get failedValue;
   int get max;
+  @override
   $ListTooLongCopyWith<ListTooLong> get copyWith;
 }
 
-abstract class $InvalidEmailCopyWith<$Res> {
+abstract class $InvalidEmailCopyWith<$Res>
+    implements $ValueFailureCopyWith<$Res> {
   factory $InvalidEmailCopyWith(
           InvalidEmail value, $Res Function(InvalidEmail) then) =
       _$InvalidEmailCopyWithImpl<$Res>;
+  @override
   $Res call({dynamic failedValue});
 }
 
@@ -811,7 +844,7 @@ class _$InvalidEmail implements InvalidEmail {
     @required Result invalidEmail(dynamic failedValue),
     @required Result shortPassword(dynamic failedValue),
     @required Result numberNotPositive(dynamic failedValue),
-    @required Result nullValue(),
+    @required Result nullValue(dynamic failedValue),
   }) {
     assert(exceedingLength != null);
     assert(empty != null);
@@ -834,7 +867,7 @@ class _$InvalidEmail implements InvalidEmail {
     Result invalidEmail(dynamic failedValue),
     Result shortPassword(dynamic failedValue),
     Result numberNotPositive(dynamic failedValue),
-    Result nullValue(),
+    Result nullValue(dynamic failedValue),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -891,14 +924,18 @@ class _$InvalidEmail implements InvalidEmail {
 abstract class InvalidEmail implements ValueFailure {
   const factory InvalidEmail(dynamic failedValue) = _$InvalidEmail;
 
+  @override
   dynamic get failedValue;
+  @override
   $InvalidEmailCopyWith<InvalidEmail> get copyWith;
 }
 
-abstract class $ShortPasswordCopyWith<$Res> {
+abstract class $ShortPasswordCopyWith<$Res>
+    implements $ValueFailureCopyWith<$Res> {
   factory $ShortPasswordCopyWith(
           ShortPassword value, $Res Function(ShortPassword) then) =
       _$ShortPasswordCopyWithImpl<$Res>;
+  @override
   $Res call({dynamic failedValue});
 }
 
@@ -959,7 +996,7 @@ class _$ShortPassword implements ShortPassword {
     @required Result invalidEmail(dynamic failedValue),
     @required Result shortPassword(dynamic failedValue),
     @required Result numberNotPositive(dynamic failedValue),
-    @required Result nullValue(),
+    @required Result nullValue(dynamic failedValue),
   }) {
     assert(exceedingLength != null);
     assert(empty != null);
@@ -982,7 +1019,7 @@ class _$ShortPassword implements ShortPassword {
     Result invalidEmail(dynamic failedValue),
     Result shortPassword(dynamic failedValue),
     Result numberNotPositive(dynamic failedValue),
-    Result nullValue(),
+    Result nullValue(dynamic failedValue),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -1039,14 +1076,18 @@ class _$ShortPassword implements ShortPassword {
 abstract class ShortPassword implements ValueFailure {
   const factory ShortPassword(dynamic failedValue) = _$ShortPassword;
 
+  @override
   dynamic get failedValue;
+  @override
   $ShortPasswordCopyWith<ShortPassword> get copyWith;
 }
 
-abstract class $NumberNotPositiveCopyWith<$Res> {
+abstract class $NumberNotPositiveCopyWith<$Res>
+    implements $ValueFailureCopyWith<$Res> {
   factory $NumberNotPositiveCopyWith(
           NumberNotPositive value, $Res Function(NumberNotPositive) then) =
       _$NumberNotPositiveCopyWithImpl<$Res>;
+  @override
   $Res call({dynamic failedValue});
 }
 
@@ -1108,7 +1149,7 @@ class _$NumberNotPositive implements NumberNotPositive {
     @required Result invalidEmail(dynamic failedValue),
     @required Result shortPassword(dynamic failedValue),
     @required Result numberNotPositive(dynamic failedValue),
-    @required Result nullValue(),
+    @required Result nullValue(dynamic failedValue),
   }) {
     assert(exceedingLength != null);
     assert(empty != null);
@@ -1131,7 +1172,7 @@ class _$NumberNotPositive implements NumberNotPositive {
     Result invalidEmail(dynamic failedValue),
     Result shortPassword(dynamic failedValue),
     Result numberNotPositive(dynamic failedValue),
-    Result nullValue(),
+    Result nullValue(dynamic failedValue),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -1188,13 +1229,17 @@ class _$NumberNotPositive implements NumberNotPositive {
 abstract class NumberNotPositive implements ValueFailure {
   const factory NumberNotPositive(dynamic failedValue) = _$NumberNotPositive;
 
+  @override
   dynamic get failedValue;
+  @override
   $NumberNotPositiveCopyWith<NumberNotPositive> get copyWith;
 }
 
-abstract class $NullValueCopyWith<$Res> {
+abstract class $NullValueCopyWith<$Res> implements $ValueFailureCopyWith<$Res> {
   factory $NullValueCopyWith(NullValue value, $Res Function(NullValue) then) =
       _$NullValueCopyWithImpl<$Res>;
+  @override
+  $Res call({dynamic failedValue});
 }
 
 class _$NullValueCopyWithImpl<$Res> extends _$ValueFailureCopyWithImpl<$Res>
@@ -1204,23 +1249,44 @@ class _$NullValueCopyWithImpl<$Res> extends _$ValueFailureCopyWithImpl<$Res>
 
   @override
   NullValue get _value => super._value as NullValue;
+
+  @override
+  $Res call({
+    Object failedValue = freezed,
+  }) {
+    return _then(NullValue(
+      failedValue == freezed ? _value.failedValue : failedValue as dynamic,
+    ));
+  }
 }
 
 class _$NullValue implements NullValue {
-  const _$NullValue();
+  const _$NullValue(this.failedValue) : assert(failedValue != null);
+
+  @override
+  final dynamic failedValue;
 
   @override
   String toString() {
-    return 'ValueFailure.nullValue()';
+    return 'ValueFailure.nullValue(failedValue: $failedValue)';
   }
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is NullValue);
+    return identical(this, other) ||
+        (other is NullValue &&
+            (identical(other.failedValue, failedValue) ||
+                const DeepCollectionEquality()
+                    .equals(other.failedValue, failedValue)));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(failedValue);
+
+  @override
+  $NullValueCopyWith<NullValue> get copyWith =>
+      _$NullValueCopyWithImpl<NullValue>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -1232,7 +1298,7 @@ class _$NullValue implements NullValue {
     @required Result invalidEmail(dynamic failedValue),
     @required Result shortPassword(dynamic failedValue),
     @required Result numberNotPositive(dynamic failedValue),
-    @required Result nullValue(),
+    @required Result nullValue(dynamic failedValue),
   }) {
     assert(exceedingLength != null);
     assert(empty != null);
@@ -1242,7 +1308,7 @@ class _$NullValue implements NullValue {
     assert(shortPassword != null);
     assert(numberNotPositive != null);
     assert(nullValue != null);
-    return nullValue();
+    return nullValue(failedValue);
   }
 
   @override
@@ -1255,12 +1321,12 @@ class _$NullValue implements NullValue {
     Result invalidEmail(dynamic failedValue),
     Result shortPassword(dynamic failedValue),
     Result numberNotPositive(dynamic failedValue),
-    Result nullValue(),
+    Result nullValue(dynamic failedValue),
     @required Result orElse(),
   }) {
     assert(orElse != null);
     if (nullValue != null) {
-      return nullValue();
+      return nullValue(failedValue);
     }
     return orElse();
   }
@@ -1310,5 +1376,10 @@ class _$NullValue implements NullValue {
 }
 
 abstract class NullValue implements ValueFailure {
-  const factory NullValue() = _$NullValue;
+  const factory NullValue(dynamic failedValue) = _$NullValue;
+
+  @override
+  dynamic get failedValue;
+  @override
+  $NullValueCopyWith<NullValue> get copyWith;
 }
