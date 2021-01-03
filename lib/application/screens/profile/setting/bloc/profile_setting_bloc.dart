@@ -7,7 +7,7 @@ import 'package:fluttertaladsod/application/bloc/core/simple_progress_setter.dar
 import 'package:fluttertaladsod/domain/user/user.dart';
 
 class ProfileSettingBloc extends GetxController with SimepleProgressSetter{
-  AuthBloc get _authBloc => Get.find();
+  final AuthBloc _authBloc = Get.find();
 
   UserDomain get user => _authBloc.user;
 

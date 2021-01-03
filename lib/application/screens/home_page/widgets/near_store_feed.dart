@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:fluttertaladsod/application/language/translation_base.dart';
 
 // Package imports:
 import 'package:get/get.dart';
@@ -7,7 +8,7 @@ import 'package:get/get.dart';
 // Project imports:
 import 'package:fluttertaladsod/application/bloc/core/view_widget.dart';
 import 'package:fluttertaladsod/application/core/components/progress_indicator.dart';
-import 'package:fluttertaladsod/application/screens/home_page/bloc/store_feed/near_store_bloc.dart';
+import 'package:fluttertaladsod/application/screens/home_page/bloc/near_store_bloc.dart';
 import 'package:fluttertaladsod/application/screens/home_page/widgets/store_card2.dart';
 import 'package:fluttertaladsod/domain/store/store.dart';
 import 'buttons.dart';
@@ -20,8 +21,8 @@ class NearStoreFeed extends ViewWidget<NearStoreBloc> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          'Stores close to you',
+        Text(
+          TrBase.storeCloseToYou.tr,
           style: TextStyle(fontSize: 25.0),
         ),
         const SizedBox(height: 10.0),

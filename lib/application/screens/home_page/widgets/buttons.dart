@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertaladsod/application/bloc/core/view_widget.dart';
-import 'package:fluttertaladsod/application/screens/home_page/bloc/store_feed/near_store_bloc.dart';
+import 'package:fluttertaladsod/application/screens/home_page/bloc/near_store_bloc.dart';
 import 'package:get/get.dart';
 
 class StoreFeedButton extends ViewWidget<NearStoreBloc> {

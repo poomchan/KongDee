@@ -10,9 +10,8 @@ import 'package:fluttertaladsod/domain/user/user.dart';
 
 class ProfileBloc extends GetxController with SimepleProgressSetter {
   final userId = Get.arguments as UniqueId;
-
-  AuthBloc get authBloc => Get.find();
-  IUserRepository get _iUserRepo => Get.find();
+  final AuthBloc authBloc = Get.find();
+  final IUserRepository _iUserRepo = Get.find();
   bool get isOwner => userId == authBloc.user.id;
 
   final _user = Rx<UserDomain>();

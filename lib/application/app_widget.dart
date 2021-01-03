@@ -1,5 +1,8 @@
 // Flutter imports:
 import 'package:flutter/material.dart' hide Router;
+import 'package:fluttertaladsod/application/language/en_us.dart';
+import 'package:fluttertaladsod/application/language/th.dart';
+import 'package:fluttertaladsod/application/language/translation.dart';
 
 // Package imports:
 import 'package:get/get.dart';
@@ -17,6 +20,9 @@ class AppWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      translations: AppTranslation(),
+      locale: ThaiTr.locale,
+      fallbackLocale: EnUSTr.locale,
       smartManagement: SmartManagement.full,
       getPages: Router.pages,
       initialRoute: Routes.startUpSplash,

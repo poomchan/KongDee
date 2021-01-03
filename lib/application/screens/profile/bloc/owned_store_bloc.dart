@@ -14,9 +14,9 @@ import 'package:fluttertaladsod/domain/store/store_failures.dart';
 
 class OwnedStoreBloc extends GetxController
     with SimepleProgressSetter<StoreFailure> {
-  IStoreRepository get _iStoreRepo => Get.find();
-  ILocationRepository get _iLocationRepo => Get.find();
-  AuthBloc get _authBloc => Get.find();
+  final IStoreRepository _iStoreRepo = Get.find();
+  final ILocationRepository _iLocationRepo = Get.find();
+  final AuthBloc _authBloc = Get.find();
 
   final _store = Store.created().obs;
   Store get store => _store.value;

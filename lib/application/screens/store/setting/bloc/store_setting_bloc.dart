@@ -1,4 +1,5 @@
 // Package imports:
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
 // Project imports:
@@ -13,17 +14,14 @@ import 'package:fluttertaladsod/domain/store/value_objects.dart';
 
 class StoreSettingBloc extends GetxController
     with SimepleProgressSetter<StoreFailure> {
-  StoreViewBloc get _watcherBloc => Get.find();
-  ILocationRepository get _iLocationRepo => Get.find();
-  IStoreRepository get _iStoreRepo => Get.find();
+  final StoreViewBloc _viewBloc = Get.find();
+  final ILocationRepository _iLocationRepo = Get.find();
+  final IStoreRepository _iStoreRepo = Get.find();
 
-  Store get store => _watcherBloc.store;
-
+  Store get store => _viewBloc.store;
   StoreLocation location;
-
   SellingRange sellingRange = SellingRange.created();
   bool isInfinite = true;
-
   Map<String, bool> blockedUsers = {};  
 
   Future<void> onLocationUpdated() async {
@@ -38,7 +36,7 @@ class StoreSettingBloc extends GetxController
   Future<void> onLocationSaved() async {
     updateWithLoading();
     final fOrUnit = await _iStoreRepo
-        .update(_watcherBloc.store.copyWith(location: location));
+        .update(_viewBloc.store.copyWith(location: location));
     fOrUnit.fold(
       (f) => null,
       (ok) => Get.back(),
@@ -49,7 +47,7 @@ class StoreSettingBloc extends GetxController
     if (isInf) {
       sellingRange = SellingRange.infinite();
     } else {
-      final defaultSellingRange = _watcherBloc.store.prefs.sellingRange;
+      final defaultSellingRange = _viewBloc.store.prefs.sellingRange;
       if (defaultSellingRange.isInFinite) {
         sellingRange = SellingRange.created();
       } else {
@@ -69,7 +67,7 @@ class StoreSettingBloc extends GetxController
 
   Future<void> onSellingRangeSaved() async {
     updateWithLoading();
-    final Store store = _watcherBloc.store;
+    final Store store = _viewBloc.store;
     final fOrUnit = await _iStoreRepo.update(
       store.copyWith(
         prefs: store.prefs.copyWith(sellingRange: sellingRange),
@@ -81,20 +79,15 @@ class StoreSettingBloc extends GetxController
     );
   }
 
-  Future<void> onStoreOpenToggled({bool isOpen}) async {
+  Future<void> onStoreOpenToggled({@required bool isOpen}) async {
     updateWithLoading();
-    final Store store = _watcherBloc.store;
-    await _iStoreRepo.update(
-      store.copyWith(
-        prefs: store.prefs.copyWith(isOpen: isOpen),
-      ),
-    );
+    await _viewBloc.onStoreOpenToggled(isOpen: isOpen);
     updateWithLoaded();
   }
 
   Future<void> onStoreNotificationToggled({bool isOn}) async {
     updateWithLoading();
-    final Store store = _watcherBloc.store;
+    final Store store = _viewBloc.store;
     await _iStoreRepo.update(
       store.copyWith(
         prefs: store.prefs.copyWith(isNotificationOn: isOn),
@@ -104,8 +97,8 @@ class StoreSettingBloc extends GetxController
   }
 
   void resetState() {
-    location = _watcherBloc.store.location;
-    sellingRange = _watcherBloc.store.prefs.sellingRange;
+    location = _viewBloc.store.location;
+    sellingRange = _viewBloc.store.prefs.sellingRange;
     if (!sellingRange.isInFinite) {
       isInfinite = false;
     } else {

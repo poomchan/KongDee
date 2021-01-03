@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 // Project imports:
 import 'package:fluttertaladsod/application/bloc/core/view_widget.dart';
 import 'package:fluttertaladsod/application/core/components/progress_indicator.dart';
-import 'package:fluttertaladsod/application/screens/store/setting/bloc/blocked_users_bloc.dart';
+import 'package:fluttertaladsod/application/screens/store/setting/blocked_user/blocked_users_bloc.dart';
 import 'package:fluttertaladsod/domain/user/user.dart';
 
 class BlockedUsersSettingPage extends ViewWidget<BlockedUsersSettingBloc> {

@@ -16,9 +16,9 @@ import 'package:fluttertaladsod/domain/store/store_failures.dart';
 
 class BlockedStoreBloc extends GetxController
     with SimepleProgressSetter<StoreFailure> {
-  IStoreRepository get _iStoreRepository => Get.find();
-  LocationBloc get _locationBloc => Get.find();
-  AuthBloc get _authBloc => Get.find();
+  final IStoreRepository _iStoreRepository = Get.find();
+  final LocationBloc _locationBloc = Get.find();
+  final  AuthBloc _authBloc = Get.find();
 
   List<Store> storeList = [];
   List<StreamSubscription> subList = [];

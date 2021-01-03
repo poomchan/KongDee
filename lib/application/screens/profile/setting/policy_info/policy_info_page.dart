@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:webview_flutter/webview_flutter.dart';
 
-class LegalPage extends StatelessWidget {
+class PolicyInfoPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {

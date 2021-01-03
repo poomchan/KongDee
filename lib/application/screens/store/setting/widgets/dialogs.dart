@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 
 // Project imports:
 import 'package:fluttertaladsod/application/core/components/progress_indicator.dart';
-import 'package:fluttertaladsod/application/screens/store/setting/bloc/blocked_users_bloc.dart';
+import 'package:fluttertaladsod/application/screens/store/setting/blocked_user/blocked_users_bloc.dart';
 
 Widget buildAvatarActionSheet() {
   return GetBuilder<BlockedUsersSettingBloc>(

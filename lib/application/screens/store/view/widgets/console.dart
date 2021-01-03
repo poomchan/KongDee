@@ -9,15 +9,12 @@ import 'package:settings_ui/settings_ui.dart';
 // Project imports:
 import 'package:fluttertaladsod/application/bloc/core/view_widget.dart';
 import 'package:fluttertaladsod/application/screens/store/form/widgets/reusable_card.dart';
-import 'package:fluttertaladsod/application/screens/store/setting/bloc/store_setting_bloc.dart';
 import 'package:fluttertaladsod/application/screens/store/view/bloc/store_view_bloc.dart';
 import 'package:fluttertaladsod/application/screens/store/view/widgets/store_setting_button.dart';
 import 'edit_store_button.dart';
 
 class Console extends ViewWidget<StoreViewBloc> {
   const Console();
-
-  StoreSettingBloc get settingBloc => Get.find<StoreSettingBloc>();
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +37,7 @@ class Console extends ViewWidget<StoreViewBloc> {
         Obx(
           () => SettingsTile.switchTile(
             title: 'Open - Close Store',
-            onToggle: (val) => settingBloc.onStoreOpenToggled(isOpen: val),
+            onToggle: (val) => bloc.onStoreOpenToggled(isOpen: val),
             switchValue: bloc.store.prefs.isOpen,
           ),
         ),

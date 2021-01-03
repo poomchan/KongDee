@@ -1,4 +1,5 @@
 // Package imports:
+import 'package:fluttertaladsod/application/bloc/language/language_bloc.dart';
 import 'package:get/get.dart';
 
 // Project imports:
@@ -46,6 +47,7 @@ class AppBinding extends Bindings {
     /// Global Blocs
     Get.put(AuthBloc());
     Get.put(LocationBloc());
+    Get.put(LanguageBloc());
   }
 }
 

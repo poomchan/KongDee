@@ -27,7 +27,7 @@ class StoreViewBloc extends GetxController
   final ILocationRepository _iLocationRepository = Get.find();
   final AuthBloc _authBloc = Get.find();
 
-  StreamSubscription _storeSubscription;
+  StreamSubscription _storeSub;
 
   final _store = Rx<Store>();
   Store get store => _store.value;
@@ -44,7 +44,7 @@ class StoreViewBloc extends GetxController
       (f) => updateWithFailure(StoreFailure.locationNotGranted()),
       (location) async {
         final Option<UserDomain> userOption = optionOf(_authBloc.user);
-        _storeSubscription = _iStoreRepository
+        _storeSub = _iStoreRepository
             .watchSingleStore(
                 storeId: storeId, location: location, userOption: userOption)
             .listen(
@@ -77,6 +77,16 @@ class StoreViewBloc extends GetxController
     print('more!');
   }
 
+  Future<void> onStoreOpenToggled({@required bool isOpen}) async {
+    updateWithLoading();
+    await _iStoreRepository.update(
+      store.copyWith(
+        prefs: store.prefs.copyWith(isOpen: isOpen),
+      ),
+    );
+    updateWithLoaded();
+  }
+
   @override
   Future<void> onReady() async {
     await watchStoreStarted(storeId: Get.arguments as UniqueId);
@@ -85,7 +95,7 @@ class StoreViewBloc extends GetxController
 
   @override
   void onClose() {
-    _storeSubscription.cancel();
+    _storeSub.cancel();
     _store.close();
     Get.delete<StoreSettingBloc>();
     super.onClose();
