@@ -38,10 +38,11 @@ class NearStoreBloc extends GetxController
     authSub = _authBloc.rxUser.listen((_) => watchNearbyStore());
   }
 
-  void watchNearbyStore() {
+  Future<void> watchNearbyStore() async {
     updateWithLoading();
     final location = _locationBloc.location;
     final user = _authBloc.user;
+    storeSub?.cancel();
     storeSub = _iStoreRepository
         .watchNearbyStore(
           location: location,
@@ -80,9 +81,14 @@ class NearStoreBloc extends GetxController
     radiusSubject.add(rad);
   }
 
-  void drainRadius() {
+  Future<void> onResetTapped() async {
     _rad.value = initRad;
-    radiusSubject.add(rad);
+    radiusSubject?.add(rad);
+    updateWithLoading();
+    print('loading...');
+    await Future.delayed(Duration(milliseconds: 1000));
+    print('loaded');
+
   }
 
   @override

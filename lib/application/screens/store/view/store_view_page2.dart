@@ -48,28 +48,34 @@ class StoreViewPage2 extends ViewWidget<StoreViewBloc> {
           floatingActionButton: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              FloatingActionButton(
-                heroTag: null,
-                backgroundColor: Colors.blueAccent,
-                shape: const StadiumBorder(),
-                onPressed: () => print('linking'),
-                child: const Icon(Icons.thumb_up),
-              ),
+              // FloatingActionButton(
+              //   heroTag: null,
+              //   backgroundColor: Colors.blueAccent,
+              //   shape: const StadiumBorder(),
+              //   onPressed: () => print('linking'),
+              //   child: const Icon(Icons.thumb_up),
+              // ),
               const SizedBox(width: 10.0),
               FloatingActionButton.extended(
+                heroTag: null,
                 shape: const StadiumBorder(),
                 onPressed: () => Get.toNamed(Routes.chatPage),
+                backgroundColor: Get.theme.primaryColor,
                 label: Row(
-                  children: const [
-                    Text('chat'),
-                    Icon(Icons.chat),
+                  children: [
+                    Text(
+                      'chat',
+                      style: Get.textTheme.button.copyWith(color: Colors.white),
+                    ),
+                    const SizedBox(width: 5),
+                    Icon(Icons.chat, color: Colors.white),
                   ],
                 ),
               ),
             ],
           ),
           body: CustomScrollView(
-            slivers: <Widget> [
+            slivers: <Widget>[
               const BannerAppbar2(),
               SliverToBoxAdapter(
                 child: Column(

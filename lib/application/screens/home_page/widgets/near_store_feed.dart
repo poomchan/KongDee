@@ -10,6 +10,7 @@ import 'package:fluttertaladsod/application/core/components/progress_indicator.d
 import 'package:fluttertaladsod/application/screens/home_page/bloc/store_feed/near_store_bloc.dart';
 import 'package:fluttertaladsod/application/screens/home_page/widgets/store_card2.dart';
 import 'package:fluttertaladsod/domain/store/store.dart';
+import 'buttons.dart';
 
 class NearStoreFeed extends ViewWidget<NearStoreBloc> {
   const NearStoreFeed();
@@ -34,32 +35,8 @@ class NearStoreFeed extends ViewWidget<NearStoreBloc> {
             failure: () => _buildErrorWidget(),
           ),
         ),
-        ButtonBar(
-          children: [
-            GetBuilder<NearStoreBloc>(
-              builder: (bloc) => bloc.progress.maybeWhen(
-                loaded: () => _buildRxTextRadius(),
-                loading: () => _buildRxTextRadius(),
-                orElse: () => const SizedBox(height: 10.0 + 4.0),
-              ),
-            ),
-            RaisedButton(
-              onPressed: bloc.requestMoreRadius,
-              child: Text('Add Radius'),
-            ),
-            RaisedButton(
-              onPressed: bloc.drainRadius,
-              child: Text('Drain Radius'),
-            ),
-          ],
-        ),
+        StoreFeedButton(),
       ],
-    );
-  }
-
-  Widget _buildRxTextRadius() {
-    return Obx(
-      () => Text('Searched in ${bloc.rad} km'),
     );
   }
 
@@ -98,7 +75,7 @@ class NearStoreFeed extends ViewWidget<NearStoreBloc> {
   Widget _buildRxLoadingIndicator(BuildContext context) {
     return GetBuilder<NearStoreBloc>(
       builder: (bloc) => bloc.progress.maybeWhen(
-        loading: () => linearProgress(context),
+        loading: () => circularProgress(),
         orElse: () => const SizedBox(height: 10.0 + 4.0),
       ),
     );
@@ -127,3 +104,4 @@ class NearStoreFeed extends ViewWidget<NearStoreBloc> {
     );
   }
 }
+

@@ -35,7 +35,11 @@ class AppWidget extends StatelessWidget {
         accentTextTheme: TextTheme(),
         visualDensity: VisualDensity.adaptivePlatformDensity,
         fontFamily: 'Roboto',
-        buttonTheme: null,
+        textTheme: TextTheme(),
+        buttonTheme: ButtonThemeData(
+          shape: StadiumBorder(),
+          buttonColor: colorScheme.secondary,
+        ),
       ),
     );
   }

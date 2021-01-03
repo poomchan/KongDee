@@ -33,7 +33,7 @@ class LocationSetting extends ViewWidget<StoreSettingBloc> {
                     dispose: (s) => bloc.resetState(),
                   ),
                 ),
-                RaisedButton(
+                OutlineButton(
                   onPressed: bloc.onLocationUpdated,
                   child: Text('Update'),
                 )
