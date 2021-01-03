@@ -5,6 +5,6 @@ import 'th.dart';
 class AppTranslation extends Translations {
   @override
   Map<String, Map<String, String>> get keys {
-    return {}..addAll(const EnUSTr().trMap)..addAll(const ThaiTr().trMap);
+    return {}..addAll(const EnglishUSTr().trMap)..addAll(const ThaiTr().trMap);
   }
 }

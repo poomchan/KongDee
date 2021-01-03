@@ -22,12 +22,10 @@ class AppWidget extends StatelessWidget {
     return GetMaterialApp(
       translations: AppTranslation(),
       locale: ThaiTr.locale,
-      fallbackLocale: EnUSTr.locale,
-      smartManagement: SmartManagement.full,
+      fallbackLocale: EnglishUSTr.locale,
       getPages: Router.pages,
       initialRoute: Routes.startUpSplash,
       initialBinding: AppBinding(),
-      debugShowMaterialGrid: false,
       debugShowCheckedModeBanner: false,
       title: 'Kong Dee',
       theme: ThemeData(

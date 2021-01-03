@@ -20,6 +20,7 @@ import 'package:fluttertaladsod/infrastucture/location/location_repository.dart'
 import 'package:fluttertaladsod/infrastucture/report/report_repository.dart';
 import 'package:fluttertaladsod/infrastucture/store/store_repository.dart';
 import 'package:fluttertaladsod/infrastucture/user/user_repository.dart';
+import 'package:get_storage/get_storage.dart';
 
 class AppBinding extends Bindings {
   final m = InjectMod();
@@ -45,6 +46,7 @@ class AppBinding extends Bindings {
     Get.lazyPut<IReportRepository>(() => ReportRepository(), fenix: true);
 
     /// Global Blocs
+    Get.put(GetStorage());
     Get.put(AuthBloc());
     Get.put(LocationBloc());
     Get.put(LanguageBloc());

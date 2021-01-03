@@ -45,12 +45,11 @@ class ProfilePage extends ViewWidget<ProfileBloc> {
       ),
       body: GetBuilder<ProfileBloc>(
         builder: (bloc) => bloc.progress.when(
-          inital: () => buildLoadingWidget(),
+          inital: () => const Text('initing ProfileBloc...'),
           loading: () => buildLoadingWidget(),
           loaded: () => buildLoadedWidget(),
           failure: () => buildFailureWidget(),
         ),
-        dispose: (_) => Get.delete<ProfileBloc>(),
       ),
     );
   }
@@ -140,14 +139,10 @@ class ProfilePage extends ViewWidget<ProfileBloc> {
   }
 
   Widget buildLoadingWidget() {
-    return Scaffold(
-      body: circularProgress(Get.context),
-    );
+    return circularProgress();
   }
 
   Widget buildFailureWidget() {
-    return Scaffold(
-      body: Center(child: Icon(Icons.error)),
-    );
+    return Icon(Icons.error);
   }
 }

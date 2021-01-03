@@ -33,7 +33,7 @@ class ProfileSettingPage extends ViewWidget<ProfileSettingBloc> {
                 tiles: [
                   SettingsTile(
                     title: 'Language',
-                    subtitle: 'English',
+                    subtitle: bloc.langName,
                     leading: Icon(Icons.language),
                     onTap: () => Get.toNamed(Routes.languageSettingPage),
                   ),

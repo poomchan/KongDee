@@ -4,6 +4,7 @@ import 'translation_base.dart';
 
 class ThaiTr extends TrBase {
   const ThaiTr() : super('th');
+  static String get langName => 'ภาษาไทย';
   static Locale get locale => const Locale('th');
 
   @override

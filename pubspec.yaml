@@ -59,6 +59,7 @@ dependencies:
 
   # state management
   get: ^3.24.0
+  get_storage: ^1.4.0
 
   # code generators
   freezed_annotation: ^0.12.0
