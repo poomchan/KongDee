@@ -16,9 +16,7 @@ import 'widgets/owned_store_view.dart';
 class ProfilePage extends ViewWidget<ProfileBloc> {
   final UniqueId userId;
 
-  const ProfilePage({Key key, @required this.userId})
-      : assert(userId != null),
-        super(key: key);
+  const ProfilePage({Key key, @required this.userId}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -131,7 +129,7 @@ class ProfilePage extends ViewWidget<ProfileBloc> {
               ),
             ),
             child: Column(
-              children: const[
+              children: const [
                 OwnedStoreView(),
               ],
             ),
