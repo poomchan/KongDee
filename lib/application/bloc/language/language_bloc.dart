@@ -24,20 +24,19 @@ class LanguageBloc extends GetxController
 
   void onThaiChanged() {
     Get.updateLocale(ThaiTr.locale);
-    storage.write('locale', ThaiTr.locale.languageCode);
+    storage.write('language', ThaiTr.locale.languageCode);
     setLoaded(LanguageState(isThai: true));
   }
 
   void onEnglishUSChanged() {
     Get.updateLocale(EnglishUSTr.locale);
-    storage.write('locale', EnglishUSTr.locale.languageCode);
+    storage.write('language', EnglishUSTr.locale.languageCode);
     setLoaded(LanguageState(isEnglishUS: true));
   }
 
   @override
   void onInit() {
-    final String langCode = storage.read('locale');
-    print(langCode);
+    final String langCode = storage.read('language');
     final code = langCode ?? Get.locale.languageCode;
     if (code == ThaiTr.locale.languageCode) {
       Get.updateLocale(ThaiTr.locale);

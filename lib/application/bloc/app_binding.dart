@@ -44,9 +44,9 @@ class AppBinding extends Bindings {
     Get.lazyPut<IChatRepository>(() => ChatRepository(), fenix: true);
     Get.lazyPut<IUserRepository>(() => UserRepository(), fenix: true);
     Get.lazyPut<IReportRepository>(() => ReportRepository(), fenix: true);
+    Get.lazyPut<GetStorage>(() => GetStorage(),fenix: true);
 
     /// Global Blocs
-    Get.put(GetStorage());
     Get.put(AuthBloc());
     Get.put(LocationBloc());
     Get.put(LanguageBloc());
