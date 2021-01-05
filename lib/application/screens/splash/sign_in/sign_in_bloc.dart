@@ -17,11 +17,11 @@ class SignInBloc extends GetxController
   StreamSubscription userStream;
 
   Future<void> signInWithGoogle() async {
-    updateWithLoading();
+    setLoading();
     final fOrUnit = await _iAuthFacade.signInWithGoogle();
     fOrUnit.fold(
       (f) => null,
-      (unit) => updateWithLoaded(),
+      (unit) => setLoaded(),
     );
   }
 

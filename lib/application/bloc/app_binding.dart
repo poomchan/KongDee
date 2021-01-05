@@ -1,5 +1,7 @@
 // Package imports:
 import 'package:fluttertaladsod/application/bloc/language/language_bloc.dart';
+import 'package:fluttertaladsod/domain/info/i_info_repository.dart';
+import 'package:fluttertaladsod/infrastucture/info/info_repository.dart';
 import 'package:get/get.dart';
 
 // Project imports:
@@ -44,7 +46,8 @@ class AppBinding extends Bindings {
     Get.lazyPut<IChatRepository>(() => ChatRepository(), fenix: true);
     Get.lazyPut<IUserRepository>(() => UserRepository(), fenix: true);
     Get.lazyPut<IReportRepository>(() => ReportRepository(), fenix: true);
-    Get.lazyPut<GetStorage>(() => GetStorage(),fenix: true);
+    Get.lazyPut<GetStorage>(() => GetStorage(), fenix: true);
+    Get.lazyPut<IInfoRepoSitory>(() => InfoRepository(), fenix: true);
 
     /// Global Blocs
     Get.put(AuthBloc());
@@ -53,7 +56,6 @@ class AppBinding extends Bindings {
   }
 }
 
-class MessageRepository {
-}
+class MessageRepository {}
 
 class InjectMod extends InjectableModule {}

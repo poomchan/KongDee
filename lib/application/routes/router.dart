@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:dartz/dartz.dart';
 import 'package:fluttertaladsod/application/screens/home_page/bloc/near_store_bloc.dart';
+import 'package:fluttertaladsod/application/screens/home_page/info/info_bloc.dart';
 import 'package:fluttertaladsod/application/screens/profile/bloc/owned_store_bloc.dart';
 import 'package:fluttertaladsod/application/screens/profile/bloc/profile_bloc.dart';
 import 'package:fluttertaladsod/application/screens/profile/setting/bloc/profile_setting_bloc.dart';
@@ -59,7 +60,10 @@ class Router {
     GetPage(
       name: Routes.homePage,
       page: () => HomePage(),
-      binding: BindingsBuilder.put(() => Get.put(NearStoreBloc())),
+      binding: BindingsBuilder(() {
+        Get.put(NearStoreBloc());
+        Get.put(InfoBloc());
+      }),
       transition: Transition.topLevel,
       curve: Curves.fastOutSlowIn,
       transitionDuration: Duration(milliseconds: 5000),

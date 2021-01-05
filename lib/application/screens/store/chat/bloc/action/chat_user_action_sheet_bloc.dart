@@ -40,7 +40,7 @@ class ChatUserActionSheetBloc extends GetxController
   }
 
   void onMessageAvatarTapped(String name, String userId) {
-    updateWithLoaded();
+    setLoaded();
     HapticFeedback.mediumImpact();
     user = ChatUser(name: name, id: userId);
     showCupertinoModalPopup(
@@ -51,14 +51,14 @@ class ChatUserActionSheetBloc extends GetxController
 
   Future<void> onBlockUserTapped({@required bool block}) async {
     Get.back();
-    updateWithLoading();
+    setLoading();
     Get.dialog(
       buildBlockingDialog(),
       barrierDismissible: false,
     );
     final fOrUnit = await _blockUser(block);
     fOrUnit.fold(
-      (f) => updateWithFailure(ChatFailure.unexpected(f)),
+      (f) => setFailure(ChatFailure.unexpected(f)),
       (unit) async {
         Get.back();
         await doubleHapticFeedback();
@@ -87,7 +87,7 @@ class ChatUserActionSheetBloc extends GetxController
   }
 
   Future<void> onReportSubmitTapped() async {
-    updateWithLoading();
+    setLoading();
     final user = _authBloc.user;
     final fOrUnit = await _iReportRepository.sendReport(
       Report.user(
@@ -97,9 +97,9 @@ class ChatUserActionSheetBloc extends GetxController
       ),
     );
     fOrUnit.fold(
-      (f) => updateWithFailure(f),
+      (f) => setFailure(f),
       (unit) async {
-        updateWithLoaded();
+        setLoaded();
         await doubleHapticFeedback();
         Get.back();
       },

@@ -52,9 +52,9 @@ class BlockedUsersSettingBloc extends GetxController
       }
     }
     if (isFailed) {
-      updateWithFailure(f);
+      setFailure(f);
     } else {
-      updateWithLoaded();
+      setLoaded();
     }
   }
 
@@ -68,17 +68,17 @@ class BlockedUsersSettingBloc extends GetxController
 
   Future<void> onBlockUserTapped() async {
     Get.back();
-    updateWithLoading();
+    setLoading();
     Get.dialog(
       buildBlockingDialog(),
       barrierDismissible: false,
     );
     final fOrUnit = await _blockUser();
     fOrUnit.fold(
-      (f) => updateWithFailure(UserFailure.unexpected(f)),
+      (f) => setFailure(UserFailure.unexpected(f)),
       (unit) async {
         Get.back();
-        updateWithLoaded();
+        setLoaded();
         await doubleHapticFeedback();
       },
     );
@@ -104,7 +104,7 @@ class BlockedUsersSettingBloc extends GetxController
 
   @override
   Future<void> onReady() async {
-    updateWithLoading();
+    setLoading();
     await getBlockedUsers();
     super.onReady();
   }

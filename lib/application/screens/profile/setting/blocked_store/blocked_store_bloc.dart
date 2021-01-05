@@ -25,7 +25,7 @@ class BlockedStoreBloc extends GetxController
 
   Future<void> watchStores() async {
     try {
-      updateWithLoading();
+      setLoading();
       final map = _authBloc.user.blockedStores;
       for (final id in map.keys) {
         if (map[id] == true) {
@@ -36,17 +36,17 @@ class BlockedStoreBloc extends GetxController
           );
           final storeSub = fOrStoreStream.listen((fOrStore) {
             return fOrStore.fold(
-              (f) => updateWithFailure(f),
+              (f) => setFailure(f),
               (store) {
                 storeList.add(store);
-                updateWithLoaded();
+                setLoaded();
               },
             );
           });
           subList.add(storeSub);
         }
       }
-      updateWithLoaded();
+      setLoaded();
     } catch (err) {
       print(err);
     }

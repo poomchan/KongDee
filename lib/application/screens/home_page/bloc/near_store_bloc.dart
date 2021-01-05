@@ -39,7 +39,7 @@ class NearStoreBloc extends GetxController
   }
 
   Future<void> watchNearbyStore() async {
-    updateWithLoading();
+    setLoading();
     final location = _locationBloc.location;
     final user = _authBloc.user;
     storeSub?.cancel();
@@ -51,10 +51,10 @@ class NearStoreBloc extends GetxController
         )
         .listen(
           (failureOrStoreList) => failureOrStoreList.fold(
-            (f) => updateWithFailure(f),
+            (f) => setFailure(f),
             (storeList) {
               this.storeList = filterBlocked(storeList).obs;
-              updateWithLoaded();
+              setLoaded();
             },
           ),
         );
@@ -76,7 +76,7 @@ class NearStoreBloc extends GetxController
   }
 
   void requestMoreRadius() {
-    updateWithLoading();
+    setLoading();
     _rad.value += 0.5;
     radiusSubject.add(rad);
   }
@@ -84,7 +84,7 @@ class NearStoreBloc extends GetxController
   Future<void> onResetTapped() async {
     _rad.value = initRad;
     radiusSubject?.add(rad);
-    updateWithLoading();
+    setLoading();
     print('loading...');
     await Future.delayed(Duration(milliseconds: 1000));
     print('loaded');

@@ -21,7 +21,7 @@ mixin SimepleProgressSetter<F> on GetxController {
   }
 
   /// set [progress] with calling [update()]
-  void updateWithLoading() => _setState(ActionState.loading());
-  void updateWithLoaded() => _setState(ActionState.loaded());
-  void updateWithFailure(F f) => _setState(ActionState.failure(), f:f);
+  void setLoading() => _setState(ActionState.loading());
+  void setLoaded() => _setState(ActionState.loaded());
+  void setFailure(F f) => _setState(ActionState.failure(), f:f);
 }

@@ -20,15 +20,15 @@ class ProfileBloc extends GetxController with SimepleProgressSetter {
   Future<void> getUser() async {
     if (isOwner) {
       _user.value = authBloc.user;
-      updateWithLoaded();
+      setLoaded();
     } else {
-      updateWithLoading();
+      setLoading();
       final fOrUser = await _iUserRepo.getUser(userId);
       fOrUser.fold(
-        (f) => updateWithFailure(f),
+        (f) => setFailure(f),
         (user) {
           _user.value = user;
-          updateWithLoaded();
+          setLoaded();
         },
       );
     }

@@ -38,10 +38,10 @@ class StoreViewBloc extends GetxController
 
   Future<void> watchStoreStarted({@required UniqueId storeId}) async {
     assert(storeId != null);
-    updateWithLoading();
+    setLoading();
     final locationOption = await _iLocationRepository.getLocation();
     locationOption.fold(
-      (f) => updateWithFailure(StoreFailure.locationNotGranted()),
+      (f) => setFailure(StoreFailure.locationNotGranted()),
       (location) async {
         final Option<UserDomain> userOption = optionOf(_authBloc.user);
         _storeSub = _iStoreRepository
@@ -50,11 +50,11 @@ class StoreViewBloc extends GetxController
             .listen(
           (storeOrF) {
             return storeOrF.fold(
-              (f) => updateWithFailure(f),
+              (f) => setFailure(f),
               (store) {
                 this.store = store;
                 filterBlockedUsers(store);
-                updateWithLoaded();
+                setLoaded();
               },
             );
           },
@@ -78,13 +78,13 @@ class StoreViewBloc extends GetxController
   }
 
   Future<void> onStoreOpenToggled({@required bool isOpen}) async {
-    updateWithLoading();
+    setLoading();
     await _iStoreRepository.update(
       store.copyWith(
         prefs: store.prefs.copyWith(isOpen: isOpen),
       ),
     );
-    updateWithLoaded();
+    setLoaded();
   }
 
   @override

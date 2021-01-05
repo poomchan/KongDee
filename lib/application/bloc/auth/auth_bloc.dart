@@ -31,19 +31,19 @@ class AuthBloc extends GetxController with SimepleProgressSetter<AuthFailure> {
   }
 
   Future<void> watchUser() async {
-    updateWithLoading();
+    setLoading();
     final userOrFailureStream = _iAuthFacade.watchSignedInUser();
     _userSub = userOrFailureStream.listen((userOrFailure) {
       return userOrFailure.fold(
         (f) {
           print('AuthBloc: not auth');
           _user.value = null;
-          updateWithFailure(f);
+          setFailure(f);
         },
         (user) {
           print('AuthBloc : auth');
           _user.value = user;
-          updateWithLoaded();
+          setLoaded();
         },
       );
     });

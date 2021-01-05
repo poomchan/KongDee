@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:fluttertaladsod/application/screens/home_page/info/info_view.dart';
 
 // Project imports:
 import 'package:fluttertaladsod/application/screens/home_page/widgets/near_store_feed.dart';
@@ -25,6 +26,8 @@ class HomePage extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(
               children: const [ 
+                InfoView(),
+                SizedBox(height: 10),
                 NearStoreFeed(),
               ],
             ),

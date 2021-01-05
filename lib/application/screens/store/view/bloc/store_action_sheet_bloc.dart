@@ -47,7 +47,7 @@ class StoreActionSheetBloc extends GetxController
   }
 
   Future<void> onBlockStoreTapped({@required bool block}) async {
-    updateWithLoading();
+    setLoading();
     Get.back();
     Get.dialog(
       buildBlockStoreDialog(),
@@ -63,9 +63,9 @@ class StoreActionSheetBloc extends GetxController
       ),
     );
     fOrUnit.fold(
-      (f) => updateWithFailure(ReportFailure.unexpected(f)),
+      (f) => setFailure(ReportFailure.unexpected(f)),
       (unit) {
-        updateWithLoaded();
+        setLoaded();
         Get.back();
         doubleHapticFeedback();
       },
@@ -81,7 +81,7 @@ class StoreActionSheetBloc extends GetxController
   }
 
   Future<void> onReportSubmitTapped() async {
-    updateWithLoading();
+    setLoading();
     final fOrUnit = await _iReportRepo.sendReport(
       Report.store(
         reporter: _user.id,
@@ -90,9 +90,9 @@ class StoreActionSheetBloc extends GetxController
       ),
     );
     fOrUnit.fold(
-      (f) => updateWithFailure(f),
+      (f) => setFailure(f),
       (unit) async {
-        updateWithLoaded();
+        setLoaded();
         await doubleHapticFeedback();
         Get.back();
       },
@@ -101,7 +101,7 @@ class StoreActionSheetBloc extends GetxController
 
   @override
   void onReady() {
-    updateWithLoaded();
+    setLoaded();
     super.onReady();
   }
 }

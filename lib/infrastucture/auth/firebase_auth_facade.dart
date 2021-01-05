@@ -9,7 +9,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:fluttertaladsod/domain/auth/auth_failure.dart';
 import 'package:fluttertaladsod/domain/auth/i_auth_facade.dart';
 import 'package:fluttertaladsod/domain/user/user.dart';
-import 'package:fluttertaladsod/infrastucture/auth/user_dto.dart';
+import 'package:fluttertaladsod/infrastucture/user/user_dto.dart';
 import 'package:fluttertaladsod/infrastucture/core/firestore_helper.dart';
 
 class FirebaseAuthFacade implements IAuthFacade {

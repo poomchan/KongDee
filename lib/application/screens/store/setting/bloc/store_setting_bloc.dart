@@ -25,16 +25,16 @@ class StoreSettingBloc extends GetxController
   Map<String, bool> blockedUsers = {};  
 
   Future<void> onLocationUpdated() async {
-    updateWithLoading();
+    setLoading();
     final locationOption = await _iLocationRepo.getLocation();
     final locationDomain =
         locationOption.getOrElse(() => throw 'location not granted');
     location = StoreLocation.fromLocationDomain(locationDomain);
-    updateWithLoading();
+    setLoading();
   }
 
   Future<void> onLocationSaved() async {
-    updateWithLoading();
+    setLoading();
     final fOrUnit = await _iStoreRepo
         .update(_viewBloc.store.copyWith(location: location));
     fOrUnit.fold(
@@ -66,7 +66,7 @@ class StoreSettingBloc extends GetxController
   }
 
   Future<void> onSellingRangeSaved() async {
-    updateWithLoading();
+    setLoading();
     final Store store = _viewBloc.store;
     final fOrUnit = await _iStoreRepo.update(
       store.copyWith(
@@ -80,20 +80,20 @@ class StoreSettingBloc extends GetxController
   }
 
   Future<void> onStoreOpenToggled({@required bool isOpen}) async {
-    updateWithLoading();
+    setLoading();
     await _viewBloc.onStoreOpenToggled(isOpen: isOpen);
-    updateWithLoaded();
+    setLoaded();
   }
 
   Future<void> onStoreNotificationToggled({bool isOn}) async {
-    updateWithLoading();
+    setLoading();
     final Store store = _viewBloc.store;
     await _iStoreRepo.update(
       store.copyWith(
         prefs: store.prefs.copyWith(isNotificationOn: isOn),
       ),
     );
-    updateWithLoaded();
+    setLoaded();
   }
 
   void resetState() {
@@ -108,10 +108,10 @@ class StoreSettingBloc extends GetxController
 
   @override
   void onInit() {
-    updateWithLoading();
+    setLoading();
     super.onInit();
     resetState();
-    updateWithLoaded();
+    setLoaded();
   }
 
   @override

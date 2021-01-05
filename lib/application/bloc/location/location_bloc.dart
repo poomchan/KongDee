@@ -18,18 +18,18 @@ class LocationBloc extends GetxController with SimepleProgressSetter<LocationFai
 
 
   Future<void> checkLocationPermission() async {
-    updateWithLoading();
+    setLoading();
     isLocationGranted = await _iLocationRepository.isPermissionGranted();
     if(isLocationGranted){
       await getUserLocation();
     } else {
       Get.offAllNamed(Routes.onboardingPage);
     }
-    updateWithLoaded();
+    setLoaded();
   }
 
   Future<void> getUserLocation() async {
-    updateWithLoading();
+    setLoading();
     final fOrlocation = await _iLocationRepository.getLocation();
     fOrlocation.fold(
       (f) => f.maybeWhen(
@@ -40,7 +40,7 @@ class LocationBloc extends GetxController with SimepleProgressSetter<LocationFai
       (location) {
         _location.value = location;
         Get.offAllNamed(Routes.homePage);
-        updateWithLoaded();
+        setLoaded();
       },
     );
   }

@@ -8,7 +8,7 @@ import 'package:fluttertaladsod/domain/core/value_objects.dart';
 import 'package:fluttertaladsod/domain/user/i_user_repository.dart';
 import 'package:fluttertaladsod/domain/user/user.dart';
 import 'package:fluttertaladsod/domain/user/user_failure.dart';
-import 'package:fluttertaladsod/infrastucture/auth/user_dto.dart';
+import 'package:fluttertaladsod/infrastucture/user/user_dto.dart';
 import 'package:fluttertaladsod/infrastucture/core/firestore_helper.dart';
 
 class UserRepository implements IUserRepository {

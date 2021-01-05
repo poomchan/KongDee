@@ -23,12 +23,12 @@ class OwnedStoreBloc extends GetxController
   StreamSubscription _ownedStoreSub;
 
   Future<void> watchOwnedStoreStarted() async {
-    updateWithLoading();
+    setLoading();
 
     final locationOption = await _iLocationRepo.getLocation();
 
     locationOption.fold(
-      (f) => updateWithFailure(StoreFailure.locationNotGranted()),
+      (f) => setFailure(StoreFailure.locationNotGranted()),
       (location) {
         final user = _authBloc.progress.maybeWhen(
           loaded: () => _authBloc.user,
@@ -43,10 +43,10 @@ class OwnedStoreBloc extends GetxController
             )
             .listen(
               (storeOrF) => storeOrF.fold(
-                (f) => updateWithFailure(f),
+                (f) => setFailure(f),
                 (store) {
                   _store.value = store;
-                  updateWithLoaded();
+                  setLoaded();
                 },
               ),
             );
